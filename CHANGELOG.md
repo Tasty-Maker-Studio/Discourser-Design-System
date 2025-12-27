@@ -1,5 +1,13 @@
 # @discourser/design-system
 
+## 0.1.6
+
+### Patch Changes
+
+- [#11](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/11) [`75de3a1`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/75de3a12a21ed5bc63608103d24311a8a8eb6c7b) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Fix: Remove dist/ from git tracking to ensure fresh builds in CI
+
+  Previously, stale dist/ files were committed causing published packages to have old builds. Now dist/ is generated fresh during each CI build, ensuring the packaging fix (rewritten styled-system imports) is actually published.
+
 ## 0.1.5
 
 ### Patch Changes
