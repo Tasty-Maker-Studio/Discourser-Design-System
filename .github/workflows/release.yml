@@ -41,29 +41,62 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Configure npm for Trusted Publishing (OIDC)
-        run: npm config set //registry.npmjs.org/:_authToken ''
+      - name: Check npm version
+        run: npm --version
 
       - name: Create Release Pull Request or Publish
         id: changesets
         uses: changesets/action@v1
         with:
           version: pnpm changeset version
-          publish: pnpm release
+          # Don't use changesets publish - we'll do it manually with npm for OIDC
+          publish: echo "Skipping changesets publish, using npm directly"
           commit: "chore: version packages"
           title: "chore: version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Check if should publish
+        id: check-publish
+        run: |
+          # Check if package version on npm matches local version
+          LOCAL_VERSION=$(node -p "require('./package.json').version")
+          NPM_VERSION=$(npm view @discourser/design-system version 2>/dev/null || echo "0.0.0")
+          
+          echo "Local version: $LOCAL_VERSION"
+          echo "npm version: $NPM_VERSION"
+          
+          if [ "$LOCAL_VERSION" != "$NPM_VERSION" ]; then
+            echo "should_publish=true" >> $GITHUB_OUTPUT
+            echo "version=$LOCAL_VERSION" >> $GITHUB_OUTPUT
+          else
+            echo "should_publish=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Publish to npm with OIDC
+        if: steps.check-publish.outputs.should_publish == 'true'
+        run: npm publish --access public
+
       - name: Create Git Tag
-        if: steps.changesets.outputs.published == 'true'
+        if: steps.check-publish.outputs.should_publish == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Get the version from package.json
-          VERSION=$(node -p "require('./package.json').version")
+          VERSION="${{ steps.check-publish.outputs.version }}"
           
-          # Create and push tag
-          git tag -a "v$VERSION" -m "Release v$VERSION"
-          git push origin "v$VERSION"
+          # Check if tag already exists
+          if git rev-parse "v$VERSION" >/dev/null 2>&1; then
+            echo "Tag v$VERSION already exists, skipping"
+          else
+            git tag -a "v$VERSION" -m "Release v$VERSION"
+            git push origin "v$VERSION"
+            echo "Created and pushed tag v$VERSION"
+          fi
+
+      - name: Publish Summary
+        if: steps.check-publish.outputs.should_publish == 'true'
+        run: |
+          echo "## 🚀 Published @discourser/design-system@${{ steps.check-publish.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Published using npm Trusted Publishing (OIDC)" >> $GITHUB_STEP_SUMMARY
