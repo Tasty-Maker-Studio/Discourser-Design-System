@@ -1,5 +1,11 @@
 # @discourser/design-system
 
+## 0.1.3
+
+### Patch Changes
+
+- [#4](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/4) [`35dcc99`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/35dcc99cf8b5d613807fa18806da9f8ddb80822a) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Test: Validate complete release pipeline with automated versioning and npm publishing via OIDC
+
 ## 0.1.1
 
 ### Patch Changes
