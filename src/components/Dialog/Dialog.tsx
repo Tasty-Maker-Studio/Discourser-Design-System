@@ -38,7 +38,7 @@ export interface DialogProps {
    * Size variant
    * @default "md"
    */
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'fullscreen';
 }
 
 export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
