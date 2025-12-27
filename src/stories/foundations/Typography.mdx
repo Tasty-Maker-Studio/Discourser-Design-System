@@ -1,0 +1,264 @@
+import { Meta } from '@storybook/blocks';
+import { TypeSpecimen } from './components/TypeSpecimen';
+import { material3Language } from '../../languages/material3.language';
+
+<Meta title="Foundations/Typography" />
+
+# Typography
+
+The Discourser Design System uses Material Design 3's type scale, which provides a comprehensive set of text styles optimized for readability and hierarchy across all screen sizes.
+
+## Font Families
+
+The system uses three font families, each serving a specific purpose:
+
+<div style={{ marginBottom: '32px', padding: '24px', backgroundColor: '#f5f5f5', borderRadius: '8px' }}>
+  <div style={{ marginBottom: '16px' }}>
+    <div style={{ fontWeight: '600', marginBottom: '8px' }}>Display</div>
+    <div style={{ fontFamily: material3Language.typography.fonts.display, fontSize: '24px', marginBottom: '4px' }}>
+      Georgia, Times New Roman, serif
+    </div>
+    <div style={{ fontSize: '12px', color: '#666' }}>
+      Used for display and headline styles. Provides an elegant, editorial feel.
+    </div>
+  </div>
+
+  <div style={{ marginBottom: '16px' }}>
+    <div style={{ fontWeight: '600', marginBottom: '8px' }}>Body</div>
+    <div style={{ fontFamily: material3Language.typography.fonts.body, fontSize: '16px', marginBottom: '4px' }}>
+      Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif
+    </div>
+    <div style={{ fontSize: '12px', color: '#666' }}>
+      Used for body text, titles, and labels. Optimized for legibility at all sizes.
+    </div>
+  </div>
+
+  <div>
+    <div style={{ fontWeight: '600', marginBottom: '8px' }}>Monospace</div>
+    <div style={{ fontFamily: material3Language.typography.fonts.mono, fontSize: '14px', marginBottom: '4px' }}>
+      JetBrains Mono, Fira Code, Consolas, monospace
+    </div>
+    <div style={{ fontSize: '12px', color: '#666' }}>
+      Used for code snippets and technical content. Supports ligatures.
+    </div>
+  </div>
+</div>
+
+---
+
+## Type Scale
+
+Material Design 3's type scale consists of 13 styles across 5 categories: Display, Headline, Title, Body, and Label.
+
+### Display Styles
+
+Display styles are the largest text on screen, reserved for short, important text or numerals.
+
+<TypeSpecimen
+  name="Display Large"
+  fontSize={material3Language.typography.scale.displayLarge.fontSize}
+  lineHeight={material3Language.typography.scale.displayLarge.lineHeight}
+  fontWeight={material3Language.typography.scale.displayLarge.fontWeight}
+  letterSpacing={material3Language.typography.scale.displayLarge.letterSpacing}
+  fontFamily={material3Language.typography.scale.displayLarge.fontFamily}
+  sampleText="Display Large"
+/>
+
+<TypeSpecimen
+  name="Display Medium"
+  fontSize={material3Language.typography.scale.displayMedium.fontSize}
+  lineHeight={material3Language.typography.scale.displayMedium.lineHeight}
+  fontWeight={material3Language.typography.scale.displayMedium.fontWeight}
+  letterSpacing={material3Language.typography.scale.displayMedium.letterSpacing}
+  fontFamily={material3Language.typography.scale.displayMedium.fontFamily}
+  sampleText="Display Medium"
+/>
+
+<TypeSpecimen
+  name="Display Small"
+  fontSize={material3Language.typography.scale.displaySmall.fontSize}
+  lineHeight={material3Language.typography.scale.displaySmall.lineHeight}
+  fontWeight={material3Language.typography.scale.displaySmall.fontWeight}
+  letterSpacing={material3Language.typography.scale.displaySmall.letterSpacing}
+  fontFamily={material3Language.typography.scale.displaySmall.fontFamily}
+  sampleText="Display Small"
+/>
+
+### Headline Styles
+
+Headlines are for high-emphasis text on smaller screens. They're best-suited for short, high-emphasis text.
+
+<TypeSpecimen
+  name="Headline Large"
+  fontSize={material3Language.typography.scale.headlineLarge.fontSize}
+  lineHeight={material3Language.typography.scale.headlineLarge.lineHeight}
+  fontWeight={material3Language.typography.scale.headlineLarge.fontWeight}
+  letterSpacing={material3Language.typography.scale.headlineLarge.letterSpacing}
+  fontFamily={material3Language.typography.scale.headlineLarge.fontFamily}
+  sampleText="Headline Large"
+/>
+
+<TypeSpecimen
+  name="Headline Medium"
+  fontSize={material3Language.typography.scale.headlineMedium.fontSize}
+  lineHeight={material3Language.typography.scale.headlineMedium.lineHeight}
+  fontWeight={material3Language.typography.scale.headlineMedium.fontWeight}
+  letterSpacing={material3Language.typography.scale.headlineMedium.letterSpacing}
+  fontFamily={material3Language.typography.scale.headlineMedium.fontFamily}
+  sampleText="Headline Medium"
+/>
+
+<TypeSpecimen
+  name="Headline Small"
+  fontSize={material3Language.typography.scale.headlineSmall.fontSize}
+  lineHeight={material3Language.typography.scale.headlineSmall.lineHeight}
+  fontWeight={material3Language.typography.scale.headlineSmall.fontWeight}
+  letterSpacing={material3Language.typography.scale.headlineSmall.letterSpacing}
+  fontFamily={material3Language.typography.scale.headlineSmall.fontFamily}
+  sampleText="Headline Small"
+/>
+
+### Title Styles
+
+Titles are for medium-emphasis text that remains relatively short. Use titles for grouping related content or to emphasize important sections.
+
+<TypeSpecimen
+  name="Title Large"
+  fontSize={material3Language.typography.scale.titleLarge.fontSize}
+  lineHeight={material3Language.typography.scale.titleLarge.lineHeight}
+  fontWeight={material3Language.typography.scale.titleLarge.fontWeight}
+  letterSpacing={material3Language.typography.scale.titleLarge.letterSpacing}
+  fontFamily={material3Language.typography.scale.titleLarge.fontFamily}
+  sampleText="Title Large"
+/>
+
+<TypeSpecimen
+  name="Title Medium"
+  fontSize={material3Language.typography.scale.titleMedium.fontSize}
+  lineHeight={material3Language.typography.scale.titleMedium.lineHeight}
+  fontWeight={material3Language.typography.scale.titleMedium.fontWeight}
+  letterSpacing={material3Language.typography.scale.titleMedium.letterSpacing}
+  fontFamily={material3Language.typography.scale.titleMedium.fontFamily}
+  sampleText="Title Medium"
+/>
+
+<TypeSpecimen
+  name="Title Small"
+  fontSize={material3Language.typography.scale.titleSmall.fontSize}
+  lineHeight={material3Language.typography.scale.titleSmall.lineHeight}
+  fontWeight={material3Language.typography.scale.titleSmall.fontWeight}
+  letterSpacing={material3Language.typography.scale.titleSmall.letterSpacing}
+  fontFamily={material3Language.typography.scale.titleSmall.fontFamily}
+  sampleText="Title Small"
+/>
+
+### Body Styles
+
+Body styles are used for longer passages of text in your app.
+
+<TypeSpecimen
+  name="Body Large"
+  fontSize={material3Language.typography.scale.bodyLarge.fontSize}
+  lineHeight={material3Language.typography.scale.bodyLarge.lineHeight}
+  fontWeight={material3Language.typography.scale.bodyLarge.fontWeight}
+  letterSpacing={material3Language.typography.scale.bodyLarge.letterSpacing}
+  fontFamily={material3Language.typography.scale.bodyLarge.fontFamily}
+  sampleText="The quick brown fox jumps over the lazy dog. Body Large is used for longer passages of text that require good readability."
+/>
+
+<TypeSpecimen
+  name="Body Medium"
+  fontSize={material3Language.typography.scale.bodyMedium.fontSize}
+  lineHeight={material3Language.typography.scale.bodyMedium.lineHeight}
+  fontWeight={material3Language.typography.scale.bodyMedium.fontWeight}
+  letterSpacing={material3Language.typography.scale.bodyMedium.letterSpacing}
+  fontFamily={material3Language.typography.scale.bodyMedium.fontFamily}
+  sampleText="The quick brown fox jumps over the lazy dog. Body Medium is the default body text size, balanced for readability and screen real estate."
+/>
+
+<TypeSpecimen
+  name="Body Small"
+  fontSize={material3Language.typography.scale.bodySmall.fontSize}
+  lineHeight={material3Language.typography.scale.bodySmall.lineHeight}
+  fontWeight={material3Language.typography.scale.bodySmall.fontWeight}
+  letterSpacing={material3Language.typography.scale.bodySmall.letterSpacing}
+  fontFamily={material3Language.typography.scale.bodySmall.fontFamily}
+  sampleText="The quick brown fox jumps over the lazy dog. Body Small is used for captions and supporting text that doesn't require much emphasis."
+/>
+
+### Label Styles
+
+Label styles are for text in components like buttons, tabs, and labels. They're utilitarian and medium-emphasis.
+
+<TypeSpecimen
+  name="Label Large"
+  fontSize={material3Language.typography.scale.labelLarge.fontSize}
+  lineHeight={material3Language.typography.scale.labelLarge.lineHeight}
+  fontWeight={material3Language.typography.scale.labelLarge.fontWeight}
+  letterSpacing={material3Language.typography.scale.labelLarge.letterSpacing}
+  fontFamily={material3Language.typography.scale.labelLarge.fontFamily}
+  sampleText="Label Large"
+/>
+
+<TypeSpecimen
+  name="Label Medium"
+  fontSize={material3Language.typography.scale.labelMedium.fontSize}
+  lineHeight={material3Language.typography.scale.labelMedium.lineHeight}
+  fontWeight={material3Language.typography.scale.labelMedium.fontWeight}
+  letterSpacing={material3Language.typography.scale.labelMedium.letterSpacing}
+  fontFamily={material3Language.typography.scale.labelMedium.fontFamily}
+  sampleText="Label Medium"
+/>
+
+<TypeSpecimen
+  name="Label Small"
+  fontSize={material3Language.typography.scale.labelSmall.fontSize}
+  lineHeight={material3Language.typography.scale.labelSmall.lineHeight}
+  fontWeight={material3Language.typography.scale.labelSmall.fontWeight}
+  letterSpacing={material3Language.typography.scale.labelSmall.letterSpacing}
+  fontFamily={material3Language.typography.scale.labelSmall.fontFamily}
+  sampleText="Label Small"
+/>
+
+---
+
+## Usage Guidelines
+
+### Choosing the Right Style
+
+**Display**: Hero text, marketing headlines, featured numbers
+**Headline**: Page titles, section headers, card titles
+**Title**: List item titles, dialog titles, form section headers
+**Body**: Paragraphs, descriptions, long-form content
+**Label**: Buttons, tabs, chips, form labels, captions
+
+### Responsive Typography
+
+Consider using different type styles at different breakpoints:
+
+- **Mobile**: Prefer smaller display/headline sizes
+- **Tablet**: Use medium sizes for most content
+- **Desktop**: Larger displays can accommodate bigger type
+
+### Accessibility
+
+- Maintain minimum 16px font size for body text
+- Ensure sufficient line height (1.5 for body text)
+- Use proper heading hierarchy (h1 → h2 → h3)
+- Test with browser zoom up to 200%
+
+### Example Usage
+
+```tsx
+import { css } from 'styled-system/css';
+
+const headingStyle = css({
+  textStyle: 'headlineLarge',
+  color: 'onSurface'
+});
+
+const bodyStyle = css({
+  textStyle: 'bodyMedium',
+  color: 'onSurfaceVariant'
+});
+```

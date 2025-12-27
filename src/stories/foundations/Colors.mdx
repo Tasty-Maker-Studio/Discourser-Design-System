@@ -1,0 +1,380 @@
+import { Meta } from '@storybook/blocks';
+import { ColorSwatch, TonalSwatch, SemanticSwatch } from './components/ColorSwatch';
+import { material3Language } from '../../languages/material3.language';
+
+<Meta title="Foundations/Colors" />
+
+# Colors
+
+The Discourser Design System uses Material Design 3's color system, which provides a comprehensive palette of colors organized into tonal palettes and semantic tokens.
+
+## Color Philosophy
+
+Material Design 3 uses a three-tiered color system:
+
+1. **Tonal Palettes**: Base color scales from 0-100, generated from source colors
+2. **Semantic Tokens**: Context-aware color roles that adapt to light/dark themes
+3. **Dynamic Color**: Colors that work harmoniously together across all contexts
+
+## Tonal Palettes
+
+Each palette contains 13 tones (0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 99, 100). Lower numbers are darker, higher numbers are lighter.
+
+### Primary
+
+The primary palette is derived from TastyMakers green (#63A002).
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(13, 1fr)', gap: '2px', marginBottom: '32px' }}>
+  {Object.entries(material3Language.colors.primary).map(([tone, value]) => (
+    <TonalSwatch key={tone} paletteName="primary" tone={Number(tone)} value={value} />
+  ))}
+</div>
+
+### Secondary
+
+Supporting colors that complement the primary palette.
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(13, 1fr)', gap: '2px', marginBottom: '32px' }}>
+  {Object.entries(material3Language.colors.secondary).map(([tone, value]) => (
+    <TonalSwatch key={tone} paletteName="secondary" tone={Number(tone)} value={value} />
+  ))}
+</div>
+
+### Tertiary
+
+Additional accent colors for variety and visual interest.
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(13, 1fr)', gap: '2px', marginBottom: '32px' }}>
+  {Object.entries(material3Language.colors.tertiary).map(([tone, value]) => (
+    <TonalSwatch key={tone} paletteName="tertiary" tone={Number(tone)} value={value} />
+  ))}
+</div>
+
+### Neutral
+
+For backgrounds, surfaces, and other neutral elements.
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(13, 1fr)', gap: '2px', marginBottom: '32px' }}>
+  {Object.entries(material3Language.colors.neutral).map(([tone, value]) => (
+    <TonalSwatch key={tone} paletteName="neutral" tone={Number(tone)} value={value} />
+  ))}
+</div>
+
+### Neutral Variant
+
+Alternative neutral colors with subtle color temperature.
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(13, 1fr)', gap: '2px', marginBottom: '32px' }}>
+  {Object.entries(material3Language.colors.neutralVariant).map(([tone, value]) => (
+    <TonalSwatch key={tone} paletteName="neutralVariant" tone={Number(tone)} value={value} />
+  ))}
+</div>
+
+### Error
+
+For error states, alerts, and destructive actions.
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(13, 1fr)', gap: '2px', marginBottom: '32px' }}>
+  {Object.entries(material3Language.colors.error).map(([tone, value]) => (
+    <TonalSwatch key={tone} paletteName="error" tone={Number(tone)} value={value} />
+  ))}
+</div>
+
+---
+
+## Semantic Tokens
+
+Semantic tokens are context-aware colors that automatically adapt to light and dark themes. **Always use semantic tokens in your components** instead of directly referencing tonal palette values.
+
+### Primary Colors
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '32px' }}>
+  <SemanticSwatch
+    name="primary"
+    lightValue={material3Language.semantic.primary}
+    darkValue={material3Language.semanticDark.primary}
+    description="Primary brand color for key actions and emphasis"
+  />
+  <SemanticSwatch
+    name="onPrimary"
+    lightValue={material3Language.semantic.onPrimary}
+    darkValue={material3Language.semanticDark.onPrimary}
+    description="Text/icons on primary color"
+  />
+  <SemanticSwatch
+    name="primaryContainer"
+    lightValue={material3Language.semantic.primaryContainer}
+    darkValue={material3Language.semanticDark.primaryContainer}
+    description="Container for primary elements"
+  />
+  <SemanticSwatch
+    name="onPrimaryContainer"
+    lightValue={material3Language.semantic.onPrimaryContainer}
+    darkValue={material3Language.semanticDark.onPrimaryContainer}
+    description="Text/icons on primary container"
+  />
+</div>
+
+### Secondary Colors
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '32px' }}>
+  <SemanticSwatch
+    name="secondary"
+    lightValue={material3Language.semantic.secondary}
+    darkValue={material3Language.semanticDark.secondary}
+    description="Secondary actions and less prominent elements"
+  />
+  <SemanticSwatch
+    name="onSecondary"
+    lightValue={material3Language.semantic.onSecondary}
+    darkValue={material3Language.semanticDark.onSecondary}
+    description="Text/icons on secondary color"
+  />
+  <SemanticSwatch
+    name="secondaryContainer"
+    lightValue={material3Language.semantic.secondaryContainer}
+    darkValue={material3Language.semanticDark.secondaryContainer}
+    description="Container for secondary elements"
+  />
+  <SemanticSwatch
+    name="onSecondaryContainer"
+    lightValue={material3Language.semantic.onSecondaryContainer}
+    darkValue={material3Language.semanticDark.onSecondaryContainer}
+    description="Text/icons on secondary container"
+  />
+</div>
+
+### Tertiary Colors
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '32px' }}>
+  <SemanticSwatch
+    name="tertiary"
+    lightValue={material3Language.semantic.tertiary}
+    darkValue={material3Language.semanticDark.tertiary}
+    description="Contrasting accent color for visual interest"
+  />
+  <SemanticSwatch
+    name="onTertiary"
+    lightValue={material3Language.semantic.onTertiary}
+    darkValue={material3Language.semanticDark.onTertiary}
+    description="Text/icons on tertiary color"
+  />
+  <SemanticSwatch
+    name="tertiaryContainer"
+    lightValue={material3Language.semantic.tertiaryContainer}
+    darkValue={material3Language.semanticDark.tertiaryContainer}
+    description="Container for tertiary elements"
+  />
+  <SemanticSwatch
+    name="onTertiaryContainer"
+    lightValue={material3Language.semantic.onTertiaryContainer}
+    darkValue={material3Language.semanticDark.onTertiaryContainer}
+    description="Text/icons on tertiary container"
+  />
+</div>
+
+### Error Colors
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '32px' }}>
+  <SemanticSwatch
+    name="error"
+    lightValue={material3Language.semantic.error}
+    darkValue={material3Language.semanticDark.error}
+    description="Error states and destructive actions"
+  />
+  <SemanticSwatch
+    name="onError"
+    lightValue={material3Language.semantic.onError}
+    darkValue={material3Language.semanticDark.onError}
+    description="Text/icons on error color"
+  />
+  <SemanticSwatch
+    name="errorContainer"
+    lightValue={material3Language.semantic.errorContainer}
+    darkValue={material3Language.semanticDark.errorContainer}
+    description="Container for error messages"
+  />
+  <SemanticSwatch
+    name="onErrorContainer"
+    lightValue={material3Language.semantic.onErrorContainer}
+    darkValue={material3Language.semanticDark.onErrorContainer}
+    description="Text/icons on error container"
+  />
+</div>
+
+### Surface Colors
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '32px' }}>
+  <SemanticSwatch
+    name="surface"
+    lightValue={material3Language.semantic.surface}
+    darkValue={material3Language.semanticDark.surface}
+    description="Base surface color for cards and containers"
+  />
+  <SemanticSwatch
+    name="onSurface"
+    lightValue={material3Language.semantic.onSurface}
+    darkValue={material3Language.semanticDark.onSurface}
+    description="Primary text and icons on surface"
+  />
+  <SemanticSwatch
+    name="surfaceVariant"
+    lightValue={material3Language.semantic.surfaceVariant}
+    darkValue={material3Language.semanticDark.surfaceVariant}
+    description="Alternative surface for variety"
+  />
+  <SemanticSwatch
+    name="onSurfaceVariant"
+    lightValue={material3Language.semantic.onSurfaceVariant}
+    darkValue={material3Language.semanticDark.onSurfaceVariant}
+    description="Text/icons on surface variant"
+  />
+</div>
+
+### Surface Containers
+
+M3 provides 5 surface container levels for creating subtle depth without elevation.
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '32px' }}>
+  <SemanticSwatch
+    name="surfaceContainerLowest"
+    lightValue={material3Language.semantic.surfaceContainerLowest}
+    darkValue={material3Language.semanticDark.surfaceContainerLowest}
+    description="Lowest container level"
+  />
+  <SemanticSwatch
+    name="surfaceContainerLow"
+    lightValue={material3Language.semantic.surfaceContainerLow}
+    darkValue={material3Language.semanticDark.surfaceContainerLow}
+    description="Low container level"
+  />
+  <SemanticSwatch
+    name="surfaceContainer"
+    lightValue={material3Language.semantic.surfaceContainer}
+    darkValue={material3Language.semanticDark.surfaceContainer}
+    description="Default container level"
+  />
+  <SemanticSwatch
+    name="surfaceContainerHigh"
+    lightValue={material3Language.semantic.surfaceContainerHigh}
+    darkValue={material3Language.semanticDark.surfaceContainerHigh}
+    description="High container level"
+  />
+  <SemanticSwatch
+    name="surfaceContainerHighest"
+    lightValue={material3Language.semantic.surfaceContainerHighest}
+    darkValue={material3Language.semanticDark.surfaceContainerHighest}
+    description="Highest container level"
+  />
+</div>
+
+### Outline Colors
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '32px' }}>
+  <SemanticSwatch
+    name="outline"
+    lightValue={material3Language.semantic.outline}
+    darkValue={material3Language.semanticDark.outline}
+    description="Important borders and dividers"
+  />
+  <SemanticSwatch
+    name="outlineVariant"
+    lightValue={material3Language.semantic.outlineVariant}
+    darkValue={material3Language.semanticDark.outlineVariant}
+    description="Decorative borders and dividers"
+  />
+</div>
+
+### Inverse Colors
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '32px' }}>
+  <SemanticSwatch
+    name="inverseSurface"
+    lightValue={material3Language.semantic.inverseSurface}
+    darkValue={material3Language.semanticDark.inverseSurface}
+    description="Inverted surface (e.g., tooltips, snackbars)"
+  />
+  <SemanticSwatch
+    name="inverseOnSurface"
+    lightValue={material3Language.semantic.inverseOnSurface}
+    darkValue={material3Language.semanticDark.inverseOnSurface}
+    description="Text on inverse surface"
+  />
+  <SemanticSwatch
+    name="inversePrimary"
+    lightValue={material3Language.semantic.inversePrimary}
+    darkValue={material3Language.semanticDark.inversePrimary}
+    description="Primary color on inverse surface"
+  />
+</div>
+
+### Utility Colors
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '32px' }}>
+  <SemanticSwatch
+    name="background"
+    lightValue={material3Language.semantic.background}
+    darkValue={material3Language.semanticDark.background}
+    description="Page background color"
+  />
+  <SemanticSwatch
+    name="onBackground"
+    lightValue={material3Language.semantic.onBackground}
+    darkValue={material3Language.semanticDark.onBackground}
+    description="Text/icons on background"
+  />
+  <SemanticSwatch
+    name="scrim"
+    lightValue={material3Language.semantic.scrim}
+    darkValue={material3Language.semanticDark.scrim}
+    description="Overlay for modals and dialogs"
+  />
+  <SemanticSwatch
+    name="shadow"
+    lightValue={material3Language.semantic.shadow}
+    darkValue={material3Language.semanticDark.shadow}
+    description="Shadow color for elevation"
+  />
+</div>
+
+---
+
+## Usage Guidelines
+
+### When to Use Semantic Tokens vs Tonal Palettes
+
+**✅ Always use semantic tokens** for:
+- Component backgrounds and text
+- Interactive states (hover, focus, disabled)
+- Theme-aware UI elements
+- Any production code
+
+**⚠️ Only use tonal palettes** when:
+- Creating new semantic tokens
+- Generating custom color schemes
+- Design exploration and prototyping
+
+### Example Usage in Components
+
+```tsx
+import { css } from 'styled-system/css';
+
+// ✅ Good: Using semantic tokens
+const buttonStyle = css({
+  bg: 'primary',
+  color: 'onPrimary',
+  _hover: {
+    bg: 'primaryContainer'
+  }
+});
+
+// ❌ Bad: Using tonal palette directly
+const buttonStyle = css({
+  bg: '#4C662B', // Hard-coded color
+  color: '#FFFFFF'
+});
+```
+
+### Accessibility
+
+All semantic token pairings (e.g., `primary` with `onPrimary`) meet WCAG AA contrast requirements. When creating custom combinations, always verify contrast ratios.

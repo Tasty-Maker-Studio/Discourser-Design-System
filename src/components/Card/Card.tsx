@@ -1,34 +1,32 @@
-import { css } from 'styled-system/css';
-import { HTMLAttributes, ReactNode } from 'react';
+import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
+import { card } from 'styled-system/recipes';
+import { cn } from '../../utils/cn';
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
-  title?: string;
   children: ReactNode;
+  /**
+   * Visual style variant
+   * @default "filled"
+   */
+  variant?: 'filled' | 'outlined' | 'elevated';
+  /**
+   * When true, the card becomes clickable with hover/active states
+   */
+  interactive?: boolean;
 }
 
-export const Card = ({ title, children, className, ...props }: CardProps) => {
-  const cardStyles = css({
-    backgroundColor: 'white',
-    borderRadius: 'lg',
-    padding: 'lg',
-    boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
-    transition: 'all 0.2s',
-    _hover: {
-      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-    },
-  });
+export const Card = forwardRef<HTMLDivElement, CardProps>(
+  ({ children, variant, interactive, className, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn(card({ variant, interactive }), className)}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  }
+);
 
-  const titleStyles = css({
-    fontSize: 'xl',
-    fontWeight: 'bold',
-    marginBottom: 'md',
-    color: 'gray.800',
-  });
-
-  return (
-    <div className={`${cardStyles} ${className || ''}`} {...props}>
-      {title && <h3 className={titleStyles}>{title}</h3>}
-      {children}
-    </div>
-  );
-};
+Card.displayName = 'Card';

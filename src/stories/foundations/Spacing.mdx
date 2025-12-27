@@ -1,0 +1,223 @@
+import { Meta } from '@storybook/blocks';
+import { SpacingBox } from './components/SpacingBox';
+import { material3Language } from '../../languages/material3.language';
+
+<Meta title="Foundations/Spacing" />
+
+# Spacing
+
+The Discourser Design System uses a consistent spacing scale based on an 8-point grid system. This creates visual rhythm and helps maintain consistent layouts across all components and screens.
+
+## Spacing Scale
+
+Our spacing scale ranges from `none` (0px) to `xxxl` (64px), with incremental steps that follow a logical progression.
+
+<div style={{ marginTop: '32px', marginBottom: '48px' }}>
+  <SpacingBox name="none" value={material3Language.spacing.none} />
+  <SpacingBox name="xxs" value={material3Language.spacing.xxs} />
+  <SpacingBox name="xs" value={material3Language.spacing.xs} />
+  <SpacingBox name="sm" value={material3Language.spacing.sm} />
+  <SpacingBox name="md" value={material3Language.spacing.md} />
+  <SpacingBox name="lg" value={material3Language.spacing.lg} />
+  <SpacingBox name="xl" value={material3Language.spacing.xl} />
+  <SpacingBox name="xxl" value={material3Language.spacing.xxl} />
+  <SpacingBox name="xxxl" value={material3Language.spacing.xxxl} />
+</div>
+
+---
+
+## Spacing Reference Table
+
+| Token | Value | Pixels | Use Case |
+|-------|-------|--------|----------|
+| `none` | {material3Language.spacing.none} | 0px | Reset spacing, remove gaps |
+| `xxs` | {material3Language.spacing.xxs} | 2px | Minimal gaps, fine-tuning |
+| `xs` | {material3Language.spacing.xs} | 4px | Tight spacing within components |
+| `sm` | {material3Language.spacing.sm} | 8px | Component internal spacing |
+| `md` | {material3Language.spacing.md} | 16px | Default spacing, component gaps |
+| `lg` | {material3Language.spacing.lg} | 24px | Section spacing, card padding |
+| `xl` | {material3Language.spacing.xl} | 32px | Large section breaks |
+| `xxl` | {material3Language.spacing.xxl} | 48px | Major section dividers |
+| `xxxl` | {material3Language.spacing.xxxl} | 64px | Page-level spacing |
+
+---
+
+## Usage Guidelines
+
+### Common Patterns
+
+**Component Internal Spacing**
+- Icon-to-text gap: `xs` (4px) or `sm` (8px)
+- Button padding: `sm` (8px) vertical, `md` (16px) horizontal
+- Input padding: `md` (16px)
+
+**Component Gaps**
+- Between related items: `sm` (8px) or `md` (16px)
+- Between form fields: `md` (16px) or `lg` (24px)
+- Between sections: `lg` (24px) to `xxl` (48px)
+
+**Layout Spacing**
+- Card padding: `lg` (24px) or `xl` (32px)
+- Section margins: `xl` (32px) or `xxl` (48px)
+- Page margins: `xxl` (48px) or `xxxl` (64px)
+
+### The 8-Point Grid
+
+Most of our spacing values are multiples of 8px, which:
+- Creates visual consistency
+- Simplifies spacing decisions
+- Works well with common screen sizes
+- Aligns with Material Design principles
+
+The exceptions (`xxs: 2px`) are provided for fine-tuning and edge cases.
+
+### Responsive Spacing
+
+Consider adjusting spacing at different breakpoints:
+
+```tsx
+import { css } from 'styled-system/css';
+
+const containerStyle = css({
+  padding: {
+    base: 'md',  // 16px on mobile
+    md: 'lg',    // 24px on tablet
+    lg: 'xl'     // 32px on desktop
+  }
+});
+```
+
+### Negative Space
+
+Empty space is just as important as filled space. Use larger spacing values to:
+- Create visual breathing room
+- Establish content hierarchy
+- Guide user attention
+- Improve scannability
+
+---
+
+## Example Usage
+
+### Padding
+
+```tsx
+import { css } from 'styled-system/css';
+
+// Card padding
+const cardStyle = css({
+  padding: 'lg'  // 24px all sides
+});
+
+// Asymmetric padding
+const headerStyle = css({
+  paddingX: 'md',  // 16px horizontal
+  paddingY: 'sm'   // 8px vertical
+});
+```
+
+### Margins
+
+```tsx
+import { css } from 'styled-system/css';
+
+// Section spacing
+const sectionStyle = css({
+  marginBottom: 'xxl'  // 48px bottom margin
+});
+
+// Component gap
+const stackStyle = css({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 'md'  // 16px between children
+});
+```
+
+### Gap (Flexbox/Grid)
+
+```tsx
+import { css } from 'styled-system/css';
+
+// Grid layout
+const gridStyle = css({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(3, 1fr)',
+  gap: 'lg'  // 24px between grid items
+});
+
+// Flex layout
+const flexStyle = css({
+  display: 'flex',
+  gap: 'sm'  // 8px between flex items
+});
+```
+
+---
+
+## Visual Examples
+
+### Compact Layout (sm spacing)
+
+<div style={{
+  display: 'flex',
+  flexDirection: 'column',
+  gap: material3Language.spacing.sm,
+  padding: material3Language.spacing.md,
+  backgroundColor: '#f5f5f5',
+  borderRadius: '8px',
+  marginBottom: '24px'
+}}>
+  <div style={{ padding: '12px', backgroundColor: '#4C662B', color: 'white', borderRadius: '4px' }}>
+    Item 1 (gap: 8px)
+  </div>
+  <div style={{ padding: '12px', backgroundColor: '#4C662B', color: 'white', borderRadius: '4px' }}>
+    Item 2
+  </div>
+  <div style={{ padding: '12px', backgroundColor: '#4C662B', color: 'white', borderRadius: '4px' }}>
+    Item 3
+  </div>
+</div>
+
+### Comfortable Layout (md spacing)
+
+<div style={{
+  display: 'flex',
+  flexDirection: 'column',
+  gap: material3Language.spacing.md,
+  padding: material3Language.spacing.lg,
+  backgroundColor: '#f5f5f5',
+  borderRadius: '8px',
+  marginBottom: '24px'
+}}>
+  <div style={{ padding: '16px', backgroundColor: '#4C662B', color: 'white', borderRadius: '4px' }}>
+    Item 1 (gap: 16px)
+  </div>
+  <div style={{ padding: '16px', backgroundColor: '#4C662B', color: 'white', borderRadius: '4px' }}>
+    Item 2
+  </div>
+  <div style={{ padding: '16px', backgroundColor: '#4C662B', color: 'white', borderRadius: '4px' }}>
+    Item 3
+  </div>
+</div>
+
+### Spacious Layout (lg spacing)
+
+<div style={{
+  display: 'flex',
+  flexDirection: 'column',
+  gap: material3Language.spacing.lg,
+  padding: material3Language.spacing.xl,
+  backgroundColor: '#f5f5f5',
+  borderRadius: '8px'
+}}>
+  <div style={{ padding: '20px', backgroundColor: '#4C662B', color: 'white', borderRadius: '4px' }}>
+    Item 1 (gap: 24px)
+  </div>
+  <div style={{ padding: '20px', backgroundColor: '#4C662B', color: 'white', borderRadius: '4px' }}>
+    Item 2
+  </div>
+  <div style={{ padding: '20px', backgroundColor: '#4C662B', color: 'white', borderRadius: '4px' }}>
+    Item 3
+  </div>
+</div>

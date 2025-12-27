@@ -1,5 +1,5 @@
 import type { Preview } from '@storybook/react';
-import '../styled-system/styles.css';
+import '../src/global.css';
 
 const preview: Preview = {
   parameters: {
@@ -7,8 +7,15 @@ const preview: Preview = {
     controls: {
       matchers: {
         color: /(background|color)$/i,
-        date: /Date$/,
+        date: /Date$/i,
       },
+    },
+    backgrounds: {
+      default: 'surface',
+      values: [
+        { name: 'surface', value: '#F9FAEF' },
+        { name: 'dark', value: '#12140E' },
+      ],
     },
   },
 };

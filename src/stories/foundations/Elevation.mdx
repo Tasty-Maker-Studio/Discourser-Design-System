@@ -1,0 +1,292 @@
+import { Meta } from '@storybook/blocks';
+import { ElevationGrid } from './components/ElevationCard';
+import { material3Language } from '../../languages/material3.language';
+
+<Meta title="Foundations/Elevation" />
+
+# Elevation
+
+Elevation in Material Design 3 creates depth and hierarchy through the use of shadows. The Discourser Design System provides 6 elevation levels, from no elevation to the highest prominence.
+
+## Elevation Scale
+
+<ElevationGrid elevations={material3Language.elevation.levels} />
+
+---
+
+## Elevation Reference
+
+| Level | Shadow Value | Use Case |
+|-------|--------------|----------|
+| **level0** | none | Flat elements, no elevation needed |
+| **level1** | `0px 1px 2px rgba(0,0,0,0.3), 0px 1px 3px 1px rgba(0,0,0,0.15)` | Cards at rest, contained buttons |
+| **level2** | `0px 1px 2px rgba(0,0,0,0.3), 0px 2px 6px 2px rgba(0,0,0,0.15)` | Cards on hover, raised buttons |
+| **level3** | `0px 4px 8px 3px rgba(0,0,0,0.15), 0px 1px 3px rgba(0,0,0,0.3)` | Dialogs, dropdowns, popovers |
+| **level4** | `0px 6px 10px 4px rgba(0,0,0,0.15), 0px 2px 3px rgba(0,0,0,0.3)` | Navigation drawer, modal sheets |
+| **level5** | `0px 8px 12px 6px rgba(0,0,0,0.15), 0px 4px 4px rgba(0,0,0,0.3)` | Floating action buttons, tooltips |
+
+---
+
+## Usage Guidelines
+
+### Component Elevation Hierarchy
+
+Material Design 3 uses elevation to communicate importance and interactivity:
+
+**Level 0 (No Elevation)**
+- Background surfaces
+- Flat buttons
+- Content that shouldn't float
+
+**Level 1 (Subtle)**
+- Cards in their default state
+- Contained buttons
+- Search bars
+- List items with separation
+
+**Level 2 (Moderate)**
+- Cards on hover
+- Raised buttons
+- Chips
+- App bars
+
+**Level 3 (Prominent)**
+- Dialogs and modals
+- Dropdown menus
+- Date pickers
+- Autocomplete suggestions
+
+**Level 4 (High)**
+- Navigation drawers
+- Bottom sheets
+- Side sheets
+- Large modals
+
+**Level 5 (Highest)**
+- Floating Action Buttons (FAB)
+- Tooltips
+- Snackbars
+- Banner notifications
+
+### Interactive States
+
+Use elevation changes to indicate interactivity:
+
+```tsx
+import { css } from 'styled-system/css';
+
+const interactiveCardStyle = css({
+  boxShadow: 'level1',
+  transition: 'box-shadow 200ms',
+  _hover: {
+    boxShadow: 'level2'
+  }
+});
+```
+
+### Accessibility Considerations
+
+**Don't rely on elevation alone** to convey meaning:
+- Elevation is visual only
+- Use proper semantic HTML
+- Provide alternative cues (borders, colors, icons)
+- Consider users with low vision or color blindness
+
+### Dark Mode
+
+Elevation works differently in dark themes:
+- In light themes, shadows create depth
+- In dark themes, surfaces also get lighter tints with higher elevation
+- This is handled automatically by Material Design 3
+
+---
+
+## Visual Comparison
+
+### Cards with Different Elevations
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+  gap: '24px',
+  padding: '32px',
+  backgroundColor: '#f5f5f5',
+  borderRadius: '8px',
+  marginBottom: '32px'
+}}>
+  <div style={{
+    padding: '24px',
+    backgroundColor: '#fff',
+    borderRadius: '12px',
+    boxShadow: material3Language.elevation.levels.level0,
+    textAlign: 'center'
+  }}>
+    <div style={{ fontWeight: '600', marginBottom: '8px' }}>Level 0</div>
+    <div style={{ fontSize: '12px', color: '#666' }}>Flat surface</div>
+  </div>
+
+  <div style={{
+    padding: '24px',
+    backgroundColor: '#fff',
+    borderRadius: '12px',
+    boxShadow: material3Language.elevation.levels.level1,
+    textAlign: 'center'
+  }}>
+    <div style={{ fontWeight: '600', marginBottom: '8px' }}>Level 1</div>
+    <div style={{ fontSize: '12px', color: '#666' }}>Subtle depth</div>
+  </div>
+
+  <div style={{
+    padding: '24px',
+    backgroundColor: '#fff',
+    borderRadius: '12px',
+    boxShadow: material3Language.elevation.levels.level2,
+    textAlign: 'center'
+  }}>
+    <div style={{ fontWeight: '600', marginBottom: '8px' }}>Level 2</div>
+    <div style={{ fontSize: '12px', color: '#666' }}>Moderate depth</div>
+  </div>
+</div>
+
+### Floating Elements
+
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+  gap: '24px',
+  padding: '32px',
+  backgroundColor: '#f5f5f5',
+  borderRadius: '8px'
+}}>
+  <div style={{
+    padding: '24px',
+    backgroundColor: '#fff',
+    borderRadius: '12px',
+    boxShadow: material3Language.elevation.levels.level3,
+    textAlign: 'center'
+  }}>
+    <div style={{ fontWeight: '600', marginBottom: '8px' }}>Level 3</div>
+    <div style={{ fontSize: '12px', color: '#666' }}>Prominent float</div>
+  </div>
+
+  <div style={{
+    padding: '24px',
+    backgroundColor: '#fff',
+    borderRadius: '12px',
+    boxShadow: material3Language.elevation.levels.level4,
+    textAlign: 'center'
+  }}>
+    <div style={{ fontWeight: '600', marginBottom: '8px' }}>Level 4</div>
+    <div style={{ fontSize: '12px', color: '#666' }}>High elevation</div>
+  </div>
+
+  <div style={{
+    padding: '24px',
+    backgroundColor: '#fff',
+    borderRadius: '12px',
+    boxShadow: material3Language.elevation.levels.level5,
+    textAlign: 'center'
+  }}>
+    <div style={{ fontWeight: '600', marginBottom: '8px' }}>Level 5</div>
+    <div style={{ fontSize: '12px', color: '#666' }}>Highest elevation</div>
+  </div>
+</div>
+
+---
+
+## Example Usage
+
+### Basic Elevation
+
+```tsx
+import { css } from 'styled-system/css';
+
+const cardStyle = css({
+  boxShadow: 'level1',
+  borderRadius: 'medium',
+  padding: 'lg'
+});
+```
+
+### Interactive Elevation
+
+```tsx
+import { css } from 'styled-system/css';
+
+const elevatedButtonStyle = css({
+  boxShadow: 'level2',
+  transition: 'all',
+  transitionDuration: 'fast',
+  _hover: {
+    boxShadow: 'level3'
+  },
+  _active: {
+    boxShadow: 'level1'
+  }
+});
+```
+
+### Modal Overlay
+
+```tsx
+import { css } from 'styled-system/css';
+
+const modalStyle = css({
+  position: 'fixed',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  boxShadow: 'level3',
+  borderRadius: 'large',
+  backgroundColor: 'surface',
+  padding: 'xl'
+});
+```
+
+---
+
+## Best Practices
+
+### Do's ✅
+
+- Use elevation consistently across similar components
+- Animate elevation changes for smooth transitions
+- Reserve higher elevations for truly important elements
+- Test elevation in both light and dark themes
+- Consider mobile devices where shadows may be subtle
+
+### Don'ts ❌
+
+- Don't use too many different elevation levels on one screen
+- Don't stack elements with the same elevation
+- Don't use elevation as the only indicator of interactivity
+- Don't apply elevation to every element
+- Don't forget to transition elevation changes
+
+### Performance
+
+Shadows can impact rendering performance:
+- Use CSS box-shadow (not filters) for best performance
+- Consider reducing elevation complexity on mobile
+- Avoid animating shadows on many elements simultaneously
+- Test on low-end devices
+
+---
+
+## Surface Containers vs Elevation
+
+Material Design 3 provides two ways to create depth:
+
+**Elevation (Shadows)**
+- Creates visual depth through shadows
+- Best for floating elements
+- More prominent visual effect
+- Works in both light and dark themes
+
+**Surface Containers (Tonal Levels)**
+- Creates depth through color tints
+- Best for stacked surfaces
+- Subtle, material-like layering
+- See the Colors documentation for surface container tokens
+
+Use surface containers for general layering, and elevation for interactive or floating elements.

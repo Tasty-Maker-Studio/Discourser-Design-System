@@ -1,63 +1,62 @@
-import { css } from 'styled-system/css';
-import { InputHTMLAttributes } from 'react';
+import { forwardRef, type InputHTMLAttributes } from 'react';
+import { Field } from '@ark-ui/react/field';
+import { input } from 'styled-system/recipes';
+import { cn } from '../../utils/cn';
 
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+  /**
+   * Label text for the input
+   */
   label?: string;
-  error?: string;
+  /**
+   * Helper text to display below the input
+   */
+  helperText?: string;
+  /**
+   * Error message to display (also sets error state)
+   */
+  errorText?: string;
+  /**
+   * Visual style variant
+   * @default "outlined"
+   */
+  variant?: 'outlined' | 'filled';
+  /**
+   * Size variant
+   * @default "md"
+   */
+  size?: 'sm' | 'md';
+  /**
+   * Visual state
+   */
+  state?: 'error';
 }
 
-export const Input = ({ label, error, className, ...props }: InputProps) => {
-  const containerStyles = css({
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 'xs',
-  });
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+  (
+    { label, helperText, errorText, variant, size, state, className, ...props },
+    ref
+  ) => {
+    const hasError = !!errorText || state === 'error';
 
-  const labelStyles = css({
-    fontSize: 'sm',
-    fontWeight: 'medium',
-    color: 'gray.700',
-  });
+    return (
+      <Field.Root invalid={hasError}>
+        {label && <Field.Label>{label}</Field.Label>}
+        <Field.Input
+          ref={ref}
+          className={cn(
+            input({ variant, size, state: hasError ? 'error' : state }),
+            className
+          )}
+          {...props}
+        />
+        {helperText && !hasError && (
+          <Field.HelperText>{helperText}</Field.HelperText>
+        )}
+        {errorText && <Field.ErrorText>{errorText}</Field.ErrorText>}
+      </Field.Root>
+    );
+  }
+);
 
-  const inputStyles = css({
-    padding: 'sm md',
-    border: '1px solid',
-    borderColor: 'gray.300',
-    borderRadius: 'md',
-    fontSize: 'md',
-    transition: 'all 0.2s',
-    _focus: {
-      outline: 'none',
-      borderColor: 'primary.500',
-      boxShadow: '0 0 0 3px rgba(59, 130, 246, 0.1)',
-    },
-    _disabled: {
-      backgroundColor: 'gray.100',
-      cursor: 'not-allowed',
-    },
-  });
-
-  const errorStyles = css({
-    fontSize: 'sm',
-    color: 'red.600',
-  });
-
-  const errorInputStyles = css({
-    borderColor: 'red.500',
-    _focus: {
-      borderColor: 'red.500',
-      boxShadow: '0 0 0 3px rgba(239, 68, 68, 0.1)',
-    },
-  });
-
-  return (
-    <div className={containerStyles}>
-      {label && <label className={labelStyles}>{label}</label>}
-      <input
-        className={`${inputStyles} ${error ? errorInputStyles : ''} ${className || ''}`}
-        {...props}
-      />
-      {error && <span className={errorStyles}>{error}</span>}
-    </div>
-  );
-};
+Input.displayName = 'Input';

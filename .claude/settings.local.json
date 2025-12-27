@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(timeout 10 pnpm dev:*)",
+      "Bash(mkdir:*)",
+      "Bash(pnpm build:panda:*)",
+      "Bash(pnpm dev)",
+      "Bash(lsof:*)",
+      "Bash(xargs kill:*)",
+      "mcp__chrome-devtools__list_pages",
+      "mcp__chrome-devtools__navigate_page",
+      "mcp__chrome-devtools__take_screenshot",
+      "mcp__chrome-devtools__take_snapshot",
+      "mcp__chrome-devtools__click",
+      "mcp__chrome-devtools__evaluate_script",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm test:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm typecheck:*)",
+      "Bash(pnpm pack:*)",
+      "Bash(pnpm remove:*)",
+      "Bash(pnpm build:lib:*)",
+      "Bash(find:*)",
+      "Bash(npm --version:*)",
+      "Bash(npm whoami:*)",
+      "Bash(npm access:*)",
+      "Bash(npm org:*)",
+      "Bash(pnpm changeset:*)"
+    ]
+  }
+}
