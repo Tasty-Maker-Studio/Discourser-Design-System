@@ -26,7 +26,9 @@
       "Bash(npm access:*)",
       "Bash(npm org:*)",
       "Bash(pnpm changeset:*)",
-      "Bash(pnpm lint:*)"
+      "Bash(pnpm lint:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }
