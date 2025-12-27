@@ -41,8 +41,12 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Check npm version
-        run: npm --version
+      - name: Check npm version and OIDC environment
+        run: |
+          npm --version
+          echo "Checking OIDC environment variables..."
+          echo "ACTIONS_ID_TOKEN_REQUEST_URL is set: ${{ env.ACTIONS_ID_TOKEN_REQUEST_URL != '' }}"
+          echo "ACTIONS_ID_TOKEN_REQUEST_TOKEN is set: ${{ env.ACTIONS_ID_TOKEN_REQUEST_TOKEN != '' }}"
 
       - name: Create Release Pull Request or Publish
         id: changesets
@@ -75,7 +79,7 @@ jobs:
 
       - name: Publish to npm with OIDC
         if: steps.check-publish.outputs.should_publish == 'true'
-        run: npm publish --access public
+        run: npm publish --provenance --access public
 
       - name: Create Git Tag
         if: steps.check-publish.outputs.should_publish == 'true'
