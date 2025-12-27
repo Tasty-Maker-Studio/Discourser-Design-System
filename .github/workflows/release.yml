@@ -11,6 +11,7 @@ concurrency:
 permissions:
   contents: write
   pull-requests: write
+  id-token: write  # Required for OIDC/Trusted Publishing
 
 jobs:
   release:
@@ -27,10 +28,10 @@ jobs:
         with:
           version: 9
 
-      - name: Setup Node.js
+      - name: Setup Node.js 24 (required for npm 11.5+ OIDC)
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
 
@@ -39,6 +40,9 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+      - name: Configure npm for Trusted Publishing (OIDC)
+        run: npm config set //registry.npmjs.org/:_authToken ''
 
       - name: Create Release Pull Request or Publish
         id: changesets
@@ -50,7 +54,6 @@ jobs:
           title: "chore: version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create Git Tag
         if: steps.changesets.outputs.published == 'true'
