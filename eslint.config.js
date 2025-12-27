@@ -17,6 +17,19 @@ export default [
           jsx: true,
         },
       },
+      globals: {
+        // Browser globals
+        document: 'readonly',
+        window: 'readonly',
+        alert: 'readonly',
+        console: 'readonly',
+        // DOM types
+        HTMLElement: 'readonly',
+        HTMLButtonElement: 'readonly',
+        HTMLDivElement: 'readonly',
+        HTMLInputElement: 'readonly',
+        Element: 'readonly',
+      },
     },
     plugins: {
       '@typescript-eslint': typescript,
@@ -29,6 +42,8 @@ export default [
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-empty-object-type': 'off',
     },
     settings: {
       react: {

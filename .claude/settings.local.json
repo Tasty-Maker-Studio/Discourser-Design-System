@@ -25,7 +25,8 @@
       "Bash(npm whoami:*)",
       "Bash(npm access:*)",
       "Bash(npm org:*)",
-      "Bash(pnpm changeset:*)"
+      "Bash(pnpm changeset:*)",
+      "Bash(pnpm lint:*)"
     ]
   }
 }
