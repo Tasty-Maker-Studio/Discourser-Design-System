@@ -1,5 +1,11 @@
 # @discourser/design-system
 
+## 0.1.7
+
+### Patch Changes
+
+- [#13](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/13) [`d610805`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/d6108055ddb43acc2f42e9ddce308caac3e6bc68) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Republish to ensure packaging fix reaches npm (0.1.4 was published before fix was merged)
+
 ## 0.1.6
 
 ### Patch Changes
