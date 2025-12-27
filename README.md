@@ -179,7 +179,7 @@ pnpm test --ui     # Open Vitest UI
 
 | Command | Description |
 |---------|-------------|
-| `pnpm dev` | Start Storybook on port 6006 |
+| `pnpm dev` | Start Storybook on port 6006 
 | `pnpm build` | Build library (Panda + tsup) |
 | `pnpm build:panda` | Generate styled-system |
 | `pnpm build:lib` | Build library only |
