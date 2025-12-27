@@ -191,16 +191,95 @@ pnpm test --ui     # Open Vitest UI
 
 ## 🤝 Contributing
 
-See [.github/README.md](.github/README.md) for CI/CD workflow documentation.
+### Development Workflow
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes
-4. Run tests: `pnpm test --run`
-5. Run type check: `pnpm typecheck`
-6. Commit: `git commit -m 'Add amazing feature'`
-7. Push: `git push origin feature/amazing-feature`
-8. Open a Pull Request
+**⚠️ IMPORTANT: We use Changesets for version management. Never manually edit the version in `package.json`.**
+
+#### For Team Members (Write Access)
+
+1. **Create a feature branch from `main`:**
+   ```bash
+   git checkout main
+   git pull
+   git checkout -b feature/my-feature  # or fix/bug-name, docs/readme-update
+   ```
+
+2. **Make your changes and test:**
+   ```bash
+   pnpm test --run      # Run tests
+   pnpm typecheck       # Type check
+   pnpm lint            # Lint code
+   pnpm build           # Build package
+   ```
+
+3. **Create a changeset** (required for any code changes):
+   ```bash
+   pnpm changeset
+   # Select change type:
+   # - patch: Bug fixes (0.1.2 → 0.1.3)
+   # - minor: New features (0.1.2 → 0.2.0)
+   # - major: Breaking changes (0.1.2 → 1.0.0)
+   # Write a brief summary of your changes
+   ```
+
+4. **Commit and push:**
+   ```bash
+   git add .
+   git commit -m "feat: add amazing feature"
+   git push -u origin feature/my-feature
+   ```
+
+5. **Open a Pull Request to `main`:**
+   - CI will run automatically (lint, test, typecheck, build)
+   - Address any CI failures
+   - Wait for review (if required)
+
+6. **After your PR is merged:**
+   - Changesets bot creates/updates a "Version Packages" PR automatically
+   - When "Version Packages" PR is merged → package publishes to npm automatically via OIDC
+
+#### For External Contributors (No Write Access)
+
+1. **Fork the repository** on GitHub
+2. **Clone your fork:**
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/Discourser-Design-System.git
+   ```
+
+3. **Follow steps 1-5 above** (feature branch, changeset, commit)
+4. **Open a Pull Request** from your fork to our `main` branch
+5. **Wait for maintainer review** - we'll review and merge if approved
+
+### Branch Protection
+
+- ✅ `main` is protected - all changes require Pull Requests
+- ✅ CI must pass before merging (lint, test, typecheck, build)
+- ✅ Only maintainers can merge to `main`
+- ✅ Releases only happen from `main` via automated workflow
+
+### Release Process (Automated)
+
+**You don't manually publish!** Our CI/CD handles it:
+
+1. **Changesets accumulate** - Multiple PRs can add changesets
+2. **"Version Packages" PR** - Created automatically when changesets exist
+3. **Review changelog** - Check the auto-generated CHANGELOG.md
+4. **Merge "Version Packages" PR** - Triggers automatic npm publish via OIDC
+5. **Published!** - Package is live on npm with provenance
+
+### What NOT to Do
+
+❌ Don't manually edit version in `package.json` - use `pnpm changeset`
+❌ Don't push directly to `main` - use Pull Requests
+❌ Don't merge without CI passing - wait for checks
+❌ Don't skip changesets - required for tracking changes
+❌ Don't manually run `npm publish` - CI handles it
+
+### Questions?
+
+- See [`.claude/skills/npm-oidc-publishing/SKILL.md`](.claude/skills/npm-oidc-publishing/SKILL.md) for OIDC setup details
+- See [.github/README.md](.github/README.md) for CI/CD workflow documentation
+- Ask in Discussions or open an Issue
 
 ## 📄 License
 
