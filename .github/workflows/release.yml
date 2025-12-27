@@ -11,7 +11,6 @@ concurrency:
 permissions:
   contents: write
   pull-requests: write
-  id-token: write  # Required for npm Trusted Publishing (OIDC)
 
 jobs:
   release:
@@ -51,7 +50,7 @@ jobs:
           title: "chore: version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # No NPM_TOKEN needed - using Trusted Publishing (OIDC)
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create Git Tag
         if: steps.changesets.outputs.published == 'true'
