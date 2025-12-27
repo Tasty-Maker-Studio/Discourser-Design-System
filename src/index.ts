@@ -1,4 +1,5 @@
 // Components
+// Pipeline validation: Testing automated release workflow
 export * from './components';
 
 // Recipes (for direct usage)
