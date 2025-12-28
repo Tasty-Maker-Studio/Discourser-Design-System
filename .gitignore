@@ -35,3 +35,6 @@ coverage/
 
 # Storybook
 storybook-static/
+
+# Generated Storybook documentation
+stories/documentation/

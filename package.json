@@ -51,11 +51,11 @@
     "styled-system"
   ],
   "scripts": {
-    "dev": "storybook dev -p 6006",
+    "dev": "pnpm docs:generate && storybook dev -p 6006",
     "build": "pnpm build:panda && pnpm build:lib",
     "build:panda": "panda codegen",
     "build:lib": "tsup",
-    "build:storybook": "storybook build",
+    "build:storybook": "pnpm docs:generate && storybook build",
     "prepare": "panda codegen",
     "lint": "eslint src --ext .ts,.tsx",
     "test": "vitest",
@@ -63,6 +63,7 @@
     "tokens:generate": "tsx scripts/generate-palette.ts",
     "tokens:sync": "tsx scripts/sync-tokens.ts",
     "tokens:full": "pnpm tokens:generate && pnpm build:panda",
+    "docs:generate": "tsx scripts/generate-storybook-docs.ts",
     "typecheck": "tsc --noEmit",
     "changeset": "changeset",
     "version": "changeset version",
