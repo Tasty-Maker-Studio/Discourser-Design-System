@@ -1,6 +1,7 @@
 'use client'
 import { Portal } from '@ark-ui/react/portal'
 import { Tooltip as ArkTooltip } from '@ark-ui/react/tooltip'
+import type React from 'react'
 import { type ComponentProps, forwardRef } from 'react'
 import { createStyleContext } from 'styled-system/jsx'
 import { tooltip } from 'styled-system/recipes'

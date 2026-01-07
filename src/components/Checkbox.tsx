@@ -1,6 +1,6 @@
 'use client'
 import { Checkbox, useCheckboxContext } from '@ark-ui/react/checkbox'
-import { type ComponentProps, forwardRef } from 'react'
+import { type ComponentProps, type ComponentPropsWithRef, forwardRef } from 'react'
 import { createStyleContext, styled } from 'styled-system/jsx'
 import { checkbox } from 'styled-system/recipes'
 import type { HTMLStyledProps } from 'styled-system/types'
@@ -22,7 +22,7 @@ export {
   CheckboxGroupProvider as GroupProvider,
 } from '@ark-ui/react/checkbox'
 
-export const Indicator = forwardRef<SVGSVGElement, HTMLStyledProps<'svg'>>(
+export const Indicator = forwardRef<HTMLElement, HTMLStyledProps<'svg'> & ComponentPropsWithRef<'svg'>>(
   function Indicator(props, ref) {
     const { indeterminate, checked } = useCheckboxContext()
 

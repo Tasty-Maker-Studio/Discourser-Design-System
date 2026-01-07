@@ -1,6 +1,7 @@
 'use client'
 import { ark } from '@ark-ui/react/factory'
 import { createContext, mergeProps } from '@ark-ui/react/utils'
+import type React from 'react'
 import { type ComponentProps, forwardRef, useMemo } from 'react'
 import { styled } from 'styled-system/jsx'
 import { type ButtonVariantProps, button } from 'styled-system/recipes'

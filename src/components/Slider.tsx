@@ -3,11 +3,8 @@ import { ark } from '@ark-ui/react/factory'
 import { Slider, useSliderContext } from '@ark-ui/react/slider'
 import type React from 'react'
 import { type ComponentProps, forwardRef, createContext, useContext } from 'react'
-import { createStyleContext } from 'styled-system/jsx'
 import { slider } from 'styled-system/recipes'
 import type { RecipeVariantProps } from 'styled-system/types/recipe'
-
-const { withProvider, withContext } = createStyleContext(slider)
 
 // Create StyleContext for child components
 type SliderVariantProps = RecipeVariantProps<typeof slider>
@@ -15,7 +12,7 @@ const StyleContextInternal = createContext<ReturnType<typeof slider> | null>(nul
 
 // Custom Root component that applies Panda styles while passing all props to Ark UI
 export const Root = forwardRef<HTMLDivElement, ComponentProps<typeof Slider.Root> & SliderVariantProps & { colorPalette?: string }>(
-  (props, ref) => {
+  function SliderRoot(props, ref) {
     const { orientation, size, variant, colorPalette, className, ...arkProps } = props
 
     // Generate Panda CSS classes using the recipe
@@ -43,11 +40,12 @@ const withCustomContext = <T extends React.ElementType>(
   Component: T,
   slot: keyof ReturnType<typeof slider>
 ) => {
-  return forwardRef<any, ComponentProps<T>>((props, ref) => {
+  const ForwardedComponent = forwardRef<HTMLElement, ComponentProps<T>>(function SliderComponent(props, ref) {
     const styles = useContext(StyleContextInternal)
     const slotClass = styles?.[slot]
     return <Component ref={ref} {...props} className={`${slotClass} ${props.className || ''}`.trim()} />
   })
+  return ForwardedComponent
 }
 
 export const Control = withCustomContext(Slider.Control, 'control')

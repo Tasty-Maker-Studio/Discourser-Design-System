@@ -1,7 +1,8 @@
 'use client'
 import { Portal } from '@ark-ui/react/portal'
 import { Toaster as ArkToaster, createToaster, Toast, useToastContext } from '@ark-ui/react/toast'
-import { forwardRef } from 'react'
+import type React from 'react'
+import { type ComponentPropsWithRef, forwardRef } from 'react'
 import { createStyleContext, Stack, styled } from 'styled-system/jsx'
 import { toast } from 'styled-system/recipes'
 import { CloseButton } from './CloseButton'
@@ -46,7 +47,7 @@ const iconMap: Record<string, React.ElementType> = {
   error: CircleXIcon,
 }
 
-const Indicator = forwardRef<SVGSVGElement, IconProps>((props, ref) => {
+const Indicator = forwardRef<HTMLElement, IconProps & ComponentPropsWithRef<'svg'>>(function ToastIndicator(props, ref) {
   const toast = useToastContext()
 
   const StatusIcon = iconMap[toast.type]
