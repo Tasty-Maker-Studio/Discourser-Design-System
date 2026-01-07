@@ -29,7 +29,15 @@
       "Bash(pnpm lint:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(tree:*)",
+      "WebFetch(domain:help.figma.com)",
+      "WebFetch(domain:developers.figma.com)",
+      "WebFetch(domain:www.figma.com)",
+      "Bash(chmod:*)",
+      "Bash(tsx scripts/generate-storybook-docs.ts:*)",
+      "mcp__chrome-devtools__handle_dialog",
+      "mcp__chrome-devtools__list_console_messages"
     ]
   }
 }

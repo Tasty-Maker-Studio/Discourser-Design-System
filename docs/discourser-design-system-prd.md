@@ -42,7 +42,7 @@ design-system/
 ├── .github/
 │   └── workflows/
 │       ├── ci.yml
-│       └── publish.yml
+│       └── release.yml
 ├── .storybook/
 │   ├── main.ts
 │   ├── preview.ts
@@ -157,8 +157,8 @@ design-system/
     "typecheck": "tsc --noEmit"
   },
   "peerDependencies": {
-    "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
+    "react": ">=19.0.0",
+    "react-dom": ">=19.0.0"
   },
   "dependencies": {
     "@ark-ui/react": "^4.4.0",
@@ -196,7 +196,7 @@ design-system/
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tastymakers/design-system.git"
+    "url": "https://github.com/Tasty-Maker-Studio/Discourser-Design-System.git"
   }
 }
 ```

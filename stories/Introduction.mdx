@@ -1,0 +1,77 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Introduction" />
+
+# Discourser Design System
+
+Welcome to the Discourser Design System documentation! This Storybook contains comprehensive guides for using, building, and maintaining the design system.
+
+## 📚 What's Inside
+
+### Component Library
+Explore interactive component examples, variants, and usage patterns.
+
+### Design System Guidelines
+Complete guidelines that teach Figma Make's AI how to use the design system:
+- **Overview** - Component catalog and usage patterns
+- **Design Tokens** - Colors, typography, spacing, and elevation
+- **Components** - Detailed guides for each component
+
+### Figma Make Documentation
+Step-by-step guides for creating and publishing Figma Make templates:
+- Understanding templates
+- Prerequisites and setup
+- Creating and publishing templates
+- Maintenance and updates
+
+### Claude Skills
+Context engineering files that help Claude Code work effectively with this project.
+
+## 🎯 Quick Start
+
+1. **Using Components?** → Check the component stories in the sidebar
+2. **Building with Figma Make?** → Start with **Documentation → Figma Make → Understanding Templates**
+3. **Working with Claude Code?** → See **Documentation → Claude Skills**
+4. **Need design tokens?** → Check **Documentation → Guidelines → Design Tokens**
+
+## 🏗️ Architecture
+
+This design system uses a three-layer architecture:
+
+**Layer 1: Infrastructure** (unchanging)
+- TypeScript interfaces and contracts
+- Build system (tsup, Storybook, Panda CSS)
+- Component logic (Ark UI primitives)
+
+**Layer 2: Design Language** (swappable)
+- Token values and semantic mappings
+- Currently: Material Design 3
+- Easily swap by changing one import
+
+**Layer 3: Component Recipes** (derived)
+- Panda CSS recipes with variants
+- Automatically adapts to active language
+
+## 📦 Package Information
+
+- **Package**: `@discourser/design-system`
+- **Version**: Latest on npm
+- **Framework**: React 19+
+- **Styling**: Panda CSS
+- **Primitives**: Ark UI
+- **Design Language**: Material Design 3
+
+## 🔗 Resources
+
+- [GitHub Repository](https://github.com/Tasty-Maker-Studio/Discourser-Design-System)
+- [npm Package](https://www.npmjs.com/package/@discourser/design-system)
+- [Material Design 3](https://m3.material.io/)
+
+## 💡 Need Help?
+
+- Browse the documentation sections in the sidebar
+- Check component stories for usage examples
+- Review the guidelines for best practices
+- See the FAQ in Figma Make docs
+
+**Let's build something amazing! 🚀**

@@ -1,11 +1,57 @@
 import { defineConfig } from '@pandacss/dev';
 import { activeLanguage, transformToPandaTheme } from './src/languages';
-import { buttonRecipe, cardRecipe, iconButtonRecipe, inputRecipe, dialogRecipe, switchRecipe } from './src/recipes';
+import { colors as m3Colors } from './src/preset/colors';
+import { m3SemanticTokens } from './src/preset/semantic-tokens';
+// Park UI recipes - Core
+import { button as parkButton } from './src/preset/recipes/button';
+import { input as parkInput } from './src/preset/recipes/input';
+import { field as parkField } from './src/preset/recipes/field';
+import { group } from './src/preset/recipes/group';
+import { spinner } from './src/preset/recipes/spinner';
+import { absoluteCenter } from './src/preset/recipes/absolute-center';
+
+// Park UI recipes - Layout & Containers
+import { card as parkCard } from './src/preset/recipes/card';
+import { accordion } from './src/preset/recipes/accordion';
+import { drawer } from './src/preset/recipes/drawer';
+import { tabs } from './src/preset/recipes/tabs';
+
+// Park UI recipes - Form Elements
+import { switchRecipe } from './src/preset/recipes/switch';
+import { checkbox } from './src/preset/recipes/checkbox';
+import { radioGroup } from './src/preset/recipes/radio-group';
+import { select } from './src/preset/recipes/select';
+import { textarea } from './src/preset/recipes/textarea';
+import { slider } from './src/preset/recipes/slider';
+
+// Park UI recipes - Feedback & Status
+import { avatar } from './src/preset/recipes/avatar';
+import { badge } from './src/preset/recipes/badge';
+import { progress } from './src/preset/recipes/progress';
+import { skeleton } from './src/preset/recipes/skeleton';
+import { toast } from './src/preset/recipes/toast';
+
+// Park UI recipes - Overlays
+import { dialog } from './src/preset/recipes/dialog';
+import { popover } from './src/preset/recipes/popover';
+import { tooltip } from './src/preset/recipes/tooltip';
+// Park UI theme extensions
+import { layerStyles } from './src/preset/layer-styles';
+import { textStyles as parkTextStyles } from './src/preset/text-styles';
+import { shadows as parkShadows } from './src/preset/shadows';
 
 const theme = transformToPandaTheme(activeLanguage);
 
 export default defineConfig({
   preflight: true,
+
+  // Base presets for Park UI compatibility
+  presets: ['@pandacss/preset-base', '@pandacss/preset-panda'],
+
+  // Generate static CSS for all recipes
+  staticCss: {
+    recipes: '*',
+  },
 
   include: [
     './src/**/*.{js,jsx,ts,tsx}',
@@ -27,19 +73,101 @@ export default defineConfig({
   },
 
   theme: {
-    tokens: theme.tokens,
-    semanticTokens: theme.semanticTokens,
-    textStyles: theme.textStyles,
     extend: {
+      // Add M3 tokens to Panda preset (colors, fonts, etc.)
+      // Keep Panda's spacing, radii from preset
+      tokens: {
+        colors: theme.tokens.colors,
+        fonts: theme.tokens.fonts,
+        fontSizes: theme.tokens.fontSizes,
+        lineHeights: theme.tokens.lineHeights,
+        fontWeights: theme.tokens.fontWeights,
+        letterSpacings: theme.tokens.letterSpacings,
+        durations: theme.tokens.durations,
+        easings: theme.tokens.easings,
+      },
+
+      // Park UI layer styles for common UI patterns (disabled, etc.)
+      layerStyles,
+
+      // Combined text styles: M3 + Park UI
+      textStyles: {
+        ...theme.textStyles,
+        ...parkTextStyles,
+      },
+
+      // Semantic tokens: M3 colors + Park UI aliases + shadows + radii
+      semanticTokens: {
+        colors: {
+          // M3-to-Radix color bridges
+          ...m3Colors,
+
+          // Park UI-style aliases for component compatibility
+          fg: {
+            default: { value: { base: '{colors.gray.12}', _dark: '{colors.gray.12}' } },
+            muted: { value: { base: '{colors.gray.11}', _dark: '{colors.gray.11}' } },
+            subtle: { value: { base: '{colors.gray.10}', _dark: '{colors.gray.10}' } },
+          },
+          canvas: { value: { base: '{colors.gray.1}', _dark: '{colors.gray.1}' } },
+          border: {
+            default: { value: { base: '{colors.gray.6}', _dark: '{colors.gray.6}' } },
+            muted: { value: { base: '{colors.gray.4}', _dark: '{colors.gray.4}' } },
+          },
+
+          // M3 semantic tokens (surface, onSurface, etc.)
+          ...m3SemanticTokens,
+
+          // Base colors
+          white: { value: '#FFFFFF' },
+          black: { value: '#000000' },
+        },
+
+        // Park UI shadow tokens
+        shadows: parkShadows,
+
+        // Park UI radii tokens (l1, l2, l3 for consistent border radius)
+        radii: {
+          l1: { value: '0.125rem' }, // 2px (xs)
+          l2: { value: '0.375rem' }, // 6px (sm)
+          l3: { value: '0.5rem' },   // 8px (md)
+        },
+      },
+
+      // Recipes: Park UI components (simple recipes)
       recipes: {
-        button: buttonRecipe,
-        card: cardRecipe,
-        iconButton: iconButtonRecipe,
-        input: inputRecipe,
+        // Core
+        button: parkButton,
+        input: parkInput,
+        group,
+        spinner,
+        absoluteCenter,
+        // Feedback & Status
+        badge,
+        skeleton,
+        textarea,
       },
       slotRecipes: {
-        dialog: dialogRecipe,
-        switchControl: switchRecipe,
+        // Core
+        field: parkField,
+        // Layout & Containers
+        card: parkCard,
+        accordion,
+        drawer,
+        tabs,
+        // Form Elements
+        switchComponent: switchRecipe,
+        checkbox,
+        radioGroup,
+        select,
+        slider,
+        // Feedback & Status
+        avatar,
+        progress,
+        toast,
+        // Overlays
+        dialog,
+        popover,
+        tooltip,
       }
     }
   },
@@ -51,13 +179,13 @@ export default defineConfig({
 
   globalCss: {
     html: {
-      colorScheme: 'light dark'
+      colorScheme: 'light dark',
+      bg: 'canvas',
+      color: 'fg.default',
     },
     body: {
       fontFamily: 'body',
-      bg: 'surface',
-      color: 'onSurface',
-      textStyle: 'bodyMedium'
+      textStyle: 'bodyMedium',
     }
   }
 });

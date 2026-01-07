@@ -38,10 +38,10 @@ Go to your package settings on npmjs.com:
 
 | Field | Value | Common Mistakes |
 |-------|-------|-----------------|
-| **Organization/User** | Your GitHub org (e.g., `Tasty-Maker-Studio`) | ❌ lowercase<br>❌ different org name |
-| **Repository** | Repository name (e.g., `Discourser-Design-System`) | ❌ lowercase<br>❌ wrong repo |
-| **Workflow** | `release.yml` | ❌ ` release.yml` (space before)<br>❌ `release.yml ` (space after)<br>❌ `.github/workflows/release.yml` |
-| **Environment** | **Leave completely empty** | ❌ typing "blank"<br>❌ any text or spaces |
+| **Organization/User** | Your GitHub org (e.g., `Tasty-Maker-Studio`) | ❌ lowercase<br />❌ different org name |
+| **Repository** | Repository name (e.g., `Discourser-Design-System`) | ❌ lowercase<br />❌ wrong repo |
+| **Workflow** | `release.yml` | ❌ ` release.yml` (space before)<br />❌ `release.yml ` (space after)<br />❌ `.github/workflows/release.yml` |
+| **Environment** | **Leave completely empty** | ❌ typing "blank"<br />❌ any text or spaces |
 
 4. **CRITICAL**: Click **"Set up connection"** button to activate
 5. Verify you see the active connection listed with GitHub icon
