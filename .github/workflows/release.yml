@@ -52,7 +52,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          version: changeset version
+          version: pnpm changeset version
           # Don't use changesets publish - we'll do it manually with npm for OIDC
           publish: echo "Skipping changesets publish, using npm directly"
           commit: "chore: version packages"
