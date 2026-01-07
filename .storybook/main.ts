@@ -10,6 +10,10 @@ const config: StorybookConfig = {
   addons: [
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
+    {
+      name: '@storybook/addon-styling',
+      options: { postCss: true },
+    },
   ],
   framework: {
     name: '@storybook/react-vite',

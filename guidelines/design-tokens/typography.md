@@ -6,8 +6,8 @@ The design system uses Material Design 3 typography scale with semantic naming.
 
 | Token | Font | Usage |
 |-------|------|-------|
-| `display` | Georgia, "Times New Roman", serif | Display text, headings, editorial content |
-| `body` | Inter, -apple-system, BlinkMacSystemFont, sans-serif | Body text, UI elements, most content |
+| `display` | "Fraunces", Georgia, serif | Display text, headings, editorial content |
+| `body` | "Poppins", -apple-system, BlinkMacSystemFont, sans-serif | Body text, UI elements, most content |
 | `mono` | "JetBrains Mono", "Fira Code", Consolas, monospace | Code snippets, technical text |
 
 ## Type Scale
@@ -221,8 +221,6 @@ The design system expects these fonts to be loaded in your application:
 <!-- In your HTML head or CSS -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600;1,9..144,700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
 ```
-
-Georgia is a system font and doesn't need to be loaded.

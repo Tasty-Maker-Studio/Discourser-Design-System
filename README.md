@@ -60,51 +60,446 @@ function App() {
 
 ## 📖 Components
 
-### Button
+We offer 21 fully-typed, accessible React components built with Ark UI and styled with Panda CSS.
+
+### Core Components
+
+#### Button
 
 Material Design 3 button with 5 variants and 3 sizes.
 
 ```tsx
-import { Button } from '@discourser/design-system';
+import * as Button from '@discourser/design-system';
 
-<Button variant="filled" size="md" leftIcon={<Icon />}>
+<Button.Root variant="filled" size="md">
   Click me
-</Button>
+</Button.Root>
 ```
 
 **Variants:** `filled` | `outlined` | `text` | `elevated` | `tonal`
 **Sizes:** `sm` | `md` | `lg`
 
-### Card
+#### Card
 
 Container component with 3 variants and optional interactive state.
 
 ```tsx
-import { Card } from '@discourser/design-system';
+import * as Card from '@discourser/design-system';
 
-<Card variant="elevated" interactive>
-  <h3>Card Title</h3>
-  <p>Card content goes here</p>
-</Card>
+<Card.Root variant="elevated">
+  <Card.Header>
+    <Card.Title>Card Title</Card.Title>
+    <Card.Description>Card description</Card.Description>
+  </Card.Header>
+  <Card.Body>
+    <p>Card content goes here</p>
+  </Card.Body>
+  <Card.Footer>
+    <Button.Root>Action</Button.Root>
+  </Card.Footer>
+</Card.Root>
 ```
 
 **Variants:** `elevated` | `filled` | `outlined`
-**Interactive:** `true` | `false` (adds hover/click states)
 
-### IconButton
+#### IconButton
 
 Icon-only button with 4 variants and 3 sizes. Requires `aria-label` for accessibility.
 
 ```tsx
-import { IconButton } from '@discourser/design-system';
+import * as IconButton from '@discourser/design-system';
 
-<IconButton variant="filled" size="md" aria-label="Settings">
+<IconButton.Root variant="filled" size="md" aria-label="Settings">
   <SettingsIcon />
-</IconButton>
+</IconButton.Root>
 ```
 
 **Variants:** `standard` | `filled` | `tonal` | `outlined`
 **Sizes:** `sm` | `md` | `lg`
+
+#### Input
+
+Text input field with multiple variants and sizes.
+
+```tsx
+import * as Input from '@discourser/design-system';
+import * as Field from '@discourser/design-system';
+
+<Field.Root>
+  <Field.Label>Email</Field.Label>
+  <Input.Root variant="outline" size="md" placeholder="you@example.com" />
+  <Field.HelperText>We'll never share your email</Field.HelperText>
+</Field.Root>
+```
+
+**Variants:** `outline` | `filled` | `flushed`
+**Sizes:** `xs` | `sm` | `md` | `lg` | `xl`
+
+### Form Components
+
+#### Select
+
+Dropdown select component for choosing from a list of options.
+
+```tsx
+import * as Select from '@discourser/design-system';
+
+const items = [
+  { label: 'Chat', value: 'chat' },
+  { label: 'Analysis', value: 'analysis' },
+];
+
+<Select.Root items={items} positioning={{ sameWidth: true }}>
+  <Select.Label>Select Scenario</Select.Label>
+  <Select.Control>
+    <Select.Trigger>
+      <Select.ValueText placeholder="Select..." />
+      <Select.Indicator />
+    </Select.Trigger>
+  </Select.Control>
+  <Select.Positioner>
+    <Select.Content>
+      <Select.List>
+        {items.map((item) => (
+          <Select.Item key={item.value} item={item}>
+            <Select.ItemText>{item.label}</Select.ItemText>
+            <Select.ItemIndicator />
+          </Select.Item>
+        ))}
+      </Select.List>
+    </Select.Content>
+  </Select.Positioner>
+  <Select.HiddenSelect />
+</Select.Root>
+```
+
+**Sizes:** `sm` | `md` | `lg`
+
+#### Checkbox
+
+Checkbox input with custom styling and checked indicator.
+
+```tsx
+import * as Checkbox from '@discourser/design-system';
+
+<Checkbox.Root>
+  <Checkbox.Control>
+    <Checkbox.Indicator />
+  </Checkbox.Control>
+  <Checkbox.Label>Accept terms and conditions</Checkbox.Label>
+  <Checkbox.HiddenInput />
+</Checkbox.Root>
+```
+
+**Sizes:** `sm` | `md` | `lg`
+
+#### RadioGroup
+
+Radio button group for mutually exclusive selections.
+
+```tsx
+import * as RadioGroup from '@discourser/design-system';
+
+<RadioGroup.Root defaultValue="option1">
+  <RadioGroup.Item value="option1">
+    <RadioGroup.ItemControl />
+    <RadioGroup.ItemText>Option 1</RadioGroup.ItemText>
+    <RadioGroup.HiddenInput />
+  </RadioGroup.Item>
+  <RadioGroup.Item value="option2">
+    <RadioGroup.ItemControl />
+    <RadioGroup.ItemText>Option 2</RadioGroup.ItemText>
+    <RadioGroup.HiddenInput />
+  </RadioGroup.Item>
+</RadioGroup.Root>
+```
+
+**Sizes:** `sm` | `md` | `lg`
+
+#### Slider
+
+Range slider component for numeric input.
+
+```tsx
+import * as Slider from '@discourser/design-system';
+
+<Slider.Root defaultValue={[50]} min={0} max={100}>
+  <Slider.Label>Volume</Slider.Label>
+  <Slider.ValueText />
+  <Slider.Control>
+    <Slider.Track>
+      <Slider.Range />
+    </Slider.Track>
+    <Slider.Thumb index={0} />
+  </Slider.Control>
+  <Slider.HiddenInput />
+</Slider.Root>
+```
+
+**Sizes:** `sm` | `md` | `lg`
+**Orientation:** `horizontal` | `vertical`
+
+#### Switch
+
+Toggle switch for on/off states.
+
+```tsx
+import * as Switch from '@discourser/design-system';
+
+<Switch.Root>
+  <Switch.Control>
+    <Switch.Thumb />
+  </Switch.Control>
+  <Switch.Label>Enable notifications</Switch.Label>
+  <Switch.HiddenInput />
+</Switch.Root>
+```
+
+**Sizes:** `sm` | `md` | `lg`
+
+#### Textarea
+
+Multi-line text input field.
+
+```tsx
+import * as Textarea from '@discourser/design-system';
+
+<Textarea.Root variant="outline" placeholder="Enter your message..." />
+```
+
+**Variants:** `outline` | `filled` | `subtle` | `flushed`
+**Sizes:** `xs` | `sm` | `md` | `lg` | `xl`
+
+### Layout & Navigation
+
+#### Tabs
+
+Tab navigation for organizing content into separate views.
+
+```tsx
+import * as Tabs from '@discourser/design-system';
+
+<Tabs.Root defaultValue="overview">
+  <Tabs.List>
+    <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
+    <Tabs.Trigger value="details">Details</Tabs.Trigger>
+    <Tabs.Indicator />
+  </Tabs.List>
+  <Tabs.Content value="overview">Overview content</Tabs.Content>
+  <Tabs.Content value="details">Details content</Tabs.Content>
+</Tabs.Root>
+```
+
+**Variants:** `line` | `enclosed` | `outline`
+**Sizes:** `sm` | `md` | `lg`
+
+#### Accordion
+
+Collapsible content panels for FAQs and expandable sections.
+
+```tsx
+import * as Accordion from '@discourser/design-system';
+
+<Accordion.Root collapsible>
+  <Accordion.Item value="item-1">
+    <Accordion.ItemTrigger>
+      Section 1
+      <Accordion.ItemIndicator />
+    </Accordion.ItemTrigger>
+    <Accordion.ItemContent>
+      Content for section 1
+    </Accordion.ItemContent>
+  </Accordion.Item>
+</Accordion.Root>
+```
+
+**Sizes:** `sm` | `md` | `lg`
+
+### Overlays & Dialogs
+
+#### Dialog
+
+Modal dialog for focused user interactions.
+
+```tsx
+import * as Dialog from '@discourser/design-system';
+
+<Dialog.Root>
+  <Dialog.Trigger>Open Dialog</Dialog.Trigger>
+  <Dialog.Backdrop />
+  <Dialog.Positioner>
+    <Dialog.Content>
+      <Dialog.Title>Dialog Title</Dialog.Title>
+      <Dialog.Description>Dialog description</Dialog.Description>
+      <Dialog.CloseTrigger />
+    </Dialog.Content>
+  </Dialog.Positioner>
+</Dialog.Root>
+```
+
+**Sizes:** `sm` | `md` | `lg` | `xl` | `full`
+
+#### Drawer
+
+Side panel for navigation or additional content.
+
+```tsx
+import * as Drawer from '@discourser/design-system';
+
+<Drawer.Root>
+  <Drawer.Trigger>Open Drawer</Drawer.Trigger>
+  <Drawer.Backdrop />
+  <Drawer.Positioner>
+    <Drawer.Content>
+      <Drawer.Header>
+        <Drawer.Title>Drawer Title</Drawer.Title>
+        <Drawer.CloseTrigger />
+      </Drawer.Header>
+      <Drawer.Body>Drawer content</Drawer.Body>
+      <Drawer.Footer>Footer content</Drawer.Footer>
+    </Drawer.Content>
+  </Drawer.Positioner>
+</Drawer.Root>
+```
+
+**Placement:** `left` | `right` | `top` | `bottom`
+
+#### Popover
+
+Floating content overlay anchored to a trigger element.
+
+```tsx
+import * as Popover from '@discourser/design-system';
+
+<Popover.Root>
+  <Popover.Trigger>Open Popover</Popover.Trigger>
+  <Popover.Positioner>
+    <Popover.Content>
+      <Popover.Arrow>
+        <Popover.ArrowTip />
+      </Popover.Arrow>
+      <Popover.Title>Popover Title</Popover.Title>
+      <Popover.Description>Popover content</Popover.Description>
+      <Popover.CloseTrigger />
+    </Popover.Content>
+  </Popover.Positioner>
+</Popover.Root>
+```
+
+#### Tooltip
+
+Brief informative text shown on hover.
+
+```tsx
+import * as Tooltip from '@discourser/design-system';
+
+<Tooltip.Root>
+  <Tooltip.Trigger>Hover me</Tooltip.Trigger>
+  <Tooltip.Positioner>
+    <Tooltip.Content>
+      Helpful tooltip text
+      <Tooltip.Arrow>
+        <Tooltip.ArrowTip />
+      </Tooltip.Arrow>
+    </Tooltip.Content>
+  </Tooltip.Positioner>
+</Tooltip.Root>
+```
+
+### Feedback & Status
+
+#### Toast
+
+Temporary notification messages.
+
+```tsx
+import { Toaster, toaster } from '@discourser/design-system';
+
+// Add <Toaster /> to your app root
+<Toaster />
+
+// Trigger toasts from anywhere
+toaster.success({
+  title: 'Success!',
+  description: 'Your changes have been saved.',
+});
+
+toaster.error({
+  title: 'Error',
+  description: 'Something went wrong.',
+});
+```
+
+**Types:** `success` | `error` | `warning` | `info` | `loading`
+
+#### Progress
+
+Linear or circular progress indicator.
+
+```tsx
+import * as Progress from '@discourser/design-system';
+
+// Linear progress
+<Progress.Root value={60}>
+  <Progress.Label>Upload Progress</Progress.Label>
+  <Progress.ValueText />
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// Circular progress
+<Progress.Root value={75} type="circular">
+  <Progress.Circle>
+    <Progress.CircleTrack />
+    <Progress.CircleRange />
+  </Progress.Circle>
+  <Progress.ValueText />
+</Progress.Root>
+```
+
+**Sizes:** `sm` | `md` | `lg`
+**Type:** `linear` | `circular`
+
+#### Avatar
+
+User avatar with image and fallback to initials.
+
+```tsx
+import * as Avatar from '@discourser/design-system';
+
+<Avatar.Root>
+  <Avatar.Fallback name="John Doe" />
+  <Avatar.Image src="https://i.pravatar.cc/150?img=3" alt="John Doe" />
+</Avatar.Root>
+```
+
+**Sizes:** `xs` | `sm` | `md` | `lg` | `xl` | `2xl`
+
+#### Badge
+
+Small status or label indicator.
+
+```tsx
+import * as Badge from '@discourser/design-system';
+
+<Badge.Root>New</Badge.Root>
+```
+
+**Sizes:** `sm` | `md` | `lg`
+
+#### Skeleton
+
+Loading placeholder for content.
+
+```tsx
+import * as Skeleton from '@discourser/design-system';
+
+<Skeleton.Root>
+  <Skeleton.Circle />
+  <Skeleton.Text noOfLines={3} />
+</Skeleton.Root>
+```
 
 ## 🎨 Three-Layer Architecture
 
