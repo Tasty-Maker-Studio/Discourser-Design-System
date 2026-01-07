@@ -35,29 +35,85 @@ export const Root = forwardRef<HTMLDivElement, ComponentProps<typeof Slider.Root
     )
   }
 )
-// Helper to create styled child components that use our custom context
-const withCustomContext = <T extends React.ElementType>(
-  Component: T,
-  slot: keyof ReturnType<typeof slider>
+
+// Create typed wrapper for each component
+const createStyledComponent = (
+  Component: typeof Slider.Control,
+  slot: keyof ReturnType<typeof slider>,
+  displayName: string
 ) => {
-  const ForwardedComponent = forwardRef<HTMLElement, ComponentProps<T>>(function SliderComponent(props, ref) {
+  const StyledComponent = forwardRef<HTMLDivElement, ComponentProps<typeof Component>>((props, ref) => {
     const styles = useContext(StyleContextInternal)
     const slotClass = styles?.[slot]
-    return <Component ref={ref} {...props} className={`${slotClass} ${props.className || ''}`.trim()} />
+    const { className, ...rest } = props
+    return <Component ref={ref} className={`${slotClass} ${className || ''}`.trim()} {...rest} />
   })
-  return ForwardedComponent
+  StyledComponent.displayName = displayName
+  return StyledComponent
 }
 
-export const Control = withCustomContext(Slider.Control, 'control')
-export const DraggingIndicator = withCustomContext(Slider.DraggingIndicator, 'draggingIndicator')
-export const Label = withCustomContext(Slider.Label, 'label')
-export const Marker = withCustomContext(Slider.Marker, 'marker')
-export const MarkerIndicator = withCustomContext(ark.div, 'markerIndicator')
-export const MarkerGroup = withCustomContext(Slider.MarkerGroup, 'markerGroup')
-export const Range = withCustomContext(Slider.Range, 'range')
-export const Thumb = withCustomContext(Slider.Thumb, 'thumb')
-export const Track = withCustomContext(Slider.Track, 'track')
-export const ValueText = withCustomContext(Slider.ValueText, 'valueText')
+export const Control = createStyledComponent(Slider.Control, 'control', 'Control')
+export const Track = createStyledComponent(Slider.Track, 'track', 'Track')
+export const Range = createStyledComponent(Slider.Range, 'range', 'Range')
+
+export const Thumb = forwardRef<HTMLDivElement, ComponentProps<typeof Slider.Thumb>>((props, ref) => {
+  const styles = useContext(StyleContextInternal)
+  const slotClass = styles?.thumb
+  const { className, ...rest } = props
+  return <Slider.Thumb ref={ref} className={`${slotClass} ${className || ''}`.trim()} {...rest} />
+})
+Thumb.displayName = 'Thumb'
+
+// eslint-disable-next-line no-undef
+export const Label = forwardRef<HTMLLabelElement, ComponentProps<typeof Slider.Label>>((props, ref) => {
+  const styles = useContext(StyleContextInternal)
+  const slotClass = styles?.label
+  const { className, ...rest } = props
+  return <Slider.Label ref={ref} className={`${slotClass} ${className || ''}`.trim()} {...rest} />
+})
+Label.displayName = 'Label'
+
+export const ValueText = forwardRef<HTMLDivElement, ComponentProps<typeof Slider.ValueText>>((props, ref) => {
+  const styles = useContext(StyleContextInternal)
+  const slotClass = styles?.valueText
+  const { className, ...rest } = props
+  return <Slider.ValueText ref={ref} className={`${slotClass} ${className || ''}`.trim()} {...rest} />
+})
+ValueText.displayName = 'ValueText'
+
+// eslint-disable-next-line no-undef
+export const Marker = forwardRef<HTMLSpanElement, ComponentProps<typeof Slider.Marker>>((props, ref) => {
+  const styles = useContext(StyleContextInternal)
+  const slotClass = styles?.marker
+  const { className, ...rest } = props
+  return <Slider.Marker ref={ref} className={`${slotClass} ${className || ''}`.trim()} {...rest} />
+})
+Marker.displayName = 'Marker'
+
+export const MarkerGroup = forwardRef<HTMLDivElement, ComponentProps<typeof Slider.MarkerGroup>>((props, ref) => {
+  const styles = useContext(StyleContextInternal)
+  const slotClass = styles?.markerGroup
+  const { className, ...rest } = props
+  return <Slider.MarkerGroup ref={ref} className={`${slotClass} ${className || ''}`.trim()} {...rest} />
+})
+MarkerGroup.displayName = 'MarkerGroup'
+
+export const MarkerIndicator = forwardRef<HTMLDivElement, ComponentProps<typeof ark.div>>((props, ref) => {
+  const styles = useContext(StyleContextInternal)
+  const slotClass = styles?.markerIndicator
+  const { className, ...rest } = props
+  return <ark.div ref={ref} className={`${slotClass} ${className || ''}`.trim()} {...rest} />
+})
+MarkerIndicator.displayName = 'MarkerIndicator'
+
+export const DraggingIndicator = forwardRef<HTMLDivElement, ComponentProps<typeof Slider.DraggingIndicator>>((props, ref) => {
+  const styles = useContext(StyleContextInternal)
+  const slotClass = styles?.draggingIndicator
+  const { className, ...rest } = props
+  return <Slider.DraggingIndicator ref={ref} className={`${slotClass} ${className || ''}`.trim()} {...rest} />
+})
+DraggingIndicator.displayName = 'DraggingIndicator'
+
 export const HiddenInput = Slider.HiddenInput
 
 export { SliderContext as Context } from '@ark-ui/react/slider'

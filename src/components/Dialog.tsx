@@ -5,12 +5,12 @@ import type { ComponentProps } from 'react'
 import { createStyleContext } from 'styled-system/jsx'
 import { dialog } from 'styled-system/recipes'
 
-const { withProvider, withContext } = createStyleContext(dialog)
+const { withRootProvider, withContext } = createStyleContext(dialog)
 
-export type RootProps = ComponentProps<typeof Root>
-export const Root = withProvider(Dialog.Root, 'root', {
+export const Root = withRootProvider(Dialog.Root, {
   defaultProps: { unmountOnExit: true, lazyMount: true },
 })
+export type RootProps = ComponentProps<typeof Root>
 export const Backdrop = withContext(Dialog.Backdrop, 'backdrop')
 export const CloseTrigger = withContext(Dialog.CloseTrigger, 'closeTrigger')
 export const Content = withContext(Dialog.Content, 'content')

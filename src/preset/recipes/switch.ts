@@ -70,7 +70,6 @@ export const switchRecipe = defineSlotRecipe({
   defaultVariants: {
     variant: 'solid',
     size: 'md',
-    colorPalette: 'primary',
   },
   variants: {
     variant: {

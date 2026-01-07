@@ -22,7 +22,8 @@ export {
   CheckboxGroupProvider as GroupProvider,
 } from '@ark-ui/react/checkbox'
 
-export const Indicator = forwardRef<HTMLElement, HTMLStyledProps<'svg'> & ComponentPropsWithRef<'svg'>>(
+// eslint-disable-next-line no-undef
+export const Indicator = forwardRef<SVGSVGElement, HTMLStyledProps<'svg'> & ComponentPropsWithRef<'svg'>>(
   function Indicator(props, ref) {
     const { indeterminate, checked } = useCheckboxContext()
 

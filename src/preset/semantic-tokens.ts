@@ -2,7 +2,7 @@ import { defineSemanticTokens } from '@pandacss/dev';
 import { material3Language } from '../languages/material3.language';
 
 const semantic = material3Language.semantic;
-const semanticDark = material3Language.semanticDark;
+const semanticDark = material3Language.semanticDark!;
 
 /**
  * M3 Semantic Tokens - layered on top of Park UI

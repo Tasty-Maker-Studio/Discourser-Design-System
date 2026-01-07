@@ -47,7 +47,8 @@ const iconMap: Record<string, React.ElementType> = {
   error: CircleXIcon,
 }
 
-const Indicator = forwardRef<HTMLElement, IconProps & ComponentPropsWithRef<'svg'>>(function ToastIndicator(props, ref) {
+// eslint-disable-next-line no-undef
+const Indicator = forwardRef<SVGSVGElement, IconProps & ComponentPropsWithRef<'svg'>>(function ToastIndicator(props, ref) {
   const toast = useToastContext()
 
   const StatusIcon = iconMap[toast.type]
