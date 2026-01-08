@@ -1,5 +1,18 @@
 # @discourser/design-system
 
+## 0.2.1
+
+### Patch Changes
+
+- [#16](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/16) [`3abcfbd`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/3abcfbdd3e798e51baa41ab860329a1ba890250f) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Add comprehensive design system documentation and Storybook integration
+  - Add complete design system guidelines (12 files) for Figma Make AI
+  - Add Figma Make template creation documentation (9 guides)
+  - Add auto-generation script to sync markdown docs to Storybook
+  - Add Storybook documentation pages and configuration
+  - Fix MDX2 syntax errors in documentation (self-closing br tags)
+  - Remove duplicate story files
+  - Update npm OIDC publishing skill documentation
+
 ## 0.1.7
 
 ### Patch Changes
