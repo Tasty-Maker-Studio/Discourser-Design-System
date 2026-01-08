@@ -56,7 +56,7 @@
     "build:panda": "panda codegen",
     "build:lib": "tsup",
     "build:storybook": "pnpm docs:generate && storybook build",
-    "prepare": "husky",
+    "prepare": "panda codegen && husky",
     "lint": "eslint src --ext .ts,.tsx",
     "test": "vitest",
     "test:ui": "vitest --ui",
