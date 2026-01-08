@@ -1,0 +1,13 @@
+# CODEOWNERS - Require approval for critical files
+# See: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# GitHub Actions workflows - CRITICAL: Do not modify without explicit approval
+/.github/workflows/ @Tasty-Maker-Studio/admins
+
+# Release and publishing configuration - CRITICAL
+/package.json @Tasty-Maker-Studio/admins
+/.changeset/config.json @Tasty-Maker-Studio/admins
+
+# Build configuration - Require review
+/tsconfig.json @Tasty-Maker-Studio/admins
+/tsup.config.ts @Tasty-Maker-Studio/admins
