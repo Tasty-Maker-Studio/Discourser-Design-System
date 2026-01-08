@@ -1,6 +1,6 @@
 {
   "name": "@discourser/design-system",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Aesthetic-agnostic design system with Panda CSS and Ark UI",
   "type": "module",
   "publishConfig": {
@@ -56,7 +56,7 @@
     "build:panda": "panda codegen",
     "build:lib": "tsup",
     "build:storybook": "pnpm docs:generate && storybook build",
-    "prepare": "husky",
+    "prepare": "panda codegen && husky",
     "lint": "eslint src --ext .ts,.tsx",
     "test": "vitest",
     "test:ui": "vitest --ui",
