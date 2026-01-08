@@ -43,6 +43,12 @@ done
 # Run lint-staged for linting and formatting
 pnpm exec lint-staged
 
+# Generate styled-system if needed (required for type checking)
+if [ ! -d "styled-system" ]; then
+  echo "Generating styled-system..."
+  pnpm build:panda --silent
+fi
+
 # Run type checking
 echo "Running type check..."
 pnpm typecheck

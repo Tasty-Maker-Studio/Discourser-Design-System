@@ -11,6 +11,9 @@ export * as Drawer from './Drawer';
 export * as Tabs from './Tabs';
 
 // Form Components
+export { Input, type InputProps } from './Input';
+export { InputAddon, type InputAddonProps } from './InputAddon';
+export { InputGroup, type InputGroupProps } from './InputGroup';
 export * as Checkbox from './Checkbox';
 export * as RadioGroup from './RadioGroup';
 export * as Select from './Select';
@@ -27,6 +30,9 @@ export { Toaster, toaster } from './Toast';
 // Overlay Components
 export * as Popover from './Popover';
 export * as Tooltip from './Tooltip';
+
+// Typography Components
+export { Heading, type HeadingProps } from './Heading';
 
 // Utility Components
 export * as CloseButton from './CloseButton';
