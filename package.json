@@ -56,7 +56,7 @@
     "build:panda": "panda codegen",
     "build:lib": "tsup",
     "build:storybook": "pnpm docs:generate && storybook build",
-    "prepare": "panda codegen",
+    "prepare": "panda codegen && husky",
     "lint": "eslint src --ext .ts,.tsx",
     "test": "vitest",
     "test:ui": "vitest --ui",
@@ -103,8 +103,10 @@
     "eslint": "^9.0.0",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^5.0.0",
+    "husky": "^9.1.7",
     "jest-axe": "^10.0.0",
     "jsdom": "^27.4.0",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.3.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -127,5 +129,14 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Tasty-Maker-Studio/Discourser-Design-System.git"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
   }
 }

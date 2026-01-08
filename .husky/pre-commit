@@ -1,0 +1,44 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Check if critical files are being modified
+CRITICAL_FILES=(
+  ".github/workflows/release.yml"
+  "package.json"
+  ".changeset/config.json"
+  "tsconfig.json"
+  "tsup.config.ts"
+)
+
+staged_files=$(git diff --cached --name-only)
+
+for file in "${CRITICAL_FILES[@]}"; do
+  if echo "$staged_files" | grep -q "^$file$"; then
+    echo ""
+    echo "⚠️  WARNING: You are modifying a CRITICAL file: $file"
+    echo ""
+    echo "This file controls the release workflow and build configuration."
+    echo "Modifications can break automated releases and publishing."
+    echo ""
+    echo "Please ensure:"
+    echo "  1. You have a specific reason to modify this file"
+    echo "  2. You understand the full impact of your changes"
+    echo "  3. You have tested the changes thoroughly"
+    echo ""
+    echo "If you're working on components/stories, you should NOT be modifying this file."
+    echo ""
+    read -p "Are you sure you want to continue? (yes/no): " -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy][Ee][Ss]$ ]]; then
+      echo "Commit aborted."
+      exit 1
+    fi
+  fi
+done
+
+# Run lint-staged for linting and formatting
+pnpm exec lint-staged
+
+# Run type checking
+echo "Running type check..."
+pnpm typecheck

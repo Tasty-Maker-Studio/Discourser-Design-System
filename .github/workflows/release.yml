@@ -1,3 +1,21 @@
+# ⚠️ CRITICAL FILE - DO NOT MODIFY WITHOUT EXPLICIT APPROVAL ⚠️
+#
+# This workflow handles automated releases using:
+# - Changesets for versioning (runs `pnpm exec changeset version` directly)
+# - npm Trusted Publishing (OIDC) for publishing (NO TOKENS REQUIRED)
+#
+# IMPORTANT:
+# - This workflow was debugged extensively after node_modules removal (commit 9035f305)
+# - We do NOT use changesets/action@v1 due to PATH resolution issues
+# - We run changeset commands directly via bash to avoid PATH problems
+# - OIDC publishing requires Node 24+ and npm 11.5+
+# - Do NOT add registry-url to setup-node (conflicts with OIDC)
+#
+# If you need to modify this file, please consult the commit history first:
+# git log --oneline .github/workflows/release.yml
+#
+# Last working configuration validated: 2025-01-07
+
 name: Release
 
 on:
