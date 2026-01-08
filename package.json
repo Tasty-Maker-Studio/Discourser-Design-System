@@ -67,7 +67,7 @@
     "typecheck": "tsc --noEmit",
     "changeset": "changeset",
     "version": "changeset version",
-    "ci:version": "changeset version",
+    "ci:version": "pnpm exec changeset version",
     "release": "pnpm build && changeset publish --access public"
   },
   "peerDependencies": {
