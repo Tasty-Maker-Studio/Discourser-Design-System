@@ -1,8 +1,8 @@
-'use client';
-import { ark } from '@ark-ui/react/factory';
-import { type ComponentProps, forwardRef, type ReactNode } from 'react';
-import { createStyleContext } from '../styled-system/jsx';
-import { inputGroup } from '../styled-system/recipes';
+'use client'
+import { ark } from '@ark-ui/react/factory'
+import { type ComponentProps, forwardRef, type ReactNode } from 'react'
+import { createStyleContext } from 'styled-system/jsx'
+import { inputGroup } from 'styled-system/recipes'
 
 const { withProvider, withContext } = createStyleContext(inputGroup);
 
@@ -13,6 +13,7 @@ const Element = withContext(ark.div, 'element');
 export interface InputGroupProps extends RootProps {
   startElement?: ReactNode | undefined;
   endElement?: ReactNode | undefined;
+  children?: ReactNode;
 }
 
 const InputGroupRoot = forwardRef<HTMLDivElement, InputGroupProps>(

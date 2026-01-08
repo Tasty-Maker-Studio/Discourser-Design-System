@@ -25,5 +25,5 @@
     "noEmit": true
   },
   "include": ["src/**/*", "scripts/**/*", "panda.config.ts", "jest-axe.d.ts"],
-  "exclude": ["node_modules", "dist", "styled-system", "storybook-static"]
+  "exclude": ["node_modules", "dist", "storybook-static"]
 }
