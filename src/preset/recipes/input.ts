@@ -1,4 +1,4 @@
-import type { RecipeConfig } from '@pandacss/dev'
+import type { RecipeConfig } from '@pandacss/dev';
 
 export const input = {
   className: 'input',
@@ -26,7 +26,7 @@ export const input = {
     variant: {
       outline: {
         borderWidth: '1px',
-        borderColor: 'gray.outline.border',
+        borderColor: 'neutral.outline.border',
         focusVisibleRing: 'inside',
         _invalid: {
           focusRingColor: 'error',
@@ -34,11 +34,10 @@ export const input = {
         },
       },
       surface: {
-        bg: 'gray.surface.bg',
+        bg: 'neutral.surface.bg',
         borderWidth: '1px',
-        borderColor: 'gray.surface.border',
+        borderColor: 'neutral.surface.border',
         focusVisibleRing: 'inside',
-
         _invalid: {
           focusRingColor: 'error',
           borderColor: 'error',
@@ -47,10 +46,9 @@ export const input = {
       subtle: {
         borderWidth: '1px',
         borderColor: 'transparent',
-        bg: 'gray.subtle.bg',
-        color: 'gray.subtle.fg',
+        bg: 'neutral.subtle.bg',
+        color: 'neutral.subtle.fg',
         focusVisibleRing: 'inside',
-
         _invalid: {
           focusRingColor: 'error',
           borderColor: 'error',
@@ -58,7 +56,7 @@ export const input = {
       },
       flushed: {
         borderBottomWidth: '1px',
-        borderBottomColor: 'gray.outline.border',
+        borderBottomColor: 'neutral.outline.border',
         borderRadius: '0',
         color: 'fg.default',
         px: '0',
@@ -86,4 +84,4 @@ export const input = {
       '2xl': { textStyle: '3xl', px: '4.5', '--input-height': 'sizes.16' },
     },
   },
-} satisfies RecipeConfig
+} satisfies RecipeConfig;

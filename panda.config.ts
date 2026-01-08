@@ -5,6 +5,8 @@ import { m3SemanticTokens } from './src/preset/semantic-tokens';
 // Park UI recipes - Core
 import { button as parkButton } from './src/preset/recipes/button';
 import { input as parkInput } from './src/preset/recipes/input';
+import { inputAddon } from './src/preset/recipes/input-addon';
+import { inputGroup } from './src/preset/recipes/input-group';
 import { field as parkField } from './src/preset/recipes/field';
 import { group } from './src/preset/recipes/group';
 import { spinner } from './src/preset/recipes/spinner';
@@ -35,6 +37,9 @@ import { toast } from './src/preset/recipes/toast';
 import { dialog } from './src/preset/recipes/dialog';
 import { popover } from './src/preset/recipes/popover';
 import { tooltip } from './src/preset/recipes/tooltip';
+
+// Park UI recipes - Typography
+import { heading } from './src/preset/recipes/heading';
 // Park UI theme extensions
 import { layerStyles } from './src/preset/layer-styles';
 import { textStyles as parkTextStyles } from './src/preset/text-styles';
@@ -53,10 +58,7 @@ export default defineConfig({
     recipes: '*',
   },
 
-  include: [
-    './src/**/*.{js,jsx,ts,tsx}',
-    './stories/**/*.{js,jsx,ts,tsx}'
-  ],
+  include: ['./src/**/*.{js,jsx,ts,tsx}', './stories/**/*.{js,jsx,ts,tsx}'],
 
   exclude: [],
 
@@ -69,7 +71,7 @@ export default defineConfig({
     base: 'base',
     tokens: 'tokens',
     recipes: 'recipes',
-    utilities: 'utilities'
+    utilities: 'utilities',
   },
 
   theme: {
@@ -104,14 +106,26 @@ export default defineConfig({
 
           // Park UI-style aliases for component compatibility
           fg: {
-            default: { value: { base: '{colors.gray.12}', _dark: '{colors.gray.12}' } },
-            muted: { value: { base: '{colors.gray.11}', _dark: '{colors.gray.11}' } },
-            subtle: { value: { base: '{colors.gray.10}', _dark: '{colors.gray.10}' } },
+            default: {
+              value: { base: '{colors.gray.12}', _dark: '{colors.gray.12}' },
+            },
+            muted: {
+              value: { base: '{colors.gray.11}', _dark: '{colors.gray.11}' },
+            },
+            subtle: {
+              value: { base: '{colors.gray.10}', _dark: '{colors.gray.10}' },
+            },
           },
-          canvas: { value: { base: '{colors.gray.1}', _dark: '{colors.gray.1}' } },
+          canvas: {
+            value: { base: '{colors.gray.1}', _dark: '{colors.gray.1}' },
+          },
           border: {
-            default: { value: { base: '{colors.gray.6}', _dark: '{colors.gray.6}' } },
-            muted: { value: { base: '{colors.gray.4}', _dark: '{colors.gray.4}' } },
+            default: {
+              value: { base: '{colors.gray.6}', _dark: '{colors.gray.6}' },
+            },
+            muted: {
+              value: { base: '{colors.gray.4}', _dark: '{colors.gray.4}' },
+            },
           },
 
           // M3 semantic tokens (surface, onSurface, etc.)
@@ -129,7 +143,7 @@ export default defineConfig({
         radii: {
           l1: { value: '0.125rem' }, // 2px (xs)
           l2: { value: '0.375rem' }, // 6px (sm)
-          l3: { value: '0.5rem' },   // 8px (md)
+          l3: { value: '0.5rem' }, // 8px (md)
         },
       },
 
@@ -138,9 +152,12 @@ export default defineConfig({
         // Core
         button: parkButton,
         input: parkInput,
+        inputAddon,
         group,
         spinner,
         absoluteCenter,
+        // Typography
+        heading,
         // Feedback & Status
         badge,
         skeleton,
@@ -149,6 +166,7 @@ export default defineConfig({
       slotRecipes: {
         // Core
         field: parkField,
+        inputGroup,
         // Layout & Containers
         card: parkCard,
         accordion,
@@ -168,13 +186,13 @@ export default defineConfig({
         dialog,
         popover,
         tooltip,
-      }
-    }
+      },
+    },
   },
 
   conditions: {
     light: '[data-theme=light] &, .light &',
-    dark: '[data-theme=dark] &, .dark &'
+    dark: '[data-theme=dark] &, .dark &',
   },
 
   globalCss: {
@@ -186,6 +204,6 @@ export default defineConfig({
     body: {
       fontFamily: 'body',
       textStyle: 'bodyMedium',
-    }
-  }
+    },
+  },
 });

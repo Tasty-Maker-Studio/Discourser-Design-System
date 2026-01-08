@@ -1,6 +1,8 @@
 // Core components
 export * from './button';
 export * from './input';
+export * from './input-addon';
+export * from './input-group';
 export * from './field';
 
 // Layout & containers
@@ -29,6 +31,9 @@ export * from './toast';
 export * from './dialog';
 export * from './popover';
 export * from './tooltip';
+
+// Typography
+export * from './heading';
 
 // Utilities
 export * from './absolute-center';
