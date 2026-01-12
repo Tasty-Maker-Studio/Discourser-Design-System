@@ -16,6 +16,7 @@ export interface DesignLanguageContract {
   shape: ShapeConfig;
   elevation: ElevationConfig;
   motion: MotionConfig;
+  border: BorderConfig;
 }
 
 // Color Types
@@ -183,4 +184,15 @@ export interface EasingScale {
   emphasized: string;
   emphasizedDecelerate: string;
   emphasizedAccelerate: string;
+}
+
+// Border Types
+export interface BorderConfig {
+  widths: BorderWidthScale;
+}
+
+export interface BorderWidthScale {
+  thin: string;
+  medium: string;
+  thick: string;
 }

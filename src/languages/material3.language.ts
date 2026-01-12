@@ -367,5 +367,13 @@ export const material3Language: DesignLanguageContract = {
       emphasizedAccelerate: 'cubic-bezier(0.3, 0, 0.8, 0.15)'
     },
     style: 'expressive'
+  },
+
+  border: {
+    widths: {
+      thin: '1px',
+      medium: '2px',
+      thick: '4px'
+    }
   }
 };

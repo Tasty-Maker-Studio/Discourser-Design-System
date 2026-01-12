@@ -50,7 +50,7 @@ const configs: DocConfig[] = [
 function convertToMDX(
   mdContent: string,
   title: string,
-  description: string
+  _description: string,
 ): string {
   // Remove any existing frontmatter
   const contentWithoutFrontmatter = mdContent.replace(/^---[\s\S]*?---\n/, '');
@@ -82,14 +82,17 @@ function processFile(
   targetPath: string,
   titlePrefix: string,
   description: string,
-  sourceBaseDir: string
+  _sourceBaseDir: string,
 ): void {
   const mdContent = fs.readFileSync(sourcePath, 'utf-8');
   const filename = path.basename(sourcePath);
   let title = getTitleFromFilename(filename);
 
   // For nested files named "SKILL.md", use parent directory name instead
-  if (filename.toLowerCase() === 'skill.md' || filename.toLowerCase() === 'skill.mdx') {
+  if (
+    filename.toLowerCase() === 'skill.md' ||
+    filename.toLowerCase() === 'skill.mdx'
+  ) {
     const parentDir = path.basename(path.dirname(sourcePath));
     title = getTitleFromFilename(parentDir);
   }
@@ -152,7 +155,13 @@ function processDirectory(config: DocConfig): void {
         }
         processDir(sourcePath, relativePath);
       } else if (entry.name.endsWith('.md')) {
-        processFile(sourcePath, targetPath, config.titlePrefix, config.description, sourceDir);
+        processFile(
+          sourcePath,
+          targetPath,
+          config.titlePrefix,
+          config.description,
+          sourceDir,
+        );
       }
     }
   }

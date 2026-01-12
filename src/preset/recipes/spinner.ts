@@ -11,7 +11,7 @@ export const spinner = defineRecipe({
     borderInlineStartColor: 'var(--spinner-track-color)',
     borderRadius: 'full',
     borderStyle: 'solid',
-    borderWidth: '2px',
+    borderWidth: 'medium',
     display: 'inline-block',
     height: 'var(--spinner-size)',
     width: 'var(--spinner-size)',

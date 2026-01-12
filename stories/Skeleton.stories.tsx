@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { Skeleton } from '../src';
+import { Skeleton, SkeletonCircle, SkeletonText } from '../src/components/Skeleton';
 
-const meta: Meta = {
+const meta: Meta<typeof Skeleton> = {
   title: 'Components/Feedback/Skeleton',
-  component: Skeleton.Root,
+  component: Skeleton,
   parameters: {
     layout: 'centered',
   },
@@ -16,19 +16,19 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
-    <Skeleton.Root>
-      <Skeleton.Skeleton style={{ width: '200px', height: '20px' }} />
-    </Skeleton.Root>
+    <div>
+      <Skeleton style={{ width: '200px', height: '20px' }} />
+    </div>
   ),
 };
 
 export const Circle: Story = {
   render: () => (
-    <Skeleton.Root>
-      <Skeleton.Skeleton
+    <div>
+      <Skeleton
         style={{ width: '60px', height: '60px', borderRadius: '50%' }}
       />
-    </Skeleton.Root>
+    </div>
   ),
 };
 
@@ -42,9 +42,9 @@ export const Card: Story = {
         borderRadius: '8px',
       }}
     >
-      <Skeleton.Root>
+      <div>
         <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
-          <Skeleton.Skeleton
+          <Skeleton
             style={{ width: '60px', height: '60px', borderRadius: '50%' }}
           />
           <div
@@ -55,18 +55,18 @@ export const Card: Story = {
               gap: '0.5rem',
             }}
           >
-            <Skeleton.Skeleton style={{ width: '60%', height: '16px' }} />
-            <Skeleton.Skeleton style={{ width: '40%', height: '14px' }} />
+            <Skeleton style={{ width: '60%', height: '16px' }} />
+            <Skeleton style={{ width: '40%', height: '14px' }} />
           </div>
         </div>
-        <Skeleton.Skeleton
+        <Skeleton
           style={{ width: '100%', height: '14px', marginBottom: '0.5rem' }}
         />
-        <Skeleton.Skeleton
+        <Skeleton
           style={{ width: '100%', height: '14px', marginBottom: '0.5rem' }}
         />
-        <Skeleton.Skeleton style={{ width: '80%', height: '14px' }} />
-      </Skeleton.Root>
+        <Skeleton style={{ width: '80%', height: '14px' }} />
+      </div>
     </div>
   ),
 };
@@ -82,9 +82,9 @@ export const List: Story = {
       }}
     >
       {[1, 2, 3, 4].map((i) => (
-        <Skeleton.Root key={i}>
+        <div key={i}>
           <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-            <Skeleton.Skeleton
+            <Skeleton
               style={{ width: '40px', height: '40px', borderRadius: '4px' }}
             />
             <div
@@ -95,11 +95,11 @@ export const List: Story = {
                 gap: '0.5rem',
               }}
             >
-              <Skeleton.Skeleton style={{ width: '70%', height: '14px' }} />
-              <Skeleton.Skeleton style={{ width: '50%', height: '12px' }} />
+              <Skeleton style={{ width: '70%', height: '14px' }} />
+              <Skeleton style={{ width: '50%', height: '12px' }} />
             </div>
           </div>
-        </Skeleton.Root>
+        </div>
       ))}
     </div>
   ),
@@ -121,9 +121,9 @@ export const WithContent: Story = {
         >
           Toggle Loading
         </button>
-        <Skeleton.Root isLoaded={isLoaded}>
+        <div isLoaded={isLoaded}>
           <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-            <Skeleton.Skeleton
+            <Skeleton
               style={{ width: '60px', height: '60px', borderRadius: '50%' }}
             >
               <div
@@ -135,19 +135,19 @@ export const WithContent: Story = {
                     'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                 }}
               />
-            </Skeleton.Skeleton>
+            </Skeleton>
             <div style={{ flex: 1 }}>
-              <Skeleton.Skeleton
+              <Skeleton
                 style={{ width: '70%', height: '16px', marginBottom: '0.5rem' }}
               >
                 <h3 style={{ margin: 0 }}>John Doe</h3>
-              </Skeleton.Skeleton>
-              <Skeleton.Skeleton style={{ width: '50%', height: '14px' }}>
+              </Skeleton>
+              <Skeleton style={{ width: '50%', height: '14px' }}>
                 <p style={{ margin: 0, color: '#666' }}>Software Engineer</p>
-              </Skeleton.Skeleton>
+              </Skeleton>
             </div>
           </div>
-        </Skeleton.Root>
+        </div>
       </div>
     );
   },

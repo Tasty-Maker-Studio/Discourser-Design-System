@@ -107,6 +107,7 @@ export const select = defineSlotRecipe({
       overflow: 'hidden',
       textOverflow: 'ellipsis',
       whiteSpace: 'nowrap',
+      color: 'fg.default',
     },
   },
   defaultVariants: {
@@ -117,7 +118,7 @@ export const select = defineSlotRecipe({
     variant: {
       outline: {
         trigger: {
-          borderWidth: '1px',
+          borderWidth: 'thin',
           borderColor: 'gray.outline.border',
 
           focusVisibleRing: 'inside',
@@ -126,7 +127,7 @@ export const select = defineSlotRecipe({
       surface: {
         trigger: {
           bg: 'gray.surface.bg',
-          borderWidth: '1px',
+          borderWidth: 'thin',
           borderColor: 'gray.surface.border',
 
           focusVisibleRing: 'inside',

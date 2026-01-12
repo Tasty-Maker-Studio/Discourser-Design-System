@@ -25,7 +25,8 @@ export const accordion = defineSlotRecipe({
       textStyle: 'lg',
       width: 'full',
       _focusVisible: {
-        outline: '2px solid',
+        outlineWidth: 'medium',
+        outlineStyle: 'solid',
         outlineColor: 'colorPalette.focusRing',
       },
       _disabled: {
@@ -58,6 +59,7 @@ export const accordion = defineSlotRecipe({
       _closed: {
         animationName: 'collapse-height, fade-out',
         animationDuration: 'normal',
+        display: 'none',
       },
     },
   },
@@ -78,7 +80,7 @@ export const accordion = defineSlotRecipe({
       md: {
         root: {
           '--accordion-padding-x': 'spacing.4',
-          '--accordion-padding-y': 'spacing.2.5',
+          '--accordion-padding-y': 'spacing.3',
         },
         itemTrigger: {
           textStyle: 'md',

@@ -76,8 +76,7 @@ export default defineConfig({
 
   theme: {
     extend: {
-      // Add M3 tokens to Panda preset (colors, fonts, etc.)
-      // Keep Panda's spacing, radii from preset
+      // Add M3 tokens to Panda preset (colors, fonts, spacing, etc.)
       tokens: {
         colors: theme.tokens.colors,
         fonts: theme.tokens.fonts,
@@ -85,8 +84,12 @@ export default defineConfig({
         lineHeights: theme.tokens.lineHeights,
         fontWeights: theme.tokens.fontWeights,
         letterSpacings: theme.tokens.letterSpacings,
+        spacing: theme.tokens.spacing,
+        radii: theme.tokens.radii,
+        shadows: theme.tokens.shadows,
         durations: theme.tokens.durations,
         easings: theme.tokens.easings,
+        borderWidths: theme.tokens.borderWidths,
       },
 
       // Park UI layer styles for common UI patterns (disabled, etc.)

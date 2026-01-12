@@ -6,6 +6,15 @@ import { VStack } from '../styled-system/jsx';
 const meta: Meta<typeof Dialog.Root> = {
   title: 'Components / Dialog',
   component: Dialog.Root,
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      story: {
+        inline: false,
+        iframeHeight: 500,
+      },
+    },
+  },
   tags: ['autodocs'],
 };
 
@@ -68,21 +77,21 @@ export const Default: Story = {
 export const Sizes: Story = {
   render: () => (
     <VStack gap="4" alignItems="start">
-      <Dialog.Root>
+      <Dialog.Root size="sm">
         <Dialog.Trigger asChild>
           <Button variant="outline" colorPalette="neutral">Small Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Backdrop />
         <Dialog.Positioner>
-          <Dialog.Content size="sm">
+          <Dialog.Content>
             <Dialog.Header>
-              <Dialog.Title>Small Dialog</Dialog.Title>
+              <Dialog.Title>Small Dialog (max-width: sm)</Dialog.Title>
               <Dialog.Description>
-                This is a small dialog (max-width: sm)
+                This dialog demonstrates the small size variant with a maximum width constraint.
               </Dialog.Description>
             </Dialog.Header>
             <Dialog.Body>
-              <p>Content for small dialog</p>
+              <p>This is a small dialog with limited width. The content will wrap within the constrained space to demonstrate the size difference between variants.</p>
             </Dialog.Body>
             <Dialog.Footer>
               <Dialog.CloseTrigger asChild>
@@ -93,21 +102,21 @@ export const Sizes: Story = {
         </Dialog.Positioner>
       </Dialog.Root>
 
-      <Dialog.Root>
+      <Dialog.Root size="md">
         <Dialog.Trigger asChild>
           <Button variant="outline" colorPalette="neutral">Medium Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Backdrop />
         <Dialog.Positioner>
-          <Dialog.Content size="md">
+          <Dialog.Content>
             <Dialog.Header>
-              <Dialog.Title>Medium Dialog</Dialog.Title>
+              <Dialog.Title>Medium Dialog (max-width: md)</Dialog.Title>
               <Dialog.Description>
-                This is a medium dialog (max-width: md)
+                This dialog demonstrates the medium size variant with a moderate maximum width constraint that provides more space than small.
               </Dialog.Description>
             </Dialog.Header>
             <Dialog.Body>
-              <p>Content for medium dialog</p>
+              <p>This is a medium dialog with moderate width constraints. The content has more horizontal space to work with compared to the small variant, allowing for more comfortable reading and form layouts.</p>
             </Dialog.Body>
             <Dialog.Footer>
               <Dialog.CloseTrigger asChild>
@@ -118,21 +127,21 @@ export const Sizes: Story = {
         </Dialog.Positioner>
       </Dialog.Root>
 
-      <Dialog.Root>
+      <Dialog.Root size="lg">
         <Dialog.Trigger asChild>
           <Button variant="outline" colorPalette="neutral">Large Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Backdrop />
         <Dialog.Positioner>
-          <Dialog.Content size="lg">
+          <Dialog.Content>
             <Dialog.Header>
-              <Dialog.Title>Large Dialog</Dialog.Title>
+              <Dialog.Title>Large Dialog (max-width: lg)</Dialog.Title>
               <Dialog.Description>
-                This is a large dialog (max-width: lg)
+                This dialog demonstrates the large size variant with an expansive maximum width constraint that provides the most horizontal space.
               </Dialog.Description>
             </Dialog.Header>
             <Dialog.Body>
-              <p>Content for large dialog with more space for content</p>
+              <p>This is a large dialog with generous width constraints. The content has significantly more horizontal space compared to both small and medium variants, making it ideal for complex forms, detailed information, or multi-column layouts that require ample room to breathe.</p>
             </Dialog.Body>
             <Dialog.Footer>
               <Dialog.CloseTrigger asChild>
@@ -149,13 +158,13 @@ export const Sizes: Story = {
 export const Placement: Story = {
   render: () => (
     <VStack gap="4" alignItems="start">
-      <Dialog.Root>
+      <Dialog.Root placement="top">
         <Dialog.Trigger asChild>
           <Button variant="outline" colorPalette="neutral">Top Placement</Button>
         </Dialog.Trigger>
         <Dialog.Backdrop />
         <Dialog.Positioner>
-          <Dialog.Content placement="top">
+          <Dialog.Content>
             <Dialog.Header>
               <Dialog.Title>Top Placement</Dialog.Title>
               <Dialog.Description>
@@ -174,13 +183,13 @@ export const Placement: Story = {
         </Dialog.Positioner>
       </Dialog.Root>
 
-      <Dialog.Root>
+      <Dialog.Root placement="center">
         <Dialog.Trigger asChild>
           <Button variant="outline" colorPalette="neutral">Center Placement (Default)</Button>
         </Dialog.Trigger>
         <Dialog.Backdrop />
         <Dialog.Positioner>
-          <Dialog.Content placement="center">
+          <Dialog.Content>
             <Dialog.Header>
               <Dialog.Title>Center Placement</Dialog.Title>
               <Dialog.Description>
@@ -199,13 +208,13 @@ export const Placement: Story = {
         </Dialog.Positioner>
       </Dialog.Root>
 
-      <Dialog.Root>
+      <Dialog.Root placement="bottom">
         <Dialog.Trigger asChild>
           <Button variant="outline" colorPalette="neutral">Bottom Placement</Button>
         </Dialog.Trigger>
         <Dialog.Backdrop />
         <Dialog.Positioner>
-          <Dialog.Content placement="bottom">
+          <Dialog.Content>
             <Dialog.Header>
               <Dialog.Title>Bottom Placement</Dialog.Title>
               <Dialog.Description>

@@ -35,7 +35,7 @@ const items = [
 
 export const Default: Story = {
   render: () => (
-    <Accordion.Root defaultValue={['item-1']} style={{ width: '400px' }}>
+    <Accordion.Root defaultValue="item-1" style={{ width: '400px' }}>
       {items.map((item) => (
         <Accordion.Item key={item.value} value={item.value}>
           <Accordion.ItemTrigger>
@@ -51,7 +51,7 @@ export const Default: Story = {
 
 export const Single: Story = {
   render: () => (
-    <Accordion.Root collapsible style={{ width: '400px' }}>
+    <Accordion.Root multiple={false} collapsible defaultValue="item-1" style={{ width: '400px' }}>
       {items.map((item) => (
         <Accordion.Item key={item.value} value={item.value}>
           <Accordion.ItemTrigger>
