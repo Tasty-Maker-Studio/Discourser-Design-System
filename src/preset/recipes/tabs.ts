@@ -87,22 +87,22 @@ export const tabs = defineSlotRecipe({
         },
         list: {
           _horizontal: {
-            borderBottomWidth: '1px',
+            borderBottomWidth: 'thin',
           },
           _vertical: {
-            borderStartWidth: '1px',
+            borderStartWidth: 'thin',
           },
         },
         indicator: {
           background: 'colorPalette.solid.bg',
           _horizontal: {
             bottom: '0',
-            height: '0.5',
+            height: 'xxs',
             transform: 'translateY(1px)',
           },
           _vertical: {
             left: '0',
-            width: '0.5',
+            width: 'xxs',
             transform: 'translateX(-1px)',
           },
         },

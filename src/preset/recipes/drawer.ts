@@ -52,6 +52,7 @@ export const drawer = defineSlotRecipe({
       _closed: {
         animationDuration: 'normal',
         animationTimingFunction: 'cubic-bezier(0.3, 0.0, 0.8, 0.15)',
+        display: 'none',
       },
     },
     header: {

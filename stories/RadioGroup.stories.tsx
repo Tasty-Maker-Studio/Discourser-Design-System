@@ -21,13 +21,13 @@ const options = [
 
 export const Default: Story = {
   render: () => (
-    <RadioGroup.Root defaultValue="md">
+    <RadioGroup.Root defaultValue="md" colorPalette="primary">
       <RadioGroup.Label>Size</RadioGroup.Label>
       {options.map((option) => (
         <RadioGroup.Item key={option.value} value={option.value}>
+          <RadioGroup.ItemHiddenInput />
           <RadioGroup.ItemControl />
           <RadioGroup.ItemText>{option.label}</RadioGroup.ItemText>
-          <RadioGroup.ItemHiddenInput />
         </RadioGroup.Item>
       ))}
     </RadioGroup.Root>
@@ -36,13 +36,13 @@ export const Default: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <RadioGroup.Root defaultValue="md" disabled>
+    <RadioGroup.Root disabled colorPalette="primary">
       <RadioGroup.Label>Size (disabled)</RadioGroup.Label>
       {options.map((option) => (
         <RadioGroup.Item key={option.value} value={option.value}>
+          <RadioGroup.ItemHiddenInput />
           <RadioGroup.ItemControl />
           <RadioGroup.ItemText>{option.label}</RadioGroup.ItemText>
-          <RadioGroup.ItemHiddenInput />
         </RadioGroup.Item>
       ))}
     </RadioGroup.Root>
@@ -51,13 +51,13 @@ export const Disabled: Story = {
 
 export const Horizontal: Story = {
   render: () => (
-    <RadioGroup.Root defaultValue="md" orientation="horizontal">
+    <RadioGroup.Root defaultValue="md" orientation="horizontal" colorPalette="primary">
       <RadioGroup.Label>Size</RadioGroup.Label>
       {options.map((option) => (
         <RadioGroup.Item key={option.value} value={option.value}>
+          <RadioGroup.ItemHiddenInput />
           <RadioGroup.ItemControl />
           <RadioGroup.ItemText>{option.label}</RadioGroup.ItemText>
-          <RadioGroup.ItemHiddenInput />
         </RadioGroup.Item>
       ))}
     </RadioGroup.Root>

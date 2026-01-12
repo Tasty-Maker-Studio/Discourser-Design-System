@@ -14,11 +14,11 @@ export * as Tabs from './Tabs';
 export { Input, type InputProps } from './Input';
 export { InputAddon, type InputAddonProps } from './InputAddon';
 export { InputGroup, type InputGroupProps } from './InputGroup';
+export { Textarea, type TextareaProps } from './Textarea';
 export * as Checkbox from './Checkbox';
 export * as RadioGroup from './RadioGroup';
 export * as Select from './Select';
 export * as Slider from './Slider';
-export * as Textarea from './Textarea';
 
 // Feedback & Status Components
 export * as Avatar from './Avatar';

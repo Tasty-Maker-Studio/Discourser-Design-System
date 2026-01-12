@@ -17,6 +17,8 @@ export const radioGroup = defineSlotRecipe({
       flexShrink: 0,
       justifyContent: 'center',
       verticalAlign: 'top',
+      boxShadow: 'inset 0 0 0 1px var(--shadow-color)',
+      boxShadowColor: 'gray.surface.border',
       _after: {
         content: '""',
         display: 'block',
@@ -25,6 +27,14 @@ export const radioGroup = defineSlotRecipe({
       },
       _focusVisible: {
         focusVisibleRing: 'outside',
+      },
+      _checked: {
+        bg: 'colorPalette.solid.bg',
+        color: 'colorPalette.solid.fg',
+        boxShadowColor: 'colorPalette.solid.bg',
+        _after: {
+          background: 'colorPalette.solid.fg',
+        },
       },
     },
     item: {
@@ -39,26 +49,21 @@ export const radioGroup = defineSlotRecipe({
       fontWeight: 'medium',
       userSelect: 'none',
     },
+    label: {
+      fontWeight: 'semibold',
+      textStyle: 'sm',
+      mb: '1',
+    },
   },
   defaultVariants: {
     variant: 'solid',
     size: 'md',
+    orientation: 'vertical',
   },
   variants: {
     variant: {
       solid: {
-        itemControl: {
-          boxShadow: 'inset 0 0 0 1px var(--shadow-color)',
-          boxShadowColor: 'gray.surface.border',
-          _checked: {
-            bg: 'colorPalette.solid.bg',
-            color: 'colorPalette.solid.fg',
-            boxShadowColor: 'colorPalette.solid.bg',
-            _after: {
-              background: 'colorPalette.solid.fg',
-            },
-          },
-        },
+        itemControl: {},
       },
     },
     size: {
@@ -76,6 +81,18 @@ export const radioGroup = defineSlotRecipe({
         item: { gap: '3' },
         itemControl: { boxSize: '5.5' },
         itemText: { textStyle: 'lg' },
+      },
+    },
+    orientation: {
+      horizontal: {
+        root: {
+          flexDirection: 'row',
+        },
+      },
+      vertical: {
+        root: {
+          flexDirection: 'column',
+        },
       },
     },
   },

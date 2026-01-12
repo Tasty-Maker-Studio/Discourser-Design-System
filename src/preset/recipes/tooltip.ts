@@ -30,8 +30,8 @@ export const tooltip = defineSlotRecipe({
       '--arrow-background': 'var(--tooltip-bg)',
     },
     arrowTip: {
-      borderTopWidth: '1px',
-      borderInlineStartWidth: '1px',
+      borderTopWidth: 'thin',
+      borderInlineStartWidth: 'thin',
       borderColor: 'var(--tooltip-bg)',
     },
   },

@@ -22,7 +22,7 @@ export const textarea = defineRecipe({
   variants: {
     variant: {
       outline: {
-        borderWidth: '1px',
+        borderWidth: 'thin',
         borderColor: 'gray.outline.border',
         focusVisibleRing: 'inside',
         _invalid: {
@@ -32,7 +32,7 @@ export const textarea = defineRecipe({
       },
       surface: {
         bg: 'gray.surface.bg',
-        borderWidth: '1px',
+        borderWidth: 'thin',
         borderColor: 'gray.surface.border',
         focusVisibleRing: 'inside',
         _invalid: {
@@ -41,7 +41,7 @@ export const textarea = defineRecipe({
         },
       },
       subtle: {
-        borderWidth: '1px',
+        borderWidth: 'thin',
         borderColor: 'transparent',
         bg: 'gray.subtle.bg',
         color: 'gray.subtle.fg',
@@ -52,7 +52,7 @@ export const textarea = defineRecipe({
         },
       },
       flushed: {
-        borderBottomWidth: '1px',
+        borderBottomWidth: 'thin',
         borderBottomColor: 'gray.outline.border',
         borderRadius: '0',
         color: 'fg.default',
@@ -72,11 +72,11 @@ export const textarea = defineRecipe({
       },
     },
     size: {
-      xs: { textStyle: 'sm', px: '2', py: '5px', scrollPaddingBottom: '5px' },
-      sm: { textStyle: 'sm', px: '2.5', py: '7px', scrollPaddingBottom: '7px' },
-      md: { textStyle: 'md', px: '3', py: '7px', scrollPaddingBottom: '7px' },
-      lg: { textStyle: 'md', px: '3.5', py: '9px', scrollPaddingBottom: '9px' },
-      xl: { textStyle: 'lg', px: '4', py: '9px', scrollPaddingBottom: '9px' },
+      xs: { textStyle: 'sm', px: '2', py: 'sm', scrollPaddingBottom: 'sm' },
+      sm: { textStyle: 'sm', px: '2.5', py: 'sm', scrollPaddingBottom: 'sm' },
+      md: { textStyle: 'md', px: '3', py: 'sm', scrollPaddingBottom: 'sm' },
+      lg: { textStyle: 'md', px: '3.5', py: 'sm', scrollPaddingBottom: 'sm' },
+      xl: { textStyle: 'lg', px: '4', py: 'sm', scrollPaddingBottom: 'sm' },
     },
   },
 })

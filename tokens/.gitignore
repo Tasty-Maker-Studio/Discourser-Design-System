@@ -1,0 +1,15 @@
+# Ignore generated files (these come from Figma exports)
+*-generated.json
+tokens.json
+
+# Ignore backups
+.archive/backup-*
+
+# Keep reference files
+!primitives/colors.json
+!semantic/colors.light.json
+!semantic/colors.dark.json
+
+# Keep documentation
+!.archive/README.md
+!README.md

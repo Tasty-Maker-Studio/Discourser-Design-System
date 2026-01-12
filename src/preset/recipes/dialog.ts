@@ -40,9 +40,6 @@ export const dialog = defineSlotRecipe({
       textStyle: 'sm',
     },
     closeTrigger: {
-      pos: 'absolute',
-      top: '3',
-      insetEnd: '3',
     },
     content: {
       bg: 'neutral.surface.bg',
@@ -63,6 +60,7 @@ export const dialog = defineSlotRecipe({
       },
       _closed: {
         animationDuration: 'normal',
+        display: 'none',
       },
     },
     header: {

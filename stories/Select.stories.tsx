@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import * as Select from '../src/components/Select';
+import { createListCollection } from '@ark-ui/react/select';
 import { VStack } from '../styled-system/jsx';
 
 const meta: Meta<typeof Select.Root> = {
@@ -19,9 +20,11 @@ const scenarios = [
   { label: 'Coding', value: 'coding' },
 ];
 
+const scenariosCollection = createListCollection({ items: scenarios });
+
 export const Default: Story = {
   render: () => (
-    <Select.Root colorPalette="primary" items={scenarios} positioning={{ sameWidth: true }}>
+    <Select.Root colorPalette="primary" collection={scenariosCollection} positioning={{ sameWidth: true }}>
       <Select.Label>Select Scenario</Select.Label>
       <Select.Control>
         <Select.Trigger>
@@ -32,7 +35,7 @@ export const Default: Story = {
       <Select.Positioner>
         <Select.Content>
           <Select.List>
-            {scenarios.map((scenario) => (
+            {scenariosCollection.items.map((scenario) => (
               <Select.Item key={scenario.value} item={scenario}>
                 <Select.ItemText>{scenario.label}</Select.ItemText>
                 <Select.ItemIndicator />
@@ -49,7 +52,7 @@ export const Default: Story = {
 export const Sizes: Story = {
   render: () => (
     <VStack gap="6" alignItems="start" width="300px">
-      <Select.Root colorPalette="primary" items={scenarios} size="sm" positioning={{ sameWidth: true }}>
+      <Select.Root colorPalette="primary" collection={scenariosCollection} size="sm" positioning={{ sameWidth: true }}>
         <Select.Label>Small</Select.Label>
         <Select.Control>
           <Select.Trigger>
@@ -60,7 +63,7 @@ export const Sizes: Story = {
         <Select.Positioner>
           <Select.Content>
             <Select.List>
-              {scenarios.map((scenario) => (
+              {scenariosCollection.items.map((scenario) => (
                 <Select.Item key={scenario.value} item={scenario}>
                   <Select.ItemText>{scenario.label}</Select.ItemText>
                   <Select.ItemIndicator />
@@ -72,7 +75,7 @@ export const Sizes: Story = {
         <Select.HiddenSelect />
       </Select.Root>
 
-      <Select.Root colorPalette="primary" items={scenarios} size="md" positioning={{ sameWidth: true }}>
+      <Select.Root colorPalette="primary" collection={scenariosCollection} size="md" positioning={{ sameWidth: true }}>
         <Select.Label>Medium (Default)</Select.Label>
         <Select.Control>
           <Select.Trigger>
@@ -83,7 +86,7 @@ export const Sizes: Story = {
         <Select.Positioner>
           <Select.Content>
             <Select.List>
-              {scenarios.map((scenario) => (
+              {scenariosCollection.items.map((scenario) => (
                 <Select.Item key={scenario.value} item={scenario}>
                   <Select.ItemText>{scenario.label}</Select.ItemText>
                   <Select.ItemIndicator />
@@ -95,7 +98,7 @@ export const Sizes: Story = {
         <Select.HiddenSelect />
       </Select.Root>
 
-      <Select.Root colorPalette="primary" items={scenarios} size="lg" positioning={{ sameWidth: true }}>
+      <Select.Root colorPalette="primary" collection={scenariosCollection} size="lg" positioning={{ sameWidth: true }}>
         <Select.Label>Large</Select.Label>
         <Select.Control>
           <Select.Trigger>
@@ -106,7 +109,7 @@ export const Sizes: Story = {
         <Select.Positioner>
           <Select.Content>
             <Select.List>
-              {scenarios.map((scenario) => (
+              {scenariosCollection.items.map((scenario) => (
                 <Select.Item key={scenario.value} item={scenario}>
                   <Select.ItemText>{scenario.label}</Select.ItemText>
                   <Select.ItemIndicator />
@@ -123,7 +126,7 @@ export const Sizes: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <Select.Root colorPalette="primary" items={scenarios} disabled positioning={{ sameWidth: true }}>
+    <Select.Root colorPalette="primary" collection={scenariosCollection} disabled positioning={{ sameWidth: true }}>
       <Select.Label>Disabled Select</Select.Label>
       <Select.Control>
         <Select.Trigger>
@@ -134,7 +137,7 @@ export const Disabled: Story = {
       <Select.Positioner>
         <Select.Content>
           <Select.List>
-            {scenarios.map((scenario) => (
+            {scenariosCollection.items.map((scenario) => (
               <Select.Item key={scenario.value} item={scenario}>
                 <Select.ItemText>{scenario.label}</Select.ItemText>
                 <Select.ItemIndicator />
@@ -163,7 +166,7 @@ export const WithGroups: Story = {
     ];
 
     return (
-      <Select.Root colorPalette="primary" items={scenarios} positioning={{ sameWidth: true }}>
+      <Select.Root colorPalette="primary" collection={scenariosCollection} positioning={{ sameWidth: true }}>
         <Select.Label>Grouped Options</Select.Label>
         <Select.Control>
           <Select.Trigger>

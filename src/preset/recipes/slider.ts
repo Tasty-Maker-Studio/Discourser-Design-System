@@ -77,27 +77,27 @@ export const slider = defineSlotRecipe({
         root: {
           '--slider-thumb-size': 'sizes.5',
           '--slider-track-size': 'sizes.2',
-          '--slider-marker-center': '8px',
+          '--slider-marker-center': '{spacing.sm}',
           '--slider-marker-size': 'sizes.1',
-          '--slider-marker-inset': '4px',
+          '--slider-marker-inset': '{spacing.xs}',
         },
       },
       md: {
         root: {
           '--slider-thumb-size': 'sizes.5',
           '--slider-track-size': 'sizes.2',
-          '--slider-marker-center': '8px',
+          '--slider-marker-center': '{spacing.sm}',
           '--slider-marker-size': 'sizes.1',
-          '--slider-marker-inset': '4px',
+          '--slider-marker-inset': '{spacing.xs}',
         },
       },
       lg: {
         root: {
           '--slider-thumb-size': 'sizes.5',
           '--slider-track-size': 'sizes.2',
-          '--slider-marker-center': '8px',
+          '--slider-marker-center': '{spacing.sm}',
           '--slider-marker-size': 'sizes.1',
-          '--slider-marker-inset': '4px',
+          '--slider-marker-inset': '{spacing.xs}',
         },
       },
     },
@@ -105,7 +105,7 @@ export const slider = defineSlotRecipe({
       outline: {
         thumb: {
           bg: 'gray.surface.bg',
-          borderWidth: '2px',
+          borderWidth: 'medium',
           borderColor: 'colorPalette.solid.bg',
           boxShadow: 'xs',
         },

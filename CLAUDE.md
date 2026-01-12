@@ -68,6 +68,31 @@ Dark mode works automatically via `data-theme="dark"` attribute.
 - [ ] Components using inline css() instead of recipes
 - [ ] M3 tokens from material-theme.json not integrated
 
+## Figma Token Sync Integration
+
+**Specification:** See `FIGMA_DESIGN_SYSTEM_SYNC_SPEC.md` in the figma-token-sync repo.
+
+Location: `/Users/willstreeter/WebstormProjects/vibe-coding/shifu-project/figma-token-sync/FIGMA_DESIGN_SYSTEM_SYNC_SPEC.md`
+
+### Token Flow:
+```
+Figma Variables → DTCG JSON → DesignLanguageContract → PandaCSS
+```
+
+### Key Files:
+- `src/contracts/design-language.contract.ts` — TypeScript interface for all tokens
+- `src/languages/material3.language.ts` — M3 implementation (generated from DTCG)
+- `src/preset/colors/m3-primary.ts` — Maps M3 tonal → Radix scale for Park UI
+
+### Expected DTCG Input:
+```
+tokens/
+├── primitives/colors.json    ← Tonal palettes (78 colors)
+└── semantic/
+    ├── colors.light.json    ← Light mode semantics (31 tokens)
+    └── colors.dark.json     ← Dark mode semantics (31 tokens)
+```
+
 ## Code Style
 
 Handled by tooling—don't manually enforce:

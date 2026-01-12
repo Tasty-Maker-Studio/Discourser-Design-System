@@ -3,7 +3,6 @@ import { defineRecipe } from '@pandacss/dev';
 export const heading = defineRecipe({
   className: 'heading',
   base: {
-    fontWeight: 'semibold',
     color: 'fg.default',
   },
   defaultVariants: {
@@ -11,17 +10,17 @@ export const heading = defineRecipe({
   },
   variants: {
     size: {
-      xs: { textStyle: 'xs' },
-      sm: { textStyle: 'sm' },
-      md: { textStyle: 'md' },
-      lg: { textStyle: 'lg' },
-      xl: { textStyle: 'xl' },
-      '2xl': { textStyle: '2xl' },
-      '3xl': { textStyle: '3xl' },
-      '4xl': { textStyle: '4xl' },
-      '5xl': { textStyle: '5xl' },
-      '6xl': { textStyle: '6xl' },
-      '7xl': { textStyle: '7xl' },
+      xs: { textStyle: 'labelLarge' },
+      sm: { textStyle: 'titleSmall' },
+      md: { textStyle: 'titleMedium' },
+      lg: { textStyle: 'titleLarge' },
+      xl: { textStyle: 'headlineSmall' },
+      '2xl': { textStyle: 'headlineMedium' },
+      '3xl': { textStyle: 'headlineLarge' },
+      '4xl': { textStyle: 'displaySmall' },
+      '5xl': { textStyle: 'displayMedium' },
+      '6xl': { textStyle: 'displayLarge' },
+      '7xl': { textStyle: 'displayLarge' },
     },
   },
 });

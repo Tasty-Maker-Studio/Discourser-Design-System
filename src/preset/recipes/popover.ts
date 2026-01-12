@@ -5,9 +5,15 @@ export const popover = defineSlotRecipe({
   className: 'popover',
   slots: popoverAnatomy.extendWith('header', 'body', 'footer').keys(),
   base: {
+    positioner: {
+      position: 'absolute',
+      top: '0',
+      left: '0',
+      zIndex: 'popover',
+    },
     content: {
       '--popover-bg': 'colors.gray.surface.bg',
-      '--popover-padding': 'spacing.4',
+      '--popover-padding': 'spacing.md',
 
       background: 'var(--popover-bg)',
       borderRadius: 'l3',
@@ -19,7 +25,7 @@ export const popover = defineSlotRecipe({
       position: 'relative',
       textStyle: 'sm',
       transformOrigin: 'var(--transform-origin)',
-      width: 'xs',
+      width: 'sm',
       zIndex: 'calc(var(--z-index-popover) + var(--layer-index, 0))',
       _open: {
         animationStyle: 'scale-fade-in',
@@ -47,8 +53,7 @@ export const popover = defineSlotRecipe({
     header: {
       display: 'flex',
       flexDirection: 'column',
-      pt: 'var(--popover-padding)',
-      px: 'var(--popover-padding)',
+      p: 'var(--popover-padding)',
     },
     body: { p: 'var(--popover-padding)', display: 'flex', flex: '1', flexDirection: 'column' },
     footer: {
@@ -64,8 +69,9 @@ export const popover = defineSlotRecipe({
       '--arrow-background': 'var(--popover-bg)',
     },
     arrowTip: {
-      borderTopWidth: '0.5px',
-      borderInlineStartWidth: '0.5px',
+      borderTopWidth: 'thin',
+      borderInlineStartWidth: 'thin',
+      borderColor: 'var(--popover-bg)',
     },
   },
 })

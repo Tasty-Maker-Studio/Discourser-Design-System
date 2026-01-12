@@ -19,12 +19,12 @@ export const inputAddon = defineRecipe({
   variants: {
     variant: {
       outline: {
-        borderWidth: '1px',
+        borderWidth: 'thin',
         borderColor: 'neutral.outline.border',
       },
       surface: {
         bg: 'neutral.surface.bg',
-        borderWidth: '1px',
+        borderWidth: 'thin',
         borderColor: 'neutral.surface.border',
       },
       subtle: {

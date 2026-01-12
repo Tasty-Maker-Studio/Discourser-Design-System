@@ -108,8 +108,8 @@ export const TypeSpecimen = ({
 
 function getFontFamilyString(family: string): string {
   const fontFamilies = {
-    display: 'Georgia, "Times New Roman", serif',
-    body: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    display: '"Fraunces", Georgia, "Times New Roman", serif',
+    body: '"Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
     mono: '"JetBrains Mono", "Fira Code", Consolas, monospace',
   };
 

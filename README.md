@@ -584,6 +584,59 @@ pnpm test --ui     # Open Vitest UI
 | `pnpm typecheck` | TypeScript validation |
 | `pnpm lint` | ESLint |
 
+## 🔄 Token Workflow
+
+This design system uses [figma-token-sync](https://github.com/yourusername/figma-token-sync) for bidirectional token synchronization with Figma.
+
+### After Exporting from Figma
+
+1. **Export from Figma**
+   - Run figma-token-sync plugin → Export
+   - Save files to Downloads (or remember location)
+
+2. **Organize tokens**
+   ```bash
+   pnpm organize-tokens
+   ```
+   - Provide paths when prompted
+   - Review summary
+
+3. **Rebuild design system**
+   ```bash
+   pnpm build:panda
+   ```
+
+4. **Test in Storybook**
+   ```bash
+   pnpm dev
+   ```
+
+5. **Commit changes**
+   ```bash
+   git add tokens/
+   git commit -m "chore: update tokens from Figma"
+   ```
+
+### Importing to Figma
+
+1. **Generate DTCG tokens**
+   ```bash
+   pnpm transform:contract-to-dtcg
+   ```
+
+2. **Open figma-token-sync plugin**
+   - Click "Import"
+   - Browse to `tokens/tokens.json`
+   - Plugin creates/updates Figma variables
+
+### Token Files
+
+- `tokens/primitives-generated.json` - Primitive color tokens from Figma (not in git)
+- `tokens/semantic-light-generated.json` - Light mode semantic tokens (not in git)
+- `tokens/semantic-dark-generated.json` - Dark mode semantic tokens (not in git)
+- `tokens/tokens.json` - Combined token file for import to Figma (not in git)
+- `src/languages/material3.language.ts` - Source of truth (in git)
+
 ## 🤝 Contributing
 
 ### Development Workflow

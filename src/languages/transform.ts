@@ -27,7 +27,8 @@ function transformTokens(language: DesignLanguageContract) {
     radii: objectToTokens(language.shape.radii as unknown as Record<string, string>),
     shadows: objectToTokens(language.elevation.levels as unknown as Record<string, string>),
     durations: objectToTokens(language.motion.durations as unknown as Record<string, string>),
-    easings: objectToTokens(language.motion.easings as unknown as Record<string, string>)
+    easings: objectToTokens(language.motion.easings as unknown as Record<string, string>),
+    borderWidths: objectToTokens(language.border.widths as unknown as Record<string, string>)
   };
 }
 
