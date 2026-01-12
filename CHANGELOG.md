@@ -1,5 +1,18 @@
 # @discourser/design-system
 
+## 0.2.2
+
+### Patch Changes
+
+- [#25](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/25) [`693dbda`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/693dbda4ed0239d88d03a6e89b4a33c677bf1e1a) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Add Badge component stories and development workflow protections
+  - Add comprehensive Badge.stories.tsx with all variants, sizes, and color palettes
+  - Add CODEOWNERS to require approval for critical files (.github/workflows/, package.json, etc.)
+  - Add pre-commit hooks with husky and lint-staged for automatic linting, formatting, and type checking
+  - Add RELEASE_PROCESS.md documentation
+  - Add warning comments to release.yml to prevent accidental modifications
+
+  These protections ensure developers working on components won't accidentally modify the carefully debugged release workflow.
+
 ## 0.2.1
 
 ### Patch Changes
