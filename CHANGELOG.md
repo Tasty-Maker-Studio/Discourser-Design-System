@@ -1,5 +1,14 @@
 # @discourser/design-system
 
+## 0.3.1
+
+### Patch Changes
+
+- [#33](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/33) [`2e89d11`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/2e89d11712b2895b2554ed185c19f17394b0b241) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Add guidelines folder to published npm package for Figma Make integration
+  - Include comprehensive design system guidelines in npm package
+  - Enable Figma Make to access component and token documentation
+  - Support AI-powered design generation with embedded guidelines
+
 ## 0.3.0
 
 ### Minor Changes
