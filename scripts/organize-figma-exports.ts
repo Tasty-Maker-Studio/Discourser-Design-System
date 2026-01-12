@@ -32,7 +32,7 @@ interface DTCGToken {
   $type: string;
   $value: string;
   $description?: string;
-  $extensions?: any;
+  $extensions?: unknown;
 }
 
 interface TokenCollection {
@@ -56,19 +56,23 @@ interface Summary {
 // Utility: Expand tilde in paths
 function expandPath(filePath: string): string {
   if (filePath.startsWith('~/')) {
-    return path.join(process.env.HOME || '', filePath.slice(2));
+    return path.join(globalThis.process.env.HOME || '', filePath.slice(2));
   }
   return filePath;
 }
 
 // Utility: Count tokens recursively
-function countTokens(obj: any): number {
+function countTokens(obj: unknown): number {
   let count = 0;
-  for (const key in obj) {
+  if (typeof obj !== 'object' || obj === null) return count;
+
+  const record = obj as Record<string, unknown>;
+  for (const key in record) {
     if (key.startsWith('$')) continue; // Skip metadata
-    const value = obj[key];
+    const value = record[key];
     if (value && typeof value === 'object') {
-      if (value.$value !== undefined) {
+      const tokenValue = value as Record<string, unknown>;
+      if (tokenValue.$value !== undefined) {
         count++;
       } else {
         count += countTokens(value);
@@ -94,7 +98,7 @@ async function promptForFiles(): Promise<FigmaExportConfig> {
           return true;
         }
         return `File not found: ${expanded}. Please check the path.`;
-      }
+      },
     },
     {
       type: 'input',
@@ -107,14 +111,14 @@ async function promptForFiles(): Promise<FigmaExportConfig> {
           return true;
         }
         return `File not found: ${expanded}. Please check the path.`;
-      }
-    }
+      },
+    },
   ]);
 
   return {
     primitivesPath: expandPath(answers.primitivesPath),
     semanticPath: expandPath(answers.semanticPath),
-    outputDir: path.join(__dirname, '..', 'tokens')
+    outputDir: path.join(__dirname, '..', 'tokens'),
   };
 }
 
@@ -131,8 +135,10 @@ async function validateAndParse(filePath: string): Promise<TokenCollection> {
 
 // Step 3: Create backup
 async function createBackup(outputDir: string): Promise<string> {
-  const timestamp = new Date().toISOString().replace(/[:.]/g, '-').split('T')[0] +
-                    '-' + new Date().toTimeString().split(' ')[0].replace(/:/g, '');
+  const timestamp =
+    new Date().toISOString().replace(/[:.]/g, '-').split('T')[0] +
+    '-' +
+    new Date().toTimeString().split(' ')[0].replace(/:/g, '');
   const backupDir = path.join(outputDir, `backup-${timestamp}`);
 
   // Create backup directory
@@ -145,7 +151,7 @@ async function createBackup(outputDir: string): Promise<string> {
     'primitives-generated.json',
     'semantic-light-generated.json',
     'semantic-dark-generated.json',
-    'tokens.json'
+    'tokens.json',
   ];
 
   let backedUpCount = 0;
@@ -175,11 +181,11 @@ async function cleanOldBackups(outputDir: string): Promise<void> {
   const entries = fs.readdirSync(outputDir);
 
   const backups = entries
-    .filter(name => backupPattern.test(name))
-    .map(name => ({
+    .filter((name) => backupPattern.test(name))
+    .map((name) => ({
       name,
       path: path.join(outputDir, name),
-      stat: fs.statSync(path.join(outputDir, name))
+      stat: fs.statSync(path.join(outputDir, name)),
     }))
     .sort((a, b) => b.stat.mtime.getTime() - a.stat.mtime.getTime());
 
@@ -193,7 +199,10 @@ async function cleanOldBackups(outputDir: string): Promise<void> {
 }
 
 // Step 4: Split semantic tokens by mode
-function splitSemanticModes(semantic: TokenCollection): { light: TokenCollection; dark: TokenCollection } {
+function splitSemanticModes(semantic: TokenCollection): {
+  light: TokenCollection;
+  dark: TokenCollection;
+} {
   const light: TokenCollection = {};
   const dark: TokenCollection = {};
 
@@ -228,12 +237,12 @@ function splitSemanticModes(semantic: TokenCollection): { light: TokenCollection
 // Step 5: Write organized token files
 async function writeTokenFiles(
   tokens: OrganizedTokens,
-  outputDir: string
+  outputDir: string,
 ): Promise<void> {
   const files = [
     { name: 'primitives-generated.json', data: tokens.primitives },
     { name: 'semantic-light-generated.json', data: tokens.semanticLight },
-    { name: 'semantic-dark-generated.json', data: tokens.semanticDark }
+    { name: 'semantic-dark-generated.json', data: tokens.semanticDark },
   ];
 
   for (const file of files) {
@@ -256,10 +265,10 @@ async function generateCombinedTokens(outputDir: string): Promise<void> {
   const combined: TokenCollection = {};
 
   // Add metadata at the top
-  combined.$metadata = {
+  (combined as Record<string, unknown>).$metadata = {
     name: packageJson.name,
     version: packageJson.version,
-    generated: new Date().toISOString()
+    generated: new Date().toISOString(),
   };
 
   // Add primitives using slash notation (paletteName/tone)
@@ -268,20 +277,22 @@ async function generateCombinedTokens(outputDir: string): Promise<void> {
     if (!palette || typeof palette !== 'object') continue;
 
     // Extract $type from palette if it exists
-    const paletteType = (palette as any).$type;
+    const paletteType = (palette as Record<string, unknown>).$type;
 
     // Add each tone as a separate top-level token with slash notation
     for (const [key, value] of Object.entries(palette)) {
       if (key === '$type') continue; // Skip $type property
 
       // Create flattened token with slash notation
-      if (paletteType && typeof value === 'object') {
+      if (paletteType && typeof value === 'object' && value !== null) {
         combined[`${paletteName}/${key}`] = {
           $type: paletteType,
-          ...(value as object)
-        };
-      } else if (typeof value === 'object') {
-        combined[`${paletteName}/${key}`] = value;
+          ...(value as object),
+        } as DTCGToken | TokenCollection;
+      } else if (typeof value === 'object' && value !== null) {
+        combined[`${paletteName}/${key}`] = value as
+          | DTCGToken
+          | TokenCollection;
       }
     }
   }
@@ -289,13 +300,13 @@ async function generateCombinedTokens(outputDir: string): Promise<void> {
   // Add light mode tokens at root level (no slash)
   // These will be distinct from primitives due to lack of slash
   for (const [key, value] of Object.entries(light)) {
-    combined[key] = value;
+    combined[key] = value as DTCGToken | TokenCollection;
   }
 
   // Add dark mode tokens with dark- prefix
   // This allows both light and dark mode tokens in the same file
   for (const [key, value] of Object.entries(dark)) {
-    combined[`dark-${key}`] = value;
+    combined[`dark-${key}`] = value as DTCGToken | TokenCollection;
   }
 
   const combinedPath = path.join(outputDir, 'tokens.json');
@@ -317,7 +328,9 @@ function showSummary(summary: Summary): void {
   console.log('   ✓ tokens/semantic-dark-generated.json');
   console.log('   ✓ tokens/tokens.json\n');
 
-  console.log(`💾 Backup saved: tokens/${path.basename(summary.backupPath)}/\n`);
+  console.log(
+    `💾 Backup saved: tokens/${path.basename(summary.backupPath)}/\n`,
+  );
 
   console.log('Next steps:');
   console.log('   1. Review changes: git diff tokens/');
@@ -356,9 +369,9 @@ async function organizeFigmaExports(): Promise<void> {
       {
         primitives,
         semanticLight: light,
-        semanticDark: dark
+        semanticDark: dark,
       },
-      config.outputDir
+      config.outputDir,
     );
 
     // 6. Generate combined tokens.json
@@ -376,20 +389,22 @@ async function organizeFigmaExports(): Promise<void> {
       lightCount,
       darkCount,
       totalCount,
-      backupPath
+      backupPath,
     };
 
     // 8. Show summary
     showSummary(summary);
-
   } catch (error) {
-    console.error('\n❌ Error:', error instanceof Error ? error.message : error);
-    process.exit(1);
+    console.error(
+      '\n❌ Error:',
+      error instanceof Error ? error.message : error,
+    );
+    globalThis.process.exit(1);
   }
 }
 
 // Run if called directly
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (import.meta.url === `file://${globalThis.process.argv[1]}`) {
   organizeFigmaExports();
 }
 

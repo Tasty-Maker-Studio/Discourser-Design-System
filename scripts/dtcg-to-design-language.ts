@@ -11,7 +11,7 @@ import type {
   DesignLanguageContract,
   TonalPalette,
   SemanticColors,
-  ColorPalettes
+  ColorPalettes,
 } from '../src/contracts/design-language.contract';
 import { material3Language } from '../src/languages/material3.language';
 import * as fs from 'fs';
@@ -28,7 +28,7 @@ interface DTCGColorToken {
   $type?: 'color';
   $value: string;
   $description?: string;
-  $extensions?: any;
+  $extensions?: unknown;
 }
 
 interface DTCGColorGroup {
@@ -46,17 +46,21 @@ interface DTCGPrimitivesColors {
 }
 
 // Tonal steps as defined in M3
-const TONAL_STEPS = ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '95', '99', '100'] as const;
-
-/**
- * Extract hex value from DTCG token
- */
-function extractValue(token: DTCGColorToken | undefined): string {
-  if (!token || typeof token === 'string') {
-    throw new Error(`Invalid token: ${JSON.stringify(token)}`);
-  }
-  return token.$value;
-}
+const TONAL_STEPS = [
+  '0',
+  '10',
+  '20',
+  '30',
+  '40',
+  '50',
+  '60',
+  '70',
+  '80',
+  '90',
+  '95',
+  '99',
+  '100',
+] as const;
 
 /**
  * Transform DTCG color group to TonalPalette
@@ -100,10 +104,7 @@ function toColorPalettes(primitives: DTCGPrimitivesColors): ColorPalettes {
  * Input: "{primary.40}"
  * Output: "#3F6900"
  */
-function resolveAlias(
-  alias: string,
-  primitives: DTCGPrimitivesColors
-): string {
+function resolveAlias(alias: string, primitives: DTCGPrimitivesColors): string {
   // Check if it's an alias
   if (!alias.startsWith('{') || !alias.endsWith('}')) {
     return alias; // Already a raw value
@@ -130,7 +131,7 @@ function resolveAlias(
  */
 function toSemanticColors(
   semantic: Record<string, DTCGColorToken>,
-  primitives: DTCGPrimitivesColors
+  primitives: DTCGPrimitivesColors,
 ): SemanticColors {
   const resolve = (key: string): string => {
     const token = semantic[key];
@@ -184,9 +185,12 @@ function toSemanticColors(
 export function transformDTCGToDesignLanguage(
   primitiveColors: DTCGPrimitivesColors,
   semanticLight: Record<string, DTCGColorToken>,
-  semanticDark?: Record<string, DTCGColorToken>
+  semanticDark?: Record<string, DTCGColorToken>,
 ): Pick<DesignLanguageContract, 'colors' | 'semantic' | 'semanticDark'> {
-  const result: Pick<DesignLanguageContract, 'colors' | 'semantic' | 'semanticDark'> = {
+  const result: Pick<
+    DesignLanguageContract,
+    'colors' | 'semantic' | 'semanticDark'
+  > = {
     colors: toColorPalettes(primitiveColors),
     semantic: toSemanticColors(semanticLight, primitiveColors),
   };
@@ -209,23 +213,37 @@ async function main() {
   // Read DTCG token files
   const tokensDir = path.join(__dirname, '..', 'tokens');
   const primitivesPath = path.join(tokensDir, 'primitives', 'colors.json');
-  const semanticLightPath = path.join(tokensDir, 'semantic', 'colors.light.json');
+  const semanticLightPath = path.join(
+    tokensDir,
+    'semantic',
+    'colors.light.json',
+  );
   const semanticDarkPath = path.join(tokensDir, 'semantic', 'colors.dark.json');
 
   console.log('📖 Reading DTCG token files...');
-  console.log(`   - ${path.relative(process.cwd(), primitivesPath)}`);
-  console.log(`   - ${path.relative(process.cwd(), semanticLightPath)}`);
-  console.log(`   - ${path.relative(process.cwd(), semanticDarkPath)}`);
+  console.log(
+    `   - ${path.relative(globalThis.process.cwd(), primitivesPath)}`,
+  );
+  console.log(
+    `   - ${path.relative(globalThis.process.cwd(), semanticLightPath)}`,
+  );
+  console.log(
+    `   - ${path.relative(globalThis.process.cwd(), semanticDarkPath)}`,
+  );
 
-  const primitives = JSON.parse(fs.readFileSync(primitivesPath, 'utf-8')) as DTCGPrimitivesColors;
-  const semanticLight = JSON.parse(fs.readFileSync(semanticLightPath, 'utf-8')) as Record<string, DTCGColorToken>;
+  const primitives = JSON.parse(
+    fs.readFileSync(primitivesPath, 'utf-8'),
+  ) as DTCGPrimitivesColors;
+  const semanticLight = JSON.parse(
+    fs.readFileSync(semanticLightPath, 'utf-8'),
+  ) as Record<string, DTCGColorToken>;
 
   // Check if dark theme exists and has content
   let semanticDark: Record<string, DTCGColorToken> | undefined;
   if (fs.existsSync(semanticDarkPath)) {
     const darkContent = JSON.parse(fs.readFileSync(semanticDarkPath, 'utf-8'));
     // Only use if it has actual tokens (not just $description placeholder)
-    if (Object.keys(darkContent).some(k => !k.startsWith('$'))) {
+    if (Object.keys(darkContent).some((k) => !k.startsWith('$'))) {
       semanticDark = darkContent;
       console.log('   ✓ Dark theme tokens found');
     } else {
@@ -235,10 +253,16 @@ async function main() {
     console.log('   ⚠ Dark theme file not found (skipping)');
   }
 
-  console.log('\n🔧 Transforming DTCG tokens to DesignLanguageContract format...');
+  console.log(
+    '\n🔧 Transforming DTCG tokens to DesignLanguageContract format...',
+  );
 
   // Transform
-  const transformed = transformDTCGToDesignLanguage(primitives, semanticLight, semanticDark);
+  const transformed = transformDTCGToDesignLanguage(
+    primitives,
+    semanticLight,
+    semanticDark,
+  );
 
   console.log('   ✓ Primitives transformed');
   console.log('   ✓ Semantic (light) transformed');
@@ -247,9 +271,17 @@ async function main() {
   }
 
   // Update material3.language.ts
-  const languagePath = path.join(__dirname, '..', 'src', 'languages', 'material3.language.ts');
+  const languagePath = path.join(
+    __dirname,
+    '..',
+    'src',
+    'languages',
+    'material3.language.ts',
+  );
 
-  console.log(`\n📝 Updating ${path.relative(process.cwd(), languagePath)}...`);
+  console.log(
+    `\n📝 Updating ${path.relative(globalThis.process.cwd(), languagePath)}...`,
+  );
 
   // Read current language file
   const currentLanguage = material3Language;
@@ -259,7 +291,9 @@ async function main() {
     ...currentLanguage,
     colors: transformed.colors,
     semantic: transformed.semantic,
-    ...(transformed.semanticDark ? { semanticDark: transformed.semanticDark } : {}),
+    ...(transformed.semanticDark
+      ? { semanticDark: transformed.semanticDark }
+      : {}),
   };
 
   // Generate TypeScript code
@@ -272,9 +306,13 @@ async function main() {
   console.log('\n✅ Transformation complete!\n');
   console.log('Summary:');
   console.log(`   - 6 color palettes with 13 tones each`);
-  console.log(`   - ${Object.keys(transformed.semantic).length} semantic tokens (light)`);
+  console.log(
+    `   - ${Object.keys(transformed.semantic).length} semantic tokens (light)`,
+  );
   if (transformed.semanticDark) {
-    console.log(`   - ${Object.keys(transformed.semanticDark).length} semantic tokens (dark)`);
+    console.log(
+      `   - ${Object.keys(transformed.semanticDark).length} semantic tokens (dark)`,
+    );
   }
   console.log();
 }
@@ -300,5 +338,5 @@ export const material3Language: DesignLanguageContract = ${JSON.stringify(langua
 main().catch((error) => {
   console.error('\n❌ Error during transformation:');
   console.error(error);
-  process.exit(1);
+  globalThis.process.exit(1);
 });

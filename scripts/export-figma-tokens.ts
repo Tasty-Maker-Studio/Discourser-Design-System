@@ -69,7 +69,7 @@ function generateManifest(): FigmaTokenManifest {
     semanticColors[key] = {
       value: value,
       figmaVariable: `semantic/${kebabKey}`,
-      description: `Semantic color: ${key}`
+      description: `Semantic color: ${key}`,
     };
   }
 
@@ -79,9 +79,9 @@ function generateManifest(): FigmaTokenManifest {
     palettes[paletteName] = {};
     for (const [tone, value] of Object.entries(tones)) {
       palettes[paletteName][tone] = {
-        value: value,
+        value: String(value),
         figmaVariable: `palettes/${paletteName}/${tone}`,
-        description: `${paletteName} palette, tone ${tone}`
+        description: `${paletteName} palette, tone ${tone}`,
       };
     }
   }
@@ -92,7 +92,7 @@ function generateManifest(): FigmaTokenManifest {
     spacing[key] = {
       value: value,
       figmaVariable: `spacing/${key}`,
-      description: `Spacing: ${key}`
+      description: `Spacing: ${key}`,
     };
   }
 
@@ -103,7 +103,7 @@ function generateManifest(): FigmaTokenManifest {
     radii[key] = {
       value: value,
       figmaVariable: `shape/radii/${kebabKey}`,
-      description: `Border radius: ${key}`
+      description: `Border radius: ${key}`,
     };
   }
 
@@ -113,7 +113,7 @@ function generateManifest(): FigmaTokenManifest {
     borderWidths[key] = {
       value: value,
       figmaVariable: `border/widths/${key}`,
-      description: `Border width: ${key}`
+      description: `Border width: ${key}`,
     };
   }
 
@@ -121,14 +121,14 @@ function generateManifest(): FigmaTokenManifest {
   const typographyScale: Record<string, TypographyTokenValue> = {};
   for (const [key, style] of Object.entries(lang.typography.scale)) {
     const kebabKey = toKebabCase(key);
-    const fontKey = style.fontFamily || 'body';
+    const fontKey = (style.fontFamily || 'body') as 'display' | 'body' | 'mono';
     typographyScale[key] = {
       fontSize: style.fontSize,
       lineHeight: style.lineHeight,
       fontWeight: style.fontWeight,
       letterSpacing: style.letterSpacing,
       fontFamily: lang.typography.fonts[fontKey],
-      figmaTextStyle: `typography/${kebabKey}`
+      figmaTextStyle: `typography/${kebabKey}`,
     };
   }
 
@@ -145,17 +145,17 @@ function generateManifest(): FigmaTokenManifest {
     tokens: {
       colors: {
         semantic: semanticColors,
-        palettes: palettes
+        palettes: palettes,
       },
       spacing: spacing,
       radii: radii,
       borderWidths: borderWidths,
       typography: {
         fonts: lang.typography.fonts,
-        scale: typographyScale
+        scale: typographyScale,
       },
-      elevation: elevation
-    }
+      elevation: elevation,
+    },
   };
 }
 
@@ -174,10 +174,19 @@ console.log(`✅ Token manifest generated: ${outputPath}`);
 
 // Also output to stdout for piping
 console.log('\n📋 Token Summary:');
-console.log(`   Colors: ${Object.keys(manifest.tokens.colors.semantic).length} semantic tokens`);
-console.log(`   Spacing: ${Object.keys(manifest.tokens.spacing).length} tokens`);
+console.log(
+  `   Colors: ${Object.keys(manifest.tokens.colors.semantic).length} semantic tokens`,
+);
+console.log(
+  `   Spacing: ${Object.keys(manifest.tokens.spacing).length} tokens`,
+);
 console.log(`   Radii: ${Object.keys(manifest.tokens.radii).length} tokens`);
-console.log(`   Border Widths: ${Object.keys(manifest.tokens.borderWidths).length} tokens`);
-console.log(`   Typography: ${Object.keys(manifest.tokens.typography.scale).length} styles`);
+console.log(
+  `   Border Widths: ${Object.keys(manifest.tokens.borderWidths).length} tokens`,
+);
+console.log(
+  `   Typography: ${Object.keys(manifest.tokens.typography.scale).length} styles`,
+);
 
-export { generateManifest, FigmaTokenManifest };
+export { generateManifest };
+export type { FigmaTokenManifest };
