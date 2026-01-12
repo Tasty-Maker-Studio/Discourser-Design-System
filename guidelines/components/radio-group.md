@@ -1,0 +1,757 @@
+# RadioGroup
+
+**Purpose:** Provides mutually exclusive selection between multiple options, allowing users to choose exactly one item from a set of choices.
+
+## Import
+
+```typescript
+import { RadioGroup } from '@discourser/design-system';
+```
+
+## Component Structure
+
+RadioGroup is a compound component built on Ark UI, providing a complete solution for radio button groups with built-in accessibility and state management.
+
+### Anatomy
+
+```typescript
+<RadioGroup.Root>
+  <RadioGroup.Label />
+  <RadioGroup.Item>
+    <RadioGroup.ItemControl>
+      <RadioGroup.Indicator />
+    </RadioGroup.ItemControl>
+    <RadioGroup.ItemText />
+    <RadioGroup.ItemHiddenInput />
+  </RadioGroup.Item>
+</RadioGroup.Root>
+```
+
+**Component Parts:**
+
+- **Root**: Container that manages the radio group state and keyboard navigation
+- **Label**: Optional label for the entire group
+- **Item**: Individual radio option container
+- **ItemControl**: Visual radio button (circle with inner dot when selected)
+- **Indicator**: Visual indicator shown when radio is selected
+- **ItemText**: Label text for the individual radio option
+- **ItemHiddenInput**: Hidden native input for form integration and accessibility
+
+## Variants
+
+| Variant | Visual Style                                      | Usage                  | When to Use                                    |
+| ------- | ------------------------------------------------- | ---------------------- | ---------------------------------------------- |
+| `solid` | Filled circle with color background when selected | Standard radio buttons | All use cases, default choice for radio groups |
+
+**Note:** Currently only the `solid` variant is implemented, providing a clean, Material Design-inspired appearance.
+
+### Visual Characteristics
+
+- **solid**: Gray border circle in default state, colored background with white inner dot when selected
+
+## Sizes
+
+| Size | Control Size | Gap      | Font Size | Usage                                                     |
+| ---- | ------------ | -------- | --------- | --------------------------------------------------------- |
+| `sm` | 18px (4.5)   | 8px (2)  | sm        | Compact forms, dense layouts, space-constrained UI        |
+| `md` | 20px (5)     | 12px (3) | md        | Default, most use cases, standard forms                   |
+| `lg` | 22px (5.5)   | 12px (3) | lg        | Touch-friendly interfaces, emphasis, mobile-first designs |
+
+**Recommendation:** Use `md` for most cases. Use `lg` for mobile-first designs or when prioritizing touch accessibility.
+
+## Orientation
+
+RadioGroup supports both horizontal and vertical layouts:
+
+| Orientation  | Layout Direction      | When to Use                                    |
+| ------------ | --------------------- | ---------------------------------------------- |
+| `vertical`   | Stacked vertically    | Default, most forms, multiple options (3+)     |
+| `horizontal` | Arranged horizontally | Simple choices (2-3 options), toolbar settings |
+
+## Props
+
+### Root Props
+
+| Prop            | Type                                   | Default      | Description                             |
+| --------------- | -------------------------------------- | ------------ | --------------------------------------- |
+| `variant`       | `'solid'`                              | `'solid'`    | Visual style variant                    |
+| `size`          | `'sm' \| 'md' \| 'lg'`                 | `'md'`       | Control and text size                   |
+| `orientation`   | `'horizontal' \| 'vertical'`           | `'vertical'` | Layout direction                        |
+| `value`         | `string`                               | -            | Currently selected value (controlled)   |
+| `defaultValue`  | `string`                               | -            | Initially selected value (uncontrolled) |
+| `disabled`      | `boolean`                              | `false`      | Disable entire radio group              |
+| `onValueChange` | `(details: { value: string }) => void` | -            | Callback when selection changes         |
+| `name`          | `string`                               | -            | Form field name                         |
+
+### Item Props
+
+| Prop       | Type      | Default  | Description                       |
+| ---------- | --------- | -------- | --------------------------------- |
+| `value`    | `string`  | Required | Unique identifier for this option |
+| `disabled` | `boolean` | `false`  | Disable this specific option      |
+| `invalid`  | `boolean` | `false`  | Mark this option as invalid       |
+
+**Note:** RadioGroup.Root extends Ark UI's RadioGroupRootProps, supporting all native radio group attributes.
+
+## Examples
+
+### Basic Usage
+
+```typescript
+// Uncontrolled (internal state management)
+<RadioGroup.Root defaultValue="option1">
+  <RadioGroup.Label>Choose an option</RadioGroup.Label>
+  <RadioGroup.Item value="option1">
+    <RadioGroup.ItemControl>
+      <RadioGroup.Indicator />
+    </RadioGroup.ItemControl>
+    <RadioGroup.ItemText>Option 1</RadioGroup.ItemText>
+    <RadioGroup.ItemHiddenInput />
+  </RadioGroup.Item>
+  <RadioGroup.Item value="option2">
+    <RadioGroup.ItemControl>
+      <RadioGroup.Indicator />
+    </RadioGroup.ItemControl>
+    <RadioGroup.ItemText>Option 2</RadioGroup.ItemText>
+    <RadioGroup.ItemHiddenInput />
+  </RadioGroup.Item>
+  <RadioGroup.Item value="option3">
+    <RadioGroup.ItemControl>
+      <RadioGroup.Indicator />
+    </RadioGroup.ItemControl>
+    <RadioGroup.ItemText>Option 3</RadioGroup.ItemText>
+    <RadioGroup.ItemHiddenInput />
+  </RadioGroup.Item>
+</RadioGroup.Root>
+```
+
+### Controlled Usage
+
+```typescript
+const [selectedValue, setSelectedValue] = useState('medium');
+
+<RadioGroup.Root
+  value={selectedValue}
+  onValueChange={(details) => setSelectedValue(details.value)}
+>
+  <RadioGroup.Label>Select size</RadioGroup.Label>
+  <RadioGroup.Item value="small">
+    <RadioGroup.ItemControl>
+      <RadioGroup.Indicator />
+    </RadioGroup.ItemControl>
+    <RadioGroup.ItemText>Small</RadioGroup.ItemText>
+    <RadioGroup.ItemHiddenInput />
+  </RadioGroup.Item>
+  <RadioGroup.Item value="medium">
+    <RadioGroup.ItemControl>
+      <RadioGroup.Indicator />
+    </RadioGroup.ItemControl>
+    <RadioGroup.ItemText>Medium</RadioGroup.ItemText>
+    <RadioGroup.ItemHiddenInput />
+  </RadioGroup.Item>
+  <RadioGroup.Item value="large">
+    <RadioGroup.ItemControl>
+      <RadioGroup.Indicator />
+    </RadioGroup.ItemControl>
+    <RadioGroup.ItemText>Large</RadioGroup.ItemText>
+    <RadioGroup.ItemHiddenInput />
+  </RadioGroup.Item>
+</RadioGroup.Root>
+```
+
+### Different Sizes
+
+```typescript
+// Small size (compact)
+<RadioGroup.Root size="sm" defaultValue="option1">
+  <RadioGroup.Label>Small Radio Group</RadioGroup.Label>
+  <RadioGroup.Item value="option1">
+    <RadioGroup.ItemControl>
+      <RadioGroup.Indicator />
+    </RadioGroup.ItemControl>
+    <RadioGroup.ItemText>Compact option</RadioGroup.ItemText>
+    <RadioGroup.ItemHiddenInput />
+  </RadioGroup.Item>
+</RadioGroup.Root>
+
+// Large size (touch-friendly)
+<RadioGroup.Root size="lg" defaultValue="option1">
+  <RadioGroup.Label>Large Radio Group</RadioGroup.Label>
+  <RadioGroup.Item value="option1">
+    <RadioGroup.ItemControl>
+      <RadioGroup.Indicator />
+    </RadioGroup.ItemControl>
+    <RadioGroup.ItemText>Touch-friendly option</RadioGroup.ItemText>
+    <RadioGroup.ItemHiddenInput />
+  </RadioGroup.Item>
+</RadioGroup.Root>
+```
+
+### Horizontal Layout
+
+```typescript
+<RadioGroup.Root orientation="horizontal" defaultValue="yes">
+  <RadioGroup.Label>Enable notifications?</RadioGroup.Label>
+  <RadioGroup.Item value="yes">
+    <RadioGroup.ItemControl>
+      <RadioGroup.Indicator />
+    </RadioGroup.ItemControl>
+    <RadioGroup.ItemText>Yes</RadioGroup.ItemText>
+    <RadioGroup.ItemHiddenInput />
+  </RadioGroup.Item>
+  <RadioGroup.Item value="no">
+    <RadioGroup.ItemControl>
+      <RadioGroup.Indicator />
+    </RadioGroup.ItemControl>
+    <RadioGroup.ItemText>No</RadioGroup.ItemText>
+    <RadioGroup.ItemHiddenInput />
+  </RadioGroup.Item>
+</RadioGroup.Root>
+```
+
+### Disabled States
+
+```typescript
+// Entire group disabled
+<RadioGroup.Root disabled defaultValue="option1">
+  <RadioGroup.Label>Disabled Group</RadioGroup.Label>
+  <RadioGroup.Item value="option1">
+    <RadioGroup.ItemControl>
+      <RadioGroup.Indicator />
+    </RadioGroup.ItemControl>
+    <RadioGroup.ItemText>Option 1</RadioGroup.ItemText>
+    <RadioGroup.ItemHiddenInput />
+  </RadioGroup.Item>
+  <RadioGroup.Item value="option2">
+    <RadioGroup.ItemControl>
+      <RadioGroup.Indicator />
+    </RadioGroup.ItemControl>
+    <RadioGroup.ItemText>Option 2</RadioGroup.ItemText>
+    <RadioGroup.ItemHiddenInput />
+  </RadioGroup.Item>
+</RadioGroup.Root>
+
+// Individual option disabled
+<RadioGroup.Root defaultValue="option1">
+  <RadioGroup.Label>Partially Disabled</RadioGroup.Label>
+  <RadioGroup.Item value="option1">
+    <RadioGroup.ItemControl>
+      <RadioGroup.Indicator />
+    </RadioGroup.ItemControl>
+    <RadioGroup.ItemText>Available option</RadioGroup.ItemText>
+    <RadioGroup.ItemHiddenInput />
+  </RadioGroup.Item>
+  <RadioGroup.Item value="option2" disabled>
+    <RadioGroup.ItemControl>
+      <RadioGroup.Indicator />
+    </RadioGroup.ItemControl>
+    <RadioGroup.ItemText>Disabled option</RadioGroup.ItemText>
+    <RadioGroup.ItemHiddenInput />
+  </RadioGroup.Item>
+</RadioGroup.Root>
+```
+
+### Form Integration
+
+```typescript
+<form onSubmit={handleSubmit}>
+  <RadioGroup.Root name="deliveryMethod" defaultValue="standard">
+    <RadioGroup.Label>Delivery Method</RadioGroup.Label>
+    <RadioGroup.Item value="standard">
+      <RadioGroup.ItemControl>
+        <RadioGroup.Indicator />
+      </RadioGroup.ItemControl>
+      <RadioGroup.ItemText>Standard (5-7 days)</RadioGroup.ItemText>
+      <RadioGroup.ItemHiddenInput />
+    </RadioGroup.Item>
+    <RadioGroup.Item value="express">
+      <RadioGroup.ItemControl>
+        <RadioGroup.Indicator />
+      </RadioGroup.ItemControl>
+      <RadioGroup.ItemText>Express (2-3 days)</RadioGroup.ItemText>
+      <RadioGroup.ItemHiddenInput />
+    </RadioGroup.Item>
+    <RadioGroup.Item value="overnight">
+      <RadioGroup.ItemControl>
+        <RadioGroup.Indicator />
+      </RadioGroup.ItemControl>
+      <RadioGroup.ItemText>Overnight</RadioGroup.ItemText>
+      <RadioGroup.ItemHiddenInput />
+    </RadioGroup.Item>
+  </RadioGroup.Root>
+  <Button type="submit">Continue</Button>
+</form>
+```
+
+## Common Patterns
+
+### Dynamic Options from Data
+
+```typescript
+const deliveryOptions = [
+  { value: 'standard', label: 'Standard Shipping', description: '5-7 business days' },
+  { value: 'express', label: 'Express Shipping', description: '2-3 business days' },
+  { value: 'overnight', label: 'Overnight Shipping', description: 'Next business day' },
+];
+
+<RadioGroup.Root defaultValue="standard">
+  <RadioGroup.Label>Choose delivery method</RadioGroup.Label>
+  {deliveryOptions.map((option) => (
+    <RadioGroup.Item key={option.value} value={option.value}>
+      <RadioGroup.ItemControl>
+        <RadioGroup.Indicator />
+      </RadioGroup.ItemControl>
+      <RadioGroup.ItemText>
+        <div>
+          <div>{option.label}</div>
+          <div className={css({ color: 'fg.subtle', fontSize: 'sm' })}>
+            {option.description}
+          </div>
+        </div>
+      </RadioGroup.ItemText>
+      <RadioGroup.ItemHiddenInput />
+    </RadioGroup.Item>
+  ))}
+</RadioGroup.Root>
+```
+
+### With Validation
+
+```typescript
+const [value, setValue] = useState('');
+const [error, setError] = useState('');
+
+const handleSubmit = () => {
+  if (!value) {
+    setError('Please select an option');
+    return;
+  }
+  setError('');
+  // Process form
+};
+
+<div>
+  <RadioGroup.Root
+    value={value}
+    onValueChange={(details) => {
+      setValue(details.value);
+      setError('');
+    }}
+  >
+    <RadioGroup.Label>Select your preference</RadioGroup.Label>
+    <RadioGroup.Item value="option1">
+      <RadioGroup.ItemControl>
+        <RadioGroup.Indicator />
+      </RadioGroup.ItemControl>
+      <RadioGroup.ItemText>Option 1</RadioGroup.ItemText>
+      <RadioGroup.ItemHiddenInput />
+    </RadioGroup.Item>
+    <RadioGroup.Item value="option2">
+      <RadioGroup.ItemControl>
+        <RadioGroup.Indicator />
+      </RadioGroup.ItemControl>
+      <RadioGroup.ItemText>Option 2</RadioGroup.ItemText>
+      <RadioGroup.ItemHiddenInput />
+    </RadioGroup.Item>
+  </RadioGroup.Root>
+  {error && (
+    <div className={css({ color: 'error.fg', fontSize: 'sm', mt: '1' })}>
+      {error}
+    </div>
+  )}
+</div>
+```
+
+### Settings Panel
+
+```typescript
+<div className={css({ display: 'flex', flexDirection: 'column', gap: '6' })}>
+  <RadioGroup.Root defaultValue="light" name="theme">
+    <RadioGroup.Label>Theme Preference</RadioGroup.Label>
+    <RadioGroup.Item value="light">
+      <RadioGroup.ItemControl>
+        <RadioGroup.Indicator />
+      </RadioGroup.ItemControl>
+      <RadioGroup.ItemText>Light</RadioGroup.ItemText>
+      <RadioGroup.ItemHiddenInput />
+    </RadioGroup.Item>
+    <RadioGroup.Item value="dark">
+      <RadioGroup.ItemControl>
+        <RadioGroup.Indicator />
+      </RadioGroup.ItemControl>
+      <RadioGroup.ItemText>Dark</RadioGroup.ItemText>
+      <RadioGroup.ItemHiddenInput />
+    </RadioGroup.Item>
+    <RadioGroup.Item value="system">
+      <RadioGroup.ItemControl>
+        <RadioGroup.Indicator />
+      </RadioGroup.ItemControl>
+      <RadioGroup.ItemText>System</RadioGroup.ItemText>
+      <RadioGroup.ItemHiddenInput />
+    </RadioGroup.Item>
+  </RadioGroup.Root>
+
+  <RadioGroup.Root defaultValue="en" name="language">
+    <RadioGroup.Label>Language</RadioGroup.Label>
+    <RadioGroup.Item value="en">
+      <RadioGroup.ItemControl>
+        <RadioGroup.Indicator />
+      </RadioGroup.ItemControl>
+      <RadioGroup.ItemText>English</RadioGroup.ItemText>
+      <RadioGroup.ItemHiddenInput />
+    </RadioGroup.Item>
+    <RadioGroup.Item value="es">
+      <RadioGroup.ItemControl>
+        <RadioGroup.Indicator />
+      </RadioGroup.ItemControl>
+      <RadioGroup.ItemText>Español</RadioGroup.ItemText>
+      <RadioGroup.ItemHiddenInput />
+    </RadioGroup.Item>
+    <RadioGroup.Item value="fr">
+      <RadioGroup.ItemControl>
+        <RadioGroup.Indicator />
+      </RadioGroup.ItemControl>
+      <RadioGroup.ItemText>Français</RadioGroup.ItemText>
+      <RadioGroup.ItemHiddenInput />
+    </RadioGroup.Item>
+  </RadioGroup.Root>
+</div>
+```
+
+## DO NOT
+
+```typescript
+// ❌ Don't use for multiple selections (use Checkbox instead)
+<RadioGroup.Root>
+  <RadioGroup.Label>Select all that apply</RadioGroup.Label>
+  {/* Radio groups are for single selection only */}
+</RadioGroup.Root>
+
+// ✅ Use Checkbox for multiple selections
+<CheckboxGroup>
+  <Checkbox value="option1">Option 1</Checkbox>
+  <Checkbox value="option2">Option 2</Checkbox>
+</CheckboxGroup>
+
+// ❌ Don't use for many options (>7 items, use Select instead)
+<RadioGroup.Root>
+  <RadioGroup.Item value="country1">Country 1</RadioGroup.Item>
+  <RadioGroup.Item value="country2">Country 2</RadioGroup.Item>
+  {/* ... 50+ more countries */}
+</RadioGroup.Root>
+
+// ✅ Use Select for many options
+<Select.Root>
+  <Select.Trigger>
+    <Select.ValueText placeholder="Select country" />
+  </Select.Trigger>
+  <Select.Content>
+    {countries.map((country) => (
+      <Select.Item key={country.value} item={country.value}>
+        <Select.ItemText>{country.label}</Select.ItemText>
+      </Select.Item>
+    ))}
+  </Select.Content>
+</Select.Root>
+
+// ❌ Don't omit RadioGroup.ItemHiddenInput (breaks form submission)
+<RadioGroup.Item value="option1">
+  <RadioGroup.ItemControl>
+    <RadioGroup.Indicator />
+  </RadioGroup.ItemControl>
+  <RadioGroup.ItemText>Option 1</RadioGroup.ItemText>
+  {/* Missing ItemHiddenInput */}
+</RadioGroup.Item>
+
+// ✅ Always include ItemHiddenInput
+<RadioGroup.Item value="option1">
+  <RadioGroup.ItemControl>
+    <RadioGroup.Indicator />
+  </RadioGroup.ItemControl>
+  <RadioGroup.ItemText>Option 1</RadioGroup.ItemText>
+  <RadioGroup.ItemHiddenInput />
+</RadioGroup.Item>
+
+// ❌ Don't use for binary choices that are actions (use Switch instead)
+<RadioGroup.Root>
+  <RadioGroup.Item value="enabled">Enable notifications</RadioGroup.Item>
+  <RadioGroup.Item value="disabled">Disable notifications</RadioGroup.Item>
+</RadioGroup.Root>
+
+// ✅ Use Switch for on/off toggles
+<Switch.Root>
+  <Switch.Label>Enable notifications</Switch.Label>
+  <Switch.Control>
+    <Switch.Thumb />
+  </Switch.Control>
+</Switch.Root>
+
+// ❌ Don't create radio groups without a label
+<RadioGroup.Root>
+  {/* No label - unclear what user is choosing */}
+  <RadioGroup.Item value="option1">...</RadioGroup.Item>
+</RadioGroup.Root>
+
+// ✅ Always provide a clear group label
+<RadioGroup.Root>
+  <RadioGroup.Label>Select your preference</RadioGroup.Label>
+  <RadioGroup.Item value="option1">...</RadioGroup.Item>
+</RadioGroup.Root>
+```
+
+## Accessibility
+
+The RadioGroup component follows WCAG 2.1 Level AA standards:
+
+- **Keyboard Navigation**:
+  - `Tab` moves focus to the selected radio or first radio if none selected
+  - Arrow keys (↑/↓ for vertical, ←/→ for horizontal) navigate between options
+  - `Space` selects the focused radio
+- **Focus Management**: Clear focus indicator on ItemControl with 2px outline
+- **Screen Readers**:
+  - Group labeled with `role="radiogroup"` and `aria-labelledby`
+  - Each radio has `role="radio"` and `aria-checked` state
+  - Hidden input ensures form submission works correctly
+- **Disabled State**:
+  - Uses `aria-disabled` attribute
+  - Visual opacity reduction (layerStyle: 'disabled')
+  - Prevents interaction while maintaining focusability for context
+- **Required Fields**: Use `aria-required` on Root for required groups
+
+### Accessibility Best Practices
+
+```typescript
+// ✅ Always provide a descriptive group label
+<RadioGroup.Root>
+  <RadioGroup.Label>Select shipping method</RadioGroup.Label>
+  {/* options */}
+</RadioGroup.Root>
+
+// ✅ Provide helpful descriptions for complex options
+<RadioGroup.Item value="express">
+  <RadioGroup.ItemControl>
+    <RadioGroup.Indicator />
+  </RadioGroup.ItemControl>
+  <RadioGroup.ItemText>
+    <span>Express Shipping</span>
+    <span className={css({ fontSize: 'sm', color: 'fg.subtle' })}>
+      2-3 business days, $15.99
+    </span>
+  </RadioGroup.ItemText>
+  <RadioGroup.ItemHiddenInput />
+</RadioGroup.Item>
+
+// ✅ Mark required fields clearly
+<RadioGroup.Root aria-required="true">
+  <RadioGroup.Label>
+    Payment method
+    <span className={css({ color: 'error.fg' })}> *</span>
+  </RadioGroup.Label>
+  {/* options */}
+</RadioGroup.Root>
+
+// ✅ Use appropriate orientation for context
+<RadioGroup.Root
+  orientation="horizontal"  // Good for simple yes/no
+  defaultValue="yes"
+>
+  <RadioGroup.Label>Accept terms?</RadioGroup.Label>
+  <RadioGroup.Item value="yes">Yes</RadioGroup.Item>
+  <RadioGroup.Item value="no">No</RadioGroup.Item>
+</RadioGroup.Root>
+```
+
+## Orientation Selection Guide
+
+| Scenario                  | Recommended Orientation | Reasoning                                 |
+| ------------------------- | ----------------------- | ----------------------------------------- |
+| 2-3 simple options        | `horizontal`            | Saves vertical space, easy to scan        |
+| 4+ options                | `vertical`              | Easier to read and compare options        |
+| Options with descriptions | `vertical`              | Provides room for additional text         |
+| Toolbar/filter settings   | `horizontal`            | Fits naturally in horizontal UI           |
+| Form fields               | `vertical`              | Consistent with standard form layouts     |
+| Yes/No or binary choices  | `horizontal`            | Emphasizes the choice between two options |
+
+## Size Selection Guide
+
+| Scenario             | Recommended Size | Reasoning                           |
+| -------------------- | ---------------- | ----------------------------------- |
+| Mobile interfaces    | `lg`             | Larger touch targets (44px minimum) |
+| Desktop forms        | `md`             | Standard, comfortable size          |
+| Dense layouts/tables | `sm`             | Saves space while remaining usable  |
+| Settings panels      | `md` or `lg`     | Emphasizes important choices        |
+| Inline options       | `sm` or `md`     | Fits naturally in content flow      |
+
+## State Behaviors
+
+| State                  | Visual Change                            | Behavior                                 |
+| ---------------------- | ---------------------------------------- | ---------------------------------------- |
+| **Default**            | Gray border circle, white background     | Clickable, focusable                     |
+| **Hover**              | Subtle background change on item         | Indicates interactivity                  |
+| **Checked**            | Colored background, white inner dot      | Shows selection, maintains focus ring    |
+| **Focus**              | 2px outline ring on control              | Keyboard navigation indicator            |
+| **Disabled**           | Reduced opacity, gray appearance         | Cannot be interacted with, not focusable |
+| **Disabled + Checked** | Reduced opacity, maintains checked state | Shows selected but unavailable option    |
+
+## When to Use RadioGroup vs. Other Components
+
+| Use RadioGroup When                                  | Use Instead                                            |
+| ---------------------------------------------------- | ------------------------------------------------------ |
+| User must choose exactly one option from 2-7 choices | -                                                      |
+| All options should be visible at once                | Use **Select** if 8+ options or limited space          |
+| Selection is a primary action                        | -                                                      |
+| Options need to be compared                          | -                                                      |
+| User needs to choose multiple items                  | Use **Checkbox** for multi-select                      |
+| Binary on/off toggle for immediate action            | Use **Switch** for instant state changes               |
+| Navigation between views/tabs                        | Use **Tabs** for content switching                     |
+| Filtering data                                       | Use **Select** or **Checkbox** based on space/quantity |
+
+## Responsive Considerations
+
+```typescript
+// Mobile-first: Use larger size and vertical orientation
+<RadioGroup.Root
+  size="lg"
+  orientation="vertical"
+  defaultValue="option1"
+>
+  <RadioGroup.Label>Select option</RadioGroup.Label>
+  {/* options */}
+</RadioGroup.Root>
+
+// Responsive orientation
+<RadioGroup.Root
+  orientation={{ base: 'vertical', md: 'horizontal' }}
+  size={{ base: 'lg', md: 'md' }}
+  defaultValue="option1"
+>
+  <RadioGroup.Label>Delivery preference</RadioGroup.Label>
+  {/* options */}
+</RadioGroup.Root>
+
+// Responsive container for groups
+<div className={css({
+  display: 'grid',
+  gridTemplateColumns: { base: '1fr', md: '1fr 1fr' },
+  gap: '6'
+})}>
+  <RadioGroup.Root defaultValue="option1">
+    <RadioGroup.Label>Category 1</RadioGroup.Label>
+    {/* options */}
+  </RadioGroup.Root>
+  <RadioGroup.Root defaultValue="option2">
+    <RadioGroup.Label>Category 2</RadioGroup.Label>
+    {/* options */}
+  </RadioGroup.Root>
+</div>
+```
+
+## Testing
+
+When testing RadioGroup components:
+
+```typescript
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+test('selects radio option on click', async () => {
+  const handleChange = vi.fn();
+  render(
+    <RadioGroup.Root onValueChange={handleChange}>
+      <RadioGroup.Label>Choose option</RadioGroup.Label>
+      <RadioGroup.Item value="option1">
+        <RadioGroup.ItemControl>
+          <RadioGroup.Indicator />
+        </RadioGroup.ItemControl>
+        <RadioGroup.ItemText>Option 1</RadioGroup.ItemText>
+        <RadioGroup.ItemHiddenInput />
+      </RadioGroup.Item>
+      <RadioGroup.Item value="option2">
+        <RadioGroup.ItemControl>
+          <RadioGroup.Indicator />
+        </RadioGroup.ItemControl>
+        <RadioGroup.ItemText>Option 2</RadioGroup.ItemText>
+        <RadioGroup.ItemHiddenInput />
+      </RadioGroup.Item>
+    </RadioGroup.Root>
+  );
+
+  const option2 = screen.getByText('Option 2');
+  await userEvent.click(option2);
+
+  expect(handleChange).toHaveBeenCalledWith(
+    expect.objectContaining({ value: 'option2' })
+  );
+});
+
+test('keyboard navigation works correctly', async () => {
+  const user = userEvent.setup();
+  render(
+    <RadioGroup.Root defaultValue="option1">
+      <RadioGroup.Label>Choose option</RadioGroup.Label>
+      <RadioGroup.Item value="option1">
+        <RadioGroup.ItemControl>
+          <RadioGroup.Indicator />
+        </RadioGroup.ItemControl>
+        <RadioGroup.ItemText>Option 1</RadioGroup.ItemText>
+        <RadioGroup.ItemHiddenInput />
+      </RadioGroup.Item>
+      <RadioGroup.Item value="option2">
+        <RadioGroup.ItemControl>
+          <RadioGroup.Indicator />
+        </RadioGroup.ItemControl>
+        <RadioGroup.ItemText>Option 2</RadioGroup.ItemText>
+        <RadioGroup.ItemHiddenInput />
+      </RadioGroup.Item>
+    </RadioGroup.Root>
+  );
+
+  const radioGroup = screen.getByRole('radiogroup');
+  await user.tab(); // Focus first radio
+
+  const option1 = screen.getByRole('radio', { name: 'Option 1' });
+  expect(option1).toHaveFocus();
+
+  await user.keyboard('{ArrowDown}');
+  const option2 = screen.getByRole('radio', { name: 'Option 2' });
+  expect(option2).toHaveFocus();
+  expect(option2).toBeChecked();
+});
+
+test('disabled radio cannot be selected', async () => {
+  const handleChange = vi.fn();
+  render(
+    <RadioGroup.Root onValueChange={handleChange}>
+      <RadioGroup.Label>Choose option</RadioGroup.Label>
+      <RadioGroup.Item value="option1">
+        <RadioGroup.ItemControl>
+          <RadioGroup.Indicator />
+        </RadioGroup.ItemControl>
+        <RadioGroup.ItemText>Option 1</RadioGroup.ItemText>
+        <RadioGroup.ItemHiddenInput />
+      </RadioGroup.Item>
+      <RadioGroup.Item value="option2" disabled>
+        <RadioGroup.ItemControl>
+          <RadioGroup.Indicator />
+        </RadioGroup.ItemControl>
+        <RadioGroup.ItemText>Option 2 (Disabled)</RadioGroup.ItemText>
+        <RadioGroup.ItemHiddenInput />
+      </RadioGroup.Item>
+    </RadioGroup.Root>
+  );
+
+  const disabledOption = screen.getByRole('radio', { name: /Option 2/ });
+  await userEvent.click(disabledOption);
+
+  expect(handleChange).not.toHaveBeenCalled();
+  expect(disabledOption).not.toBeChecked();
+});
+```
+
+## Related Components
+
+- **Checkbox**: For multiple selection scenarios
+- **Switch**: For binary on/off toggles with immediate effect
+- **Select**: For choosing from many options (8+) or when space is limited
+- **Button**: For triggering actions or navigation
+- **Tabs**: For switching between content views
