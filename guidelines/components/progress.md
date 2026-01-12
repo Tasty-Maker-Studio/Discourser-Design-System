@@ -1,0 +1,773 @@
+# Progress
+
+**Purpose:** Visual indicator that displays the completion status of a task or operation, providing feedback to users about ongoing processes following Material Design 3 patterns.
+
+## Import
+
+```typescript
+import { Progress } from '@discourser/design-system';
+```
+
+## Component Structure
+
+The Progress component is built with compositional sub-components for maximum flexibility:
+
+```typescript
+<Progress.Root>
+  <Progress.Label />        {/* Optional: Label for the progress bar */}
+  <Progress.Track>          {/* Container for the progress bar */}
+    <Progress.Range />      {/* Filled portion showing progress */}
+  </Progress.Track>
+  <Progress.ValueText />    {/* Optional: Percentage or numeric value */}
+</Progress.Root>
+```
+
+### Circular Progress Structure
+
+```typescript
+<Progress.Root>
+  <Progress.Label />
+  <Progress.Circle>          {/* Container for circular progress */}
+    <Progress.CircleTrack /> {/* Background circle */}
+    <Progress.CircleRange /> {/* Progress arc */}
+  </Progress.Circle>
+  <Progress.ValueText />
+</Progress.Root>
+```
+
+## Variants
+
+The Progress component supports 2 visual variants:
+
+| Variant  | Visual Style                              | Usage                       | When to Use                                               |
+| -------- | ----------------------------------------- | --------------------------- | --------------------------------------------------------- |
+| `solid`  | Gray background with colored fill         | Default progress indication | Most use cases, general progress tracking                 |
+| `subtle` | Color-tinted background with colored fill | Contextual progress         | When progress bar needs to match surrounding color scheme |
+
+### Visual Characteristics
+
+- **solid**: Gray subtle background (`gray.subtle.bg`) with colorPalette solid fill
+- **subtle**: Color-tinted background (`colorPalette.subtle.bg.active`) with colorPalette solid fill
+
+## Sizes
+
+| Size | Height | Usage                                        |
+| ---- | ------ | -------------------------------------------- |
+| `xs` | 6px    | Minimal progress indicators, very compact UI |
+| `sm` | 8px    | Compact layouts, inline progress             |
+| `md` | 10px   | Default, most use cases                      |
+| `lg` | 12px   | Prominent progress bars, better visibility   |
+| `xl` | 14px   | Hero sections, emphasized progress           |
+
+**Recommendation:** Use `md` for most cases. Use `lg` for prominent progress indicators.
+
+## Shapes
+
+| Shape     | Border Radius     | Usage                                    |
+| --------- | ----------------- | ---------------------------------------- |
+| `square`  | 0                 | Sharp corners, modern minimalist designs |
+| `rounded` | Small radius (l1) | Default, balanced appearance             |
+| `full`    | Fully rounded     | Pill-shaped, smooth modern appearance    |
+
+## Additional Variants
+
+| Variant    | Description              | When to Use                                            |
+| ---------- | ------------------------ | ------------------------------------------------------ |
+| `striped`  | Diagonal stripes pattern | Active processes, downloads, uploads                   |
+| `animated` | Animated stripes         | Active downloads, ongoing operations needing attention |
+
+## Props
+
+### Progress.Root
+
+| Prop           | Type                                   | Default     | Description                        |
+| -------------- | -------------------------------------- | ----------- | ---------------------------------- |
+| `value`        | `number \| null`                       | `null`      | Current progress value (0-100)     |
+| `min`          | `number`                               | `0`         | Minimum value                      |
+| `max`          | `number`                               | `100`       | Maximum value                      |
+| `variant`      | `'solid' \| 'subtle'`                  | `'solid'`   | Visual style variant               |
+| `size`         | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'`      | Progress bar size                  |
+| `shape`        | `'square' \| 'rounded' \| 'full'`      | `'rounded'` | Border radius style                |
+| `striped`      | `boolean`                              | `false`     | Add diagonal stripe pattern        |
+| `animated`     | `boolean`                              | `false`     | Animate stripes (requires striped) |
+| `colorPalette` | `string`                               | -           | Color scheme for progress bar      |
+
+**Note:** When `value` is `null`, the progress bar enters indeterminate mode with continuous animation.
+
+### Sub-components
+
+| Component              | Description                             |
+| ---------------------- | --------------------------------------- |
+| `Progress.Label`       | Text label describing the progress      |
+| `Progress.Track`       | Container for linear progress bar       |
+| `Progress.Range`       | Filled portion showing progress amount  |
+| `Progress.ValueText`   | Formatted value text (e.g., "75%")      |
+| `Progress.Circle`      | Container for circular progress         |
+| `Progress.CircleTrack` | Background circle for circular progress |
+| `Progress.CircleRange` | Progress arc for circular progress      |
+
+## Examples
+
+### Basic Usage
+
+```typescript
+// Simple progress bar
+<Progress.Root value={50}>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// With label and value text
+<Progress.Root value={75}>
+  <Progress.Label>Upload Progress</Progress.Label>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+  <Progress.ValueText />
+</Progress.Root>
+
+// Complete example with all elements
+<Progress.Root value={60}>
+  <Progress.Label>Loading...</Progress.Label>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+  <Progress.ValueText />
+</Progress.Root>
+```
+
+### Variants
+
+```typescript
+// Solid variant (default)
+<Progress.Root value={50} variant="solid">
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// Subtle variant (color-tinted)
+<Progress.Root value={50} variant="subtle" colorPalette="blue">
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+```
+
+### Sizes
+
+```typescript
+// Extra small
+<Progress.Root value={50} size="xs">
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// Small
+<Progress.Root value={50} size="sm">
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// Medium (default)
+<Progress.Root value={50} size="md">
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// Large
+<Progress.Root value={50} size="lg">
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// Extra large
+<Progress.Root value={50} size="xl">
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+```
+
+### Shapes
+
+```typescript
+// Square (sharp corners)
+<Progress.Root value={50} shape="square">
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// Rounded (default)
+<Progress.Root value={50} shape="rounded">
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// Full (pill-shaped)
+<Progress.Root value={50} shape="full">
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+```
+
+### Striped and Animated
+
+```typescript
+// Striped progress
+<Progress.Root value={50} striped>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// Animated striped progress
+<Progress.Root value={50} striped animated>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// Download indicator
+<Progress.Root value={progress} striped animated colorPalette="blue">
+  <Progress.Label>Downloading file...</Progress.Label>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+  <Progress.ValueText />
+</Progress.Root>
+```
+
+### Indeterminate Progress
+
+```typescript
+// Loading state with unknown duration
+<Progress.Root value={null}>
+  <Progress.Label>Loading...</Progress.Label>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// Processing without specific progress
+<Progress.Root value={null} striped animated>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+```
+
+### Circular Progress
+
+```typescript
+// Basic circular progress
+<Progress.Root value={75}>
+  <Progress.Circle>
+    <Progress.CircleTrack />
+    <Progress.CircleRange />
+  </Progress.Circle>
+</Progress.Root>
+
+// Circular with label and value
+<Progress.Root value={60}>
+  <Progress.Label>Uploading</Progress.Label>
+  <Progress.Circle>
+    <Progress.CircleTrack />
+    <Progress.CircleRange />
+  </Progress.Circle>
+  <Progress.ValueText />
+</Progress.Root>
+
+// Circular indeterminate
+<Progress.Root value={null}>
+  <Progress.Circle>
+    <Progress.CircleTrack />
+    <Progress.CircleRange />
+  </Progress.Circle>
+</Progress.Root>
+```
+
+### Color Schemes
+
+```typescript
+// Blue progress (info/processing)
+<Progress.Root value={50} colorPalette="blue">
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// Green progress (success)
+<Progress.Root value={100} colorPalette="green">
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// Orange progress (warning)
+<Progress.Root value={90} colorPalette="orange">
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// Red progress (critical/error)
+<Progress.Root value={95} colorPalette="red">
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+```
+
+## Common Patterns
+
+### File Upload Progress
+
+```typescript
+const [uploadProgress, setUploadProgress] = useState(0);
+
+async function handleUpload(file: File) {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  await fetch('/api/upload', {
+    method: 'POST',
+    body: formData,
+    onUploadProgress: (progressEvent) => {
+      const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+      setUploadProgress(progress);
+    },
+  });
+}
+
+<Progress.Root value={uploadProgress} striped animated colorPalette="blue">
+  <Progress.Label>Uploading {file.name}</Progress.Label>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+  <Progress.ValueText />
+</Progress.Root>
+```
+
+### Multi-Step Form Progress
+
+```typescript
+const [currentStep, setCurrentStep] = useState(1);
+const totalSteps = 4;
+const progress = (currentStep / totalSteps) * 100;
+
+<Progress.Root value={progress} colorPalette="blue">
+  <Progress.Label>Step {currentStep} of {totalSteps}</Progress.Label>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+  <Progress.ValueText />
+</Progress.Root>
+```
+
+### Loading State
+
+```typescript
+const [isLoading, setIsLoading] = useState(true);
+
+{isLoading && (
+  <Progress.Root value={null} size="sm">
+    <Progress.Track>
+      <Progress.Range />
+    </Progress.Track>
+  </Progress.Root>
+)}
+```
+
+### Storage Usage Indicator
+
+```typescript
+const usedStorage = 8.5; // GB
+const totalStorage = 10; // GB
+const percentage = (usedStorage / totalStorage) * 100;
+
+// Color changes based on usage
+const getColorPalette = (percent: number) => {
+  if (percent >= 90) return 'red';
+  if (percent >= 75) return 'orange';
+  return 'blue';
+};
+
+<Progress.Root
+  value={percentage}
+  colorPalette={getColorPalette(percentage)}
+  size="lg"
+>
+  <Progress.Label>Storage Used</Progress.Label>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+  <Progress.ValueText />
+</Progress.Root>
+
+<Text>{usedStorage}GB of {totalStorage}GB used</Text>
+```
+
+### Task Completion Progress
+
+```typescript
+const [completedTasks, setCompletedTasks] = useState(7);
+const totalTasks = 10;
+const progress = (completedTasks / totalTasks) * 100;
+
+<Progress.Root value={progress} colorPalette="green">
+  <Progress.Label>Project Tasks</Progress.Label>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+<Text>{completedTasks} of {totalTasks} tasks completed</Text>
+```
+
+### Download with Time Remaining
+
+```typescript
+const [progress, setProgress] = useState(0);
+const [timeRemaining, setTimeRemaining] = useState('Calculating...');
+
+<Progress.Root value={progress} striped animated colorPalette="blue" size="lg">
+  <Progress.Label>
+    Downloading update
+    <Text fontSize="sm" color="fg.muted">{timeRemaining}</Text>
+  </Progress.Label>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+  <Progress.ValueText />
+</Progress.Root>
+```
+
+### Skill Level Indicator
+
+```typescript
+const skills = [
+  { name: 'JavaScript', level: 90 },
+  { name: 'TypeScript', level: 85 },
+  { name: 'React', level: 88 },
+  { name: 'Node.js', level: 75 },
+];
+
+<Stack gap="4">
+  {skills.map((skill) => (
+    <Progress.Root
+      key={skill.name}
+      value={skill.level}
+      colorPalette="blue"
+      size="md"
+    >
+      <Progress.Label>{skill.name}</Progress.Label>
+      <Progress.Track>
+        <Progress.Range />
+      </Progress.Track>
+      <Progress.ValueText />
+    </Progress.Root>
+  ))}
+</Stack>
+```
+
+## DO NOT
+
+```typescript
+// ❌ Don't use progress without accessible label
+<Progress.Root value={50}>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root> // Missing label for screen readers
+
+// ❌ Don't use values outside the min-max range
+<Progress.Root value={150} max={100}>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root> // Value exceeds maximum
+
+// ❌ Don't animate without striped
+<Progress.Root value={50} animated>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root> // Animated requires striped
+
+// ❌ Don't use tiny sizes for touch interfaces
+<Progress.Root value={50} size="xs">
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root> // Too small for mobile interaction
+
+// ❌ Don't use indeterminate for known progress
+<Progress.Root value={null}>
+  <Progress.Label>50% Complete</Progress.Label>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root> // Contradictory: label says 50% but indeterminate
+
+// ❌ Don't update progress too frequently (causes jank)
+setProgress(progress + 0.1); // Every 10ms - too frequent
+
+// ✅ Use aria-label when no visible label
+<Progress.Root value={50} aria-label="Page loading progress">
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// ✅ Clamp values within range
+const clampedValue = Math.min(Math.max(value, 0), 100);
+<Progress.Root value={clampedValue}>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// ✅ Include striped when using animated
+<Progress.Root value={50} striped animated>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// ✅ Update progress at reasonable intervals
+useEffect(() => {
+  const interval = setInterval(() => {
+    setProgress(prev => Math.min(prev + 10, 100));
+  }, 500); // Update every 500ms
+  return () => clearInterval(interval);
+}, []);
+```
+
+## Accessibility
+
+The Progress component follows WCAG 2.1 Level AA standards:
+
+- **ARIA Role**: Uses `role="progressbar"` for semantic meaning
+- **ARIA Attributes**:
+  - `aria-valuenow`: Current progress value
+  - `aria-valuemin`: Minimum value (default 0)
+  - `aria-valuemax`: Maximum value (default 100)
+  - `aria-valuetext`: Human-readable progress description
+  - `aria-label` or `aria-labelledby`: Accessible name for the progress
+- **Indeterminate State**: Uses `aria-valuenow="undefined"` when value is null
+- **Visual + Text**: Combines visual progress with optional text value
+- **Color Independence**: Does not rely solely on color to convey progress
+
+### Accessibility Best Practices
+
+```typescript
+// ✅ Always provide a label
+<Progress.Root value={50}>
+  <Progress.Label>File upload progress</Progress.Label>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// ✅ Or use aria-label
+<Progress.Root value={50} aria-label="Loading page content">
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// ✅ Include value text for specific progress
+<Progress.Root value={75}>
+  <Progress.Label>Download</Progress.Label>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+  <Progress.ValueText /> {/* Automatically displays "75%" */}
+</Progress.Root>
+
+// ✅ Use semantic descriptions
+<Progress.Root value={33} aria-valuetext="1 of 3 steps completed">
+  <Progress.Label>Registration progress</Progress.Label>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// ✅ Announce progress updates
+<Progress.Root
+  value={progress}
+  aria-live="polite"
+  aria-atomic="true"
+>
+  <Progress.Label>Processing</Progress.Label>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+```
+
+## Variant Selection Guide
+
+| Scenario                    | Recommended Variant | Shape     | Animated           | Reasoning                       |
+| --------------------------- | ------------------- | --------- | ------------------ | ------------------------------- |
+| Page loading                | `solid`, `md`       | `rounded` | No                 | Simple, unobtrusive             |
+| File download               | `solid`, `lg`       | `full`    | Yes (striped)      | Prominent, active indication    |
+| File upload                 | `solid`, `lg`       | `full`    | Yes (striped)      | Active process needs attention  |
+| Form steps                  | `solid`, `md`       | `rounded` | No                 | Clear progress, not distracting |
+| Storage usage               | `subtle`, `lg`      | `rounded` | No                 | Contextual, matches content     |
+| Task completion             | `solid`, `md`       | `rounded` | No                 | Clear progress indicator        |
+| Skill level                 | `subtle`, `sm`      | `full`    | No                 | Visual rating, less emphasis    |
+| Loading spinner alternative | `solid`, `sm`       | `full`    | No (indeterminate) | Inline loading state            |
+
+## State Behaviors
+
+| State             | Visual Change                 | Behavior                                  |
+| ----------------- | ----------------------------- | ----------------------------------------- |
+| **Normal**        | Filled portion shows progress | Updates smoothly as value changes         |
+| **Indeterminate** | Continuous animation          | Moving gradient or bar when value is null |
+| **Complete**      | 100% filled                   | Reached maximum value                     |
+| **Striped**       | Diagonal pattern              | Static stripes showing texture            |
+| **Animated**      | Moving stripes                | Indicates active process                  |
+
+## Responsive Considerations
+
+```typescript
+// Mobile-first: Use larger sizes for better visibility
+<Progress.Root value={50} size="lg">
+  <Progress.Label>Upload progress</Progress.Label>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// Responsive sizing
+<Progress.Root value={50} size={{ base: 'lg', md: 'md' }}>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// Stack label and value on mobile
+<Progress.Root value={75}>
+  <Stack
+    direction={{ base: 'column', md: 'row' }}
+    justify="space-between"
+    align={{ base: 'start', md: 'center' }}
+  >
+    <Progress.Label>Downloading</Progress.Label>
+    <Progress.ValueText />
+  </Stack>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+```
+
+## Testing
+
+When testing Progress components:
+
+```typescript
+import { render, screen } from '@testing-library/react';
+import { Progress } from '@discourser/design-system';
+
+test('displays correct progress value', () => {
+  render(
+    <Progress.Root value={50}>
+      <Progress.Label>Loading</Progress.Label>
+      <Progress.Track>
+        <Progress.Range />
+      </Progress.Track>
+    </Progress.Root>
+  );
+
+  const progressbar = screen.getByRole('progressbar', { name: 'Loading' });
+  expect(progressbar).toHaveAttribute('aria-valuenow', '50');
+  expect(progressbar).toHaveAttribute('aria-valuemin', '0');
+  expect(progressbar).toHaveAttribute('aria-valuemax', '100');
+});
+
+test('handles indeterminate state', () => {
+  render(
+    <Progress.Root value={null} aria-label="Loading">
+      <Progress.Track>
+        <Progress.Range />
+      </Progress.Track>
+    </Progress.Root>
+  );
+
+  const progressbar = screen.getByRole('progressbar');
+  expect(progressbar).not.toHaveAttribute('aria-valuenow');
+});
+
+test('updates progress value', () => {
+  const { rerender } = render(
+    <Progress.Root value={25}>
+      <Progress.Label>Loading</Progress.Label>
+      <Progress.Track>
+        <Progress.Range />
+      </Progress.Track>
+    </Progress.Root>
+  );
+
+  let progressbar = screen.getByRole('progressbar');
+  expect(progressbar).toHaveAttribute('aria-valuenow', '25');
+
+  rerender(
+    <Progress.Root value={75}>
+      <Progress.Label>Loading</Progress.Label>
+      <Progress.Track>
+        <Progress.Range />
+      </Progress.Track>
+    </Progress.Root>
+  );
+
+  progressbar = screen.getByRole('progressbar');
+  expect(progressbar).toHaveAttribute('aria-valuenow', '75');
+});
+
+test('displays value text', () => {
+  render(
+    <Progress.Root value={60}>
+      <Progress.Track>
+        <Progress.Range />
+      </Progress.Track>
+      <Progress.ValueText />
+    </Progress.Root>
+  );
+
+  expect(screen.getByText('60%')).toBeInTheDocument();
+});
+
+test('respects custom min and max', () => {
+  render(
+    <Progress.Root value={50} min={0} max={200}>
+      <Progress.Label>Custom range</Progress.Label>
+      <Progress.Track>
+        <Progress.Range />
+      </Progress.Track>
+    </Progress.Root>
+  );
+
+  const progressbar = screen.getByRole('progressbar');
+  expect(progressbar).toHaveAttribute('aria-valuenow', '50');
+  expect(progressbar).toHaveAttribute('aria-valuemin', '0');
+  expect(progressbar).toHaveAttribute('aria-valuemax', '200');
+});
+```
+
+## Related Components
+
+- **Spinner**: For indeterminate loading without progress indication
+- **Skeleton**: For content loading placeholders
+- **Toast**: For completion notifications after progress reaches 100%
+- **Stepper**: For multi-step process navigation (alternative to progress)

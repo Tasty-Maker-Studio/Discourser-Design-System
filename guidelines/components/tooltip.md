@@ -1,0 +1,832 @@
+# Tooltip
+
+**Purpose:** Contextual information overlay that appears on hover or focus, providing supplementary details without cluttering the interface.
+
+## Import
+
+```typescript
+import { Tooltip } from '@discourser/design-system';
+```
+
+## Component API
+
+The Tooltip component uses a simplified API that wraps Ark UI's compound component pattern:
+
+```typescript
+interface TooltipProps {
+  showArrow?: boolean; // Display arrow pointing to trigger
+  portalled?: boolean; // Render in portal (default: true)
+  portalRef?: React.RefObject; // Custom portal container
+  children: React.ReactNode; // Trigger element
+  content: React.ReactNode; // Tooltip content
+  contentProps?: ContentProps; // Additional content styling
+  disabled?: boolean; // Disable tooltip
+  positioning?: PositioningOptions; // Placement and positioning
+  openDelay?: number; // Delay before showing (ms)
+  closeDelay?: number; // Delay before hiding (ms)
+}
+```
+
+## Props
+
+| Prop           | Type                           | Default                | Description                                  |
+| -------------- | ------------------------------ | ---------------------- | -------------------------------------------- |
+| `children`     | `ReactNode`                    | Required               | Element that triggers the tooltip            |
+| `content`      | `ReactNode \| string`          | Required               | Content displayed in tooltip                 |
+| `showArrow`    | `boolean`                      | `false`                | Show arrow pointing to trigger element       |
+| `portalled`    | `boolean`                      | `true`                 | Render tooltip in portal for proper layering |
+| `portalRef`    | `React.RefObject<HTMLElement>` | -                      | Custom container for portal rendering        |
+| `contentProps` | `ContentProps`                 | -                      | Additional props for content styling         |
+| `disabled`     | `boolean`                      | `false`                | Disable tooltip (returns children only)      |
+| `positioning`  | `PositioningOptions`           | `{ placement: 'top' }` | Tooltip placement and positioning            |
+| `openDelay`    | `number`                       | `700`                  | Delay in ms before tooltip appears           |
+| `closeDelay`   | `number`                       | `500`                  | Delay in ms before tooltip disappears        |
+
+### Positioning Options
+
+```typescript
+positioning={{
+  placement: 'top' | 'right' | 'bottom' | 'left' |
+             'top-start' | 'top-end' | 'right-start' | 'right-end' |
+             'bottom-start' | 'bottom-end' | 'left-start' | 'left-end',
+  gutter: number,        // Distance from trigger (default: 8px)
+  offset: { x, y },      // Fine-tune position
+  flip: boolean,         // Auto-flip on edge collision (default: true)
+  slide: boolean,        // Slide along edge (default: true)
+}}
+```
+
+## Visual Characteristics
+
+- **Background**: Gray solid background with subtle shadow
+- **Typography**: Extra small, semibold text
+- **Border Radius**: Large (l2)
+- **Padding**: Compact (8px horizontal, 6px vertical)
+- **Max Width**: 320px (xs size)
+- **Animation**: Scale-fade in/out with fast timing
+- **Shadow**: Small shadow for elevation
+
+## Examples
+
+### Basic Usage
+
+```typescript
+import { Tooltip } from '@discourser/design-system';
+import { Button } from '@discourser/design-system';
+
+// Simple text tooltip
+<Tooltip content="Click to save your changes">
+  <Button>Save</Button>
+</Tooltip>
+
+// With arrow indicator
+<Tooltip content="This action cannot be undone" showArrow>
+  <Button variant="filled">Delete</Button>
+</Tooltip>
+```
+
+### Icon Tooltips
+
+```typescript
+import { InfoIcon, HelpIcon, SettingsIcon } from 'your-icon-library';
+import { IconButton } from '@discourser/design-system';
+
+// Information icon
+<Tooltip content="Additional information about this field" showArrow>
+  <IconButton aria-label="More info">
+    <InfoIcon />
+  </IconButton>
+</Tooltip>
+
+// Help icon
+<Tooltip content="Click for help documentation" showArrow>
+  <IconButton aria-label="Help">
+    <HelpIcon />
+  </IconButton>
+</Tooltip>
+
+// Settings icon
+<Tooltip content="Open settings panel">
+  <IconButton aria-label="Settings">
+    <SettingsIcon />
+  </IconButton>
+</Tooltip>
+```
+
+### Positioning
+
+```typescript
+// Top (default)
+<Tooltip content="Appears above" positioning={{ placement: 'top' }} showArrow>
+  <Button>Top</Button>
+</Tooltip>
+
+// Right
+<Tooltip content="Appears to the right" positioning={{ placement: 'right' }} showArrow>
+  <Button>Right</Button>
+</Tooltip>
+
+// Bottom
+<Tooltip content="Appears below" positioning={{ placement: 'bottom' }} showArrow>
+  <Button>Bottom</Button>
+</Tooltip>
+
+// Left
+<Tooltip content="Appears to the left" positioning={{ placement: 'left' }} showArrow>
+  <Button>Left</Button>
+</Tooltip>
+
+// Advanced positioning
+<Tooltip
+  content="Custom positioned tooltip"
+  positioning={{
+    placement: 'bottom-start',
+    gutter: 12,
+    offset: { x: 0, y: 4 }
+  }}
+  showArrow
+>
+  <Button>Custom Position</Button>
+</Tooltip>
+```
+
+### Complex Content
+
+```typescript
+// Multi-line text
+<Tooltip
+  content="This is a longer tooltip with more detailed information that wraps across multiple lines to provide comprehensive context."
+  showArrow
+  contentProps={{ style: { maxWidth: '250px' } }}
+>
+  <Button>Detailed Info</Button>
+</Tooltip>
+
+// Rich content with JSX
+<Tooltip
+  content={
+    <div>
+      <strong>Keyboard Shortcut</strong>
+      <div>Press Cmd+S to save</div>
+    </div>
+  }
+  showArrow
+>
+  <Button>Save</Button>
+</Tooltip>
+
+// With custom styling
+<Tooltip
+  content="Custom styled tooltip"
+  contentProps={{
+    className: css({
+      maxWidth: '400px',
+      textAlign: 'center'
+    })
+  }}
+>
+  <Button>Custom Style</Button>
+</Tooltip>
+```
+
+### Timing Control
+
+```typescript
+// Instant tooltip (no delay)
+<Tooltip content="Appears immediately" openDelay={0} showArrow>
+  <Button>Instant</Button>
+</Tooltip>
+
+// Longer delay
+<Tooltip content="Takes longer to appear" openDelay={1000} showArrow>
+  <Button>Delayed</Button>
+</Tooltip>
+
+// Quick close
+<Tooltip content="Closes quickly" openDelay={500} closeDelay={0} showArrow>
+  <Button>Quick Close</Button>
+</Tooltip>
+```
+
+### Disabled State
+
+```typescript
+const [showTooltip, setShowTooltip] = useState(true);
+
+// Conditionally disable
+<Tooltip content="This tooltip can be disabled" disabled={!showTooltip}>
+  <Button>Toggle Tooltip</Button>
+</Tooltip>
+
+// Disabled returns children only
+<Tooltip content="Never shown" disabled>
+  <Button>No Tooltip</Button>
+</Tooltip>
+```
+
+### Non-Portalled Tooltip
+
+```typescript
+// Render in local DOM (useful for specific layout contexts)
+<div style={{ position: 'relative', overflow: 'hidden' }}>
+  <Tooltip content="Stays within parent" portalled={false} showArrow>
+    <Button>Local Tooltip</Button>
+  </Tooltip>
+</div>
+
+// Custom portal container
+const portalRef = useRef<HTMLDivElement>(null);
+
+<div>
+  <div ref={portalRef} />
+
+  <Tooltip content="Renders in custom container" portalRef={portalRef} showArrow>
+    <Button>Custom Portal</Button>
+  </Tooltip>
+</div>
+```
+
+## Common Patterns
+
+### Truncated Text Helper
+
+```typescript
+// Show full text in tooltip when truncated
+<Tooltip content="This is the complete text that gets truncated in the UI">
+  <div className={css({
+    maxWidth: '200px',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
+  })}>
+    This is the complete text that gets truncated in the UI
+  </div>
+</Tooltip>
+```
+
+### Form Field Help
+
+```typescript
+import { Input } from '@discourser/design-system';
+
+// Help text for form inputs
+<div className={css({ display: 'flex', alignItems: 'center', gap: 'sm' })}>
+  <Input label="Password" type="password" />
+  <Tooltip
+    content="Password must be at least 8 characters with 1 uppercase, 1 lowercase, and 1 number"
+    showArrow
+    positioning={{ placement: 'right' }}
+  >
+    <IconButton aria-label="Password requirements">
+      <InfoIcon />
+    </IconButton>
+  </Tooltip>
+</div>
+```
+
+### Action Confirmation
+
+```typescript
+// Explain consequences of actions
+<div className={css({ display: 'flex', gap: 'sm' })}>
+  <Tooltip content="Permanently remove this item" showArrow>
+    <Button variant="tonal">Delete</Button>
+  </Tooltip>
+
+  <Tooltip content="Restore default settings" showArrow>
+    <Button variant="outlined">Reset</Button>
+  </Tooltip>
+</div>
+```
+
+### Status Indicators
+
+```typescript
+// Explain status with tooltips
+<div className={css({ display: 'flex', alignItems: 'center', gap: 'sm' })}>
+  <Tooltip content="All systems operational" positioning={{ placement: 'bottom' }}>
+    <div className={css({
+      w: '3',
+      h: '3',
+      borderRadius: 'full',
+      bg: 'success.solid'
+    })} />
+  </Tooltip>
+
+  <span>System Status</span>
+</div>
+```
+
+### Disabled Actions
+
+```typescript
+// Explain why action is disabled
+const canDelete = hasPermission && itemsSelected > 0;
+
+<Tooltip
+  content={
+    !hasPermission
+      ? "You don't have permission to delete items"
+      : itemsSelected === 0
+      ? "Select at least one item to delete"
+      : "Delete selected items"
+  }
+  showArrow
+>
+  <Button disabled={!canDelete}>Delete Selected</Button>
+</Tooltip>
+```
+
+### Keyboard Shortcuts
+
+```typescript
+// Display keyboard shortcuts
+<div className={css({ display: 'flex', gap: 'sm' })}>
+  <Tooltip content={<>Save <kbd>⌘S</kbd></>} showArrow>
+    <Button>Save</Button>
+  </Tooltip>
+
+  <Tooltip content={<>Open <kbd>⌘O</kbd></>} showArrow>
+    <Button>Open</Button>
+  </Tooltip>
+
+  <Tooltip content={<>Search <kbd>⌘K</kbd></>} showArrow>
+    <Button>Search</Button>
+  </Tooltip>
+</div>
+```
+
+### Data Visualization
+
+```typescript
+// Explain chart data points
+<Tooltip content={`Revenue: $${dataPoint.revenue.toLocaleString()}`}>
+  <circle cx={dataPoint.x} cy={dataPoint.y} r="4" />
+</Tooltip>
+
+// Table cell details
+<Tooltip content={`Last updated: ${formatDate(item.updatedAt)}`} showArrow>
+  <td>{item.name}</td>
+</Tooltip>
+```
+
+## DO NOT
+
+```typescript
+// ❌ Don't use for critical information
+<Tooltip content="Click Save to prevent data loss!">
+  <Button>Continue</Button>
+</Tooltip>
+// Tooltips are easily missed - use visible text or Dialog for critical info
+
+// ❌ Don't put interactive elements in tooltips
+<Tooltip content={
+  <div>
+    <a href="/learn-more">Learn more</a>
+  </div>
+}>
+  <Button>Info</Button>
+</Tooltip>
+// Tooltip disappears on hover out - use Popover for interactive content
+
+// ❌ Don't use overly long text
+<Tooltip content="This tooltip has way too much text that goes on and on explaining everything in extreme detail which makes it hard to read and defeats the purpose of a quick contextual hint...">
+  <Button>Info</Button>
+</Tooltip>
+// Keep tooltips concise (1-2 short sentences max)
+
+// ❌ Don't duplicate visible text
+<Button>Save Changes</Button>
+<Tooltip content="Save Changes">  // Redundant!
+  <IconButton><SaveIcon /></IconButton>
+</Tooltip>
+// Only use if adding helpful context
+
+// ❌ Don't nest tooltips
+<Tooltip content="Outer">
+  <Tooltip content="Inner">
+    <Button>Nested</Button>
+  </Tooltip>
+</Tooltip>
+// Creates confusing UX
+
+// ❌ Don't use on disabled elements without wrapper
+<Tooltip content="This button is disabled">
+  <Button disabled>Action</Button>  // Tooltip won't show!
+</Tooltip>
+
+// ✅ Wrap disabled elements
+<Tooltip content="This action requires admin privileges">
+  <span>
+    <Button disabled>Admin Action</Button>
+  </span>
+</Tooltip>
+
+// ✅ Keep content concise and helpful
+<Tooltip content="Save your changes" showArrow>
+  <Button>Save</Button>
+</Tooltip>
+
+// ✅ Use Popover for interactive content
+<Popover>
+  <PopoverTrigger>
+    <Button>More Info</Button>
+  </PopoverTrigger>
+  <PopoverContent>
+    <a href="/docs">View Documentation</a>
+  </PopoverContent>
+</Popover>
+```
+
+## Accessibility
+
+The Tooltip component follows WCAG 2.1 Level AA standards:
+
+- **ARIA Attributes**: Proper `role="tooltip"` and `aria-describedby` relationships
+- **Keyboard Support**: Tooltips appear on focus, dismiss on Escape
+- **Focus Management**: Does not trap focus (use Popover for interactive content)
+- **Dismiss Behavior**: Automatically dismisses on Escape, blur, or scroll
+- **Screen Readers**: Content is announced when tooltip trigger receives focus
+- **Pointer Events**: Supports both hover and focus triggers
+
+### Accessibility Best Practices
+
+```typescript
+// ✅ Provide aria-label on icon buttons with tooltips
+<Tooltip content="Delete item" showArrow>
+  <IconButton aria-label="Delete">  // Screen readers use this, not tooltip
+    <TrashIcon />
+  </IconButton>
+</Tooltip>
+
+// ✅ Ensure tooltips don't contain essential information
+// (Some users may not be able to trigger hover/focus)
+<div>
+  <Button>Submit Form</Button>
+  <Tooltip content="This will send your data to our servers">
+    <IconButton aria-label="More information">
+      <InfoIcon />
+    </IconButton>
+  </Tooltip>
+</div>
+
+// ✅ Use appropriate delays for different contexts
+// Instant for toolbar icons (users expect quick feedback)
+<Tooltip content="Bold" openDelay={0}>
+  <IconButton aria-label="Bold">
+    <BoldIcon />
+  </IconButton>
+</Tooltip>
+
+// Default delay for regular buttons (prevents tooltip spam)
+<Tooltip content="Save changes" openDelay={700}>
+  <Button>Save</Button>
+</Tooltip>
+
+// ✅ Wrap disabled buttons to show explanation
+<Tooltip content="Complete required fields to enable">
+  <span>
+    <Button disabled={!isValid}>Submit</Button>
+  </span>
+</Tooltip>
+```
+
+### Common Accessibility Issues
+
+```typescript
+// ❌ Missing aria-label on icon button
+<Tooltip content="Settings">
+  <IconButton>  // Screen reader has no context!
+    <SettingsIcon />
+  </IconButton>
+</Tooltip>
+
+// ✅ Provide both aria-label and tooltip
+<Tooltip content="Configure application settings">
+  <IconButton aria-label="Settings">
+    <SettingsIcon />
+  </IconButton>
+</Tooltip>
+
+// ❌ Essential information only in tooltip
+<Tooltip content="Required field">
+  <Input label="Email" />
+</Tooltip>
+
+// ✅ Show required indicator visibly
+<Input label="Email *" required />
+<Tooltip content="We'll never share your email">
+  <IconButton aria-label="Privacy information">
+    <InfoIcon />
+  </IconButton>
+</Tooltip>
+```
+
+## Content Guidelines
+
+### Keep It Concise
+
+```typescript
+// ❌ Too verbose
+<Tooltip content="This button will save all of your changes to the database and then redirect you to the dashboard page where you can view your saved data">
+  <Button>Save</Button>
+</Tooltip>
+
+// ✅ Concise and clear
+<Tooltip content="Save changes and return to dashboard">
+  <Button>Save</Button>
+</Tooltip>
+```
+
+### Be Specific
+
+```typescript
+// ❌ Vague
+<Tooltip content="Click here">
+  <Button>Export</Button>
+</Tooltip>
+
+// ✅ Specific and actionable
+<Tooltip content="Download data as CSV file">
+  <Button>Export</Button>
+</Tooltip>
+```
+
+### Use Title Case for Actions
+
+```typescript
+// ❌ Inconsistent capitalization
+<Tooltip content="save your changes">
+  <IconButton aria-label="Save"><SaveIcon /></IconButton>
+</Tooltip>
+
+// ✅ Consistent title case
+<Tooltip content="Save Your Changes">
+  <IconButton aria-label="Save"><SaveIcon /></IconButton>
+</Tooltip>
+```
+
+### Explain Why, Not Just What
+
+```typescript
+// ❌ States the obvious
+<Button disabled>Delete</Button>
+<Tooltip content="Delete button">  // User can see it's a delete button
+  <span><Button disabled>Delete</Button></span>
+</Tooltip>
+
+// ✅ Explains constraint
+<Tooltip content="Select items to delete">
+  <span><Button disabled>Delete</Button></span>
+</Tooltip>
+```
+
+## Positioning Best Practices
+
+### Optimal Placement by Context
+
+```typescript
+// Icon toolbar - bottom placement (doesn't obscure content above)
+<Tooltip content="Bold text" positioning={{ placement: 'bottom' }}>
+  <IconButton aria-label="Bold"><BoldIcon /></IconButton>
+</Tooltip>
+
+// Form help - right placement (keeps form labels visible)
+<div className={css({ display: 'flex', gap: 'sm' })}>
+  <Input label="Username" />
+  <Tooltip content="4-20 characters, letters and numbers only" positioning={{ placement: 'right' }}>
+    <IconButton aria-label="Username requirements"><InfoIcon /></IconButton>
+  </Tooltip>
+</div>
+
+// Table actions - left placement (prevents overflow)
+<Tooltip content="Delete row" positioning={{ placement: 'left' }}>
+  <IconButton aria-label="Delete"><TrashIcon /></IconButton>
+</Tooltip>
+
+// Top navigation - bottom placement (natural reading order)
+<Tooltip content="User profile" positioning={{ placement: 'bottom' }}>
+  <IconButton aria-label="Profile"><UserIcon /></IconButton>
+</Tooltip>
+```
+
+### Edge Detection
+
+```typescript
+// Let tooltip auto-flip near edges (default behavior)
+<Tooltip
+  content="This tooltip will flip to stay on screen"
+  positioning={{
+    placement: 'top',
+    flip: true,  // Default
+    slide: true  // Default
+  }}
+>
+  <Button>Near Edge</Button>
+</Tooltip>
+```
+
+## Responsive Considerations
+
+```typescript
+// Disable tooltips on touch devices (hover isn't reliable)
+const isTouchDevice = 'ontouchstart' in window;
+
+<Tooltip content="Hover for info" disabled={isTouchDevice}>
+  <Button>Info</Button>
+</Tooltip>
+
+// Alternative: Use openDelay={0} for touch-friendly instant feedback
+<Tooltip content="Quick info" openDelay={0}>
+  <Button>Info</Button>
+</Tooltip>
+
+// Mobile: Consider using Dialog instead for complex information
+const [showInfo, setShowInfo] = useState(false);
+
+<>
+  <Button onClick={() => setShowInfo(true)}>Info</Button>
+  {isMobile && (
+    <Dialog open={showInfo} onOpenChange={setShowInfo}>
+      <DialogContent>
+        <DialogTitle>Information</DialogTitle>
+        <DialogDescription>
+          Detailed information that would be in a tooltip
+        </DialogDescription>
+      </DialogContent>
+    </Dialog>
+  )}
+  {!isMobile && (
+    <Tooltip content="Brief info">
+      <Button>Info</Button>
+    </Tooltip>
+  )}
+</>
+```
+
+## Performance Considerations
+
+```typescript
+// ✅ Tooltip uses lazy mounting (only renders when opened)
+// ✅ Unmounts on exit by default (cleans up DOM)
+<Tooltip content="Efficiently rendered">
+  <Button>Optimized</Button>
+</Tooltip>
+
+// For frequently toggled tooltips, you can disable unmounting
+<Tooltip
+  content="Stays mounted for faster reopening"
+  lazyMount={false}
+  unmountOnExit={false}
+>
+  <Button>Frequently Hovered</Button>
+</Tooltip>
+
+// Portalling (default) ensures proper z-index stacking
+// Only disable if you have specific layout requirements
+<Tooltip content="Portalled by default" portalled={true}>
+  <Button>Default Behavior</Button>
+</Tooltip>
+```
+
+## Testing
+
+```typescript
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+test('tooltip appears on hover', async () => {
+  const user = userEvent.setup();
+
+  render(
+    <Tooltip content="Helpful information">
+      <button>Hover me</button>
+    </Tooltip>
+  );
+
+  const trigger = screen.getByRole('button', { name: 'Hover me' });
+
+  // Tooltip should not be visible initially
+  expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+
+  // Hover over trigger
+  await user.hover(trigger);
+
+  // Tooltip should appear
+  await waitFor(() => {
+    expect(screen.getByRole('tooltip')).toBeInTheDocument();
+    expect(screen.getByText('Helpful information')).toBeVisible();
+  });
+
+  // Unhover
+  await user.unhover(trigger);
+
+  // Tooltip should disappear
+  await waitFor(() => {
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+  });
+});
+
+test('tooltip appears on focus for keyboard users', async () => {
+  const user = userEvent.setup();
+
+  render(
+    <Tooltip content="Keyboard accessible">
+      <button>Focus me</button>
+    </Tooltip>
+  );
+
+  const trigger = screen.getByRole('button');
+
+  // Tab to focus
+  await user.tab();
+  expect(trigger).toHaveFocus();
+
+  // Tooltip should appear
+  await waitFor(() => {
+    expect(screen.getByRole('tooltip')).toBeInTheDocument();
+  });
+
+  // Tab away
+  await user.tab();
+
+  // Tooltip should disappear
+  await waitFor(() => {
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+  });
+});
+
+test('disabled tooltip returns children only', () => {
+  render(
+    <Tooltip content="Never shown" disabled>
+      <button>Child element</button>
+    </Tooltip>
+  );
+
+  const button = screen.getByRole('button', { name: 'Child element' });
+  expect(button).toBeInTheDocument();
+
+  // Tooltip wrapper should not exist
+  expect(screen.queryByRole('tooltip')).not.toBeInTheDocument();
+});
+
+test('tooltip with custom positioning', async () => {
+  const user = userEvent.setup();
+
+  render(
+    <Tooltip
+      content="Positioned tooltip"
+      positioning={{ placement: 'bottom' }}
+      showArrow
+    >
+      <button>Trigger</button>
+    </Tooltip>
+  );
+
+  await user.hover(screen.getByRole('button'));
+
+  await waitFor(() => {
+    const tooltip = screen.getByRole('tooltip');
+    expect(tooltip).toBeInTheDocument();
+    expect(tooltip).toHaveAttribute('data-placement', 'bottom');
+  });
+});
+
+test('instant tooltip with no delay', async () => {
+  const user = userEvent.setup({ delay: null });
+
+  render(
+    <Tooltip content="Instant tooltip" openDelay={0}>
+      <button>Hover</button>
+    </Tooltip>
+  );
+
+  await user.hover(screen.getByRole('button'));
+
+  // Should appear immediately
+  expect(screen.getByRole('tooltip')).toBeInTheDocument();
+});
+```
+
+## Related Components
+
+- **Popover** - For interactive content that requires user interaction (clicks, form inputs)
+- **Dialog** - For critical information or complex interactions requiring focus
+- **IconButton** - Common trigger element for tooltips (provide aria-label!)
+- **Button** - Standard trigger element for action tooltips
+- **HoverCard** - For rich preview content (larger, more complex than tooltips)
+
+## When to Use Tooltip vs. Alternatives
+
+| Scenario                 | Use                          | Reasoning                         |
+| ------------------------ | ---------------------------- | --------------------------------- |
+| Icon button explanation  | Tooltip                      | Brief, supplementary info         |
+| Form field help text     | Tooltip or visible help text | Critical help should be visible   |
+| Interactive content      | Popover                      | Tooltips disappear on unhover     |
+| Critical information     | Visible text or Dialog       | Tooltips are easily missed        |
+| Truncated text preview   | Tooltip                      | Shows full text on hover          |
+| Keyboard shortcuts       | Tooltip                      | Supplementary, not essential      |
+| Complex data details     | HoverCard or Popover         | Richer layout needed              |
+| Mobile-primary UI        | Visible text or Dialog       | Touch doesn't have reliable hover |
+| Required field indicator | Visible asterisk             | Must be immediately visible       |
+| Error messages           | Visible text                 | Critical for form validation      |

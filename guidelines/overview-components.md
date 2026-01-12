@@ -4,14 +4,56 @@ Always prefer components from `@discourser/design-system` if available. Do not u
 
 ## Available Components
 
-| Component | Purpose | Guidelines |
-|-----------|---------|------------|
-| Button | Primary interactive element for actions | [button.md](components/button.md) |
-| Card | Container for related content with elevation | [card.md](components/card.md) |
-| IconButton | Icon-only interactive element | [icon-button.md](components/icon-button.md) |
-| Input | Text input with label and validation states | [input.md](components/input.md) |
-| Dialog | Modal overlay for focused tasks or confirmations | [dialog.md](components/dialog.md) |
-| Switch | Toggle control for binary on/off states | [switch.md](components/switch.md) |
+### Interactive Elements
+
+| Component  | Purpose                                            | Guidelines                                  |
+| ---------- | -------------------------------------------------- | ------------------------------------------- |
+| Button     | Primary interactive element for actions            | [button.md](components/button.md)           |
+| IconButton | Icon-only interactive element                      | [icon-button.md](components/icon-button.md) |
+| Switch     | Toggle control for binary on/off states            | [switch.md](components/switch.md)           |
+| Checkbox   | Binary selection control for toggling options      | [checkbox.md](components/checkbox.md)       |
+| RadioGroup | Mutually exclusive selection from multiple options | [radio-group.md](components/radio-group.md) |
+
+### Form Elements
+
+| Component | Purpose                                          | Guidelines                            |
+| --------- | ------------------------------------------------ | ------------------------------------- |
+| Input     | Single-line text input with label and validation | [input.md](components/input.md)       |
+| Textarea  | Multi-line text input for longer content         | [textarea.md](components/textarea.md) |
+| Select    | Dropdown selection from list of options          | [select.md](components/select.md)     |
+
+### Layout & Container Elements
+
+| Component | Purpose                                            | Guidelines                              |
+| --------- | -------------------------------------------------- | --------------------------------------- |
+| Card      | Container for related content with elevation       | [card.md](components/card.md)           |
+| Accordion | Collapsible sections for organizing content        | [accordion.md](components/accordion.md) |
+| Tabs      | Tabbed navigation for switching between views      | [tabs.md](components/tabs.md)           |
+| Drawer    | Side panel for navigation or supplementary content | [drawer.md](components/drawer.md)       |
+
+### Overlay Elements
+
+| Component | Purpose                                          | Guidelines                          |
+| --------- | ------------------------------------------------ | ----------------------------------- |
+| Dialog    | Modal overlay for focused tasks or confirmations | [dialog.md](components/dialog.md)   |
+| Popover   | Floating panel for contextual content            | [popover.md](components/popover.md) |
+| Tooltip   | Brief contextual help text on hover              | [tooltip.md](components/tooltip.md) |
+
+### Feedback & Status Elements
+
+| Component | Purpose                                       | Guidelines                            |
+| --------- | --------------------------------------------- | ------------------------------------- |
+| Badge     | Compact visual indicator for status or labels | [badge.md](components/badge.md)       |
+| Avatar    | User profile image with fallback initials     | [avatar.md](components/avatar.md)     |
+| Toast     | Temporary notification messages               | [toast.md](components/toast.md)       |
+| Progress  | Visual indicator for task completion          | [progress.md](components/progress.md) |
+| Skeleton  | Loading placeholder for content               | [skeleton.md](components/skeleton.md) |
+
+### Typography Elements
+
+| Component | Purpose                                | Guidelines                          |
+| --------- | -------------------------------------- | ----------------------------------- |
+| Heading   | Semantic heading for content hierarchy | [heading.md](components/heading.md) |
 
 ## Common Props
 
@@ -66,22 +108,27 @@ const style = css({ bg: '#4C662B' });  // Use semantic tokens instead
 ## Component Categories
 
 ### Interactive Elements
+
 - **Button** - For user actions (submit, cancel, etc.)
 - **IconButton** - For icon-only actions (close, menu, etc.)
 - **Switch** - For toggle states (enable/disable features)
 
 ### Input Elements
+
 - **Input** - For text input fields with built-in label and validation
 
 ### Layout Elements
+
 - **Card** - For grouping related content with visual hierarchy
 
 ### Overlay Elements
+
 - **Dialog** - For modal dialogs and confirmations
 
 ## Controlled vs Uncontrolled
 
 ### Controlled Components
+
 Component receives `value` and `onChange` props from parent:
 
 ```typescript
@@ -94,6 +141,7 @@ const [email, setEmail] = useState('');
 ```
 
 ### Uncontrolled Components
+
 Component manages own state, use `defaultValue`:
 
 ```typescript
