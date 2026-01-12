@@ -48,7 +48,8 @@
   },
   "files": [
     "dist",
-    "styled-system"
+    "styled-system",
+    "guidelines"
   ],
   "scripts": {
     "dev": "pnpm docs:generate && storybook dev -p 6006",
