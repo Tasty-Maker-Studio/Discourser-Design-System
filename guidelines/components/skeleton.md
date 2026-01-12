@@ -566,8 +566,8 @@ function ContentSection() {
 | Premium/prominent content   | `shine`             | Enhanced visual feedback, modern feel        |
 | User prefers reduced motion | `none`              | Respects accessibility preferences           |
 | Many simultaneous skeletons | `pulse`             | Better performance than shine                |
-| Quick loading (<500ms)      | `none`              | Prevents animation flash                     |
-| Long loading (>2s)          | `shine`             | Indicates activity, reduces perceived wait   |
+| Quick loading (under 500ms) | `none`              | Prevents animation flash                     |
+| Long loading (over 2s)      | `shine`             | Indicates activity, reduces perceived wait   |
 | Background/ambient loading  | `pulse`             | Less attention-grabbing                      |
 
 ## Performance Considerations
