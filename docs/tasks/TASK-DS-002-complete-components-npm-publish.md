@@ -165,6 +165,7 @@ import { styled } from 'styled-system/jsx'
 import { type ComponentProps } from 'styled-system/types'
 ```
 
+
 Update to use local paths:
 ```typescript
 import { ark } from '@ark-ui/react/...'  // Keep as-is
