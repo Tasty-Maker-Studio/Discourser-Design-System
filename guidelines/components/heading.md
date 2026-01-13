@@ -2,6 +2,77 @@
 
 **Purpose:** Semantic heading component for establishing content hierarchy and structure following Material Design 3 typography patterns.
 
+## When to Use This Component
+
+Use Heading when you need to **establish semantic document structure and visual hierarchy** with properly ordered heading levels (h1-h6).
+
+### Decision Tree
+
+| Scenario                     | Use Heading? | Alternative                   | Reasoning                                             |
+| ---------------------------- | ------------ | ----------------------------- | ----------------------------------------------------- |
+| Page titles, section headers | ✅ Yes       | -                             | Headings provide semantic structure for accessibility |
+| Article titles, card headers | ✅ Yes       | -                             | Establishes content hierarchy                         |
+| Document outline structure   | ✅ Yes       | -                             | Screen readers use headings for navigation            |
+| Emphasized body text         | ❌ No        | Text with `fontWeight="bold"` | Don't use headings just for styling                   |
+| Navigation labels            | ❌ No        | Text or label elements        | Navigation isn't part of content hierarchy            |
+| Button labels or UI text     | ❌ No        | Button or Text                | Headings are for content structure                    |
+
+### Component Comparison
+
+```typescript
+// ✅ Heading - Page and section structure
+<article>
+  <Heading as="h1" size="4xl">
+    Main Article Title
+  </Heading>
+
+  <Heading as="h2" size="2xl">
+    Section One
+  </Heading>
+  <p>Content...</p>
+
+  <Heading as="h3" size="xl">
+    Subsection
+  </Heading>
+  <p>More content...</p>
+
+  <Heading as="h2" size="2xl">
+    Section Two
+  </Heading>
+  <p>Content...</p>
+</article>
+
+// ❌ Don't use Heading for emphasized text - Use Text
+<Heading as="h3" size="md">
+  Just some bold text
+</Heading>
+
+// ✅ Better: Use Text with fontWeight for emphasis
+<Text fontSize="md" fontWeight="bold">
+  Just some bold text
+</Text>
+
+// ❌ Don't skip heading levels (h1 → h3)
+<Heading as="h1" size="3xl">Title</Heading>
+<Heading as="h3" size="xl">Section</Heading> {/* Should be h2 */}
+
+// ✅ Better: Use proper heading hierarchy
+<Heading as="h1" size="3xl">Title</Heading>
+<Heading as="h2" size="xl">Section</Heading>
+
+// ❌ Don't use Heading for navigation - Use Text
+<nav>
+  <Heading as="h3" size="sm">Menu</Heading>
+  <a href="/home">Home</a>
+</nav>
+
+// ✅ Better: Use Text for navigation labels
+<nav aria-label="Main navigation">
+  <Text fontSize="sm" fontWeight="medium">Menu</Text>
+  <a href="/home">Home</a>
+</nav>
+```
+
 ## Import
 
 ```typescript

@@ -1,0 +1,830 @@
+# InputGroup
+
+**Purpose:** Layout wrapper component for composing inputs with decorative elements (icons, text, buttons) positioned at start or end following Material Design 3 patterns.
+
+## When to Use This Component
+
+Use InputGroup when you need to **position elements inside or around an input field** (search icons, clear buttons, prefix/suffix text).
+
+**Decision Tree:**
+
+| Scenario                                                 | Use This              | Why                                  |
+| -------------------------------------------------------- | --------------------- | ------------------------------------ |
+| Input with prefix icon or text (search, user, currency)  | InputGroup ✅         | Positions elements relative to input |
+| Input with suffix icon or text (units, domains, actions) | InputGroup ✅         | Manages internal layout and spacing  |
+| Input with both prefix and suffix elements               | InputGroup ✅         | Coordinates multiple elements        |
+| Standalone input without decoration                      | Input                 | No layout management needed          |
+| Input with external label above/below                    | Input with label prop | Built-in label positioning           |
+| Multiple inputs side by side                             | Flex/Grid layout      | Different layout pattern             |
+
+**Component Comparison:**
+
+```typescript
+// ✅ Use InputGroup for input with icon
+<InputGroup.Root size="md">
+  <InputGroup.Element>
+    <SearchIcon />
+  </InputGroup.Element>
+  <Input placeholder="Search..." />
+</InputGroup.Root>
+
+// ✅ Use InputGroup for input with addon text
+<InputGroup.Root size="md">
+  <InputAddon variant="outline">$</InputAddon>
+  <Input placeholder="0.00" type="number" />
+</InputGroup.Root>
+
+// ✅ Use InputGroup for input with action button
+<InputGroup.Root size="md">
+  <Input placeholder="Password" type="password" />
+  <InputGroup.Element>
+    <IconButton variant="ghost" aria-label="Toggle visibility">
+      <EyeIcon />
+    </IconButton>
+  </InputGroup.Element>
+</InputGroup.Root>
+
+// ❌ Don't use InputGroup for standalone input
+<InputGroup.Root size="md">
+  <Input placeholder="Email" />  // Wrong - no decorative elements
+</InputGroup.Root>
+
+<Input placeholder="Email" />  // Correct - no group needed
+
+// ❌ Don't use InputGroup for external labels
+<InputGroup.Root>
+  <label>Email Address</label>  // Wrong - labels go outside
+  <Input />
+</InputGroup.Root>
+
+<div>
+  <label>Email Address</label>  // Correct
+  <Input />
+</div>
+
+// ❌ Don't use InputGroup for multiple separate inputs
+<InputGroup.Root>
+  <Input placeholder="First name" />
+  <Input placeholder="Last name" />  // Wrong - separate inputs
+</InputGroup.Root>
+
+<div className={css({ display: 'flex', gap: 'md' })}>
+  <Input placeholder="First name" />
+  <Input placeholder="Last name" />  // Correct
+</div>
+```
+
+## Import
+
+```typescript
+import { InputGroup, Input, InputAddon } from '@discourser/design-system';
+```
+
+## Component Structure
+
+InputGroup uses a compound component pattern with these parts:
+
+- `InputGroup.Root` - Container wrapper that manages layout and sizing
+- `InputGroup.Element` - Positioned element container for icons or buttons (no border/background)
+- `InputAddon` - Styled addon element for text or bordered content (separate component)
+
+```typescript
+// Basic structure with Element (icon, button)
+<InputGroup.Root size="md">
+  <InputGroup.Element><!-- icon or button --></InputGroup.Element>
+  <Input />
+  <InputGroup.Element><!-- icon or button --></InputGroup.Element>
+</InputGroup.Root>
+
+// Structure with InputAddon (text, bordered elements)
+<InputGroup.Root size="md">
+  <InputAddon><!-- prefix text --></InputAddon>
+  <Input />
+  <InputAddon><!-- suffix text --></InputAddon>
+</InputGroup.Root>
+```
+
+## Sizes
+
+| Size | Input Height | Element Min Width | Icon Size | Usage                           |
+| ---- | ------------ | ----------------- | --------- | ------------------------------- |
+| `xs` | 32px         | 32px              | 16px      | Extra compact forms, mobile     |
+| `sm` | 36px         | 36px              | 18px      | Compact forms, dense layouts    |
+| `md` | 40px         | 40px              | 20px      | Default, most use cases         |
+| `lg` | 44px         | 44px              | 20px      | Touch targets, prominent inputs |
+| `xl` | 48px         | 44px              | 22px      | Large forms, hero sections      |
+
+**Recommendation:** Use `md` for most cases. Size automatically applies to child Input and addons.
+
+## Props
+
+### Root Props
+
+| Prop        | Type                                   | Default  | Description                  |
+| ----------- | -------------------------------------- | -------- | ---------------------------- |
+| `size`      | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'`   | Size applied to all children |
+| `children`  | `ReactNode`                            | Required | Input and addon elements     |
+| `className` | `string`                               | -        | Additional CSS classes       |
+
+### Element Props
+
+| Prop        | Type        | Default  | Description              |
+| ----------- | ----------- | -------- | ------------------------ |
+| `children`  | `ReactNode` | Required | Icon, button, or content |
+| `className` | `string`    | -        | Additional CSS classes   |
+
+**Note:** InputGroup.Root and InputGroup.Element extend `HTMLAttributes<HTMLDivElement>`.
+
+## Examples
+
+### Basic Icon Elements
+
+```typescript
+import { InputGroup, Input } from '@discourser/design-system';
+import { SearchIcon, UserIcon, MailIcon, LockIcon } from 'your-icon-library';
+
+// Search with icon prefix
+<InputGroup.Root size="md">
+  <InputGroup.Element>
+    <SearchIcon />
+  </InputGroup.Element>
+  <Input placeholder="Search..." />
+</InputGroup.Root>
+
+// User icon prefix
+<InputGroup.Root size="md">
+  <InputGroup.Element>
+    <UserIcon />
+  </InputGroup.Element>
+  <Input placeholder="Username" />
+</InputGroup.Root>
+
+// Email icon prefix
+<InputGroup.Root size="md">
+  <InputGroup.Element>
+    <MailIcon />
+  </InputGroup.Element>
+  <Input type="email" placeholder="Email address" />
+</InputGroup.Root>
+
+// Lock icon for password
+<InputGroup.Root size="md">
+  <InputGroup.Element>
+    <LockIcon />
+  </InputGroup.Element>
+  <Input type="password" placeholder="Password" />
+</InputGroup.Root>
+```
+
+### Icon on Right
+
+```typescript
+import { CalendarIcon, ChevronDownIcon } from 'your-icon-library';
+
+// Calendar icon suffix
+<InputGroup.Root size="md">
+  <Input type="date" />
+  <InputGroup.Element>
+    <CalendarIcon />
+  </InputGroup.Element>
+</InputGroup.Root>
+
+// Dropdown indicator
+<InputGroup.Root size="md">
+  <Input placeholder="Select option..." readOnly />
+  <InputGroup.Element>
+    <ChevronDownIcon />
+  </InputGroup.Element>
+</InputGroup.Root>
+```
+
+### Interactive Button Elements
+
+```typescript
+import { IconButton } from '@discourser/design-system';
+import { XIcon, EyeIcon, EyeOffIcon } from 'your-icon-library';
+
+// Clear button
+const [value, setValue] = useState('');
+
+<InputGroup.Root size="md">
+  <Input
+    placeholder="Search..."
+    value={value}
+    onChange={(e) => setValue(e.target.value)}
+  />
+  {value && (
+    <InputGroup.Element>
+      <IconButton
+        variant="ghost"
+        size="sm"
+        aria-label="Clear"
+        onClick={() => setValue('')}
+      >
+        <XIcon />
+      </IconButton>
+    </InputGroup.Element>
+  )}
+</InputGroup.Root>
+
+// Password visibility toggle
+const [showPassword, setShowPassword] = useState(false);
+
+<InputGroup.Root size="md">
+  <Input
+    type={showPassword ? 'text' : 'password'}
+    placeholder="Password"
+  />
+  <InputGroup.Element>
+    <IconButton
+      variant="ghost"
+      size="sm"
+      aria-label={showPassword ? 'Hide password' : 'Show password'}
+      onClick={() => setShowPassword(!showPassword)}
+    >
+      {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+    </IconButton>
+  </InputGroup.Element>
+</InputGroup.Root>
+```
+
+### With InputAddon (Text/Bordered Elements)
+
+```typescript
+import { InputAddon } from '@discourser/design-system';
+
+// Currency prefix
+<InputGroup.Root size="md">
+  <InputAddon variant="outline">$</InputAddon>
+  <Input placeholder="0.00" type="number" />
+</InputGroup.Root>
+
+// Unit suffix
+<InputGroup.Root size="md">
+  <Input placeholder="Enter weight" type="number" />
+  <InputAddon variant="outline">kg</InputAddon>
+</InputGroup.Root>
+
+// Domain suffix
+<InputGroup.Root size="md">
+  <Input placeholder="username" />
+  <InputAddon variant="outline">@example.com</InputAddon>
+</InputGroup.Root>
+
+// URL prefix
+<InputGroup.Root size="md">
+  <InputAddon variant="outline">https://</InputAddon>
+  <Input placeholder="example.com" />
+</InputGroup.Root>
+```
+
+### Combining Element and InputAddon
+
+```typescript
+// Icon with currency
+<InputGroup.Root size="md">
+  <InputGroup.Element>
+    <DollarIcon />
+  </InputGroup.Element>
+  <Input placeholder="0.00" type="number" />
+  <InputAddon variant="outline">USD</InputAddon>
+</InputGroup.Root>
+
+// Search icon with clear button
+<InputGroup.Root size="md">
+  <InputGroup.Element>
+    <SearchIcon />
+  </InputGroup.Element>
+  <Input
+    placeholder="Search..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+  />
+  {searchQuery && (
+    <InputGroup.Element>
+      <IconButton
+        variant="ghost"
+        size="sm"
+        aria-label="Clear"
+        onClick={() => setSearchQuery('')}
+      >
+        <XIcon />
+      </IconButton>
+    </InputGroup.Element>
+  )}
+</InputGroup.Root>
+```
+
+### Different Sizes
+
+```typescript
+// Extra small
+<InputGroup.Root size="xs">
+  <InputGroup.Element>
+    <SearchIcon />
+  </InputGroup.Element>
+  <Input placeholder="Search..." />
+</InputGroup.Root>
+
+// Small
+<InputGroup.Root size="sm">
+  <InputGroup.Element>
+    <SearchIcon />
+  </InputGroup.Element>
+  <Input placeholder="Search..." />
+</InputGroup.Root>
+
+// Medium (default)
+<InputGroup.Root size="md">
+  <InputGroup.Element>
+    <SearchIcon />
+  </InputGroup.Element>
+  <Input placeholder="Search..." />
+</InputGroup.Root>
+
+// Large
+<InputGroup.Root size="lg">
+  <InputGroup.Element>
+    <SearchIcon />
+  </InputGroup.Element>
+  <Input placeholder="Search..." />
+</InputGroup.Root>
+
+// Extra large
+<InputGroup.Root size="xl">
+  <InputGroup.Element>
+    <SearchIcon />
+  </InputGroup.Element>
+  <Input placeholder="Search..." />
+</InputGroup.Root>
+```
+
+### Multiple Elements
+
+```typescript
+// Both prefix and suffix elements
+<InputGroup.Root size="md">
+  <InputGroup.Element>
+    <UserIcon />
+  </InputGroup.Element>
+  <Input placeholder="Username" />
+  <InputGroup.Element>
+    <CheckIcon />
+  </InputGroup.Element>
+</InputGroup.Root>
+
+// Complex composition
+<InputGroup.Root size="md">
+  <InputAddon variant="outline">https://</InputAddon>
+  <Input placeholder="mysite" />
+  <InputAddon variant="outline">.com</InputAddon>
+  <InputGroup.Element>
+    <IconButton variant="ghost" size="sm" aria-label="Copy">
+      <CopyIcon />
+    </IconButton>
+  </InputGroup.Element>
+</InputGroup.Root>
+```
+
+### Loading State
+
+```typescript
+import { Spinner } from '@discourser/design-system';
+
+const [isSearching, setIsSearching] = useState(false);
+
+<InputGroup.Root size="md">
+  <InputGroup.Element>
+    {isSearching ? (
+      <Spinner size="sm" />
+    ) : (
+      <SearchIcon />
+    )}
+  </InputGroup.Element>
+  <Input placeholder="Search..." />
+</InputGroup.Root>
+```
+
+### With Form Label
+
+```typescript
+<div className={css({ display: 'flex', flexDirection: 'column', gap: 'xs' })}>
+  <label htmlFor="search" className={css({ fontWeight: 'medium', textStyle: 'sm' })}>
+    Search
+  </label>
+  <InputGroup.Root size="md">
+    <InputGroup.Element>
+      <SearchIcon />
+    </InputGroup.Element>
+    <Input id="search" placeholder="Search products..." />
+  </InputGroup.Root>
+</div>
+```
+
+## Common Patterns
+
+### Search Input
+
+```typescript
+const [searchQuery, setSearchQuery] = useState('');
+const [isSearching, setIsSearching] = useState(false);
+
+<InputGroup.Root size="md">
+  <InputGroup.Element>
+    {isSearching ? (
+      <Spinner size="sm" />
+    ) : (
+      <SearchIcon />
+    )}
+  </InputGroup.Element>
+  <Input
+    placeholder="Search products..."
+    value={searchQuery}
+    onChange={(e) => {
+      setSearchQuery(e.target.value);
+      setIsSearching(true);
+      // Debounce search logic
+    }}
+  />
+  {searchQuery && (
+    <InputGroup.Element>
+      <IconButton
+        variant="ghost"
+        size="sm"
+        aria-label="Clear search"
+        onClick={() => {
+          setSearchQuery('');
+          setIsSearching(false);
+        }}
+      >
+        <XIcon />
+      </IconButton>
+    </InputGroup.Element>
+  )}
+</InputGroup.Root>
+```
+
+### Password Input with Toggle
+
+```typescript
+const [password, setPassword] = useState('');
+const [showPassword, setShowPassword] = useState(false);
+
+<div className={css({ display: 'flex', flexDirection: 'column', gap: 'xs' })}>
+  <label htmlFor="password" className={css({ fontWeight: 'medium' })}>
+    Password
+  </label>
+  <InputGroup.Root size="md">
+    <InputGroup.Element>
+      <LockIcon />
+    </InputGroup.Element>
+    <Input
+      id="password"
+      type={showPassword ? 'text' : 'password'}
+      placeholder="Enter password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+    />
+    <InputGroup.Element>
+      <IconButton
+        variant="ghost"
+        size="sm"
+        aria-label={showPassword ? 'Hide password' : 'Show password'}
+        onClick={() => setShowPassword(!showPassword)}
+      >
+        {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+      </IconButton>
+    </InputGroup.Element>
+  </InputGroup.Root>
+</div>
+```
+
+### Currency Input
+
+```typescript
+const [amount, setAmount] = useState('');
+
+<div className={css({ display: 'flex', flexDirection: 'column', gap: 'xs' })}>
+  <label htmlFor="amount" className={css({ fontWeight: 'medium' })}>
+    Amount
+  </label>
+  <InputGroup.Root size="md">
+    <InputAddon variant="outline">$</InputAddon>
+    <Input
+      id="amount"
+      type="number"
+      placeholder="0.00"
+      value={amount}
+      onChange={(e) => setAmount(e.target.value)}
+      min="0"
+      step="0.01"
+    />
+    <InputAddon variant="outline">USD</InputAddon>
+  </InputGroup.Root>
+</div>
+```
+
+### URL Input
+
+```typescript
+const [url, setUrl] = useState('');
+
+<InputGroup.Root size="md">
+  <InputAddon variant="outline">https://</InputAddon>
+  <Input
+    placeholder="example.com"
+    value={url}
+    onChange={(e) => setUrl(e.target.value)}
+  />
+  {url && (
+    <InputGroup.Element>
+      <IconButton
+        variant="ghost"
+        size="sm"
+        aria-label="Copy URL"
+        onClick={() => navigator.clipboard.writeText(`https://${url}`)}
+      >
+        <CopyIcon />
+      </IconButton>
+    </InputGroup.Element>
+  )}
+</InputGroup.Root>
+```
+
+### Phone Number Input
+
+```typescript
+const [phone, setPhone] = useState('');
+
+<InputGroup.Root size="md">
+  <InputGroup.Element>
+    <PhoneIcon />
+  </InputGroup.Element>
+  <InputAddon variant="outline">+1</InputAddon>
+  <Input
+    placeholder="(555) 000-0000"
+    type="tel"
+    value={phone}
+    onChange={(e) => setPhone(e.target.value)}
+  />
+</InputGroup.Root>
+```
+
+### Email Input with Validation
+
+```typescript
+const [email, setEmail] = useState('');
+const [isValid, setIsValid] = useState<boolean | null>(null);
+
+const validateEmail = (value: string) => {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(value);
+};
+
+<InputGroup.Root size="md">
+  <InputGroup.Element>
+    <MailIcon />
+  </InputGroup.Element>
+  <Input
+    type="email"
+    placeholder="you@example.com"
+    value={email}
+    onChange={(e) => {
+      setEmail(e.target.value);
+      setIsValid(e.target.value ? validateEmail(e.target.value) : null);
+    }}
+  />
+  <InputGroup.Element>
+    {isValid === true && <CheckIcon className={css({ color: 'success' })} />}
+    {isValid === false && <XIcon className={css({ color: 'error' })} />}
+  </InputGroup.Element>
+</InputGroup.Root>
+```
+
+## DO NOT
+
+```typescript
+// ❌ Don't use InputGroup without decorative elements
+<InputGroup.Root>
+  <Input placeholder="Email" />  // Wrong - no point without addons/elements
+</InputGroup.Root>
+
+// ✅ Use Input directly if no decorations
+<Input placeholder="Email" />
+
+// ❌ Don't put labels inside InputGroup
+<InputGroup.Root>
+  <label>Search</label>  // Wrong - labels go outside
+  <Input />
+</InputGroup.Root>
+
+// ✅ Put labels outside
+<div>
+  <label>Search</label>
+  <InputGroup.Root>
+    <InputGroup.Element><SearchIcon /></InputGroup.Element>
+    <Input />
+  </InputGroup.Root>
+</div>
+
+// ❌ Don't use multiple inputs in one group
+<InputGroup.Root>
+  <Input placeholder="First name" />
+  <Input placeholder="Last name" />  // Wrong - separate inputs
+</InputGroup.Root>
+
+// ✅ Use separate groups or flex layout
+<div className={css({ display: 'flex', gap: 'md' })}>
+  <Input placeholder="First name" />
+  <Input placeholder="Last name" />
+</div>
+
+// ❌ Don't nest InputGroups
+<InputGroup.Root>
+  <InputGroup.Root>  // Wrong - no nesting
+    <Input />
+  </InputGroup.Root>
+</InputGroup.Root>
+
+// ❌ Don't override positioning with inline styles
+<InputGroup.Root>
+  <InputGroup.Element style={{ position: 'relative' }}>
+    <SearchIcon />
+  </InputGroup.Element>
+  <Input />
+</InputGroup.Root>  // Wrong - breaks internal positioning
+
+// ✅ Use component as designed
+<InputGroup.Root>
+  <InputGroup.Element>
+    <SearchIcon />
+  </InputGroup.Element>
+  <Input />
+</InputGroup.Root>
+```
+
+## Accessibility
+
+The InputGroup component follows WCAG 2.1 Level AA standards:
+
+- **Visual Association**: Elements are visually grouped with inputs
+- **Focus Management**: Focus stays on input, not decorative elements
+- **Interactive Elements**: Buttons have proper labels and keyboard access
+- **Icon Semantics**: Decorative icons are hidden from screen readers
+- **Touch Targets**: Minimum 44x44px for interactive elements (size md or larger)
+
+### Accessibility Best Practices
+
+```typescript
+// ✅ Provide aria-label for icon-only buttons
+<InputGroup.Root>
+  <Input />
+  <InputGroup.Element>
+    <IconButton
+      variant="ghost"
+      aria-label="Clear input"
+      onClick={handleClear}
+    >
+      <XIcon />
+    </IconButton>
+  </InputGroup.Element>
+</InputGroup.Root>
+
+// ✅ Use proper labels for inputs
+<div>
+  <label htmlFor="search">Search products</label>
+  <InputGroup.Root>
+    <InputGroup.Element>
+      <SearchIcon aria-hidden="true" />
+    </InputGroup.Element>
+    <Input id="search" placeholder="Search..." />
+  </InputGroup.Root>
+</div>
+
+// ✅ Hide decorative icons from screen readers
+<InputGroup.Root>
+  <InputGroup.Element>
+    <SearchIcon aria-hidden="true" />
+  </InputGroup.Element>
+  <Input aria-label="Search" placeholder="Search..." />
+</InputGroup.Root>
+
+// ✅ Provide context in input labels
+<InputGroup.Root>
+  <InputAddon variant="outline">$</InputAddon>
+  <Input
+    aria-label="Price in US dollars"
+    placeholder="0.00"
+    type="number"
+  />
+</InputGroup.Root>
+
+// ✅ Announce loading states
+<InputGroup.Root>
+  <InputGroup.Element>
+    <Spinner size="sm" role="status" aria-label="Searching" />
+  </InputGroup.Element>
+  <Input placeholder="Search..." />
+</InputGroup.Root>
+```
+
+## State Behaviors
+
+| State              | Visual Change                                | Behavior                    |
+| ------------------ | -------------------------------------------- | --------------------------- |
+| **Default**        | Elements positioned, input ready             | Static layout               |
+| **Input Focus**    | Input receives focus ring                    | Elements remain in position |
+| **Input Disabled** | All elements show disabled state             | No interaction              |
+| **With Content**   | Dynamic elements appear (e.g., clear button) | Conditional rendering       |
+
+## Responsive Considerations
+
+```typescript
+// Mobile-first: Use larger sizes for touch
+<InputGroup.Root size={{ base: 'lg', md: 'md' }}>
+  <InputGroup.Element>
+    <SearchIcon />
+  </InputGroup.Element>
+  <Input placeholder="Search..." />
+</InputGroup.Root>
+
+// Adaptive sizing
+<InputGroup.Root size={{ base: 'md', lg: 'sm' }}>
+  <InputAddon variant="outline">$</InputAddon>
+  <Input placeholder="0.00" />
+</InputGroup.Root>
+
+// Full width on mobile, constrained on desktop
+<div className={css({ maxWidth: { base: 'full', md: '400px' } })}>
+  <InputGroup.Root size="md">
+    <InputGroup.Element>
+      <SearchIcon />
+    </InputGroup.Element>
+    <Input placeholder="Search..." />
+  </InputGroup.Root>
+</div>
+```
+
+## Testing
+
+```typescript
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+test('input group renders icon element', () => {
+  render(
+    <InputGroup.Root>
+      <InputGroup.Element>
+        <SearchIcon data-testid="search-icon" />
+      </InputGroup.Element>
+      <Input placeholder="Search" />
+    </InputGroup.Root>
+  );
+
+  expect(screen.getByTestId('search-icon')).toBeInTheDocument();
+  expect(screen.getByPlaceholderText('Search')).toBeInTheDocument();
+});
+
+test('input group button triggers action', async () => {
+  const handleClear = vi.fn();
+
+  render(
+    <InputGroup.Root>
+      <Input value="test" />
+      <InputGroup.Element>
+        <IconButton aria-label="Clear" onClick={handleClear}>
+          <XIcon />
+        </IconButton>
+      </InputGroup.Element>
+    </InputGroup.Root>
+  );
+
+  const clearButton = screen.getByLabelText('Clear');
+  await userEvent.click(clearButton);
+
+  expect(handleClear).toHaveBeenCalledOnce();
+});
+
+test('input remains focusable with decorative elements', () => {
+  render(
+    <InputGroup.Root>
+      <InputGroup.Element>
+        <SearchIcon />
+      </InputGroup.Element>
+      <Input placeholder="Search" />
+    </InputGroup.Root>
+  );
+
+  const input = screen.getByPlaceholderText('Search');
+  input.focus();
+
+  expect(input).toHaveFocus();
+});
+```
+
+## Related Components
+
+- **Input** - Text input field that InputGroup wraps
+- **InputAddon** - Styled addon elements for text/bordered content
+- **IconButton** - For interactive buttons within elements
+- **Spinner** - For loading states in elements

@@ -2,6 +2,83 @@
 
 **Purpose:** Temporary notification component that provides non-intrusive feedback to users about system events, actions, or status changes following Material Design 3 patterns.
 
+## When to Use This Component
+
+Use Toast when you need to **provide temporary, non-intrusive feedback about system events or actions** that auto-dismiss after a few seconds.
+
+### Decision Tree
+
+| Scenario                                | Use Toast? | Alternative       | Reasoning                                  |
+| --------------------------------------- | ---------- | ----------------- | ------------------------------------------ |
+| Success confirmation (saved, deleted)   | ✅ Yes     | -                 | Quick feedback that doesn't block workflow |
+| Error notifications (network failed)    | ✅ Yes     | -                 | Informs user without interrupting          |
+| Loading state updates (upload complete) | ✅ Yes     | -                 | Progress feedback with auto-dismiss        |
+| Critical errors requiring action        | ❌ No      | Dialog            | Dialog forces acknowledgment               |
+| Persistent status information           | ❌ No      | Alert banner      | Toast auto-dismisses, alerts stay          |
+| Complex forms with multiple errors      | ❌ No      | Inline validation | Toast is too brief for detailed feedback   |
+
+### Component Comparison
+
+```typescript
+// ✅ Toast - Success feedback
+toaster.create({
+  title: 'Profile updated',
+  description: 'Your changes have been saved successfully.',
+  type: 'success',
+  duration: 3000,
+});
+
+// ❌ Don't use Toast for critical errors - Use Dialog
+toaster.create({
+  title: 'Payment failed',
+  description: 'Your card was declined.',
+  type: 'error',
+}); // User might miss this!
+
+// ✅ Better: Use Dialog for critical actions
+<Dialog.Root>
+  <Dialog.Content>
+    <Dialog.Title>Payment Failed</Dialog.Title>
+    <Dialog.Description>
+      Your card was declined. Please update your payment method.
+    </Dialog.Description>
+    <Dialog.Footer>
+      <Button>Update Payment</Button>
+    </Dialog.Footer>
+  </Dialog.Content>
+</Dialog.Root>
+
+// ❌ Don't use Toast for persistent info - Use Alert
+toaster.create({
+  title: 'Maintenance scheduled',
+  description: 'System will be down tomorrow 2-4pm.',
+  type: 'warning',
+  duration: Infinity,
+}); // Toast placement isn't ideal for persistent info
+
+// ✅ Better: Use Alert banner for persistent warnings
+<Alert status="warning">
+  <Alert.Icon />
+  <Alert.Title>Maintenance Scheduled</Alert.Title>
+  <Alert.Description>
+    System will be down tomorrow 2-4pm.
+  </Alert.Description>
+</Alert>
+
+// ✅ Toast - Loading to success transition
+const toastId = toaster.create({
+  title: 'Uploading file...',
+  type: 'loading',
+});
+
+// Later, update to success
+toaster.update(toastId, {
+  title: 'Upload complete',
+  type: 'success',
+  duration: 3000,
+});
+```
+
 ## Import
 
 ```typescript

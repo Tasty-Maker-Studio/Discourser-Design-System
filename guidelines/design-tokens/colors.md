@@ -5,6 +5,7 @@ The design system uses Material Design 3 semantic color tokens. **Always use sem
 ## Why Semantic Colors?
 
 Semantic colors automatically adapt to light/dark themes and follow M3 color roles. Using semantic names ensures:
+
 - Automatic theme switching
 - Consistent contrast ratios
 - Proper color relationships
@@ -13,96 +14,105 @@ Semantic colors automatically adapt to light/dark themes and follow M3 color rol
 ## Semantic Colors Reference
 
 ### Primary Colors
+
 Used for primary actions, key UI elements, and brand identity.
 
-| Token | Light Mode | Dark Mode | Usage |
-|-------|-----------|-----------|-------|
-| `primary` | #4C662B | #B1D18A | Primary buttons, active states, links |
-| `onPrimary` | #FFFFFF | #1F3701 | Text/icons on primary color |
-| `primaryContainer` | #CDEDA3 | #354E16 | Containers for primary content |
-| `onPrimaryContainer` | #354E16 | #CDEDA3 | Text/icons on primary container |
+| Token                | Light Mode | Dark Mode | Usage                                 |
+| -------------------- | ---------- | --------- | ------------------------------------- |
+| `primary`            | #4C662B    | #B1D18A   | Primary buttons, active states, links |
+| `onPrimary`          | #FFFFFF    | #1F3701   | Text/icons on primary color           |
+| `primaryContainer`   | #CDEDA3    | #354E16   | Containers for primary content        |
+| `onPrimaryContainer` | #354E16    | #CDEDA3   | Text/icons on primary container       |
 
 ### Secondary Colors
+
 Used for secondary actions and less prominent UI elements.
 
-| Token | Light Mode | Dark Mode | Usage |
-|-------|-----------|-----------|-------|
-| `secondary` | #586249 | #BFCBAD | Secondary buttons, less prominent actions |
-| `onSecondary` | #FFFFFF | #2A331E | Text/icons on secondary color |
-| `secondaryContainer` | #DCE7C8 | #404A33 | Secondary containers |
-| `onSecondaryContainer` | #404A33 | #DCE7C8 | Text/icons on secondary container |
+| Token                  | Light Mode | Dark Mode | Usage                                     |
+| ---------------------- | ---------- | --------- | ----------------------------------------- |
+| `secondary`            | #586249    | #BFCBAD   | Secondary buttons, less prominent actions |
+| `onSecondary`          | #FFFFFF    | #2A331E   | Text/icons on secondary color             |
+| `secondaryContainer`   | #DCE7C8    | #404A33   | Secondary containers                      |
+| `onSecondaryContainer` | #404A33    | #DCE7C8   | Text/icons on secondary container         |
 
 ### Tertiary Colors
+
 Used for accent colors and tertiary actions.
 
-| Token | Light Mode | Dark Mode | Usage |
-|-------|-----------|-----------|-------|
-| `tertiary` | #386663 | #A0D0CB | Accent colors, tertiary actions |
-| `onTertiary` | #FFFFFF | #003735 | Text/icons on tertiary color |
-| `tertiaryContainer` | #BCECE7 | #1F4E4B | Tertiary containers |
-| `onTertiaryContainer` | #1F4E4B | #BCECE7 | Text/icons on tertiary container |
+| Token                 | Light Mode | Dark Mode | Usage                            |
+| --------------------- | ---------- | --------- | -------------------------------- |
+| `tertiary`            | #386663    | #A0D0CB   | Accent colors, tertiary actions  |
+| `onTertiary`          | #FFFFFF    | #003735   | Text/icons on tertiary color     |
+| `tertiaryContainer`   | #BCECE7    | #1F4E4B   | Tertiary containers              |
+| `onTertiaryContainer` | #1F4E4B    | #BCECE7   | Text/icons on tertiary container |
 
 ### Error Colors
+
 Used for error states, warnings, and destructive actions.
 
-| Token | Light Mode | Dark Mode | Usage |
-|-------|-----------|-----------|-------|
-| `error` | #BA1A1A | #FFB4AB | Error text, error icons |
-| `onError` | #FFFFFF | #690005 | Text/icons on error color |
-| `errorContainer` | #FFDAD6 | #93000A | Error message backgrounds |
-| `onErrorContainer` | #93000A | #FFDAD6 | Text/icons in error containers |
+| Token              | Light Mode | Dark Mode | Usage                          |
+| ------------------ | ---------- | --------- | ------------------------------ |
+| `error`            | #BA1A1A    | #FFB4AB   | Error text, error icons        |
+| `onError`          | #FFFFFF    | #690005   | Text/icons on error color      |
+| `errorContainer`   | #FFDAD6    | #93000A   | Error message backgrounds      |
+| `onErrorContainer` | #93000A    | #FFDAD6   | Text/icons in error containers |
 
 ### Surface Colors
+
 Used for backgrounds and containers at different elevations.
 
-| Token | Light Mode | Dark Mode | Usage |
-|-------|-----------|-----------|-------|
-| `surface` | #F9FAEF | #12140E | Default background |
-| `onSurface` | #1A1C16 | #E2E3D8 | Default text color |
-| `surfaceVariant` | #E1E4D5 | #44483D | Alternate surface (subtle contrast) |
-| `onSurfaceVariant` | #44483D | #C5C8BA | Text on variant surfaces |
+| Token              | Light Mode | Dark Mode | Usage                               |
+| ------------------ | ---------- | --------- | ----------------------------------- |
+| `surface`          | #F9FAEF    | #12140E   | Default background                  |
+| `onSurface`        | #1A1C16    | #E2E3D8   | Default text color                  |
+| `surfaceVariant`   | #E1E4D5    | #44483D   | Alternate surface (subtle contrast) |
+| `onSurfaceVariant` | #44483D    | #C5C8BA   | Text on variant surfaces            |
 
 ### Surface Container Elevations
+
 M3 uses surface tints instead of shadows for elevation. Higher elevations get lighter in light mode, darker in dark mode.
 
-| Token | Light Mode | Dark Mode | Usage |
-|-------|-----------|-----------|-------|
-| `surfaceContainerLowest` | #FFFFFF | #0C0F09 | Lowest elevation (0dp) |
-| `surfaceContainerLow` | #F3F4E9 | #1A1C16 | Low elevation (1dp) - Cards |
-| `surfaceContainer` | #EEEFE3 | #1E201A | Default containers (3dp) |
-| `surfaceContainerHigh` | #E8E9DE | #282B24 | High elevation (4dp) - Dialogs |
-| `surfaceContainerHighest` | #E2E3D8 | #33362E | Highest elevation (5dp) |
+| Token                     | Light Mode | Dark Mode | Usage                          |
+| ------------------------- | ---------- | --------- | ------------------------------ |
+| `surfaceContainerLowest`  | #FFFFFF    | #0C0F09   | Lowest elevation (0dp)         |
+| `surfaceContainerLow`     | #F3F4E9    | #1A1C16   | Low elevation (1dp) - Cards    |
+| `surfaceContainer`        | #EEEFE3    | #1E201A   | Default containers (3dp)       |
+| `surfaceContainerHigh`    | #E8E9DE    | #282B24   | High elevation (4dp) - Dialogs |
+| `surfaceContainerHighest` | #E2E3D8    | #33362E   | Highest elevation (5dp)        |
 
 ### Outline Colors
+
 Used for borders and dividers.
 
-| Token | Light Mode | Dark Mode | Usage |
-|-------|-----------|-----------|-------|
-| `outline` | #75796C | #8F9285 | Borders, dividers |
-| `outlineVariant` | #C5C8BA | #44483D | Subtle borders |
+| Token            | Light Mode | Dark Mode | Usage             |
+| ---------------- | ---------- | --------- | ----------------- |
+| `outline`        | #75796C    | #8F9285   | Borders, dividers |
+| `outlineVariant` | #C5C8BA    | #44483D   | Subtle borders    |
 
 ### Inverse Colors
+
 Used for inverse color schemes (e.g., snackbars).
 
-| Token | Light Mode | Dark Mode | Usage |
-|-------|-----------|-----------|-------|
-| `inverseSurface` | #2F312A | #E2E3D8 | Inverse backgrounds |
-| `inverseOnSurface` | #F1F2E6 | #2F312A | Text on inverse surfaces |
-| `inversePrimary` | #B1D18A | #4C662B | Primary color on inverse |
+| Token              | Light Mode | Dark Mode | Usage                    |
+| ------------------ | ---------- | --------- | ------------------------ |
+| `inverseSurface`   | #2F312A    | #E2E3D8   | Inverse backgrounds      |
+| `inverseOnSurface` | #F1F2E6    | #2F312A   | Text on inverse surfaces |
+| `inversePrimary`   | #B1D18A    | #4C662B   | Primary color on inverse |
 
 ### Background Colors
+
 Used for page/app backgrounds.
 
-| Token | Light Mode | Dark Mode | Usage |
-|-------|-----------|-----------|-------|
-| `background` | #F9FAEF | #12140E | Page background |
-| `onBackground` | #1A1C16 | #E2E3D8 | Text on background |
+| Token          | Light Mode | Dark Mode | Usage              |
+| -------------- | ---------- | --------- | ------------------ |
+| `background`   | #F9FAEF    | #12140E   | Page background    |
+| `onBackground` | #1A1C16    | #E2E3D8   | Text on background |
 
 ### Special Colors
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| `scrim` | #000000 | Overlay behind modals/dialogs |
+| Token    | Value   | Usage                               |
+| -------- | ------- | ----------------------------------- |
+| `scrim`  | #000000 | Overlay behind modals/dialogs       |
 | `shadow` | #000000 | Shadow color (rarely used directly) |
 
 ## Usage in Code
@@ -116,17 +126,17 @@ import { css } from '@discourser/design-system/styled-system/css';
 const container = css({
   bg: 'surfaceContainerLow',
   color: 'onSurface',
-  borderColor: 'outline'
+  borderColor: 'outline',
 });
 
 const primaryAction = css({
   bg: 'primary',
-  color: 'onPrimary'
+  color: 'onPrimary',
 });
 
 const errorMessage = css({
   bg: 'errorContainer',
-  color: 'onErrorContainer'
+  color: 'onErrorContainer',
 });
 ```
 
@@ -134,21 +144,21 @@ const errorMessage = css({
 
 ```typescript
 // Card backgrounds
-bg: 'surfaceContainerLow'  // For elevated cards
-bg: 'surface'              // For filled/outlined cards
+bg: 'surfaceContainerLow'; // For elevated cards
+bg: 'surface'; // For filled/outlined cards
 
 // Text colors
-color: 'onSurface'         // Primary text
-color: 'onSurfaceVariant'  // Secondary text
+color: 'onSurface'; // Primary text
+color: 'onSurfaceVariant'; // Secondary text
 
 // Borders
-borderColor: 'outline'     // Standard borders
-borderColor: 'outlineVariant' // Subtle borders
+borderColor: 'outline'; // Standard borders
+borderColor: 'outlineVariant'; // Subtle borders
 
 // Interactive states
-bg: 'primary'              // Default
-bg: 'primaryContainer'     // Hover/focus
-color: 'onPrimary'         // Text on primary
+bg: 'primary'; // Default
+bg: 'primaryContainer'; // Hover/focus
+color: 'onPrimary'; // Text on primary
 ```
 
 ## What NOT to Do
@@ -171,14 +181,241 @@ const correct = css({ bg: 'surface' });
 
 Always pair colors with their corresponding "on" color for proper contrast:
 
-| Background | Text/Icon Color | Use Case |
-|-----------|----------------|----------|
-| `primary` | `onPrimary` | Filled buttons |
+| Background         | Text/Icon Color      | Use Case             |
+| ------------------ | -------------------- | -------------------- |
+| `primary`          | `onPrimary`          | Filled buttons       |
 | `primaryContainer` | `onPrimaryContainer` | Tonal buttons, chips |
-| `surface` | `onSurface` | Default backgrounds |
-| `surfaceVariant` | `onSurfaceVariant` | Alternate surfaces |
-| `error` | `onError` | Error badges |
-| `errorContainer` | `onErrorContainer` | Error messages |
+| `surface`          | `onSurface`          | Default backgrounds  |
+| `surfaceVariant`   | `onSurfaceVariant`   | Alternate surfaces   |
+| `error`            | `onError`            | Error badges         |
+| `errorContainer`   | `onErrorContainer`   | Error messages       |
+
+## How Color Tokens Work With Other Tokens
+
+Color tokens are rarely used in isolation. Here are real-world examples showing how colors combine with typography, spacing, and elevation tokens:
+
+### Primary Button (Filled Variant)
+
+```typescript
+import { Button } from '@discourser/design-system';
+
+// Button uses these tokens together:
+<Button variant="filled">
+  {/* Component internally uses: */}
+  bg: 'primary'              // Color token - #4C662B in light mode
+  color: 'onPrimary'         // Color token - #FFFFFF in light mode
+  textStyle: 'labelLarge'    // Typography token - 14px/20px
+  px: 'lg'                   // Spacing token - 24px
+  height: '40px'             // Size token - md variant
+  borderRadius: 'full'       // Border radius - fully rounded
+  _hover: {
+    bg: 'primaryContainer'   // Color token - hover state
+  }
+</Button>
+```
+
+### Elevated Card Component
+
+```typescript
+import { Card } from '@discourser/design-system';
+import { css } from '@discourser/design-system/styled-system/css';
+
+<Card variant="elevated">
+  {/* Card uses these tokens together: */}
+  bg: 'surfaceContainerLow'       // Color token - elevated surface
+  color: 'onSurface'               // Color token - default text
+  borderRadius: 'l3'               // Border radius - 12px
+  boxShadow: 'level1'              // Elevation token - subtle shadow
+  _hover: {
+    boxShadow: 'level2'            // Elevation token - hover shadow
+  }
+
+  <div className={css({ p: 'lg' })}>
+    {/* Content padding: Spacing token - 24px */}
+
+    <h3 className={css({
+      textStyle: 'titleLarge',      // Typography - 22px/28px
+      color: 'onSurface',            // Color - primary text
+      mb: 'sm'                       // Spacing - 8px bottom margin
+    })}>
+      Card Title
+    </h3>
+
+    <p className={css({
+      textStyle: 'bodyMedium',       // Typography - 14px/20px
+      color: 'onSurfaceVariant'      // Color - secondary text
+    })}>
+      Card description with proper contrast.
+    </p>
+  </div>
+</Card>
+```
+
+### Form Input with Error State
+
+```typescript
+import { Input } from '@discourser/design-system';
+
+<Input
+  label="Email"
+  errorText="Invalid email address"
+  {/* Input combines these tokens: */}
+  bg: 'surface'                    // Color - transparent/white
+  color: 'onSurface'               // Color - input text
+  borderColor: 'error'             // Color - error state border
+  textStyle: 'bodyLarge'           // Typography - 16px/24px
+  px: 'md'                         // Spacing - 16px horizontal padding
+  py: 'sm'                         // Spacing - 8px vertical padding
+  height: '56px'                   // Size - md variant
+  borderRadius: 'l1'               // Border radius - 4px
+
+  {/* Error text uses: */}
+  errorTextColor: 'error'          // Color - #BA1A1A
+  errorTextStyle: 'bodySmall'      // Typography - 12px/16px
+/>
+```
+
+### Dialog with Actions
+
+```typescript
+import { Dialog, Button } from '@discourser/design-system';
+import { css } from '@discourser/design-system/styled-system/css';
+
+<Dialog.Root>
+  <Dialog.Backdrop
+    bg: 'scrim'                    // Color - semi-transparent black
+    opacity: 0.32                  // Opacity for backdrop
+  />
+
+  <Dialog.Content
+    bg: 'surfaceContainerHigh'     // Color - high elevation surface
+    color: 'onSurface'             // Color - default text
+    borderRadius: 'l4'             // Border radius - 28px
+    p: 'xl'                        // Spacing - 32px padding
+    boxShadow: 'level3'            // Elevation - dialog shadow
+    minWidth: '280px'              // Size - sm variant
+  >
+    <Dialog.Title
+      textStyle: 'headlineSmall'   // Typography - 24px/32px
+      color: 'onSurface'           // Color - primary text
+      mb: 'md'                     // Spacing - 16px bottom margin
+    >
+      Confirm Action
+    </Dialog.Title>
+
+    <Dialog.Description
+      textStyle: 'bodyMedium'      // Typography - 14px/20px
+      color: 'onSurfaceVariant'    // Color - secondary text
+      mb: 'lg'                     // Spacing - 24px bottom margin
+    >
+      Are you sure you want to proceed?
+    </Dialog.Description>
+
+    <div className={css({
+      display: 'flex',
+      gap: 'sm',                   // Spacing - 8px between buttons
+      justifyContent: 'flex-end'
+    })}>
+      <Button variant="text"
+        color: 'primary'           // Color - text button
+        textStyle: 'labelLarge'    // Typography - 14px/20px
+        px: 'lg'                   // Spacing - 24px horizontal
+      >
+        Cancel
+      </Button>
+
+      <Button variant="filled"
+        bg: 'primary'              // Color - primary background
+        color: 'onPrimary'         // Color - white text
+        textStyle: 'labelLarge'    // Typography - 14px/20px
+        px: 'lg'                   // Spacing - 24px horizontal
+      >
+        Confirm
+      </Button>
+    </div>
+  </Dialog.Content>
+</Dialog.Root>
+```
+
+### Toast Notification (Success)
+
+```typescript
+import { toaster } from '@discourser/design-system';
+
+toaster.success({
+  title: "Changes saved",
+  {/* Toast combines: */}
+  bg: 'inverseSurface'             // Color - dark background
+  color: 'inverseOnSurface'        // Color - light text
+  borderRadius: 'l1'               // Border radius - 4px
+  p: 'md'                          // Spacing - 16px padding
+  textStyle: 'bodyMedium'          // Typography - 14px/20px
+  boxShadow: 'level2'              // Elevation - floating shadow
+
+  {/* Success icon uses: */}
+  iconColor: 'inversePrimary'      // Color - brand color on dark
+});
+```
+
+### Badge Component
+
+```typescript
+import { Badge } from '@discourser/design-system';
+
+<Badge variant="solid" colorPalette="error">
+  {/* Badge combines: */}
+  bg: 'error'                      // Color - error background
+  color: 'onError'                 // Color - white text
+  textStyle: 'labelSmall'          // Typography - 11px/16px
+  px: 'sm'                         // Spacing - 8px horizontal
+  py: '2xs'                        // Spacing - 2px vertical
+  borderRadius: 'full'             // Border radius - fully rounded
+  height: '20px'                   // Size - sm variant
+</Badge>
+```
+
+### Multi-Token Pattern Summary
+
+When designing components, tokens typically combine in these patterns:
+
+**Container Pattern:**
+
+```typescript
+{
+  bg: 'surface*',              // Surface color token
+  color: 'onSurface*',         // Corresponding text color
+  p: 'md-xl',                  // Spacing for padding
+  borderRadius: 'l1-l4',       // Border radius
+  boxShadow: 'level*'          // Elevation (if elevated)
+}
+```
+
+**Text Pattern:**
+
+```typescript
+{
+  textStyle: 'body*|title*',   // Typography token
+  color: 'onSurface*',         // Color token for text
+  mb/mt: 'sm-lg'               // Spacing for margins
+}
+```
+
+**Interactive Pattern:**
+
+```typescript
+{
+  bg: 'primary*',              // Color for background
+  color: 'onPrimary*',         // Contrast color for text
+  textStyle: 'label*',         // Typography for labels
+  px: 'lg',                    // Horizontal spacing
+  py: 'sm',                    // Vertical spacing
+  borderRadius: 'full',        // Border radius
+  _hover: {
+    bg: 'primaryContainer',    // Hover state color
+    boxShadow: 'level1'        // Hover elevation
+  }
+}
+```
 
 ## Accessibility
 

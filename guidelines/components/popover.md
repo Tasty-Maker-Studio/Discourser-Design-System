@@ -2,6 +2,77 @@
 
 **Purpose:** A floating panel that appears near a trigger element to display contextual content, menus, forms, or additional information. Built on Ark UI's Popover primitive with intelligent positioning and smooth animations.
 
+## When to Use This Component
+
+Use Popover when you need to **display rich contextual content or interactive elements near a trigger** without navigating away from the current page.
+
+### Decision Tree
+
+| Scenario                                   | Use Popover? | Alternative | Reasoning                                          |
+| ------------------------------------------ | ------------ | ----------- | -------------------------------------------------- |
+| Contextual menus with actions              | ✅ Yes       | -           | Popover shows rich content near the trigger        |
+| Forms or color pickers attached to element | ✅ Yes       | -           | Perfect for inline editing without page navigation |
+| User profile preview on hover/click        | ✅ Yes       | -           | Shows detailed info without full page load         |
+| Simple text hints or labels                | ❌ No        | Tooltip     | Tooltip is lighter and better for brief help text  |
+| Critical actions requiring focus           | ❌ No        | Dialog      | Dialog centers attention and is modal              |
+| Navigation menus (mobile)                  | ❌ No        | Drawer      | Drawer slides from edge, better for mobile menus   |
+
+### Component Comparison
+
+```typescript
+// ✅ Popover - Rich contextual menu with form
+<Popover.Root>
+  <Popover.Trigger asChild>
+    <Button>Add Comment</Button>
+  </Popover.Trigger>
+  <Popover.Positioner>
+    <Popover.Content>
+      <Popover.Title>New Comment</Popover.Title>
+      <Popover.Description>Add your thoughts below</Popover.Description>
+      <Textarea placeholder="Type your comment..." />
+      <Button>Submit</Button>
+    </Popover.Content>
+  </Popover.Positioner>
+</Popover.Root>
+
+// ❌ Don't use Popover for simple hints - Use Tooltip
+<Popover.Root>
+  <Popover.Trigger asChild>
+    <IconButton><InfoIcon /></IconButton>
+  </Popover.Trigger>
+  <Popover.Positioner>
+    <Popover.Content>
+      This is a simple hint
+    </Popover.Content>
+  </Popover.Positioner>
+</Popover.Root>
+
+// ✅ Better: Use Tooltip for brief hints
+<Tooltip content="This is a simple hint">
+  <IconButton><InfoIcon /></IconButton>
+</Tooltip>
+
+// ❌ Don't use Popover for critical modals - Use Dialog
+<Popover.Root>
+  <Popover.Content>
+    <Popover.Title>Delete Account?</Popover.Title>
+    <Button>Confirm Delete</Button>
+  </Popover.Content>
+</Popover.Root>
+
+// ✅ Better: Use Dialog for important confirmations
+<Dialog.Root>
+  <Dialog.Content>
+    <Dialog.Title>Delete Account?</Dialog.Title>
+    <Dialog.Description>This cannot be undone.</Dialog.Description>
+    <Dialog.Footer>
+      <Button variant="outlined">Cancel</Button>
+      <Button colorPalette="error">Delete</Button>
+    </Dialog.Footer>
+  </Dialog.Content>
+</Dialog.Root>
+```
+
 ## Import
 
 ```typescript

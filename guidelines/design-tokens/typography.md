@@ -4,11 +4,11 @@ The design system uses Material Design 3 typography scale with semantic naming.
 
 ## Font Families
 
-| Token | Font | Usage |
-|-------|------|-------|
-| `display` | "Fraunces", Georgia, serif | Display text, headings, editorial content |
-| `body` | "Poppins", -apple-system, BlinkMacSystemFont, sans-serif | Body text, UI elements, most content |
-| `mono` | "JetBrains Mono", "Fira Code", Consolas, monospace | Code snippets, technical text |
+| Token     | Font                                                     | Usage                                     |
+| --------- | -------------------------------------------------------- | ----------------------------------------- |
+| `display` | "Fraunces", Georgia, serif                               | Display text, headings, editorial content |
+| `body`    | "Poppins", -apple-system, BlinkMacSystemFont, sans-serif | Body text, UI elements, most content      |
+| `mono`    | "JetBrains Mono", "Fira Code", Consolas, monospace       | Code snippets, technical text             |
 
 ## Type Scale
 
@@ -18,11 +18,11 @@ Material Design 3 provides a comprehensive type scale with specific roles. Alway
 
 Use for hero sections, large marketing content, or prominent display text.
 
-| Token | Size | Line Height | Weight | Letter Spacing | Font Family |
-|-------|------|-------------|--------|----------------|-------------|
-| `displayLarge` | 57px | 64px | 400 | -0.25px | display |
-| `displayMedium` | 45px | 52px | 400 | 0px | display |
-| `displaySmall` | 36px | 44px | 400 | 0px | display |
+| Token           | Size | Line Height | Weight | Letter Spacing | Font Family |
+| --------------- | ---- | ----------- | ------ | -------------- | ----------- |
+| `displayLarge`  | 57px | 64px        | 400    | -0.25px        | display     |
+| `displayMedium` | 45px | 52px        | 400    | 0px            | display     |
+| `displaySmall`  | 36px | 44px        | 400    | 0px            | display     |
 
 **Use cases**: Landing page heroes, large feature announcements, major section breaks
 
@@ -30,11 +30,11 @@ Use for hero sections, large marketing content, or prominent display text.
 
 Use for page titles and major section headings.
 
-| Token | Size | Line Height | Weight | Letter Spacing | Font Family |
-|-------|------|-------------|--------|----------------|-------------|
-| `headlineLarge` | 32px | 40px | 400 | 0px | display |
-| `headlineMedium` | 28px | 36px | 400 | 0px | display |
-| `headlineSmall` | 24px | 32px | 400 | 0px | display |
+| Token            | Size | Line Height | Weight | Letter Spacing | Font Family |
+| ---------------- | ---- | ----------- | ------ | -------------- | ----------- |
+| `headlineLarge`  | 32px | 40px        | 400    | 0px            | display     |
+| `headlineMedium` | 28px | 36px        | 400    | 0px            | display     |
+| `headlineSmall`  | 24px | 32px        | 400    | 0px            | display     |
 
 **Use cases**: Page titles (h1), section headings (h2), major card headers
 
@@ -42,11 +42,11 @@ Use for page titles and major section headings.
 
 Use for card titles, dialog headers, and prominent list items.
 
-| Token | Size | Line Height | Weight | Letter Spacing | Font Family |
-|-------|------|-------------|--------|----------------|-------------|
-| `titleLarge` | 22px | 28px | 500 | 0px | body |
-| `titleMedium` | 16px | 24px | 500 | 0.15px | body |
-| `titleSmall` | 14px | 20px | 500 | 0.1px | body |
+| Token         | Size | Line Height | Weight | Letter Spacing | Font Family |
+| ------------- | ---- | ----------- | ------ | -------------- | ----------- |
+| `titleLarge`  | 22px | 28px        | 500    | 0px            | body        |
+| `titleMedium` | 16px | 24px        | 500    | 0.15px         | body        |
+| `titleSmall`  | 14px | 20px        | 500    | 0.1px          | body        |
 
 **Use cases**: Dialog titles, card headers, list item titles, h3-h4 equivalents
 
@@ -54,13 +54,14 @@ Use for card titles, dialog headers, and prominent list items.
 
 Use for main content, paragraphs, and body copy.
 
-| Token | Size | Line Height | Weight | Letter Spacing | Font Family |
-|-------|------|-------------|--------|----------------|-------------|
-| `bodyLarge` | 16px | 24px | 400 | 0.5px | body |
-| `bodyMedium` | 14px | 20px | 400 | 0.25px | body |
-| `bodySmall` | 12px | 16px | 400 | 0.4px | body |
+| Token        | Size | Line Height | Weight | Letter Spacing | Font Family |
+| ------------ | ---- | ----------- | ------ | -------------- | ----------- |
+| `bodyLarge`  | 16px | 24px        | 400    | 0.5px          | body        |
+| `bodyMedium` | 14px | 20px        | 400    | 0.25px         | body        |
+| `bodySmall`  | 12px | 16px        | 400    | 0.4px          | body        |
 
 **Use cases**:
+
 - `bodyLarge`: Primary paragraphs, important content
 - `bodyMedium`: Default body text (most common)
 - `bodySmall`: Secondary text, captions, hints
@@ -69,13 +70,14 @@ Use for main content, paragraphs, and body copy.
 
 Use for buttons, form labels, chips, and other UI elements.
 
-| Token | Size | Line Height | Weight | Letter Spacing | Font Family |
-|-------|------|-------------|--------|----------------|-------------|
-| `labelLarge` | 14px | 20px | 500 | 0.1px | body |
-| `labelMedium` | 12px | 16px | 500 | 0.5px | body |
-| `labelSmall` | 11px | 16px | 500 | 0.5px | body |
+| Token         | Size | Line Height | Weight | Letter Spacing | Font Family |
+| ------------- | ---- | ----------- | ------ | -------------- | ----------- |
+| `labelLarge`  | 14px | 20px        | 500    | 0.1px          | body        |
+| `labelMedium` | 12px | 16px        | 500    | 0.5px          | body        |
+| `labelSmall`  | 11px | 16px        | 500    | 0.5px          | body        |
 
 **Use cases**:
+
 - `labelLarge`: Button text, tab labels
 - `labelMedium`: Form field labels, input labels
 - `labelSmall`: Small badges, overline text, timestamps
@@ -135,25 +137,25 @@ Always combine typography with semantic color tokens:
 // Primary heading
 const heading = css({
   textStyle: 'headlineLarge',
-  color: 'onSurface'
+  color: 'onSurface',
 });
 
 // Secondary text
 const secondary = css({
   textStyle: 'bodySmall',
-  color: 'onSurfaceVariant'
+  color: 'onSurfaceVariant',
 });
 
 // Error message
 const errorText = css({
   textStyle: 'bodySmall',
-  color: 'error'
+  color: 'error',
 });
 
 // Button text (components handle this automatically)
 const buttonText = css({
   textStyle: 'labelLarge',
-  color: 'onPrimary'
+  color: 'onPrimary',
 });
 ```
 
@@ -177,18 +179,18 @@ const correct = css({ textStyle: 'bodyMedium' });
 
 Recommended mapping of textStyle tokens to HTML semantic elements:
 
-| HTML Element | Recommended textStyle | Alternative |
-|--------------|----------------------|-------------|
-| `<h1>` | `headlineLarge` or `displaySmall` | `headlineMedium` |
-| `<h2>` | `headlineMedium` | `headlineSmall` |
-| `<h3>` | `headlineSmall` or `titleLarge` | `titleMedium` |
-| `<h4>` | `titleLarge` | `titleMedium` |
-| `<h5>` | `titleMedium` | `titleSmall` |
-| `<h6>` | `titleSmall` | `labelLarge` |
-| `<p>` | `bodyMedium` | `bodyLarge` or `bodySmall` |
-| `<button>` | `labelLarge` | (handled by Button component) |
-| `<label>` | `labelMedium` | (handled by Input component) |
-| `<caption>` | `bodySmall` | `labelSmall` |
+| HTML Element | Recommended textStyle             | Alternative                   |
+| ------------ | --------------------------------- | ----------------------------- |
+| `<h1>`       | `headlineLarge` or `displaySmall` | `headlineMedium`              |
+| `<h2>`       | `headlineMedium`                  | `headlineSmall`               |
+| `<h3>`       | `headlineSmall` or `titleLarge`   | `titleMedium`                 |
+| `<h4>`       | `titleLarge`                      | `titleMedium`                 |
+| `<h5>`       | `titleMedium`                     | `titleSmall`                  |
+| `<h6>`       | `titleSmall`                      | `labelLarge`                  |
+| `<p>`        | `bodyMedium`                      | `bodyLarge` or `bodySmall`    |
+| `<button>`   | `labelLarge`                      | (handled by Button component) |
+| `<label>`    | `labelMedium`                     | (handled by Input component)  |
+| `<caption>`  | `bodySmall`                       | `labelSmall`                  |
 
 ## Responsive Typography
 
@@ -202,6 +204,380 @@ The type scale is fixed and does not change at different breakpoints. However, y
 <h1 className={css({
   textStyle: { base: 'headlineMedium', lg: 'headlineLarge' }
 })}>Title</h1>
+```
+
+## How Typography Tokens Work With Other Tokens
+
+Typography tokens are rarely used alone. Here are real-world examples showing how text styles combine with color, spacing, and other design tokens:
+
+### Article Header with Metadata
+
+```typescript
+import { css } from '@discourser/design-system/styled-system/css';
+
+<article>
+  <header className={css({ mb: 'xl' })}>  {/* Spacing - 32px bottom margin */}
+
+    <h1 className={css({
+      textStyle: 'headlineLarge',        // Typography - 32px/40px
+      color: 'onSurface',                // Color - primary text
+      mb: 'md'                           // Spacing - 16px bottom margin
+    })}>
+      Understanding Material Design 3
+    </h1>
+
+    <div className={css({
+      display: 'flex',
+      gap: 'sm',                         // Spacing - 8px between items
+      alignItems: 'center'
+    })}>
+      <span className={css({
+        textStyle: 'labelSmall',         // Typography - 11px/16px
+        color: 'onSurfaceVariant',       // Color - secondary text
+        textTransform: 'uppercase'
+      })}>
+        Design
+      </span>
+
+      <span className={css({
+        textStyle: 'bodySmall',          // Typography - 12px/16px
+        color: 'onSurfaceVariant'        // Color - secondary text
+      })}>
+        •
+      </span>
+
+      <time className={css({
+        textStyle: 'bodySmall',          // Typography - 12px/16px
+        color: 'onSurfaceVariant'        // Color - secondary text
+      })}>
+        January 13, 2026
+      </time>
+    </div>
+  </header>
+
+  <p className={css({
+    textStyle: 'bodyLarge',              // Typography - 16px/24px
+    color: 'onSurface',                  // Color - primary text
+    mb: 'lg'                             // Spacing - 24px bottom margin
+  })}>
+    Material Design 3 is the latest evolution of Google's design system...
+  </p>
+</article>
+```
+
+### Card with Title, Description, and Actions
+
+```typescript
+import { Card, Button } from '@discourser/design-system';
+import { css } from '@discourser/design-system/styled-system/css';
+
+<Card variant="elevated">
+  <div className={css({
+    p: 'lg',                             // Spacing - 24px padding
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 'md'                            // Spacing - 16px between sections
+  })}>
+
+    <h3 className={css({
+      textStyle: 'titleLarge',           // Typography - 22px/28px
+      color: 'onSurface',                // Color - primary text
+      fontWeight: 500                    // Typography - medium weight
+    })}>
+      Premium Plan
+    </h3>
+
+    <p className={css({
+      textStyle: 'bodyMedium',           // Typography - 14px/20px
+      color: 'onSurfaceVariant',         // Color - secondary text
+      lineClamp: 3                       // Limit to 3 lines
+    })}>
+      Get access to all premium features including priority support,
+      advanced analytics, and unlimited projects.
+    </p>
+
+    <div className={css({
+      display: 'flex',
+      alignItems: 'center',
+      gap: 'xs',                         // Spacing - 4px gap
+      mt: 'sm'                           // Spacing - 8px top margin
+    })}>
+      <span className={css({
+        textStyle: 'displaySmall',       // Typography - 36px/44px
+        color: 'primary',                // Color - brand color
+        fontWeight: 400
+      })}>
+        $29
+      </span>
+
+      <span className={css({
+        textStyle: 'bodySmall',          // Typography - 12px/16px
+        color: 'onSurfaceVariant',       // Color - secondary text
+        alignSelf: 'flex-end',
+        pb: 'xs'                         // Spacing - 4px bottom padding
+      })}>
+        /month
+      </span>
+    </div>
+
+    <Button variant="filled">
+      {/* Button text uses labelLarge internally */}
+      Get Started
+    </Button>
+  </div>
+</Card>
+```
+
+### Form with Labels and Helper Text
+
+```typescript
+import { Input, Button } from '@discourser/design-system';
+import { css } from '@discourser/design-system/styled-system/css';
+
+<form className={css({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 'lg',                             // Spacing - 24px between fields
+  maxWidth: '400px'
+})}>
+
+  <h2 className={css({
+    textStyle: 'headlineSmall',          // Typography - 24px/32px
+    color: 'onSurface',                  // Color - primary text
+    mb: 'sm'                             // Spacing - 8px bottom margin
+  })}>
+    Create Account
+  </h2>
+
+  <Input
+    label="Email"                        // Label uses labelMedium (12px/16px)
+    type="email"
+    helperText="We'll never share your email"  // Helper uses bodySmall (12px/16px)
+    {/* Input internally uses: */}
+    {/* textStyle: 'bodyLarge' for input text (16px/24px) */}
+    {/* color: 'onSurface' for input text */}
+    {/* Label uses labelMedium with color: 'onSurface' */}
+    {/* Helper text uses bodySmall with color: 'onSurfaceVariant' */}
+  />
+
+  <Input
+    label="Password"
+    type="password"
+    errorText="Password must be at least 8 characters"  // Error uses bodySmall
+    {/* Error text color: 'error' */}
+  />
+
+  <Button type="submit" variant="filled">
+    {/* Button text: labelLarge (14px/20px) */}
+    {/* Button color: onPrimary */}
+    Sign Up
+  </Button>
+
+  <p className={css({
+    textStyle: 'bodySmall',              // Typography - 12px/16px
+    color: 'onSurfaceVariant',           // Color - secondary text
+    textAlign: 'center'
+  })}>
+    Already have an account?{' '}
+    <a className={css({
+      textStyle: 'labelMedium',          // Typography - 12px/16px
+      color: 'primary',                  // Color - brand link color
+      textDecoration: 'underline'
+    })}>
+      Sign in
+    </a>
+  </p>
+</form>
+```
+
+### Dialog with Hierarchical Typography
+
+```typescript
+import { Dialog, Button } from '@discourser/design-system';
+import { css } from '@discourser/design-system/styled-system/css';
+
+<Dialog.Root>
+  <Dialog.Content className={css({
+    p: 'xl',                             // Spacing - 32px padding
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 'md'                            // Spacing - 16px between elements
+  })}>
+
+    <Dialog.Title className={css({
+      textStyle: 'headlineSmall',        // Typography - 24px/32px
+      color: 'onSurface'                 // Color - primary text
+    })}>
+      Delete Account
+    </Dialog.Title>
+
+    <Dialog.Description className={css({
+      textStyle: 'bodyMedium',           // Typography - 14px/20px
+      color: 'onSurfaceVariant'          // Color - secondary text
+    })}>
+      This action cannot be undone. All your data will be permanently deleted.
+    </Dialog.Description>
+
+    <div className={css({
+      bg: 'errorContainer',              // Color - error background
+      p: 'md',                           // Spacing - 16px padding
+      borderRadius: 'l2',                // Border radius - 8px
+      mt: 'sm'                           // Spacing - 8px top margin
+    })}>
+      <p className={css({
+        textStyle: 'labelMedium',        // Typography - 12px/16px
+        color: 'onErrorContainer',       // Color - error contrast text
+        fontWeight: 500
+      })}>
+        Warning
+      </p>
+      <p className={css({
+        textStyle: 'bodySmall',          // Typography - 12px/16px
+        color: 'onErrorContainer',       // Color - error contrast text
+        mt: 'xs'                         // Spacing - 4px top margin
+      })}>
+        You have 3 active projects that will be lost.
+      </p>
+    </div>
+
+    <div className={css({
+      display: 'flex',
+      gap: 'sm',                         // Spacing - 8px between buttons
+      justifyContent: 'flex-end',
+      mt: 'md'                           // Spacing - 16px top margin
+    })}>
+      <Button variant="text">
+        {/* labelLarge text */}
+        Cancel
+      </Button>
+      <Button variant="filled" colorPalette="error">
+        {/* labelLarge text with onError color */}
+        Delete Account
+      </Button>
+    </div>
+  </Dialog.Content>
+</Dialog.Root>
+```
+
+### List with Mixed Typography
+
+```typescript
+import { Avatar, Badge } from '@discourser/design-system';
+import { css } from '@discourser/design-system/styled-system/css';
+
+<ul className={css({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 'md'                              // Spacing - 16px between items
+})}>
+  {users.map(user => (
+    <li key={user.id} className={css({
+      display: 'flex',
+      alignItems: 'center',
+      gap: 'md',                         // Spacing - 16px between avatar and text
+      p: 'md',                           // Spacing - 16px padding
+      borderRadius: 'l2',                // Border radius - 8px
+      _hover: {
+        bg: 'surfaceContainerHighest'    // Color - hover background
+      }
+    })}>
+
+      <Avatar.Root size="md">
+        {/* Avatar size: 40px */}
+        <Avatar.Image src={user.avatar} alt={user.name} />
+        <Avatar.Fallback>
+          {/* Fallback text: labelLarge */}
+          {user.initials}
+        </Avatar.Fallback>
+      </Avatar.Root>
+
+      <div className={css({ flex: 1 })}>
+        <div className={css({
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'xs',                     // Spacing - 4px gap
+          mb: 'xs'                       // Spacing - 4px bottom margin
+        })}>
+          <h4 className={css({
+            textStyle: 'titleMedium',    // Typography - 16px/24px
+            color: 'onSurface',          // Color - primary text
+            fontWeight: 500
+          })}>
+            {user.name}
+          </h4>
+
+          {user.isVerified && (
+            <Badge variant="subtle" colorPalette="primary" size="sm">
+              {/* Badge text: labelSmall (11px/16px) */}
+              Verified
+            </Badge>
+          )}
+        </div>
+
+        <p className={css({
+          textStyle: 'bodySmall',        // Typography - 12px/16px
+          color: 'onSurfaceVariant'      // Color - secondary text
+        })}>
+          {user.email}
+        </p>
+
+        <span className={css({
+          textStyle: 'labelSmall',       // Typography - 11px/16px
+          color: 'onSurfaceVariant'      // Color - tertiary text
+        })}>
+          Last seen {user.lastSeen}
+        </span>
+      </div>
+    </li>
+  ))}
+</ul>
+```
+
+### Multi-Token Typography Pattern Summary
+
+When combining typography with other tokens, follow these patterns:
+
+**Heading Pattern:**
+
+```typescript
+{
+  textStyle: 'headline*|title*',       // Typography token
+  color: 'onSurface',                  // Color - primary text
+  mb: 'sm-lg',                         // Spacing - bottom margin
+  fontWeight: 400-500                  // Weight from type scale
+}
+```
+
+**Body Text Pattern:**
+
+```typescript
+{
+  textStyle: 'body*',                  // Typography token
+  color: 'onSurface|onSurfaceVariant', // Color - primary or secondary
+  mb: 'md',                            // Spacing - paragraph spacing
+  lineHeight: 'from token'             // Never override line-height
+}
+```
+
+**Label/UI Text Pattern:**
+
+```typescript
+{
+  textStyle: 'label*',                 // Typography token
+  color: 'onSurface|primary',          // Color - depends on context
+  fontWeight: 500,                     // Medium weight from scale
+  textTransform: 'uppercase|none'      // Optional for labels
+}
+```
+
+**Metadata/Caption Pattern:**
+
+```typescript
+{
+  textStyle: 'bodySmall|labelSmall',   // Typography - small sizes
+  color: 'onSurfaceVariant',           // Color - de-emphasized
+  mt/mb: 'xs-sm'                       // Spacing - tight margins
+}
 ```
 
 ## Accessibility
@@ -219,8 +595,14 @@ The design system expects these fonts to be loaded in your application:
 
 ```html
 <!-- In your HTML head or CSS -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600;1,9..144,700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600;1,9..144,700&family=Poppins:wght@300;400;500;600;700&display=swap"
+  rel="stylesheet"
+/>
+<link
+  href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"
+  rel="stylesheet"
+/>
 ```
