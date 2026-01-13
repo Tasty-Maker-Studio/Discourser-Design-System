@@ -2,6 +2,67 @@
 
 **Purpose:** Compact visual indicator for displaying status, labels, counts, or categories following Material Design 3 patterns.
 
+## When to Use This Component
+
+Use Badge when you need to **display compact visual indicators for status, counts, labels, or categories** as non-interactive elements.
+
+### Decision Tree
+
+| Scenario                                         | Use Badge? | Alternative    | Reasoning                                      |
+| ------------------------------------------------ | ---------- | -------------- | ---------------------------------------------- |
+| Displaying status labels (Active, Pending, etc.) | ✅ Yes     | -              | Badge provides clear visual categorization     |
+| Notification counts on icons or buttons          | ✅ Yes     | -              | Perfect for unread messages, alerts            |
+| Category tags or labels                          | ✅ Yes     | -              | Compact visual grouping                        |
+| Clickable filters or selections                  | ❌ No      | Button or Chip | Badge is non-interactive                       |
+| Primary call-to-action                           | ❌ No      | Button         | Button is designed for actions                 |
+| User profile images                              | ❌ No      | Avatar         | Avatar is specifically for user representation |
+
+### Component Comparison
+
+```typescript
+// ✅ Badge - Status indicator
+<Stack gap="2" direction="row">
+  <Badge colorPalette="success">Active</Badge>
+  <Badge colorPalette="warning">Pending</Badge>
+  <Badge colorPalette="error">Expired</Badge>
+</Stack>
+
+// ❌ Don't use Badge for interactive elements - Use Button
+<Badge onClick={handleClick} colorPalette="primary">
+  Click me
+</Badge>
+
+// ✅ Better: Use Button for clickable actions
+<Button size="sm" variant="outlined">
+  Click me
+</Button>
+
+// ❌ Don't use Badge for user avatars - Use Avatar
+<Badge colorPalette="primary" size="2xl">
+  JD
+</Badge>
+
+// ✅ Better: Use Avatar for user representation
+<Avatar.Root colorPalette="primary" size="md">
+  <Avatar.Fallback name="John Doe" />
+  <Avatar.Image src="/avatar.jpg" alt="John Doe" />
+</Avatar.Root>
+
+// ✅ Badge - Notification count on icon
+<Box position="relative">
+  <IconButton><BellIcon /></IconButton>
+  <Badge
+    position="absolute"
+    top="-1"
+    right="-1"
+    colorPalette="error"
+    size="sm"
+  >
+    5
+  </Badge>
+</Box>
+```
+
 ## Import
 
 ```typescript

@@ -13,6 +13,7 @@
 ## Objective
 
 Complete the Discourser Design System component library by:
+
 1. Adding remaining essential Park UI components needed for Discourser.AI
 2. Creating Storybook stories for all components
 3. Setting up proper package exports
@@ -23,12 +24,14 @@ Complete the Discourser Design System component library by:
 ## Context
 
 ### Current State (After TASK-DS-001)
+
 ✅ Park UI infrastructure integrated with M3 colors
 ✅ Core components working: Button, Input, Field, Card, Switch, Dialog
 ✅ Storybook running with stories
 ✅ Build passing
 
 ### Target State
+
 - Full component set for MVP (15+ components)
 - All components have Storybook stories
 - Package properly exported for consumption
@@ -51,11 +54,13 @@ Complete the Discourser Design System component library by:
 Copy these components from `/park-ui/components/react/src/components/ui/` to `src/components/`:
 
 **Layout & Container:**
+
 - `accordion.tsx` - For collapsible sections (settings panels)
 - `drawer.tsx` - Side panel (mobile navigation)
 - `tabs.tsx` - Tab navigation
 
 **Feedback & Status:**
+
 - `avatar.tsx` - User images
 - `badge.tsx` - Status indicators
 - `progress.tsx` - Loading/progress bars
@@ -64,6 +69,7 @@ Copy these components from `/park-ui/components/react/src/components/ui/` to `sr
 - `toast.tsx` - Notifications
 
 **Form Elements:**
+
 - `checkbox.tsx` - Boolean inputs
 - `radio-group.tsx` - Single selection
 - `select.tsx` - Dropdown selection
@@ -71,6 +77,7 @@ Copy these components from `/park-ui/components/react/src/components/ui/` to `sr
 - `slider.tsx` - Range input (for audio controls)
 
 **Overlay:**
+
 - `popover.tsx` - Floating content
 - `tooltip.tsx` - Hover hints
 
@@ -159,18 +166,19 @@ import {
 ### 2.1 Fix Import Paths in Copied Components
 
 Each copied component will have imports like:
+
 ```typescript
-import { ark } from '@ark-ui/react/...'
-import { styled } from 'styled-system/jsx'
-import { type ComponentProps } from 'styled-system/types'
+import { ark } from '@ark-ui/react/...';
+import { styled } from 'styled-system/jsx';
+import { type ComponentProps } from 'styled-system/types';
 ```
 
-
 Update to use local paths:
+
 ```typescript
-import { ark } from '@ark-ui/react/...'  // Keep as-is
-import { styled } from '../styled-system/jsx'
-import { type ComponentProps } from '../styled-system/types'
+import { ark } from '@ark-ui/react/...'; // Keep as-is
+import { styled } from '../styled-system/jsx';
+import { type ComponentProps } from '../styled-system/types';
 ```
 
 ### 2.2 Update Main Export
@@ -285,6 +293,7 @@ export const WithColorPalette: Story = {
 ### 3.3 Priority Stories
 
 Focus on these first (most used in Discourser.AI):
+
 1. **Select** - Scenario selection dropdowns
 2. **Tabs** - Settings panel navigation
 3. **Slider** - Audio volume/speed controls
@@ -331,13 +340,8 @@ Focus on these first (most used in Discourser.AI):
     },
     "./styles.css": "./dist/styles.css"
   },
-  "files": [
-    "dist",
-    "README.md"
-  ],
-  "sideEffects": [
-    "*.css"
-  ],
+  "files": ["dist", "README.md"],
+  "sideEffects": ["*.css"],
   "scripts": {
     "build": "pnpm build:panda && pnpm build:lib",
     "build:panda": "panda codegen",
@@ -392,7 +396,7 @@ export default defineConfig({
 
 ### 4.3 Create/Update README.md
 
-```markdown
+````markdown
 # @discourser/design-system
 
 Design system for Discourser.AI built on Park UI + Material Design 3.
@@ -417,12 +421,12 @@ import '@discourser/design-system/styles.css';
 import { Button, Input, Select } from '@discourser/design-system';
 
 export function MyComponent() {
-  return (
-    <div>
-      <Button colorPalette="primary">Click Me</Button>
-      <Input placeholder="Enter text..." />
-    </div>
-  );
+return (
+<div>
+<Button colorPalette="primary">Click Me</Button>
+<Input placeholder="Enter text..." />
+</div>
+);
 }
 \`\`\`
 
@@ -468,6 +472,7 @@ pnpm build:lib
 # Or combined:
 pnpm build
 ```
+````
 
 ### 5.2 Verify Storybook
 
@@ -476,6 +481,7 @@ pnpm dev
 ```
 
 Check that:
+
 - [ ] All component stories load
 - [ ] No console errors
 - [ ] Dark mode works for all components
@@ -529,20 +535,21 @@ pnpm add @discourser/design-system
 
 ## Success Criteria
 
-| Criterion | Target |
-|-----------|--------|
-| Components added | ✅ 15+ total components |
-| Stories created | ✅ Story for each component |
-| Build passes | ✅ Zero errors |
-| Package exports work | ✅ All entry points resolve |
-| Published to npm | ✅ @discourser/design-system@0.2.0 |
-| Consumable in Discourser.AI | ✅ Verified import works |
+| Criterion                   | Target                             |
+| --------------------------- | ---------------------------------- |
+| Components added            | ✅ 15+ total components            |
+| Stories created             | ✅ Story for each component        |
+| Build passes                | ✅ Zero errors                     |
+| Package exports work        | ✅ All entry points resolve        |
+| Published to npm            | ✅ @discourser/design-system@0.2.0 |
+| Consumable in Discourser.AI | ✅ Verified import works           |
 
 ---
 
 ## Component Inventory (Target)
 
 ### ✅ Complete (from TASK-DS-001)
+
 - Button
 - IconButton (if separate)
 - Input
@@ -552,6 +559,7 @@ pnpm add @discourser/design-system
 - Dialog
 
 ### 🎯 To Add (this task)
+
 - Accordion
 - Avatar
 - Badge
@@ -589,4 +597,4 @@ pnpm add @discourser/design-system
 
 ---
 
-*End of Task Document*
+_End of Task Document_

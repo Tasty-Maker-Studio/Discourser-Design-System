@@ -2,6 +2,94 @@
 
 **Purpose:** Binary selection control for toggling options on/off, supporting single checkboxes and checkbox groups.
 
+## When to Use This Component
+
+Use Checkbox when you need **binary selections** that are part of a form or when users can select multiple independent options.
+
+**Decision Tree:**
+
+| Scenario                                                        | Use This    | Why                                       |
+| --------------------------------------------------------------- | ----------- | ----------------------------------------- |
+| Form consent (accept terms, subscribe to newsletter)            | Checkbox ✅ | Standard for form agreements              |
+| Multiple selections from a list (select interests, features)    | Checkbox ✅ | Users can pick multiple items             |
+| Single binary choice in a form                                  | Checkbox ✅ | Form submission context                   |
+| Toggle setting with immediate effect (dark mode, notifications) | Switch      | Visual metaphor for instant state changes |
+| Mutually exclusive choices (select one from many)               | RadioGroup  | Only one option can be selected           |
+| Action trigger (save, delete)                                   | Button      | Explicit action with confirmation         |
+
+**Component Comparison:**
+
+```typescript
+// ✅ Use Checkbox for form consent
+<form onSubmit={handleSubmit}>
+  <Checkbox.Root name="terms">
+    <Checkbox.Control>
+      <Checkbox.Indicator />
+    </Checkbox.Control>
+    <Checkbox.Label>I accept the terms and conditions</Checkbox.Label>
+  </Checkbox.Root>
+  <Button type="submit">Sign Up</Button>
+</form>
+
+// ✅ Use Checkbox for multiple selections
+<Checkbox.Group value={selectedInterests} onValueChange={setSelectedInterests}>
+  <Checkbox.Root value="sports">
+    <Checkbox.Control><Checkbox.Indicator /></Checkbox.Control>
+    <Checkbox.Label>Sports</Checkbox.Label>
+  </Checkbox.Root>
+  <Checkbox.Root value="music">
+    <Checkbox.Control><Checkbox.Indicator /></Checkbox.Control>
+    <Checkbox.Label>Music</Checkbox.Label>
+  </Checkbox.Root>
+  <Checkbox.Root value="travel">
+    <Checkbox.Control><Checkbox.Indicator /></Checkbox.Control>
+    <Checkbox.Label>Travel</Checkbox.Label>
+  </Checkbox.Root>
+</Checkbox.Group>
+
+// ❌ Don't use Checkbox for instant toggles - use Switch
+<Checkbox.Root checked={isDarkMode} onCheckedChange={setDarkMode}>
+  <Checkbox.Control><Checkbox.Indicator /></Checkbox.Control>
+  <Checkbox.Label>Dark mode</Checkbox.Label>
+</Checkbox.Root>  // Wrong - settings that apply immediately should use Switch
+
+<Switch.Root checked={isDarkMode} onCheckedChange={setDarkMode}>
+  <Switch.Label>Dark mode</Switch.Label>
+  <Switch.Control><Switch.Thumb /></Switch.Control>
+</Switch.Root>  // Correct
+
+// ❌ Don't use Checkbox for exclusive choices - use RadioGroup
+<Checkbox.Group>
+  <Checkbox.Root value="small">
+    <Checkbox.Control><Checkbox.Indicator /></Checkbox.Control>
+    <Checkbox.Label>Small</Checkbox.Label>
+  </Checkbox.Root>
+  <Checkbox.Root value="medium">
+    <Checkbox.Control><Checkbox.Indicator /></Checkbox.Control>
+    <Checkbox.Label>Medium</Checkbox.Label>
+  </Checkbox.Root>
+  <Checkbox.Root value="large">
+    <Checkbox.Control><Checkbox.Indicator /></Checkbox.Control>
+    <Checkbox.Label>Large</Checkbox.Label>
+  </Checkbox.Root>
+</Checkbox.Group>  // Wrong - users shouldn't select multiple sizes
+
+<RadioGroup.Root>
+  <RadioGroup.Item value="small">
+    <RadioGroup.ItemControl />
+    <RadioGroup.ItemText>Small</RadioGroup.ItemText>
+  </RadioGroup.Item>
+  <RadioGroup.Item value="medium">
+    <RadioGroup.ItemControl />
+    <RadioGroup.ItemText>Medium</RadioGroup.ItemText>
+  </RadioGroup.Item>
+  <RadioGroup.Item value="large">
+    <RadioGroup.ItemControl />
+    <RadioGroup.ItemText>Large</RadioGroup.ItemText>
+  </RadioGroup.Item>
+</RadioGroup.Root>  // Correct
+```
+
 ## Import
 
 ```typescript

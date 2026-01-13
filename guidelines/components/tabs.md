@@ -2,6 +2,93 @@
 
 **Purpose:** Navigation component for organizing content into separate views with smooth transitions and visual indicators, following Material Design 3 principles.
 
+## When to Use This Component
+
+Use Tabs when you need to **organize related content into separate, mutually exclusive views** where users switch between them without leaving the page.
+
+### Decision Tree
+
+| Scenario                                             | Use Tabs? | Alternative              | Reasoning                                                    |
+| ---------------------------------------------------- | --------- | ------------------------ | ------------------------------------------------------------ |
+| Switching between related views (Dashboard sections) | ✅ Yes    | -                        | Tabs provide clear navigation between distinct content areas |
+| Organizing product info (Details, Reviews, Specs)    | ✅ Yes    | -                        | Perfect for grouping related but separate information        |
+| User needs to see multiple sections at once          | ❌ No     | Accordion (multiple)     | Tabs show one view at a time                                 |
+| Progressive disclosure of content (FAQs)             | ❌ No     | Accordion                | Accordion is better for showing/hiding sections              |
+| Sequential steps in a process                        | ❌ No     | Stepper                  | Stepper shows progress through ordered steps                 |
+| More than 7-8 tabs needed                            | ❌ No     | Dropdown menu or Sidebar | Too many tabs become hard to navigate                        |
+
+### Component Comparison
+
+```typescript
+// ✅ Tabs - Switching between related views
+<Tabs.Root colorPalette="primary" defaultValue="overview">
+  <Tabs.List>
+    <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
+    <Tabs.Trigger value="analytics">Analytics</Tabs.Trigger>
+    <Tabs.Trigger value="settings">Settings</Tabs.Trigger>
+    <Tabs.Indicator />
+  </Tabs.List>
+  <Tabs.Content value="overview">
+    <DashboardOverview />
+  </Tabs.Content>
+  <Tabs.Content value="analytics">
+    <AnalyticsView />
+  </Tabs.Content>
+  <Tabs.Content value="settings">
+    <SettingsPanel />
+  </Tabs.Content>
+</Tabs.Root>
+
+// ❌ Don't use Tabs when users need to see multiple sections - Use Accordion
+<Tabs.Root defaultValue="section1">
+  <Tabs.List>
+    <Tabs.Trigger value="section1">FAQ 1</Tabs.Trigger>
+    <Tabs.Trigger value="section2">FAQ 2</Tabs.Trigger>
+    {/* User might want to see multiple FAQs at once */}
+  </Tabs.List>
+</Tabs.Root>
+
+// ✅ Better: Use Accordion for collapsible sections
+<Accordion.Root multiple>
+  <Accordion.Item value="faq1">
+    <Accordion.ItemTrigger>
+      FAQ 1
+      <Accordion.ItemIndicator />
+    </Accordion.ItemTrigger>
+    <Accordion.ItemContent>Answer 1</Accordion.ItemContent>
+  </Accordion.Item>
+  <Accordion.Item value="faq2">
+    <Accordion.ItemTrigger>
+      FAQ 2
+      <Accordion.ItemIndicator />
+    </Accordion.ItemTrigger>
+    <Accordion.ItemContent>Answer 2</Accordion.ItemContent>
+  </Accordion.Item>
+</Accordion.Root>
+
+// ❌ Don't use Tabs for sequential steps - Use Stepper
+<Tabs.Root defaultValue="step1">
+  <Tabs.List>
+    <Tabs.Trigger value="step1">Step 1</Tabs.Trigger>
+    <Tabs.Trigger value="step2">Step 2</Tabs.Trigger>
+    <Tabs.Trigger value="step3">Step 3</Tabs.Trigger>
+  </Tabs.List>
+  {/* Steps have an order - tabs don't convey sequence */}
+</Tabs.Root>
+
+// ✅ Better: Use Stepper for multi-step processes
+<Stepper value={currentStep} onValueChange={setCurrentStep}>
+  <Stepper.List>
+    <Stepper.Item index={0}>Information</Stepper.Item>
+    <Stepper.Item index={1}>Payment</Stepper.Item>
+    <Stepper.Item index={2}>Confirmation</Stepper.Item>
+  </Stepper.List>
+  <Stepper.Content index={0}>Step 1 content</Stepper.Content>
+  <Stepper.Content index={1}>Step 2 content</Stepper.Content>
+  <Stepper.Content index={2}>Step 3 content</Stepper.Content>
+</Stepper>
+```
+
 ## Import
 
 ```typescript
@@ -467,6 +554,573 @@ import { HomeIcon, UserIcon, SettingsIcon } from 'your-icon-library';
   <Tabs.Content value="settings">Settings content</Tabs.Content>
 </Tabs.Root>
 ```
+
+## Edge Cases
+
+This section covers common edge cases and how to handle them properly.
+
+### Dynamic Tabs - Adding/Removing at Runtime
+
+**Scenario:** Tabs need to be added or removed dynamically based on user actions or application state.
+
+**Solution:**
+
+```typescript
+interface Tab {
+  id: string;
+  label: string;
+  content: string;
+  closable?: boolean;
+}
+
+const [tabs, setTabs] = useState<Tab[]>([
+  { id: 'tab1', label: 'Home', content: 'Home content', closable: false },
+  { id: 'tab2', label: 'Profile', content: 'Profile content', closable: true },
+]);
+const [activeTab, setActiveTab] = useState('tab1');
+
+const addTab = () => {
+  const newTabId = `tab${Date.now()}`;
+  const newTab: Tab = {
+    id: newTabId,
+    label: `New Tab ${tabs.length + 1}`,
+    content: `Content for new tab`,
+    closable: true,
+  };
+  setTabs([...tabs, newTab]);
+  setActiveTab(newTabId); // Activate newly created tab
+};
+
+const closeTab = (tabId: string) => {
+  // Prevent closing if it's the last tab
+  if (tabs.length <= 1) return;
+
+  const tabIndex = tabs.findIndex((t) => t.id === tabId);
+  const newTabs = tabs.filter((t) => t.id !== tabId);
+  setTabs(newTabs);
+
+  // If closing active tab, switch to adjacent tab
+  if (activeTab === tabId) {
+    const newActiveIndex = Math.min(tabIndex, newTabs.length - 1);
+    setActiveTab(newTabs[newActiveIndex].id);
+  }
+};
+
+<div>
+  <Tabs.Root
+    colorPalette="primary"
+    value={activeTab}
+    onValueChange={(details) => setActiveTab(details.value)}
+  >
+    <div className={css({ display: 'flex', alignItems: 'center', gap: '2', mb: '2' })}>
+      <Tabs.List className={css({ flex: 1 })}>
+        {tabs.map((tab) => (
+          <Tabs.Trigger key={tab.id} value={tab.id}>
+            <span>{tab.label}</span>
+            {tab.closable && (
+              <button
+                className={css({
+                  ml: '2',
+                  p: '1',
+                  borderRadius: 'sm',
+                  _hover: { bg: 'gray.a3' },
+                })}
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent tab activation
+                  closeTab(tab.id);
+                }}
+                aria-label={`Close ${tab.label}`}
+              >
+                ×
+              </button>
+            )}
+          </Tabs.Trigger>
+        ))}
+        <Tabs.Indicator />
+      </Tabs.List>
+
+      <Button size="sm" onClick={addTab} variant="outlined">
+        + Add Tab
+      </Button>
+    </div>
+
+    {tabs.map((tab) => (
+      <Tabs.Content key={tab.id} value={tab.id}>
+        <div className={css({ p: '4' })}>{tab.content}</div>
+      </Tabs.Content>
+    ))}
+  </Tabs.Root>
+</div>
+```
+
+**Best practices:**
+
+- Always maintain at least one tab to prevent empty state
+- Switch to adjacent tab when closing the active tab
+- Stop event propagation on close buttons to prevent tab activation
+- Provide clear visual indicators for closable tabs
+- Consider confirming before closing tabs with unsaved changes
+
+---
+
+### Too Many Tabs - Handling Overflow
+
+**Scenario:** When there are too many tabs to fit horizontally, implement scrolling or alternative navigation patterns.
+
+**Solution:**
+
+```typescript
+const manyTabs = Array.from({ length: 12 }, (_, i) => ({
+  id: `tab${i + 1}`,
+  label: `Tab ${i + 1}`,
+  content: `Content for tab ${i + 1}`,
+}));
+
+const [activeTab, setActiveTab] = useState('tab1');
+
+<Tabs.Root
+  colorPalette="primary"
+  value={activeTab}
+  onValueChange={(details) => setActiveTab(details.value)}
+>
+  {/* Horizontal scroll container */}
+  <div
+    className={css({
+      overflowX: 'auto',
+      overflowY: 'hidden',
+      WebkitOverflowScrolling: 'touch', // Smooth scrolling on iOS
+      scrollbarWidth: 'thin', // Firefox
+      '&::-webkit-scrollbar': {
+        height: '6px',
+      },
+      '&::-webkit-scrollbar-thumb': {
+        bg: 'gray.a5',
+        borderRadius: 'full',
+      },
+    })}
+  >
+    <Tabs.List className={css({ minWidth: 'max-content' })}>
+      {manyTabs.map((tab) => (
+        <Tabs.Trigger
+          key={tab.id}
+          value={tab.id}
+          className={css({ whiteSpace: 'nowrap', flexShrink: 0 })}
+        >
+          {tab.label}
+        </Tabs.Trigger>
+      ))}
+      <Tabs.Indicator />
+    </Tabs.List>
+  </div>
+
+  {manyTabs.map((tab) => (
+    <Tabs.Content key={tab.id} value={tab.id}>
+      <div className={css({ p: '4' })}>{tab.content}</div>
+    </Tabs.Content>
+  ))}
+</Tabs.Root>
+
+{/* Alternative: Dropdown for overflow tabs */}
+<Tabs.Root
+  colorPalette="primary"
+  value={activeTab}
+  onValueChange={(details) => setActiveTab(details.value)}
+>
+  <div className={css({ display: 'flex', alignItems: 'center' })}>
+    <Tabs.List>
+      {/* Show first 5 tabs */}
+      {manyTabs.slice(0, 5).map((tab) => (
+        <Tabs.Trigger key={tab.id} value={tab.id}>
+          {tab.label}
+        </Tabs.Trigger>
+      ))}
+      <Tabs.Indicator />
+    </Tabs.List>
+
+    {/* Dropdown for remaining tabs */}
+    {manyTabs.length > 5 && (
+      <Select.Root
+        items={manyTabs.slice(5)}
+        itemToValue={(item) => item.id}
+        itemToString={(item) => item.label}
+        value={[activeTab]}
+        onValueChange={(details) => setActiveTab(details.value[0])}
+      >
+        <Select.Control>
+          <Select.Trigger>
+            <Select.ValueText placeholder="More..." />
+          </Select.Trigger>
+        </Select.Control>
+        <Select.Positioner>
+          <Select.Content>
+            <Select.List>
+              {manyTabs.slice(5).map((tab) => (
+                <Select.Item key={tab.id} item={tab}>
+                  <Select.ItemText>{tab.label}</Select.ItemText>
+                </Select.Item>
+              ))}
+            </Select.List>
+          </Select.Content>
+        </Select.Positioner>
+      </Select.Root>
+    )}
+  </div>
+
+  {manyTabs.map((tab) => (
+    <Tabs.Content key={tab.id} value={tab.id}>
+      <div className={css({ p: '4' })}>{tab.content}</div>
+    </Tabs.Content>
+  ))}
+</Tabs.Root>
+```
+
+**Best practices:**
+
+- Limit visible tabs to 7-8 maximum for usability
+- Use horizontal scrolling with clear scroll indicators
+- Consider a dropdown menu for overflow tabs
+- Add visual cues (shadows/gradients) to indicate more tabs
+- On mobile, consider switching to a different navigation pattern
+
+---
+
+### Disabled Tabs - Conditional Access
+
+**Scenario:** Some tabs should be visible but not accessible due to permissions, incomplete prerequisites, or application state.
+
+**Solution:**
+
+```typescript
+interface TabConfig {
+  id: string;
+  label: string;
+  content: string;
+  disabled: boolean;
+  disabledReason?: string;
+}
+
+const [hasPermission, setHasPermission] = useState(false);
+const [completedStep1, setCompletedStep1] = useState(false);
+
+const tabConfigs: TabConfig[] = [
+  {
+    id: 'overview',
+    label: 'Overview',
+    content: 'Overview content available to all',
+    disabled: false,
+  },
+  {
+    id: 'analytics',
+    label: 'Analytics',
+    content: 'Analytics content',
+    disabled: !hasPermission,
+    disabledReason: 'Requires Pro subscription',
+  },
+  {
+    id: 'advanced',
+    label: 'Advanced',
+    content: 'Advanced settings',
+    disabled: !completedStep1,
+    disabledReason: 'Complete overview first',
+  },
+];
+
+const [activeTab, setActiveTab] = useState('overview');
+const [tooltipTab, setTooltipTab] = useState<string | null>(null);
+
+<div>
+  {/* Controls for demo */}
+  <div className={css({ mb: '4', p: '3', bg: 'gray.a2', borderRadius: 'md' })}>
+    <label>
+      <input
+        type="checkbox"
+        checked={hasPermission}
+        onChange={(e) => setHasPermission(e.target.checked)}
+      />
+      <span className={css({ ml: '2' })}>Has Pro subscription</span>
+    </label>
+    <label className={css({ ml: '4' })}>
+      <input
+        type="checkbox"
+        checked={completedStep1}
+        onChange={(e) => setCompletedStep1(e.target.checked)}
+      />
+      <span className={css({ ml: '2' })}>Completed overview</span>
+    </label>
+  </div>
+
+  <Tabs.Root
+    colorPalette="primary"
+    value={activeTab}
+    onValueChange={(details) => setActiveTab(details.value)}
+  >
+    <Tabs.List>
+      {tabConfigs.map((tab) => (
+        <div
+          key={tab.id}
+          className={css({ position: 'relative' })}
+          onMouseEnter={() => tab.disabled && setTooltipTab(tab.id)}
+          onMouseLeave={() => setTooltipTab(null)}
+        >
+          <Tabs.Trigger value={tab.id} disabled={tab.disabled}>
+            {tab.label}
+            {tab.disabled && (
+              <span className={css({ ml: '1', fontSize: 'xs', color: 'fg.muted' })}>
+                🔒
+              </span>
+            )}
+          </Tabs.Trigger>
+
+          {/* Tooltip for disabled tabs */}
+          {tab.disabled && tooltipTab === tab.id && tab.disabledReason && (
+            <div
+              className={css({
+                position: 'absolute',
+                top: 'full',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                mt: '2',
+                p: '2',
+                bg: 'gray.12',
+                color: 'white',
+                fontSize: 'xs',
+                borderRadius: 'sm',
+                whiteSpace: 'nowrap',
+                zIndex: 10,
+              })}
+            >
+              {tab.disabledReason}
+            </div>
+          )}
+        </div>
+      ))}
+      <Tabs.Indicator />
+    </Tabs.List>
+
+    {tabConfigs.map((tab) => (
+      <Tabs.Content key={tab.id} value={tab.id}>
+        <div className={css({ p: '4' })}>{tab.content}</div>
+      </Tabs.Content>
+    ))}
+  </Tabs.Root>
+</div>
+```
+
+**Best practices:**
+
+- Clearly indicate why a tab is disabled with tooltips or labels
+- Use lock icons or visual indicators for disabled tabs
+- Keep disabled tabs visible for discoverability
+- Provide actionable steps to enable disabled tabs when possible
+- Ensure `aria-disabled` is properly communicated to screen readers
+
+---
+
+### Async Tab Content - Lazy Loading
+
+**Scenario:** Tab content is expensive to render or requires data fetching, so it should only load when the tab is first selected.
+
+**Solution:**
+
+```typescript
+interface TabData {
+  id: string;
+  label: string;
+  loaded: boolean;
+  loading: boolean;
+  data: any | null;
+  error: string | null;
+}
+
+const [activeTab, setActiveTab] = useState('overview');
+const [tabsData, setTabsData] = useState<Record<string, TabData>>({
+  overview: { id: 'overview', label: 'Overview', loaded: true, loading: false, data: {}, error: null },
+  analytics: { id: 'analytics', label: 'Analytics', loaded: false, loading: false, data: null, error: null },
+  reports: { id: 'reports', label: 'Reports', loaded: false, loading: false, data: null, error: null },
+});
+
+// Load data when tab becomes active
+useEffect(() => {
+  const currentTab = tabsData[activeTab];
+
+  if (!currentTab.loaded && !currentTab.loading) {
+    // Start loading
+    setTabsData((prev) => ({
+      ...prev,
+      [activeTab]: { ...prev[activeTab], loading: true },
+    }));
+
+    // Simulate async data fetch
+    fetch(`/api/${activeTab}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setTabsData((prev) => ({
+          ...prev,
+          [activeTab]: {
+            ...prev[activeTab],
+            loaded: true,
+            loading: false,
+            data,
+            error: null,
+          },
+        }));
+      })
+      .catch((error) => {
+        setTabsData((prev) => ({
+          ...prev,
+          [activeTab]: {
+            ...prev[activeTab],
+            loading: false,
+            error: error.message,
+          },
+        }));
+      });
+  }
+}, [activeTab]);
+
+<Tabs.Root
+  colorPalette="primary"
+  value={activeTab}
+  onValueChange={(details) => setActiveTab(details.value)}
+>
+  <Tabs.List>
+    {Object.values(tabsData).map((tab) => (
+      <Tabs.Trigger key={tab.id} value={tab.id}>
+        {tab.label}
+        {tab.loading && (
+          <span className={css({ ml: '2' })}>
+            <Spinner size="xs" />
+          </span>
+        )}
+      </Tabs.Trigger>
+    ))}
+    <Tabs.Indicator />
+  </Tabs.List>
+
+  {Object.values(tabsData).map((tab) => (
+    <Tabs.Content key={tab.id} value={tab.id}>
+      <div className={css({ p: '4', minHeight: '200px' })}>
+        {tab.loading && (
+          <div className={css({ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2' })}>
+            <Spinner />
+            <p className={css({ color: 'fg.muted' })}>Loading {tab.label.toLowerCase()}...</p>
+          </div>
+        )}
+
+        {tab.error && (
+          <div className={css({ textAlign: 'center', color: 'error.fg' })}>
+            <p>Failed to load {tab.label.toLowerCase()}</p>
+            <p className={css({ fontSize: 'sm', mt: '2' })}>{tab.error}</p>
+          </div>
+        )}
+
+        {tab.loaded && !tab.loading && !tab.error && (
+          <div>
+            <h3>{tab.label} Content</h3>
+            <pre>{JSON.stringify(tab.data, null, 2)}</pre>
+          </div>
+        )}
+      </div>
+    </Tabs.Content>
+  ))}
+</Tabs.Root>
+```
+
+**Best practices:**
+
+- Show loading indicators in both the tab trigger and content area
+- Cache loaded data to avoid refetching when switching back
+- Handle errors gracefully with retry options
+- Set minimum heights to prevent layout shifts during loading
+- Use `activationMode="manual"` for expensive operations to prevent accidental loads
+
+---
+
+### Keyboard Navigation - Advanced Controls
+
+**Scenario:** Implementing comprehensive keyboard navigation including Home, End, and proper arrow key behavior with looping.
+
+**Solution:**
+
+```typescript
+const tabs = [
+  { id: 'home', label: 'Home', content: 'Home content' },
+  { id: 'profile', label: 'Profile', content: 'Profile content' },
+  { id: 'settings', label: 'Settings', content: 'Settings content' },
+  { id: 'help', label: 'Help', content: 'Help content' },
+];
+
+const [activeTab, setActiveTab] = useState('home');
+const [lastInteraction, setLastInteraction] = useState<'mouse' | 'keyboard'>('mouse');
+
+<div>
+  {/* Keyboard shortcuts legend */}
+  <div className={css({ mb: '3', p: '2', bg: 'gray.a2', borderRadius: 'sm', fontSize: 'sm' })}>
+    <strong>Keyboard shortcuts:</strong> Arrow keys to navigate, Home/End for first/last tab,
+    Enter/Space to activate (manual mode)
+  </div>
+
+  <Tabs.Root
+    colorPalette="primary"
+    value={activeTab}
+    onValueChange={(details) => {
+      setActiveTab(details.value);
+    }}
+    // Enable keyboard navigation
+    loopFocus={true} // Arrow keys loop from last to first
+    activationMode="automatic" // Change to "manual" for explicit Enter/Space activation
+    onFocusChange={(details) => {
+      // Track interaction type for analytics or styling
+      setLastInteraction('keyboard');
+    }}
+  >
+    <Tabs.List
+      onMouseDown={() => setLastInteraction('mouse')}
+      className={css({
+        // Add visual indicator for keyboard focus
+        '& [data-focus]': {
+          outline: lastInteraction === 'keyboard' ? '2px solid' : 'none',
+          outlineColor: 'primary.9',
+          outlineOffset: '2px',
+        },
+      })}
+    >
+      {tabs.map((tab) => (
+        <Tabs.Trigger key={tab.id} value={tab.id}>
+          {tab.label}
+        </Tabs.Trigger>
+      ))}
+      <Tabs.Indicator />
+    </Tabs.List>
+
+    {tabs.map((tab) => (
+      <Tabs.Content
+        key={tab.id}
+        value={tab.id}
+        // Make content focusable for screen readers
+        tabIndex={0}
+      >
+        <div className={css({ p: '4' })}>{tab.content}</div>
+      </Tabs.Content>
+    ))}
+  </Tabs.Root>
+
+  <div className={css({ mt: '3', fontSize: 'sm', color: 'fg.muted' })}>
+    Last interaction: {lastInteraction}
+  </div>
+</div>
+```
+
+**Best practices:**
+
+- Enable `loopFocus` for intuitive circular navigation
+- Use `activationMode="manual"` for tabs with expensive content
+- Show clear focus indicators for keyboard navigation
+- Make tab content focusable for screen reader access
+- Test with keyboard-only navigation to ensure full accessibility
+- Document keyboard shortcuts for users
+
+---
 
 ## DO NOT
 

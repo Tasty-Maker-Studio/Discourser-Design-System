@@ -2,6 +2,82 @@
 
 **Purpose:** Loading placeholder component that displays a temporary gray placeholder while content is loading, providing visual feedback and reducing perceived loading time following Material Design 3 patterns.
 
+## When to Use This Component
+
+Use Skeleton when you need to **show content placeholders during loading** to preserve layout and reduce perceived wait time.
+
+### Decision Tree
+
+| Scenario                                | Use Skeleton? | Alternative               | Reasoning                            |
+| --------------------------------------- | ------------- | ------------------------- | ------------------------------------ |
+| Loading cards, lists, or content blocks | ✅ Yes        | -                         | Maintains layout and shows structure |
+| Loading user profiles or complex UI     | ✅ Yes        | -                         | Shows content shape while loading    |
+| Loading tables or data grids            | ✅ Yes        | -                         | Preserves column structure           |
+| Quick operations (under 300ms)          | ❌ No         | Nothing                   | Skeleton flash is jarring            |
+| Operations with known progress          | ❌ No         | Progress bar              | Progress shows percentage complete   |
+| Full page loading                       | ❌ No         | Spinner or loading screen | Skeleton is for content sections     |
+
+### Component Comparison
+
+```typescript
+// ✅ Skeleton - Loading user cards
+{isLoading ? (
+  <Card>
+    <HStack gap="4">
+      <SkeletonCircle size="64px" />
+      <Stack flex="1" gap="2">
+        <Skeleton width="150px" height="20px" />
+        <Skeleton width="200px" height="16px" />
+        <SkeletonText noOfLines={2} />
+      </Stack>
+    </HStack>
+  </Card>
+) : (
+  <UserCard user={data} />
+)}
+
+// ❌ Don't use Skeleton for progress tracking - Use Progress
+{isUploading && (
+  <Stack gap="2">
+    <Skeleton width="full" height="8px" />
+    <Skeleton width="full" height="8px" />
+  </Stack>
+)}
+
+// ✅ Better: Use Progress for measurable operations
+<Progress.Root value={uploadProgress} striped animated>
+  <Progress.Label>Uploading...</Progress.Label>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+  <Progress.ValueText />
+</Progress.Root>
+
+// ❌ Don't use Skeleton for instant loading - Don't show anything
+{isLoading && <Skeleton width="full" height="40px" />}
+{/* If loading takes < 300ms, skeleton flashes */}
+
+// ✅ Better: Only show skeleton for longer loads
+{isLoading && loadingTime > 300 && (
+  <Skeleton width="full" height="40px" />
+)}
+
+// ✅ Skeleton - Article list loading
+{isLoading ? (
+  <Stack gap="6">
+    {[...Array(3)].map((_, i) => (
+      <Card key={i}>
+        <Skeleton width="full" height="200px" />
+        <Skeleton width="80%" height="24px" />
+        <SkeletonText noOfLines={3} />
+      </Card>
+    ))}
+  </Stack>
+) : (
+  <ArticleList articles={data} />
+)}
+```
+
 ## Import
 
 ```typescript

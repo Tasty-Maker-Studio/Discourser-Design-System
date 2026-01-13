@@ -2,6 +2,71 @@
 
 **Purpose:** Modal overlay component for focused tasks, confirmations, and important information following Material Design 3 patterns.
 
+## When to Use This Component
+
+Use Dialog when you need to **interrupt the user's workflow** and demand their attention for a critical task, decision, or information.
+
+**Decision Tree:**
+
+| Scenario                                                   | Use This  | Why                                       |
+| ---------------------------------------------------------- | --------- | ----------------------------------------- |
+| Critical confirmation (delete, logout, destructive action) | Dialog ✅ | Blocks interaction until user responds    |
+| Form submission requiring focus (create account, add item) | Dialog ✅ | Prevents distraction, modal context       |
+| Important notifications requiring acknowledgment           | Dialog ✅ | User must explicitly dismiss              |
+| Side navigation or supplementary content                   | Drawer    | Doesn't block page, slides from edge      |
+| Contextual information near trigger element                | Popover   | Non-modal, positioned relative to trigger |
+| Brief help text (under 2 sentences)                        | Tooltip   | Lightweight, appears on hover             |
+| Content grouping without interruption                      | Card      | Non-modal, embedded in page flow          |
+
+**Component Comparison:**
+
+```typescript
+// ✅ Use Dialog for critical confirmations
+<Dialog.Root open={open} onOpenChange={setOpen}>
+  <Dialog.Trigger>
+    <Button variant="filled">Delete Account</Button>
+  </Dialog.Trigger>
+  <Dialog.Content>
+    <Dialog.Title>Delete Account?</Dialog.Title>
+    <Dialog.Description>This action cannot be undone.</Dialog.Description>
+    <Dialog.CloseTrigger>
+      <Button variant="text">Cancel</Button>
+    </Dialog.CloseTrigger>
+  </Dialog.Content>
+</Dialog.Root>
+
+// ❌ Don't use Dialog for navigation - use Drawer
+<Dialog.Root>
+  <Dialog.Content>
+    <nav>
+      <Link href="/dashboard">Dashboard</Link>
+      <Link href="/settings">Settings</Link>
+    </nav>
+  </Dialog.Content>
+</Dialog.Root>  // Wrong - navigation shouldn't be modal
+
+<Drawer.Root>
+  <Drawer.Content>
+    <nav>
+      <Link href="/dashboard">Dashboard</Link>
+      <Link href="/settings">Settings</Link>
+    </nav>
+  </Drawer.Content>
+</Drawer.Root>  // Correct
+
+// ❌ Don't use Dialog for contextual help - use Popover or Tooltip
+<Dialog.Root>
+  <Dialog.Content>
+    <Dialog.Description>Click here to save your work</Dialog.Description>
+  </Dialog.Content>
+</Dialog.Root>  // Wrong - too heavy for simple help
+
+<Tooltip.Root>
+  <Tooltip.Trigger><Button>Save</Button></Tooltip.Trigger>
+  <Tooltip.Content>Click here to save your work</Tooltip.Content>
+</Tooltip.Root>  // Correct
+```
+
 ## Import
 
 ```typescript
@@ -11,6 +76,7 @@ import { Dialog } from '@discourser/design-system';
 ## Overview
 
 The Dialog component creates modal overlays that:
+
 - Block interaction with the background content
 - Display a semi-transparent backdrop (scrim)
 - Center content on screen
@@ -20,25 +86,25 @@ The Dialog component creates modal overlays that:
 
 ## Sizes
 
-| Size | Width | Min Height | Usage |
-|------|-------|-----------|-------|
-| `sm` | 280px | 140px | Simple confirmations, alerts |
-| `md` | 560px | 200px | Default, most dialogs |
-| `lg` | 800px | 300px | Forms, detailed content |
-| `fullscreen` | 100vw × 100vh | - | Mobile-optimized, complex flows |
+| Size         | Width         | Min Height | Usage                           |
+| ------------ | ------------- | ---------- | ------------------------------- |
+| `sm`         | 280px         | 140px      | Simple confirmations, alerts    |
+| `md`         | 560px         | 200px      | Default, most dialogs           |
+| `lg`         | 800px         | 300px      | Forms, detailed content         |
+| `fullscreen` | 100vw × 100vh | -          | Mobile-optimized, complex flows |
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `open` | `boolean` | - | Whether the dialog is open (controlled) |
-| `onOpenChange` | `(details: { open: boolean }) => void` | - | Callback when open state changes |
-| `title` | `string` | - | Dialog title (headlineSmall) |
-| `description` | `string` | - | Dialog description/content (bodyMedium) |
-| `children` | `ReactNode` | - | Custom dialog content (alternative to description) |
-| `size` | `'sm' \| 'md' \| 'lg' \| 'fullscreen'` | `'md'` | Dialog size |
-| `showCloseButton` | `boolean` | `true` | Whether to show the close button |
-| `closeLabel` | `string` | `'Close'` | Accessible label for close button |
+| Prop              | Type                                   | Default   | Description                                        |
+| ----------------- | -------------------------------------- | --------- | -------------------------------------------------- |
+| `open`            | `boolean`                              | -         | Whether the dialog is open (controlled)            |
+| `onOpenChange`    | `(details: { open: boolean }) => void` | -         | Callback when open state changes                   |
+| `title`           | `string`                               | -         | Dialog title (headlineSmall)                       |
+| `description`     | `string`                               | -         | Dialog description/content (bodyMedium)            |
+| `children`        | `ReactNode`                            | -         | Custom dialog content (alternative to description) |
+| `size`            | `'sm' \| 'md' \| 'lg' \| 'fullscreen'` | `'md'`    | Dialog size                                        |
+| `showCloseButton` | `boolean`                              | `true`    | Whether to show the close button                   |
+| `closeLabel`      | `string`                               | `'Close'` | Accessible label for close button                  |
 
 ## Examples
 
@@ -265,6 +331,526 @@ const handleSubmit = (e: FormEvent) => {
 </Dialog>
 ```
 
+## Edge Cases
+
+This section covers common edge cases and how to handle them properly.
+
+### Nested Dialogs - Confirmation Flow
+
+**Scenario:** A dialog needs to open another dialog for confirmation (e.g., delete confirmation within a settings dialog).
+
+**Solution:**
+
+```typescript
+const [settingsOpen, setSettingsOpen] = useState(false);
+const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+
+const handleDelete = () => {
+  // Show confirmation dialog on top of settings dialog
+  setConfirmDeleteOpen(true);
+};
+
+const confirmDelete = async () => {
+  // Perform delete operation
+  await deleteAccount();
+  // Close both dialogs
+  setConfirmDeleteOpen(false);
+  setSettingsOpen(false);
+};
+
+<>
+  {/* Primary settings dialog */}
+  <Dialog
+    open={settingsOpen}
+    onOpenChange={({ open }) => setSettingsOpen(open)}
+    title="Account Settings"
+    size="md"
+  >
+    <div className={css({ p: 'lg' })}>
+      <h3 className={css({ textStyle: 'bodyLarge', mb: 'md' })}>Danger Zone</h3>
+      <Button
+        variant="outlined"
+        colorPalette="error"
+        onClick={handleDelete}
+      >
+        Delete Account
+      </Button>
+    </div>
+  </Dialog>
+
+  {/* Nested confirmation dialog */}
+  <Dialog
+    open={confirmDeleteOpen}
+    onOpenChange={({ open }) => setConfirmDeleteOpen(open)}
+    title="Confirm Deletion"
+    size="sm"
+  >
+    <div className={css({ p: 'lg' })}>
+      <p className={css({ textStyle: 'bodyMedium', color: 'onSurfaceVariant', mb: 'lg' })}>
+        Are you absolutely sure? This action cannot be undone.
+        All your data will be permanently deleted.
+      </p>
+      <div className={css({ display: 'flex', gap: 'sm', justifyContent: 'flex-end' })}>
+        <Button variant="text" onClick={() => setConfirmDeleteOpen(false)}>
+          Cancel
+        </Button>
+        <Button variant="filled" colorPalette="error" onClick={confirmDelete}>
+          Delete Forever
+        </Button>
+      </div>
+    </div>
+  </Dialog>
+</>
+```
+
+**Best practices:**
+
+- Limit nesting to two levels maximum to avoid overwhelming users
+- Use smaller dialog sizes for nested confirmations (typically `sm`)
+- Ensure both dialogs can be dismissed independently via Escape key
+- Consider closing both dialogs after the nested action completes
+- Use proper z-index stacking (handled automatically by Dialog component)
+
+---
+
+### Focus Trap Edge Cases
+
+**Scenario:** Managing focus when a dialog opens with complex focus requirements or when there are no focusable elements.
+
+**Solution:**
+
+```typescript
+import { useRef, useEffect } from 'react';
+
+const [open, setOpen] = useState(false);
+const firstInputRef = useRef<HTMLInputElement>(null);
+
+// Focus first input when dialog opens
+useEffect(() => {
+  if (open && firstInputRef.current) {
+    // Small delay to ensure dialog animation completes
+    setTimeout(() => {
+      firstInputRef.current?.focus();
+    }, 100);
+  }
+}, [open]);
+
+<Dialog
+  open={open}
+  onOpenChange={({ open }) => setOpen(open)}
+  title="New Contact"
+  size="md"
+>
+  <form onSubmit={handleSubmit}>
+    <div className={css({ p: 'lg', display: 'flex', flexDirection: 'column', gap: 'md' })}>
+      {/* Explicitly focus first input */}
+      <Input
+        ref={firstInputRef}
+        label="Name"
+        placeholder="Enter name"
+        required
+        autoComplete="name"
+      />
+      <Input
+        label="Email"
+        type="email"
+        placeholder="Enter email"
+        required
+        autoComplete="email"
+      />
+
+      {/* Ensure dialog has focusable elements */}
+      <div className={css({ display: 'flex', gap: 'sm', justifyContent: 'flex-end', mt: 'md' })}>
+        <Button
+          type="button"
+          variant="text"
+          onClick={() => setOpen(false)}
+        >
+          Cancel
+        </Button>
+        <Button type="submit" variant="filled">
+          Save Contact
+        </Button>
+      </div>
+    </div>
+  </form>
+</Dialog>
+
+{/* Dialog with no interactive elements - add explicit close button */}
+<Dialog
+  open={loadingOpen}
+  onOpenChange={() => {}} // Prevent closing during loading
+  title="Processing"
+  showCloseButton={false} // Hide default close button during loading
+  size="sm"
+>
+  <div className={css({ p: 'lg', textAlign: 'center' })}>
+    <Spinner className={css({ mb: 'md' })} />
+    <p className={css({ textStyle: 'bodyMedium', color: 'onSurfaceVariant' })}>
+      Please wait...
+    </p>
+    {/* No focusable elements - focus trapped on dialog container */}
+  </div>
+</Dialog>
+```
+
+**Best practices:**
+
+- Always include at least one focusable element in dialogs
+- Use `autoFocus` prop or refs to control initial focus
+- Provide clear keyboard navigation between form fields
+- For loading states without buttons, consider making the dialog container focusable
+- Test focus behavior with screen readers
+
+---
+
+### Async Loading - Dialog with Dynamic Content
+
+**Scenario:** Dialog content needs to be loaded asynchronously after opening, requiring loading states and error handling.
+
+**Solution:**
+
+```typescript
+const [open, setOpen] = useState(false);
+const [userData, setUserData] = useState<User | null>(null);
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState<string | null>(null);
+
+// Load data when dialog opens
+useEffect(() => {
+  if (open) {
+    const loadUserData = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await fetch('/api/user/profile');
+        if (!response.ok) throw new Error('Failed to load profile');
+        const data = await response.json();
+        setUserData(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An error occurred');
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadUserData();
+  } else {
+    // Reset state when dialog closes
+    setUserData(null);
+    setError(null);
+  }
+}, [open]);
+
+<Dialog
+  open={open}
+  onOpenChange={({ open }) => setOpen(open)}
+  title="User Profile"
+  size="md"
+>
+  <div className={css({ p: 'lg', minHeight: '200px' })}>
+    {loading && (
+      <div className={css({ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'md' })}>
+        <Spinner />
+        <p className={css({ textStyle: 'bodyMedium', color: 'onSurfaceVariant' })}>
+          Loading profile...
+        </p>
+      </div>
+    )}
+
+    {error && (
+      <div className={css({ textAlign: 'center' })}>
+        <p className={css({ color: 'error.fg', mb: 'md' })}>{error}</p>
+        <Button variant="outlined" onClick={() => setOpen(false)}>
+          Close
+        </Button>
+      </div>
+    )}
+
+    {!loading && !error && userData && (
+      <div className={css({ display: 'flex', flexDirection: 'column', gap: 'md' })}>
+        <Input label="Name" defaultValue={userData.name} />
+        <Input label="Email" defaultValue={userData.email} />
+        <div className={css({ display: 'flex', gap: 'sm', justifyContent: 'flex-end', mt: 'md' })}>
+          <Button variant="text" onClick={() => setOpen(false)}>
+            Cancel
+          </Button>
+          <Button variant="filled">Save Changes</Button>
+        </div>
+      </div>
+    )}
+  </div>
+</Dialog>
+```
+
+**Best practices:**
+
+- Show loading indicators immediately when content is loading
+- Provide clear error messages with recovery options
+- Set minimum heights to prevent layout shifts during loading
+- Reset dialog state when closing to ensure fresh data on next open
+- Consider skeleton loaders for better perceived performance
+
+---
+
+### Form Validation - Dialog with Form Errors
+
+**Scenario:** A dialog contains a form that needs validation, preventing submission with invalid data while keeping the dialog open.
+
+**Solution:**
+
+```typescript
+interface FormData {
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+interface FormErrors {
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+}
+
+const [open, setOpen] = useState(false);
+const [formData, setFormData] = useState<FormData>({
+  email: '',
+  password: '',
+  confirmPassword: '',
+});
+const [errors, setErrors] = useState<FormErrors>({});
+const [isSubmitting, setIsSubmitting] = useState(false);
+
+const validateForm = (): boolean => {
+  const newErrors: FormErrors = {};
+
+  // Email validation
+  if (!formData.email) {
+    newErrors.email = 'Email is required';
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    newErrors.email = 'Invalid email format';
+  }
+
+  // Password validation
+  if (!formData.password) {
+    newErrors.password = 'Password is required';
+  } else if (formData.password.length < 8) {
+    newErrors.password = 'Password must be at least 8 characters';
+  }
+
+  // Confirm password validation
+  if (formData.password !== formData.confirmPassword) {
+    newErrors.confirmPassword = 'Passwords do not match';
+  }
+
+  setErrors(newErrors);
+  return Object.keys(newErrors).length === 0;
+};
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  if (!validateForm()) {
+    return; // Keep dialog open, show errors
+  }
+
+  setIsSubmitting(true);
+  try {
+    await registerUser(formData);
+    setOpen(false); // Close dialog on success
+    // Reset form
+    setFormData({ email: '', password: '', confirmPassword: '' });
+    setErrors({});
+  } catch (error) {
+    setErrors({ email: 'Registration failed. Please try again.' });
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
+<Dialog
+  open={open}
+  onOpenChange={({ open }) => {
+    setOpen(open);
+    if (!open) {
+      // Reset errors when dialog closes
+      setErrors({});
+    }
+  }}
+  title="Create Account"
+  size="md"
+>
+  <form onSubmit={handleSubmit}>
+    <div className={css({ p: 'lg', display: 'flex', flexDirection: 'column', gap: 'md' })}>
+      <div>
+        <Input
+          label="Email"
+          type="email"
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          invalid={!!errors.email}
+          required
+        />
+        {errors.email && (
+          <span className={css({ color: 'error.fg', fontSize: 'sm', mt: '1' })}>
+            {errors.email}
+          </span>
+        )}
+      </div>
+
+      <div>
+        <Input
+          label="Password"
+          type="password"
+          value={formData.password}
+          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+          invalid={!!errors.password}
+          required
+        />
+        {errors.password && (
+          <span className={css({ color: 'error.fg', fontSize: 'sm', mt: '1' })}>
+            {errors.password}
+          </span>
+        )}
+      </div>
+
+      <div>
+        <Input
+          label="Confirm Password"
+          type="password"
+          value={formData.confirmPassword}
+          onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+          invalid={!!errors.confirmPassword}
+          required
+        />
+        {errors.confirmPassword && (
+          <span className={css({ color: 'error.fg', fontSize: 'sm', mt: '1' })}>
+            {errors.confirmPassword}
+          </span>
+        )}
+      </div>
+
+      <div className={css({ display: 'flex', gap: 'sm', justifyContent: 'flex-end', mt: 'md' })}>
+        <Button
+          type="button"
+          variant="text"
+          onClick={() => setOpen(false)}
+          disabled={isSubmitting}
+        >
+          Cancel
+        </Button>
+        <Button type="submit" variant="filled" disabled={isSubmitting}>
+          {isSubmitting ? 'Creating...' : 'Create Account'}
+        </Button>
+      </div>
+    </div>
+  </form>
+</Dialog>
+```
+
+**Best practices:**
+
+- Validate on submit, not on every keystroke (better UX)
+- Display field-level errors below each input
+- Keep dialog open when validation fails
+- Disable submit button during submission to prevent double-submission
+- Reset form and errors when dialog closes
+- Use ARIA live regions for dynamic error announcements
+
+---
+
+### Portal Rendering - Custom Container
+
+**Scenario:** Dialog needs to render in a specific portal container or custom mount point in the DOM.
+
+**Solution:**
+
+```typescript
+import { createPortal } from 'react-dom';
+import { useEffect, useState } from 'react';
+
+const [open, setOpen] = useState(false);
+const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null);
+
+// Create or find portal container on mount
+useEffect(() => {
+  // Check if custom portal exists
+  let container = document.getElementById('dialog-portal');
+
+  if (!container) {
+    // Create custom portal container
+    container = document.createElement('div');
+    container.id = 'dialog-portal';
+    container.setAttribute('data-portal', 'dialogs');
+    document.body.appendChild(container);
+  }
+
+  setPortalContainer(container);
+
+  // Cleanup on unmount
+  return () => {
+    // Only remove if we created it
+    const existing = document.getElementById('dialog-portal');
+    if (existing && existing.childNodes.length === 0) {
+      existing.remove();
+    }
+  };
+}, []);
+
+<>
+  <Button onClick={() => setOpen(true)}>Open Dialog</Button>
+
+  {/* Dialog automatically renders in portal, but you can customize if needed */}
+  <Dialog
+    open={open}
+    onOpenChange={({ open }) => setOpen(open)}
+    title="Custom Portal Dialog"
+    size="md"
+    // Ark UI handles portal rendering automatically
+    // For custom portal behavior, use Dialog.Root with custom positioning
+  >
+    <div className={css({ p: 'lg' })}>
+      <p className={css({ mb: 'md' })}>
+        This dialog is rendered in a custom portal container.
+      </p>
+      <p className={css({ fontSize: 'sm', color: 'fg.muted' })}>
+        Check the DOM: it's in #dialog-portal, not where the trigger is.
+      </p>
+      <div className={css({ display: 'flex', justifyContent: 'flex-end', mt: 'lg' })}>
+        <Button variant="filled" onClick={() => setOpen(false)}>
+          Close
+        </Button>
+      </div>
+    </div>
+  </Dialog>
+</>
+
+{/* For z-index stacking context issues */}
+<div className={css({ position: 'relative', zIndex: 10 })}>
+  <Dialog
+    open={open}
+    onOpenChange={({ open }) => setOpen(open)}
+    title="High Z-Index Dialog"
+    size="md"
+    // Dialog will render with appropriate z-index above other content
+  >
+    <div className={css({ p: 'lg' })}>
+      This dialog appears above elements with lower z-index values.
+    </div>
+  </Dialog>
+</div>
+```
+
+**Best practices:**
+
+- Dialog component handles portal rendering automatically via Ark UI
+- Custom portal containers are rarely needed unless integrating with specific frameworks
+- Ensure portal containers are at root level for proper stacking context
+- Clean up dynamically created portal containers on unmount
+- Use CSS z-index values from design system for consistent layering
+- Test dialog positioning in different stacking contexts
+
+---
+
 ## DO NOT
 
 ```typescript
@@ -354,28 +940,29 @@ The Dialog component follows WCAG 2.1 Level AA standards:
 
 ## Size Selection Guide
 
-| Scenario | Recommended Size | Reasoning |
-|----------|-----------------|-----------|
-| Simple confirmation | `sm` | Minimal content, quick decision |
-| Alerts | `sm` | Brief message, single action |
-| Forms (2-3 fields) | `md` | Standard forms, most common |
-| Settings/Preferences | `lg` | Multiple sections, complex UI |
-| Mobile editor/viewer | `fullscreen` | Maximize screen space |
-| Multi-step wizard | `lg` or `fullscreen` | Complex flow needs space |
+| Scenario             | Recommended Size     | Reasoning                       |
+| -------------------- | -------------------- | ------------------------------- |
+| Simple confirmation  | `sm`                 | Minimal content, quick decision |
+| Alerts               | `sm`                 | Brief message, single action    |
+| Forms (2-3 fields)   | `md`                 | Standard forms, most common     |
+| Settings/Preferences | `lg`                 | Multiple sections, complex UI   |
+| Mobile editor/viewer | `fullscreen`         | Maximize screen space           |
+| Multi-step wizard    | `lg` or `fullscreen` | Complex flow needs space        |
 
 ## State Behaviors
 
-| State | Visual Change | Behavior |
-|-------|---------------|----------|
-| **Opening** | Fade in + scale animation | Backdrop fades, content scales up |
-| **Open** | Fully visible | Modal state, focus trapped |
-| **Closing** | Fade out + scale animation | Backdrop fades, content scales down |
-| **Backdrop Click** | Closes dialog | Click outside closes (default Ark UI behavior) |
-| **Escape Key** | Closes dialog | Keyboard shortcut to close |
+| State              | Visual Change              | Behavior                                       |
+| ------------------ | -------------------------- | ---------------------------------------------- |
+| **Opening**        | Fade in + scale animation  | Backdrop fades, content scales up              |
+| **Open**           | Fully visible              | Modal state, focus trapped                     |
+| **Closing**        | Fade out + scale animation | Backdrop fades, content scales down            |
+| **Backdrop Click** | Closes dialog              | Click outside closes (default Ark UI behavior) |
+| **Escape Key**     | Closes dialog              | Keyboard shortcut to close                     |
 
 ## Backdrop Behavior
 
 The backdrop (scrim) behind the dialog:
+
 - Uses `scrim` color token (#000000)
 - 40% opacity
 - Blocks all background interactions
@@ -384,6 +971,7 @@ The backdrop (scrim) behind the dialog:
 ## Focus Management
 
 The Dialog component automatically:
+
 1. **Traps focus** within the dialog when open
 2. **Focuses first focusable element** when opened (typically close button or first input)
 3. **Restores focus** to the trigger element when closed

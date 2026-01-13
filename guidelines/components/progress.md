@@ -2,6 +2,69 @@
 
 **Purpose:** Visual indicator that displays the completion status of a task or operation, providing feedback to users about ongoing processes following Material Design 3 patterns.
 
+## When to Use This Component
+
+Use Progress when you need to **visually indicate the completion percentage of a determinate process** where progress can be measured.
+
+### Decision Tree
+
+| Scenario                          | Use Progress? | Alternative         | Reasoning                                 |
+| --------------------------------- | ------------- | ------------------- | ----------------------------------------- |
+| File upload with known progress   | ✅ Yes        | -                   | Progress bar shows percentage complete    |
+| Multi-step form progress          | ✅ Yes        | -                   | Visual indicator of completion            |
+| Task completion tracking          | ✅ Yes        | -                   | Shows how much work remains               |
+| Unknown duration loading          | ❌ No         | Spinner or Skeleton | Progress needs measurable completion      |
+| Page content loading              | ❌ No         | Skeleton            | Skeleton preserves layout during load     |
+| Quick operations (under 1 second) | ❌ No         | Nothing or Spinner  | Progress is too heavy for instant actions |
+
+### Component Comparison
+
+```typescript
+// ✅ Progress - File upload with percentage
+const [progress, setProgress] = useState(0);
+
+<Progress.Root value={progress} striped animated>
+  <Progress.Label>Uploading {fileName}</Progress.Label>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+  <Progress.ValueText />
+</Progress.Root>
+
+// ❌ Don't use Progress for unknown duration - Use Spinner
+<Progress.Root value={null}>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+
+// ✅ Better: Use Spinner for indeterminate loading
+<Spinner size="lg" />
+
+// ❌ Don't use Progress for content loading - Use Skeleton
+<Progress.Root value={null} size="sm">
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+{/* Then content loads */}
+
+// ✅ Better: Use Skeleton for content placeholders
+<SkeletonText noOfLines={3} />
+
+// ✅ Progress - Multi-step form
+const currentStep = 2;
+const totalSteps = 4;
+const progress = (currentStep / totalSteps) * 100;
+
+<Progress.Root value={progress}>
+  <Progress.Label>Step {currentStep} of {totalSteps}</Progress.Label>
+  <Progress.Track>
+    <Progress.Range />
+  </Progress.Track>
+</Progress.Root>
+```
+
 ## Import
 
 ```typescript

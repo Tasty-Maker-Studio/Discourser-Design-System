@@ -2,6 +2,65 @@
 
 **Purpose:** Container component for grouping related content with Material Design 3 elevation and styling.
 
+## When to Use This Component
+
+Use Card when you need to **group related content** in a visually distinct container that feels like a physical surface.
+
+**Decision Tree:**
+
+| Scenario                                                        | Use This             | Why                                                       |
+| --------------------------------------------------------------- | -------------------- | --------------------------------------------------------- |
+| Group related content (dashboard widget, product card, profile) | Card ✅              | Provides visual hierarchy and content separation          |
+| Modal overlay requiring user interaction                        | Dialog               | Blocks interaction with page, requires explicit dismissal |
+| Side panel navigation or supplementary content                  | Drawer               | Slides from edge, preserves page context                  |
+| Floating contextual content near trigger element                | Popover              | Positioned relative to trigger, temporary                 |
+| Brief contextual help (under 2 sentences)                       | Tooltip              | Lightweight, appears on hover                             |
+| Collapsible sections within a page                              | Accordion            | Manages vertical space, shows/hides content               |
+| Simple content wrapper without elevation                        | `<div>` with padding | When you don't need Material Design styling               |
+
+**Component Comparison:**
+
+```typescript
+// ✅ Use Card for grouped content
+<Card>
+  <h3>User Profile</h3>
+  <p>Name: John Doe</p>
+  <p>Email: john@example.com</p>
+</Card>
+
+// ❌ Don't use Card for modal overlays - use Dialog
+<Card>
+  <h2>Confirm Delete</h2>
+  <Button>Delete</Button>
+</Card>  // Wrong - doesn't block background interaction
+
+<Dialog.Root>
+  <Dialog.Content>
+    <Dialog.Title>Confirm Delete</Dialog.Title>
+    <Button>Delete</Button>
+  </Dialog.Content>
+</Dialog.Root>  // Correct
+
+// ❌ Don't use Card for side panels - use Drawer
+<Card className={css({ position: 'fixed', right: 0 })}>
+  Navigation links
+</Card>  // Wrong - Card isn't designed for this
+
+<Drawer.Root>
+  <Drawer.Content>Navigation links</Drawer.Content>
+</Drawer.Root>  // Correct
+
+// ❌ Don't use Card for tooltip-like hints - use Tooltip
+<Card className={css({ position: 'absolute', fontSize: 'xs' })}>
+  Helpful hint
+</Card>  // Wrong - too heavy for brief help
+
+<Tooltip.Root>
+  <Tooltip.Trigger>Hover me</Tooltip.Trigger>
+  <Tooltip.Content>Helpful hint</Tooltip.Content>
+</Tooltip.Root>  // Correct
+```
+
 ## Import
 
 ```typescript
@@ -12,11 +71,11 @@ import { Card } from '@discourser/design-system';
 
 The Card component supports 3 Material Design 3 variants:
 
-| Variant | Visual Style | Usage | When to Use |
-|---------|-------------|-------|-------------|
-| `elevated` | Surface with shadow, elevated appearance | Default cards, content containers | Most common use case, provides visual hierarchy |
-| `filled` | Filled background, no shadow | Secondary cards, less emphasis | When multiple cards are stacked, alternative style |
-| `outlined` | Outlined border, no shadow | Tertiary cards, minimal style | When you want subtle separation without elevation |
+| Variant    | Visual Style                             | Usage                             | When to Use                                        |
+| ---------- | ---------------------------------------- | --------------------------------- | -------------------------------------------------- |
+| `elevated` | Surface with shadow, elevated appearance | Default cards, content containers | Most common use case, provides visual hierarchy    |
+| `filled`   | Filled background, no shadow             | Secondary cards, less emphasis    | When multiple cards are stacked, alternative style |
+| `outlined` | Outlined border, no shadow               | Tertiary cards, minimal style     | When you want subtle separation without elevation  |
 
 ### Visual Characteristics
 
@@ -26,13 +85,13 @@ The Card component supports 3 Material Design 3 variants:
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `'elevated' \| 'filled' \| 'outlined'` | `'elevated'` | Visual style variant |
-| `interactive` | `boolean` | `false` | Makes card clickable with hover/active states |
-| `onClick` | `(event: MouseEvent) => void` | - | Click handler (sets interactive=true automatically) |
-| `className` | `string` | - | Additional CSS classes (use sparingly) |
-| `children` | `ReactNode` | Required | Card content |
+| Prop          | Type                                   | Default      | Description                                         |
+| ------------- | -------------------------------------- | ------------ | --------------------------------------------------- |
+| `variant`     | `'elevated' \| 'filled' \| 'outlined'` | `'elevated'` | Visual style variant                                |
+| `interactive` | `boolean`                              | `false`      | Makes card clickable with hover/active states       |
+| `onClick`     | `(event: MouseEvent) => void`          | -            | Click handler (sets interactive=true automatically) |
+| `className`   | `string`                               | -            | Additional CSS classes (use sparingly)              |
+| `children`    | `ReactNode`                            | Required     | Card content                                        |
 
 **Note:** Card extends `HTMLAttributes<HTMLDivElement>`, so all standard HTML div attributes are supported.
 
@@ -247,22 +306,22 @@ The Card component follows accessibility best practices:
 
 ## Variant Selection Guide
 
-| Scenario | Recommended Variant | Reasoning |
-|----------|-------------------|-----------|
-| Product cards | `elevated` | Visual hierarchy, draws attention |
-| Form sections | `outlined` | Subtle separation without heavy elevation |
-| Dashboard widgets | `elevated` | Emphasizes different data sections |
-| List items | `outlined` or `filled` | Lighter style for repeated elements |
-| Content previews | `elevated` | Interactive, prominent |
-| Settings sections | `outlined` | Clean, minimal separation |
+| Scenario          | Recommended Variant    | Reasoning                                 |
+| ----------------- | ---------------------- | ----------------------------------------- |
+| Product cards     | `elevated`             | Visual hierarchy, draws attention         |
+| Form sections     | `outlined`             | Subtle separation without heavy elevation |
+| Dashboard widgets | `elevated`             | Emphasizes different data sections        |
+| List items        | `outlined` or `filled` | Lighter style for repeated elements       |
+| Content previews  | `elevated`             | Interactive, prominent                    |
+| Settings sections | `outlined`             | Clean, minimal separation                 |
 
 ## State Behaviors
 
-| State | Visual Change | Applies When |
-|-------|---------------|--------------|
-| **Hover** | `elevated`: shadow increases to level2<br />`filled`/`outlined`: slight opacity change | Only when `interactive={true}` |
-| **Active** | Opacity reduces to 0.92 | Only when `interactive={true}` |
-| **Default** | No hover effects | When `interactive={false}` (default) |
+| State       | Visual Change                                                                          | Applies When                         |
+| ----------- | -------------------------------------------------------------------------------------- | ------------------------------------ |
+| **Hover**   | `elevated`: shadow increases to level2<br />`filled`/`outlined`: slight opacity change | Only when `interactive={true}`       |
+| **Active**  | Opacity reduces to 0.92                                                                | Only when `interactive={true}`       |
+| **Default** | No hover effects                                                                       | When `interactive={false}` (default) |
 
 ## Responsive Considerations
 

@@ -16,11 +16,14 @@ Always prefer components from `@discourser/design-system` if available. Do not u
 
 ### Form Elements
 
-| Component | Purpose                                          | Guidelines                            |
-| --------- | ------------------------------------------------ | ------------------------------------- |
-| Input     | Single-line text input with label and validation | [input.md](components/input.md)       |
-| Textarea  | Multi-line text input for longer content         | [textarea.md](components/textarea.md) |
-| Select    | Dropdown selection from list of options          | [select.md](components/select.md)     |
+| Component  | Purpose                                                   | Guidelines                                  |
+| ---------- | --------------------------------------------------------- | ------------------------------------------- |
+| Input      | Single-line text input with label and validation          | [input.md](components/input.md)             |
+| InputAddon | Decorative element for enhancing inputs (icons, text)     | [input-addon.md](components/input-addon.md) |
+| InputGroup | Layout wrapper for inputs with start/end elements         | [input-group.md](components/input-group.md) |
+| Textarea   | Multi-line text input for longer content                  | [textarea.md](components/textarea.md)       |
+| Select     | Dropdown selection from list of options                   | [select.md](components/select.md)           |
+| Slider     | Range selection control for continuous or discrete values | [slider.md](components/slider.md)           |
 
 ### Layout & Container Elements
 
@@ -48,6 +51,7 @@ Always prefer components from `@discourser/design-system` if available. Do not u
 | Toast     | Temporary notification messages               | [toast.md](components/toast.md)       |
 | Progress  | Visual indicator for task completion          | [progress.md](components/progress.md) |
 | Skeleton  | Loading placeholder for content               | [skeleton.md](components/skeleton.md) |
+| Spinner   | Loading indicator for asynchronous operations | [spinner.md](components/spinner.md)   |
 
 ### Typography Elements
 

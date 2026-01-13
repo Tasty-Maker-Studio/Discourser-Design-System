@@ -2,6 +2,69 @@
 
 **Purpose:** Toggle control for binary on/off states following Material Design 3 patterns.
 
+## When to Use This Component
+
+Use Switch when you need to **toggle a setting or preference** that takes effect immediately (no submit button required).
+
+**Decision Tree:**
+
+| Scenario                                                        | Use This   | Why                                                   |
+| --------------------------------------------------------------- | ---------- | ----------------------------------------------------- |
+| Toggle setting with immediate effect (dark mode, notifications) | Switch ✅  | Visual metaphor for on/off, instant feedback          |
+| Selection that requires form submission                         | Checkbox   | Part of form data, submitted together                 |
+| Mutually exclusive choices (select one from many)               | RadioGroup | Only one option can be selected                       |
+| Action that triggers behavior (save, delete)                    | Button     | Actions need explicit confirmation                    |
+| Binary choice in a list or group                                | Checkbox   | Better for lists where multiple items can be selected |
+
+**Component Comparison:**
+
+```typescript
+// ✅ Use Switch for immediate toggle settings
+<Switch.Root checked={isDarkMode} onCheckedChange={({ checked }) => setDarkMode(checked)}>
+  <Switch.Label>Dark mode</Switch.Label>
+  <Switch.Control>
+    <Switch.Thumb />
+  </Switch.Control>
+</Switch.Root>
+
+// ❌ Don't use Switch for form selections - use Checkbox
+<form onSubmit={handleSubmit}>
+  <Switch.Root name="terms">
+    <Switch.Label>I accept the terms</Switch.Label>
+    <Switch.Control><Switch.Thumb /></Switch.Control>
+  </Switch.Root>
+  <Button type="submit">Sign Up</Button>
+</form>  // Wrong - use Checkbox for form consent
+
+<form onSubmit={handleSubmit}>
+  <Checkbox.Root name="terms">
+    <Checkbox.Label>I accept the terms</Checkbox.Label>
+    <Checkbox.Control>
+      <Checkbox.Indicator />
+    </Checkbox.Control>
+  </Checkbox.Root>
+  <Button type="submit">Sign Up</Button>
+</form>  // Correct
+
+// ❌ Don't use Switch for actions - use Button
+<Switch.Root onCheckedChange={deleteAccount}>
+  <Switch.Label>Delete account</Switch.Label>
+  <Switch.Control><Switch.Thumb /></Switch.Control>
+</Switch.Root>  // Wrong - destructive action needs confirmation
+
+<Button variant="filled" onClick={() => setShowDeleteDialog(true)}>
+  Delete Account
+</Button>  // Correct
+
+// ✅ Use Switch for settings that apply immediately
+<Switch.Root checked={notificationsEnabled} onCheckedChange={toggleNotifications}>
+  <Switch.Label>Enable push notifications</Switch.Label>
+  <Switch.Control>
+    <Switch.Thumb />
+  </Switch.Control>
+</Switch.Root>
+```
+
 ## Import
 
 ```typescript
@@ -11,6 +74,7 @@ import { Switch } from '@discourser/design-system';
 ## Overview
 
 The Switch component provides:
+
 - Binary on/off toggle functionality
 - Visual feedback for state changes
 - Smooth animation between states
@@ -21,25 +85,25 @@ The Switch component provides:
 ## Sizes
 
 | Size | Track Width | Track Height | Thumb Size (off) | Thumb Size (on) | Label Size |
-|------|------------|--------------|------------------|-----------------|-----------|
-| `sm` | 44px | 24px | 12×12px | 16×16px | bodySmall |
-| `md` | 52px | 32px | 16×16px | 24×24px | bodyMedium |
+| ---- | ----------- | ------------ | ---------------- | --------------- | ---------- |
+| `sm` | 44px        | 24px         | 12×12px          | 16×16px         | bodySmall  |
+| `md` | 52px        | 32px         | 16×16px          | 24×24px         | bodyMedium |
 
 **Note:** The thumb (circle) grows larger when the switch is in the "on" state, following M3 specifications.
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `label` | `string` | - | Label text displayed next to switch |
-| `checked` | `boolean` | - | Controlled checked state |
-| `defaultChecked` | `boolean` | - | Uncontrolled default checked state |
-| `onCheckedChange` | `(details: { checked: boolean }) => void` | - | Callback when checked state changes |
-| `disabled` | `boolean` | `false` | Disable switch interaction |
-| `name` | `string` | - | Name attribute for form submission |
-| `value` | `string` | - | Value attribute for form submission |
-| `required` | `boolean` | `false` | Whether switch is required in form |
-| `size` | `'sm' \| 'md'` | `'md'` | Switch size |
+| Prop              | Type                                      | Default | Description                         |
+| ----------------- | ----------------------------------------- | ------- | ----------------------------------- |
+| `label`           | `string`                                  | -       | Label text displayed next to switch |
+| `checked`         | `boolean`                                 | -       | Controlled checked state            |
+| `defaultChecked`  | `boolean`                                 | -       | Uncontrolled default checked state  |
+| `onCheckedChange` | `(details: { checked: boolean }) => void` | -       | Callback when checked state changes |
+| `disabled`        | `boolean`                                 | `false` | Disable switch interaction          |
+| `name`            | `string`                                  | -       | Name attribute for form submission  |
+| `value`           | `string`                                  | -       | Value attribute for form submission |
+| `required`        | `boolean`                                 | `false` | Whether switch is required in form  |
+| `size`            | `'sm' \| 'md'`                            | `'md'`  | Switch size                         |
 
 ## Examples
 
@@ -283,30 +347,33 @@ The Switch component follows WCAG 2.1 Level AA standards:
 
 ## State Behaviors
 
-| State | Visual Change | Behavior |
-|-------|---------------|----------|
-| **Unchecked** | Track: `surfaceContainerHighest` with `outline` border<br />Thumb: Small, `outline` color, left position | Off state |
-| **Checked** | Track: `primary` color<br />Thumb: Larger, `onPrimary` color, right position | On state |
-| **Hover** | Subtle visual feedback | Interactive feedback |
-| **Focus** | Focus indicator (handled by Ark UI) | Keyboard accessibility |
-| **Disabled** | 38% opacity, greyed out | Cannot be toggled |
-| **Animation** | Smooth thumb transition (fast easing) | Visual confirmation of state change |
+| State         | Visual Change                                                                                            | Behavior                            |
+| ------------- | -------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| **Unchecked** | Track: `surfaceContainerHighest` with `outline` border<br />Thumb: Small, `outline` color, left position | Off state                           |
+| **Checked**   | Track: `primary` color<br />Thumb: Larger, `onPrimary` color, right position                             | On state                            |
+| **Hover**     | Subtle visual feedback                                                                                   | Interactive feedback                |
+| **Focus**     | Focus indicator (handled by Ark UI)                                                                      | Keyboard accessibility              |
+| **Disabled**  | 38% opacity, greyed out                                                                                  | Cannot be toggled                   |
+| **Animation** | Smooth thumb transition (fast easing)                                                                    | Visual confirmation of state change |
 
 ## Visual States
 
 ### Unchecked (Off)
+
 - Track background: `surfaceContainerHighest`
 - Track border: 2px `outline`
 - Thumb: Small (16×16px for md), `outline` color
 - Thumb position: Left
 
 ### Checked (On)
+
 - Track background: `primary`
 - Track border: 2px `primary`
 - Thumb: Large (24×24px for md), `onPrimary` color
 - Thumb position: Right
 
 ### Disabled
+
 - Track background: `surfaceVariant`
 - Track border: `onSurface` (12% opacity)
 - Thumb: `onSurface` (38% opacity)
@@ -353,15 +420,15 @@ const formik = useFormik({
 
 ## Use Cases
 
-| Use Case | Recommendation |
-|----------|---------------|
-| Enable/disable feature | ✅ Perfect use case |
-| On/off settings | ✅ Perfect use case |
-| Binary preferences | ✅ Perfect use case |
-| Show/hide sections | ✅ Good use case |
+| Use Case                   | Recommendation       |
+| -------------------------- | -------------------- |
+| Enable/disable feature     | ✅ Perfect use case  |
+| On/off settings            | ✅ Perfect use case  |
+| Binary preferences         | ✅ Perfect use case  |
+| Show/hide sections         | ✅ Good use case     |
 | Mutually exclusive options | ❌ Use radio buttons |
-| Multiple selections | ❌ Use checkboxes |
-| Trigger actions | ❌ Use buttons |
+| Multiple selections        | ❌ Use checkboxes    |
+| Trigger actions            | ❌ Use buttons       |
 
 ## Responsive Considerations
 
@@ -445,13 +512,13 @@ test('switch works with keyboard', async () => {
 
 ## When to Use Switch vs Checkbox
 
-| Feature | Switch | Checkbox |
-|---------|--------|----------|
-| **Purpose** | Toggle state (on/off) | Select option(s) |
-| **Effect** | Immediate | Usually requires submit |
-| **State** | Active/inactive | Selected/unselected |
-| **Typical Use** | Settings, preferences | Forms, multi-select |
-| **Example** | "Enable dark mode" | "I agree to terms" |
-| **Visual** | Track + thumb | Box + checkmark |
+| Feature         | Switch                | Checkbox                |
+| --------------- | --------------------- | ----------------------- |
+| **Purpose**     | Toggle state (on/off) | Select option(s)        |
+| **Effect**      | Immediate             | Usually requires submit |
+| **State**       | Active/inactive       | Selected/unselected     |
+| **Typical Use** | Settings, preferences | Forms, multi-select     |
+| **Example**     | "Enable dark mode"    | "I agree to terms"      |
+| **Visual**      | Track + thumb         | Box + checkmark         |
 
 **Rule of thumb**: Use Switch when the change takes effect immediately. Use Checkbox when part of a form that needs submission.
