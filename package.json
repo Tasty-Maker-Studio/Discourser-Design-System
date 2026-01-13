@@ -66,6 +66,7 @@
     "tokens:full": "pnpm tokens:generate && pnpm build:panda",
     "organize-tokens": "tsx scripts/organize-figma-exports.ts",
     "clean:old-backups": "bash scripts/clean-old-backups.sh",
+    "check-branch": "bash scripts/check-branch.sh",
     "transform:dtcg-to-contract": "tsx scripts/dtcg-to-design-language.ts",
     "transform:contract-to-dtcg": "tsx scripts/design-language-to-dtcg.ts",
     "docs:generate": "tsx scripts/generate-storybook-docs.ts",

@@ -1,0 +1,64 @@
+name: Branch Protection
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  validate-branch-strategy:
+    name: Validate Branching Strategy
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check PR source branch
+        run: |
+          SOURCE_BRANCH="${{ github.head_ref }}"
+          TARGET_BRANCH="${{ github.base_ref }}"
+          
+          echo "Source branch: $SOURCE_BRANCH"
+          echo "Target branch: $TARGET_BRANCH"
+          
+          # PRs to main must come from dev branch
+          if [ "$TARGET_BRANCH" = "main" ]; then
+            if [ "$SOURCE_BRANCH" != "dev" ]; then
+              echo "❌ ERROR: Pull requests to 'main' branch must come from 'dev' branch only."
+              echo ""
+              echo "Current source: $SOURCE_BRANCH"
+              echo "Expected source: dev"
+              echo ""
+              echo "Please follow the branching strategy:"
+              echo "1. Create feature branches from 'dev'"
+              echo "2. Merge feature branches to 'dev'"
+              echo "3. Only merge 'dev' to 'main' for releases"
+              echo ""
+              echo "See BRANCHING_STRATEGY.md for more details."
+              exit 1
+            fi
+            echo "✅ Valid: PR to 'main' is from 'dev' branch"
+          fi
+          
+      - name: Validate branch naming (for dev PRs)
+        if: github.base_ref == 'dev'
+        run: |
+          SOURCE_BRANCH="${{ github.head_ref }}"
+          
+          # Check if branch follows naming convention
+          # Allowed patterns: feature/, fix/, docs/, chore/, hotfix/, release/
+          if [[ ! "$SOURCE_BRANCH" =~ ^(feature|fix|docs|chore|hotfix|release)/ ]]; then
+            echo "⚠️  WARNING: Branch '$SOURCE_BRANCH' doesn't follow naming convention."
+            echo ""
+            echo "Recommended branch prefixes:"
+            echo "  - feature/  : New features"
+            echo "  - fix/      : Bug fixes"
+            echo "  - docs/     : Documentation updates"
+            echo "  - chore/    : Maintenance tasks"
+            echo "  - hotfix/   : Urgent fixes"
+            echo "  - release/  : Release preparation"
+            echo ""
+            echo "Example: feature/add-button-component"
+            echo ""
+            echo "This is a warning only - the PR can still be merged."
+          else
+            echo "✅ Valid: Branch follows naming convention"
+          fi
