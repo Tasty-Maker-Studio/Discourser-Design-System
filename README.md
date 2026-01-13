@@ -752,6 +752,9 @@ See [BRANCHING_STRATEGY.md](./BRANCHING_STRATEGY.md) for complete documentation.
 
 ### Questions?
 
+- See [BRANCHING_STRATEGY.md](./BRANCHING_STRATEGY.md) for complete branching workflow
+- See [docs/BRANCHING_QUICK_REFERENCE.md](./docs/BRANCHING_QUICK_REFERENCE.md) for quick reference
+- See [docs/BRANCH_PROTECTION_SETUP.md](./docs/BRANCH_PROTECTION_SETUP.md) for maintainer setup guide
 - See [`.claude/skills/npm-oidc-publishing/SKILL.md`](.claude/skills/npm-oidc-publishing/SKILL.md) for OIDC setup details
 - See [.github/README.md](.github/README.md) for CI/CD workflow documentation
 - Ask in Discussions or open an Issue

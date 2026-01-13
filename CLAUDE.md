@@ -59,6 +59,10 @@ Dark mode works automatically via `data-theme="dark"` attribute.
 1. **Read the relevant skill** in `.claude/skills/` for the task type
 2. **Check docs/design-system-setup-prompt.md** for full architecture details
 3. **Reference docs/material-theme.json** for M3 color values
+4. **Follow the branching strategy** - see [BRANCHING_STRATEGY.md](./BRANCHING_STRATEGY.md)
+   - Create feature branches from `dev` (not `main`)
+   - Open PRs to `dev` (not `main`)
+   - Run `pnpm check-branch` to verify your branch setup
 
 ## Current State
 
