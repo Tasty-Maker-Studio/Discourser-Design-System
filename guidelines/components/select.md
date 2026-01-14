@@ -2,6 +2,112 @@
 
 **Purpose:** Provides a dropdown menu for selecting one or more items from a list of options, ideal for forms and settings when screen space is limited or when there are many options to choose from.
 
+## When to Use This Component
+
+Use Select when you need users to **choose from predefined options** (4+ choices) where typing would be error-prone or slower than selecting.
+
+**Decision Tree:**
+
+| Scenario                                            | Use This                      | Why                                     |
+| --------------------------------------------------- | ----------------------------- | --------------------------------------- |
+| 4-20 predefined options (country, category, status) | Select ✅                     | Efficient, prevents typos, saves space  |
+| 2-3 options with short labels                       | RadioGroup                    | All options visible, easier to scan     |
+| 20+ options needing search                          | Select with search enabled ✅ | Built-in search functionality           |
+| Binary choice (yes/no, on/off)                      | Switch or Checkbox            | Visual metaphor for binary states       |
+| Multiple independent selections                     | Checkbox group                | Better visual for multi-select          |
+| Freeform text entry                                 | Input or Textarea             | User needs flexibility to type anything |
+
+**Component Comparison:**
+
+```typescript
+// ✅ Use Select for many options
+<Select.Root collection={countries}>
+  <Select.Label>Country</Select.Label>
+  <Select.Control>
+    <Select.Trigger>
+      <Select.ValueText placeholder="Select your country" />
+    </Select.Trigger>
+  </Select.Control>
+  <Select.Positioner>
+    <Select.Content>
+      <Select.List>
+        {countries.map(country => (
+          <Select.Item key={country.value} item={country}>
+            <Select.ItemText>{country.label}</Select.ItemText>
+          </Select.Item>
+        ))}
+      </Select.List>
+    </Select.Content>
+  </Select.Positioner>
+</Select.Root>
+
+// ❌ Don't use Select for 2-3 options - use RadioGroup
+<Select.Root collection={[
+  { label: 'Small', value: 'sm' },
+  { label: 'Medium', value: 'md' },
+  { label: 'Large', value: 'lg' }
+]}>
+  {/* ... */}
+</Select.Root>  // Wrong - RadioGroup shows all options at once
+
+<RadioGroup.Root>
+  <RadioGroup.Item value="sm">
+    <RadioGroup.ItemControl />
+    <RadioGroup.ItemText>Small</RadioGroup.ItemText>
+  </RadioGroup.Item>
+  <RadioGroup.Item value="md">
+    <RadioGroup.ItemControl />
+    <RadioGroup.ItemText>Medium</RadioGroup.ItemText>
+  </RadioGroup.Item>
+  <RadioGroup.Item value="lg">
+    <RadioGroup.ItemControl />
+    <RadioGroup.ItemText>Large</RadioGroup.ItemText>
+  </RadioGroup.Item>
+</RadioGroup.Root>  // Correct
+
+// ❌ Don't use Select when user needs to type custom values - use Input
+<Select.Root collection={customCategories}>
+  {/* ... */}
+</Select.Root>  // Wrong - limits user to predefined options
+
+<Input
+  label="Category"
+  placeholder="Enter or create category"
+/>  // Correct - or use Combobox for autocomplete
+
+// ✅ Use Select for grouped options
+<Select.Root collection={groupedOptions}>
+  <Select.Label>Contact</Select.Label>
+  <Select.Control>
+    <Select.Trigger>
+      <Select.ValueText placeholder="Select contact method" />
+    </Select.Trigger>
+  </Select.Control>
+  <Select.Positioner>
+    <Select.Content>
+      <Select.ItemGroup>
+        <Select.ItemGroupLabel>Email</Select.ItemGroupLabel>
+        <Select.Item item={{ label: 'Work Email', value: 'work-email' }}>
+          <Select.ItemText>Work Email</Select.ItemText>
+        </Select.Item>
+        <Select.Item item={{ label: 'Personal Email', value: 'personal-email' }}>
+          <Select.ItemText>Personal Email</Select.ItemText>
+        </Select.Item>
+      </Select.ItemGroup>
+      <Select.ItemGroup>
+        <Select.ItemGroupLabel>Phone</Select.ItemGroupLabel>
+        <Select.Item item={{ label: 'Mobile', value: 'mobile' }}>
+          <Select.ItemText>Mobile</Select.ItemText>
+        </Select.Item>
+        <Select.Item item={{ label: 'Office', value: 'office' }}>
+          <Select.ItemText>Office</Select.ItemText>
+        </Select.Item>
+      </Select.ItemGroup>
+    </Select.Content>
+  </Select.Positioner>
+</Select.Root>
+```
+
 ## Import
 
 ```typescript
@@ -693,6 +799,407 @@ const filteredCountries = countries.filter((country) =>
   </Select.Root>
 </div>
 ```
+
+## Edge Cases
+
+This section covers common edge cases and how to handle them properly.
+
+### Empty State - No Options Available
+
+**Scenario:** The select component has no options to display, either due to loading state, filtering, or no data being available.
+
+**Solution:**
+
+```typescript
+const [options, setOptions] = useState<string[]>([]);
+const [isLoading, setIsLoading] = useState(true);
+
+// Simulate async data loading
+useEffect(() => {
+  const loadOptions = async () => {
+    setIsLoading(true);
+    try {
+      const data = await fetchOptions();
+      setOptions(data);
+    } catch (error) {
+      setOptions([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  loadOptions();
+}, []);
+
+<Select.Root items={options}>
+  <Select.Label>Select an option</Select.Label>
+  <Select.Control>
+    <Select.Trigger>
+      <Select.ValueText placeholder="Choose one" />
+      <Select.Indicator />
+    </Select.Trigger>
+  </Select.Control>
+  <Select.Positioner>
+    <Select.Content>
+      {isLoading ? (
+        <div className={css({ p: '4', textAlign: 'center', color: 'fg.muted' })}>
+          Loading options...
+        </div>
+      ) : options.length === 0 ? (
+        <div className={css({ p: '4', textAlign: 'center', color: 'fg.muted' })}>
+          No options available
+        </div>
+      ) : (
+        <Select.List>
+          {options.map((item) => (
+            <Select.Item key={item} item={item}>
+              <Select.ItemText>{item}</Select.ItemText>
+              <Select.ItemIndicator />
+            </Select.Item>
+          ))}
+        </Select.List>
+      )}
+    </Select.Content>
+  </Select.Positioner>
+  <Select.HiddenSelect />
+</Select.Root>
+```
+
+**Best practices:**
+
+- Display clear loading states to inform users data is being fetched
+- Show helpful empty state messages explaining why no options are available
+- Consider disabling the select trigger when no options are available
+- Provide actionable empty states when appropriate (e.g., "Add your first item")
+
+---
+
+### Invalid Pre-selected Value
+
+**Scenario:** The `defaultValue` or controlled `value` doesn't exist in the options list, potentially causing unexpected behavior.
+
+**Solution:**
+
+```typescript
+interface Option {
+  value: string;
+  label: string;
+}
+
+const options: Option[] = [
+  { value: 'apple', label: 'Apple' },
+  { value: 'banana', label: 'Banana' },
+  { value: 'orange', label: 'Orange' },
+];
+
+// Validate the value before passing to Select
+const [selectedValue, setSelectedValue] = useState<string[]>(['grape']); // Invalid!
+
+// Normalize the value to ensure it exists in options
+const normalizedValue = selectedValue.filter((val) =>
+  options.some((opt) => opt.value === val)
+);
+
+// If invalid value was provided, log warning and use first option as fallback
+useEffect(() => {
+  if (selectedValue.length > 0 && normalizedValue.length === 0) {
+    console.warn('Invalid select value:', selectedValue);
+    setSelectedValue(options.length > 0 ? [options[0].value] : []);
+  }
+}, [selectedValue, normalizedValue, options]);
+
+<Select.Root
+  items={options}
+  itemToValue={(item) => item.value}
+  itemToString={(item) => item.label}
+  value={normalizedValue}
+  onValueChange={(details) => setSelectedValue(details.value)}
+>
+  <Select.Label>Select fruit</Select.Label>
+  <Select.Control>
+    <Select.Trigger>
+      <Select.ValueText placeholder="Choose a fruit" />
+      <Select.Indicator />
+    </Select.Trigger>
+  </Select.Control>
+  <Select.Positioner>
+    <Select.Content>
+      <Select.List>
+        {options.map((option) => (
+          <Select.Item key={option.value} item={option}>
+            <Select.ItemText>{option.label}</Select.ItemText>
+            <Select.ItemIndicator />
+          </Select.Item>
+        ))}
+      </Select.List>
+    </Select.Content>
+  </Select.Positioner>
+  <Select.HiddenSelect />
+</Select.Root>
+```
+
+**Best practices:**
+
+- Always validate controlled values against available options
+- Provide sensible fallback values when validation fails
+- Log warnings in development to help debug invalid values
+- Consider resetting to placeholder state rather than auto-selecting first option
+
+---
+
+### Dynamic Options - Async Loading
+
+**Scenario:** Options are loaded asynchronously and may change over time, requiring proper state management and user feedback.
+
+**Solution:**
+
+```typescript
+const [options, setOptions] = useState<string[]>([]);
+const [isLoading, setIsLoading] = useState(false);
+const [error, setError] = useState<string | null>(null);
+const [selectedValue, setSelectedValue] = useState<string[]>([]);
+
+// Load options on mount or when dependencies change
+useEffect(() => {
+  const loadOptions = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('/api/options');
+      const data = await response.json();
+      setOptions(data);
+    } catch (err) {
+      setError('Failed to load options');
+      setOptions([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  loadOptions();
+}, []);
+
+<div>
+  <Select.Root
+    items={options}
+    value={selectedValue}
+    onValueChange={(details) => setSelectedValue(details.value)}
+    disabled={isLoading || !!error}
+  >
+    <Select.Label>
+      Select option
+      {isLoading && (
+        <span className={css({ ml: '2', fontSize: 'sm', color: 'fg.muted' })}>
+          (Loading...)
+        </span>
+      )}
+    </Select.Label>
+    <Select.Control>
+      <Select.Trigger>
+        <Select.ValueText placeholder={isLoading ? 'Loading...' : 'Select one'} />
+        <Select.Indicator />
+      </Select.Trigger>
+    </Select.Control>
+    <Select.Positioner>
+      <Select.Content>
+        <Select.List>
+          {options.map((item) => (
+            <Select.Item key={item} item={item}>
+              <Select.ItemText>{item}</Select.ItemText>
+              <Select.ItemIndicator />
+            </Select.Item>
+          ))}
+        </Select.List>
+      </Select.Content>
+    </Select.Positioner>
+    <Select.HiddenSelect />
+  </Select.Root>
+  {error && (
+    <div className={css({ color: 'error.fg', fontSize: 'sm', mt: '1' })}>
+      {error}
+    </div>
+  )}
+</div>
+```
+
+**Best practices:**
+
+- Disable the select while loading to prevent interaction with incomplete data
+- Update placeholder text to reflect loading state
+- Display error messages clearly below the select
+- Consider showing a loading indicator icon in the trigger
+
+---
+
+### Filtered Results - Search Returns No Matches
+
+**Scenario:** When implementing search/filtering, the user's query may return no matching results.
+
+**Solution:**
+
+```typescript
+const [searchTerm, setSearchTerm] = useState('');
+const allOptions = ['Apple', 'Banana', 'Cherry', 'Date', 'Elderberry', 'Fig'];
+
+// Filter options based on search term
+const filteredOptions = allOptions.filter((option) =>
+  option.toLowerCase().includes(searchTerm.toLowerCase())
+);
+
+<Select.Root items={filteredOptions}>
+  <Select.Label>Search fruits</Select.Label>
+  <Select.Control>
+    <Select.Trigger>
+      <Select.ValueText placeholder="Select fruit" />
+      <Select.Indicator />
+    </Select.Trigger>
+  </Select.Control>
+  <Select.Positioner>
+    <Select.Content>
+      {/* Search input inside dropdown */}
+      <div className={css({ p: '2', borderBottom: '1px solid', borderColor: 'gray.4' })}>
+        <Input
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          size="sm"
+          autoFocus
+        />
+      </div>
+
+      {/* Show no results message when filtered list is empty */}
+      {filteredOptions.length === 0 ? (
+        <div
+          className={css({
+            p: '4',
+            textAlign: 'center',
+            color: 'fg.muted',
+            fontSize: 'sm',
+          })}
+        >
+          No results found for "{searchTerm}"
+        </div>
+      ) : (
+        <Select.List>
+          {filteredOptions.map((option) => (
+            <Select.Item key={option} item={option}>
+              <Select.ItemText>{option}</Select.ItemText>
+              <Select.ItemIndicator />
+            </Select.Item>
+          ))}
+        </Select.List>
+      )}
+    </Select.Content>
+  </Select.Positioner>
+  <Select.HiddenSelect />
+</Select.Root>
+```
+
+**Best practices:**
+
+- Display a clear "no results" message with the search term
+- Keep the search input accessible even when no results are shown
+- Consider offering suggestions or alternative search terms
+- Don't close the dropdown when filtering returns no results
+
+---
+
+### Disabled Options - Partial Availability
+
+**Scenario:** Some options should be visible but not selectable due to business logic or permissions.
+
+**Solution:**
+
+```typescript
+interface PlanOption {
+  value: string;
+  label: string;
+  price: string;
+  disabled: boolean;
+  disabledReason?: string;
+}
+
+const plans: PlanOption[] = [
+  { value: 'free', label: 'Free Plan', price: '$0/mo', disabled: false },
+  { value: 'pro', label: 'Pro Plan', price: '$29/mo', disabled: false },
+  {
+    value: 'enterprise',
+    label: 'Enterprise Plan',
+    price: 'Custom',
+    disabled: true,
+    disabledReason: 'Contact sales to enable',
+  },
+];
+
+const [hoveredPlan, setHoveredPlan] = useState<string | null>(null);
+
+<Select.Root
+  items={plans}
+  itemToValue={(item) => item.value}
+  itemToString={(item) => item.label}
+>
+  <Select.Label>Choose your plan</Select.Label>
+  <Select.Control>
+    <Select.Trigger>
+      <Select.ValueText placeholder="Select a plan" />
+      <Select.Indicator />
+    </Select.Trigger>
+  </Select.Control>
+  <Select.Positioner>
+    <Select.Content>
+      <Select.List>
+        {plans.map((plan) => (
+          <div key={plan.value} className={css({ position: 'relative' })}>
+            <Select.Item
+              item={plan}
+              disabled={plan.disabled}
+              onMouseEnter={() => setHoveredPlan(plan.value)}
+              onMouseLeave={() => setHoveredPlan(null)}
+            >
+              <div className={css({ display: 'flex', justifyContent: 'space-between', width: 'full' })}>
+                <Select.ItemText>{plan.label}</Select.ItemText>
+                <span className={css({ fontSize: 'sm', color: 'fg.muted' })}>
+                  {plan.price}
+                </span>
+              </div>
+              <Select.ItemIndicator />
+            </Select.Item>
+            {/* Show disabled reason on hover */}
+            {plan.disabled && hoveredPlan === plan.value && plan.disabledReason && (
+              <div
+                className={css({
+                  position: 'absolute',
+                  bottom: 'full',
+                  left: '0',
+                  right: '0',
+                  p: '2',
+                  bg: 'gray.12',
+                  color: 'white',
+                  fontSize: 'xs',
+                  borderRadius: 'sm',
+                  zIndex: 1,
+                })}
+              >
+                {plan.disabledReason}
+              </div>
+            )}
+          </div>
+        ))}
+      </Select.List>
+    </Select.Content>
+  </Select.Positioner>
+  <Select.HiddenSelect />
+</Select.Root>
+```
+
+**Best practices:**
+
+- Clearly indicate why an option is disabled (visual label or tooltip)
+- Use reduced opacity for disabled items (handled automatically by component)
+- Keep disabled options in the list for discoverability
+- Consider providing a call-to-action for unlocking disabled options
+- Ensure `aria-disabled` is properly set for screen readers
+
+---
 
 ## DO NOT
 

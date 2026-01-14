@@ -2,6 +2,41 @@
 
 **Purpose:** Primary interactive element for user actions following Material Design 3 patterns.
 
+## When to Use This Component
+
+Use Button when you need a clickable element that **triggers an action** (submit, save, cancel, etc.).
+
+**Decision Tree:**
+
+| Scenario                                 | Use This                      | Why                                               |
+| ---------------------------------------- | ----------------------------- | ------------------------------------------------- |
+| Trigger an action (submit, save, delete) | Button ✅                     | Semantic action element                           |
+| Navigate to a different page/route       | `<a>` tag or Next.js `<Link>` | Navigation should use links for SEO/accessibility |
+| Icon-only action (close, menu, settings) | IconButton                    | Better for icon-only affordances                  |
+| Toggle state (on/off, enable/disable)    | Switch                        | Visual metaphor for state changes                 |
+| Select from options (exclusive choice)   | RadioGroup                    | For mutually exclusive selections                 |
+| Select multiple options                  | Checkbox                      | For multiple selections                           |
+
+**Component Comparison:**
+
+```typescript
+// ✅ Use Button for actions
+<Button onClick={handleSave}>Save</Button>
+<Button onClick={handleDelete}>Delete</Button>
+
+// ❌ Don't use Button for navigation - use Link
+<Button onClick={() => router.push('/page')}>Go to Page</Button>  // Wrong
+<Link href="/page">Go to Page</Link>  // Correct
+
+// ❌ Don't use Button for icon-only - use IconButton
+<Button><CloseIcon /></Button>  // Wrong
+<IconButton aria-label="Close"><CloseIcon /></IconButton>  // Correct
+
+// ❌ Don't use Button for toggles - use Switch
+<Button onClick={toggleDarkMode}>Dark Mode</Button>  // Wrong
+<Switch checked={isDarkMode} onCheckedChange={setDarkMode}>Dark Mode</Switch>  // Correct
+```
+
 ## Import
 
 ```typescript
@@ -12,13 +47,13 @@ import { Button } from '@discourser/design-system';
 
 The Button component supports 5 Material Design 3 variants, each with specific use cases:
 
-| Variant | Visual Style | Usage | When to Use |
-|---------|-------------|-------|-------------|
-| `filled` | Solid background with primary color | Primary actions | Submit forms, confirm dialogs, main CTAs |
-| `outlined` | Transparent background with border | Secondary actions | Cancel buttons, back navigation, alternative options |
-| `text` | Transparent background, no border | Tertiary actions | Links, less prominent actions, dialog actions |
-| `elevated` | Elevated surface with subtle shadow | Floating actions | FAB-like buttons, actions that need emphasis but not primary color |
-| `tonal` | Filled with secondary container color | Medium emphasis | Secondary CTAs, soft highlights, supportive actions |
+| Variant    | Visual Style                          | Usage             | When to Use                                                        |
+| ---------- | ------------------------------------- | ----------------- | ------------------------------------------------------------------ |
+| `filled`   | Solid background with primary color   | Primary actions   | Submit forms, confirm dialogs, main CTAs                           |
+| `outlined` | Transparent background with border    | Secondary actions | Cancel buttons, back navigation, alternative options               |
+| `text`     | Transparent background, no border     | Tertiary actions  | Links, less prominent actions, dialog actions                      |
+| `elevated` | Elevated surface with subtle shadow   | Floating actions  | FAB-like buttons, actions that need emphasis but not primary color |
+| `tonal`    | Filled with secondary container color | Medium emphasis   | Secondary CTAs, soft highlights, supportive actions                |
 
 ### Visual Characteristics
 
@@ -30,27 +65,27 @@ The Button component supports 5 Material Design 3 variants, each with specific u
 
 ## Sizes
 
-| Size | Height | Padding (Horizontal) | Font Size | Usage |
-|------|--------|---------------------|-----------|-------|
-| `sm` | 32px | 16px (md) | labelMedium | Compact UI, dense layouts, small dialogs |
-| `md` | 40px | 24px (lg) | labelLarge | Default, most use cases |
-| `lg` | 48px | 32px (xl) | labelLarge | Touch targets, mobile emphasis, hero sections |
+| Size | Height | Padding (Horizontal) | Font Size   | Usage                                         |
+| ---- | ------ | -------------------- | ----------- | --------------------------------------------- |
+| `sm` | 32px   | 16px (md)            | labelMedium | Compact UI, dense layouts, small dialogs      |
+| `md` | 40px   | 24px (lg)            | labelLarge  | Default, most use cases                       |
+| `lg` | 48px   | 32px (xl)            | labelLarge  | Touch targets, mobile emphasis, hero sections |
 
 **Recommendation:** Use `md` for most cases. Use `lg` for mobile-first designs or prominent CTAs.
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `'filled' \| 'outlined' \| 'text' \| 'elevated' \| 'tonal'` | `'filled'` | Visual style variant |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Button size |
-| `leftIcon` | `ReactNode` | - | Icon or element before button text |
-| `rightIcon` | `ReactNode` | - | Icon or element after button text |
-| `disabled` | `boolean` | `false` | Disable button interaction |
-| `onClick` | `(event: MouseEvent) => void` | - | Click handler |
-| `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | HTML button type |
-| `className` | `string` | - | Additional CSS classes (use sparingly) |
-| `children` | `ReactNode` | Required | Button text content |
+| Prop        | Type                                                        | Default    | Description                            |
+| ----------- | ----------------------------------------------------------- | ---------- | -------------------------------------- |
+| `variant`   | `'filled' \| 'outlined' \| 'text' \| 'elevated' \| 'tonal'` | `'filled'` | Visual style variant                   |
+| `size`      | `'sm' \| 'md' \| 'lg'`                                      | `'md'`     | Button size                            |
+| `leftIcon`  | `ReactNode`                                                 | -          | Icon or element before button text     |
+| `rightIcon` | `ReactNode`                                                 | -          | Icon or element after button text      |
+| `disabled`  | `boolean`                                                   | `false`    | Disable button interaction             |
+| `onClick`   | `(event: MouseEvent) => void`                               | -          | Click handler                          |
+| `type`      | `'button' \| 'submit' \| 'reset'`                           | `'button'` | HTML button type                       |
+| `className` | `string`                                                    | -          | Additional CSS classes (use sparingly) |
+| `children`  | `ReactNode`                                                 | Required   | Button text content                    |
 
 **Note:** Button extends `ButtonHTMLAttributes<HTMLButtonElement>`, so all standard HTML button attributes are supported.
 
@@ -242,26 +277,26 @@ The Button component follows WCAG 2.1 Level AA standards:
 
 ## Variant Selection Guide
 
-| Scenario | Recommended Variant | Reasoning |
-|----------|-------------------|-----------|
-| Form submission | `filled` | Primary action, needs highest emphasis |
-| Cancel/Back | `outlined` or `text` | Secondary action, lower emphasis |
-| Dialog confirmation | `filled` | Primary action in dialog |
-| Dialog dismiss | `text` | Tertiary action, minimal emphasis |
-| Save draft | `tonal` | Medium emphasis, not primary action |
-| Delete/Destructive | `filled` or `tonal` | High attention, but consider error colors |
-| Filter/Sort | `text` or `outlined` | Lower emphasis, frequent use |
-| Floating action button | `elevated` | Needs to float above content |
-| Link-like actions | `text` | Minimal emphasis, inline with text |
+| Scenario               | Recommended Variant  | Reasoning                                 |
+| ---------------------- | -------------------- | ----------------------------------------- |
+| Form submission        | `filled`             | Primary action, needs highest emphasis    |
+| Cancel/Back            | `outlined` or `text` | Secondary action, lower emphasis          |
+| Dialog confirmation    | `filled`             | Primary action in dialog                  |
+| Dialog dismiss         | `text`               | Tertiary action, minimal emphasis         |
+| Save draft             | `tonal`              | Medium emphasis, not primary action       |
+| Delete/Destructive     | `filled` or `tonal`  | High attention, but consider error colors |
+| Filter/Sort            | `text` or `outlined` | Lower emphasis, frequent use              |
+| Floating action button | `elevated`           | Needs to float above content              |
+| Link-like actions      | `text`               | Minimal emphasis, inline with text        |
 
 ## State Behaviors
 
-| State | Visual Change | Behavior |
-|-------|---------------|----------|
-| **Hover** | Opacity change or shadow | `filled`: 92% opacity + level1 shadow<br />`outlined`: 8% primary background<br />`elevated`: Increase shadow to level2 |
-| **Active** | Further opacity/shadow change | `filled`: 88% opacity<br />`outlined`: 12% primary background |
-| **Focus** | 2px outline | Primary color outline, 2px offset |
-| **Disabled** | 38% opacity, no interaction | Cannot be clicked, greyed out appearance |
+| State        | Visual Change                 | Behavior                                                                                                                |
+| ------------ | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Hover**    | Opacity change or shadow      | `filled`: 92% opacity + level1 shadow<br />`outlined`: 8% primary background<br />`elevated`: Increase shadow to level2 |
+| **Active**   | Further opacity/shadow change | `filled`: 88% opacity<br />`outlined`: 12% primary background                                                           |
+| **Focus**    | 2px outline                   | Primary color outline, 2px offset                                                                                       |
+| **Disabled** | 38% opacity, no interaction   | Cannot be clicked, greyed out appearance                                                                                |
 
 ## Responsive Considerations
 

@@ -2,6 +2,61 @@
 
 **Purpose:** Text input field with built-in label, validation, and helper text following Material Design 3 patterns.
 
+## When to Use This Component
+
+Use Input when you need **single-line text entry** from the user (names, emails, search terms, etc.).
+
+**Decision Tree:**
+
+| Scenario                                           | Use This                             | Why                                        |
+| -------------------------------------------------- | ------------------------------------ | ------------------------------------------ |
+| Single-line text (name, email, username, search)   | Input ✅                             | Optimized for single-line entry            |
+| Multi-line text (comments, descriptions, messages) | Textarea                             | Allows line breaks, expandable height      |
+| Select from predefined options (4+ choices)        | Select                               | More efficient than typing, prevents typos |
+| Select from 2-3 options                            | RadioGroup                           | Visual comparison of all options           |
+| Binary choice (yes/no, on/off)                     | Switch or Checkbox                   | Visual metaphor for state                  |
+| Date selection                                     | Input with type="date" or DatePicker | Structured date entry                      |
+| Number entry                                       | Input with type="number"             | Numeric keyboard on mobile                 |
+
+**Component Comparison:**
+
+```typescript
+// ✅ Use Input for single-line text
+<Input label="Email address" type="email" />
+<Input label="Username" />
+<Input label="Search products" type="search" />
+
+// ❌ Don't use Input for multi-line text - use Textarea
+<Input label="Comments" />  // Wrong - can't enter line breaks
+
+<Textarea label="Comments" />  // Correct
+
+// ❌ Don't use Input when Select would be clearer
+<Input label="Country" placeholder="Enter country name" />  // Wrong - prone to typos
+
+<Select.Root collection={countries}>
+  <Select.Label>Country</Select.Label>
+  <Select.Control>
+    <Select.Trigger>
+      <Select.ValueText placeholder="Select country" />
+    </Select.Trigger>
+  </Select.Control>
+  <Select.Content>
+    {/* country options */}
+  </Select.Content>
+</Select.Root>  // Correct
+
+// ❌ Don't use Input for binary choices - use Switch
+<Input label="Enable notifications" type="checkbox" />  // Wrong - not an Input use case
+
+<Switch.Root>
+  <Switch.Label>Enable notifications</Switch.Label>
+  <Switch.Control>
+    <Switch.Thumb />
+  </Switch.Control>
+</Switch.Root>  // Correct
+```
+
 ## Import
 
 ```typescript
@@ -12,10 +67,10 @@ import { Input } from '@discourser/design-system';
 
 The Input component supports 2 Material Design 3 variants:
 
-| Variant | Visual Style | Usage | When to Use |
-|---------|-------------|-------|-------------|
-| `outlined` | Outlined border around input | Default text inputs | Most common, clear boundaries |
-| `filled` | Filled background with bottom border | Alternative style | When you want less visual weight |
+| Variant    | Visual Style                         | Usage               | When to Use                      |
+| ---------- | ------------------------------------ | ------------------- | -------------------------------- |
+| `outlined` | Outlined border around input         | Default text inputs | Most common, clear boundaries    |
+| `filled`   | Filled background with bottom border | Alternative style   | When you want less visual weight |
 
 ### Visual Characteristics
 
@@ -24,28 +79,28 @@ The Input component supports 2 Material Design 3 variants:
 
 ## Sizes
 
-| Size | Height | Font Size | Usage |
-|------|--------|-----------|-------|
-| `sm` | 40px | bodySmall | Compact forms, dense layouts |
-| `md` | 56px | bodyLarge | Default, most use cases |
+| Size | Height | Font Size | Usage                        |
+| ---- | ------ | --------- | ---------------------------- |
+| `sm` | 40px   | bodySmall | Compact forms, dense layouts |
+| `md` | 56px   | bodyLarge | Default, most use cases      |
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `label` | `string` | - | Label text (highly recommended for accessibility) |
-| `helperText` | `string` | - | Helper text displayed below input |
-| `errorText` | `string` | - | Error message (also sets error state) |
-| `variant` | `'outlined' \| 'filled'` | `'outlined'` | Visual style variant |
-| `size` | `'sm' \| 'md'` | `'md'` | Input size |
-| `state` | `'error'` | - | Visual state (auto-set if errorText provided) |
-| `disabled` | `boolean` | `false` | Disable input |
-| `value` | `string` | - | Controlled value |
-| `defaultValue` | `string` | - | Uncontrolled default value |
-| `onChange` | `(event: ChangeEvent) => void` | - | Change handler |
-| `placeholder` | `string` | - | Placeholder text |
-| `type` | `string` | `'text'` | HTML input type (text, email, password, etc.) |
-| `required` | `boolean` | `false` | Mark as required field |
+| Prop           | Type                           | Default      | Description                                       |
+| -------------- | ------------------------------ | ------------ | ------------------------------------------------- |
+| `label`        | `string`                       | -            | Label text (highly recommended for accessibility) |
+| `helperText`   | `string`                       | -            | Helper text displayed below input                 |
+| `errorText`    | `string`                       | -            | Error message (also sets error state)             |
+| `variant`      | `'outlined' \| 'filled'`       | `'outlined'` | Visual style variant                              |
+| `size`         | `'sm' \| 'md'`                 | `'md'`       | Input size                                        |
+| `state`        | `'error'`                      | -            | Visual state (auto-set if errorText provided)     |
+| `disabled`     | `boolean`                      | `false`      | Disable input                                     |
+| `value`        | `string`                       | -            | Controlled value                                  |
+| `defaultValue` | `string`                       | -            | Uncontrolled default value                        |
+| `onChange`     | `(event: ChangeEvent) => void` | -            | Change handler                                    |
+| `placeholder`  | `string`                       | -            | Placeholder text                                  |
+| `type`         | `string`                       | `'text'`     | HTML input type (text, email, password, etc.)     |
+| `required`     | `boolean`                      | `false`      | Mark as required field                            |
 
 **Note:** Input extends `InputHTMLAttributes<HTMLInputElement>` (excluding 'size'), so all standard HTML input attributes are supported.
 
@@ -414,23 +469,23 @@ const formik = useFormik({
 
 ## Variant Selection Guide
 
-| Scenario | Recommended Variant | Reasoning |
-|----------|-------------------|-----------|
-| Standard forms | `outlined` | Clear boundaries, default choice |
-| Dense forms | `outlined` + `size="sm"` | Compact while maintaining clarity |
-| Minimal UI | `filled` | Lighter visual weight |
-| Search bars | `outlined` or `filled` | Either works, depends on design |
-| Settings forms | `outlined` | Clear separation of fields |
+| Scenario       | Recommended Variant      | Reasoning                         |
+| -------------- | ------------------------ | --------------------------------- |
+| Standard forms | `outlined`               | Clear boundaries, default choice  |
+| Dense forms    | `outlined` + `size="sm"` | Compact while maintaining clarity |
+| Minimal UI     | `filled`                 | Lighter visual weight             |
+| Search bars    | `outlined` or `filled`   | Either works, depends on design   |
+| Settings forms | `outlined`               | Clear separation of fields        |
 
 ## State Behaviors
 
-| State | Visual Change | Behavior |
-|-------|---------------|----------|
-| **Default** | Normal border/background | Ready for input |
-| **Hover** | Border darkens or background changes | Visual feedback |
-| **Focus** | 2px border, primary color | Active input state |
-| **Error** | Error color border, error message shown | Validation failed |
-| **Disabled** | 38% opacity, no interaction | Cannot be edited |
+| State        | Visual Change                           | Behavior           |
+| ------------ | --------------------------------------- | ------------------ |
+| **Default**  | Normal border/background                | Ready for input    |
+| **Hover**    | Border darkens or background changes    | Visual feedback    |
+| **Focus**    | 2px border, primary color               | Active input state |
+| **Error**    | Error color border, error message shown | Validation failed  |
+| **Disabled** | 38% opacity, no interaction             | Cannot be edited   |
 
 ## Responsive Considerations
 

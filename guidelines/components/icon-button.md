@@ -2,6 +2,61 @@
 
 **Purpose:** Icon-only interactive button for compact actions following Material Design 3 patterns.
 
+## When to Use This Component
+
+Use IconButton when you need an **icon-only action** without accompanying text, typically for common, recognizable actions.
+
+**Decision Tree:**
+
+| Scenario                                         | Use This               | Why                                                   |
+| ------------------------------------------------ | ---------------------- | ----------------------------------------------------- |
+| Icon-only action (close, menu, settings, delete) | IconButton ✅          | Optimized for icons, proper sizing and spacing        |
+| Action with text label                           | Button                 | Text provides clarity, better for less common actions |
+| Toggle state (on/off, enabled/disabled)          | Switch                 | Visual metaphor for binary states                     |
+| Select from options                              | RadioGroup or Checkbox | Better for multi-choice scenarios                     |
+| Brief contextual help on icon                    | IconButton + Tooltip   | Combine for accessibility                             |
+
+**Component Comparison:**
+
+```typescript
+// ✅ Use IconButton for icon-only actions
+<IconButton aria-label="Close dialog">
+  <CloseIcon />
+</IconButton>
+
+<IconButton aria-label="Open menu">
+  <MenuIcon />
+</IconButton>
+
+// ❌ Don't use Button without text for icon-only actions
+<Button onClick={handleClose}>
+  <CloseIcon />
+</Button>  // Wrong - Button expects text content
+
+<IconButton aria-label="Close">
+  <CloseIcon />
+</IconButton>  // Correct
+
+// ❌ Don't use IconButton when text label is needed
+<IconButton aria-label="Submit form">
+  <SendIcon />
+</IconButton>  // Wrong - "Submit" action needs visible text
+
+<Button leftIcon={<SendIcon />}>
+  Submit
+</Button>  // Correct
+
+// ✅ Use IconButton with Tooltip for clarity
+<Tooltip.Root>
+  <Tooltip.Trigger asChild>
+    <IconButton aria-label="Add to favorites">
+      <HeartIcon />
+    </IconButton>
+  </Tooltip.Trigger>
+  <Tooltip.Content>Add to favorites</Tooltip.Content>
+</Tooltip.Root>
+```
+
 ## Import
 
 ```typescript
@@ -12,12 +67,12 @@ import { IconButton } from '@discourser/design-system';
 
 The IconButton component supports 4 Material Design 3 variants:
 
-| Variant | Visual Style | Usage | When to Use |
-|---------|-------------|-------|-------------|
-| `standard` | Transparent background | Default icon actions | Most common, minimal emphasis |
-| `filled` | Primary color background | High emphasis icon actions | Important actions that need prominence |
-| `tonal` | Secondary container background | Medium emphasis actions | Supportive actions with some emphasis |
-| `outlined` | Outlined border | Secondary icon actions | Alternative to standard with more definition |
+| Variant    | Visual Style                   | Usage                      | When to Use                                  |
+| ---------- | ------------------------------ | -------------------------- | -------------------------------------------- |
+| `standard` | Transparent background         | Default icon actions       | Most common, minimal emphasis                |
+| `filled`   | Primary color background       | High emphasis icon actions | Important actions that need prominence       |
+| `tonal`    | Secondary container background | Medium emphasis actions    | Supportive actions with some emphasis        |
+| `outlined` | Outlined border                | Secondary icon actions     | Alternative to standard with more definition |
 
 ### Visual Characteristics
 
@@ -28,26 +83,26 @@ The IconButton component supports 4 Material Design 3 variants:
 
 ## Sizes
 
-| Size | Dimensions | Icon Size | Usage |
-|------|-----------|-----------|-------|
-| `sm` | 32×32px | 18×18px | Compact UI, dense layouts, inline actions |
-| `md` | 40×40px | 24×24px | Default, most use cases |
-| `lg` | 48×48px | 24×24px | Touch targets, mobile emphasis, FAB |
+| Size | Dimensions | Icon Size | Usage                                     |
+| ---- | ---------- | --------- | ----------------------------------------- |
+| `sm` | 32×32px    | 18×18px   | Compact UI, dense layouts, inline actions |
+| `md` | 40×40px    | 24×24px   | Default, most use cases                   |
+| `lg` | 48×48px    | 24×24px   | Touch targets, mobile emphasis, FAB       |
 
 **Important:** Icon sizes are automatically set by the component via CSS. Ensure your SVG icons inherit currentColor and size.
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `children` | `ReactNode` | Required | Icon element (SVG, icon component) |
-| `aria-label` | `string` | **Required** | Accessible label for screen readers |
-| `variant` | `'standard' \| 'filled' \| 'tonal' \| 'outlined'` | `'standard'` | Visual style variant |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Button size |
-| `disabled` | `boolean` | `false` | Disable button interaction |
-| `onClick` | `(event: MouseEvent) => void` | - | Click handler |
-| `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | HTML button type |
-| `className` | `string` | - | Additional CSS classes (use sparingly) |
+| Prop         | Type                                              | Default      | Description                            |
+| ------------ | ------------------------------------------------- | ------------ | -------------------------------------- |
+| `children`   | `ReactNode`                                       | Required     | Icon element (SVG, icon component)     |
+| `aria-label` | `string`                                          | **Required** | Accessible label for screen readers    |
+| `variant`    | `'standard' \| 'filled' \| 'tonal' \| 'outlined'` | `'standard'` | Visual style variant                   |
+| `size`       | `'sm' \| 'md' \| 'lg'`                            | `'md'`       | Button size                            |
+| `disabled`   | `boolean`                                         | `false`      | Disable button interaction             |
+| `onClick`    | `(event: MouseEvent) => void`                     | -            | Click handler                          |
+| `type`       | `'button' \| 'submit' \| 'reset'`                 | `'button'`   | HTML button type                       |
+| `className`  | `string`                                          | -            | Additional CSS classes (use sparingly) |
 
 **Critical:** `aria-label` is **required** for accessibility. Icon buttons have no visible text, so screen readers need this label.
 
@@ -299,25 +354,25 @@ const WrongIcon = () => (
 
 ## Variant Selection Guide
 
-| Scenario | Recommended Variant | Reasoning |
-|----------|-------------------|-----------|
-| Close button (dialogs) | `standard` | Minimal emphasis, common action |
-| Primary action (FAB) | `filled` | High emphasis, main action |
-| Edit/Modify action | `tonal` | Medium emphasis, supportive |
-| Delete action | `outlined` | Secondary action, needs definition |
-| Menu/Navigation | `standard` | Minimal emphasis, frequently used |
-| Toggle (active state) | `filled` | Shows active state clearly |
-| Toggle (inactive state) | `standard` or `outlined` | Shows inactive state |
-| Action bar items | `standard` | Consistent, minimal emphasis |
+| Scenario                | Recommended Variant      | Reasoning                          |
+| ----------------------- | ------------------------ | ---------------------------------- |
+| Close button (dialogs)  | `standard`               | Minimal emphasis, common action    |
+| Primary action (FAB)    | `filled`                 | High emphasis, main action         |
+| Edit/Modify action      | `tonal`                  | Medium emphasis, supportive        |
+| Delete action           | `outlined`               | Secondary action, needs definition |
+| Menu/Navigation         | `standard`               | Minimal emphasis, frequently used  |
+| Toggle (active state)   | `filled`                 | Shows active state clearly         |
+| Toggle (inactive state) | `standard` or `outlined` | Shows inactive state               |
+| Action bar items        | `standard`               | Consistent, minimal emphasis       |
 
 ## State Behaviors
 
-| State | Visual Change | Behavior |
-|-------|---------------|----------|
-| **Hover** | Background color change or opacity | `standard`: 8% background<br />`filled`/`tonal`: 92% opacity |
-| **Active** | Slight opacity change | Further visual feedback on click |
-| **Focus** | 2px outline | Primary color outline, 2px offset |
-| **Disabled** | 38% opacity, no interaction | Cannot be clicked, greyed out |
+| State        | Visual Change                      | Behavior                                                     |
+| ------------ | ---------------------------------- | ------------------------------------------------------------ |
+| **Hover**    | Background color change or opacity | `standard`: 8% background<br />`filled`/`tonal`: 92% opacity |
+| **Active**   | Slight opacity change              | Further visual feedback on click                             |
+| **Focus**    | 2px outline                        | Primary color outline, 2px offset                            |
+| **Disabled** | 38% opacity, no interaction        | Cannot be clicked, greyed out                                |
 
 ## Responsive Considerations
 

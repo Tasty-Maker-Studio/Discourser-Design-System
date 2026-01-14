@@ -2,6 +2,76 @@
 
 **Purpose:** Multi-line text input field for longer user input following Material Design 3 patterns.
 
+## When to Use This Component
+
+Use Textarea when you need **multi-line text entry** where users may need to write paragraphs, enter line breaks, or provide longer content.
+
+**Decision Tree:**
+
+| Scenario                                                | Use This                     | Why                                      |
+| ------------------------------------------------------- | ---------------------------- | ---------------------------------------- |
+| Multi-line text (comments, descriptions, messages, bio) | Textarea ✅                  | Allows line breaks, expandable content   |
+| Single-line text (name, email, username)                | Input                        | More compact, better UX for short text   |
+| Select from predefined options                          | Select                       | Prevents typos, faster than typing       |
+| Rich text editing (bold, italic, links)                 | Rich Text Editor             | Textarea is plain text only              |
+| Code input                                              | Textarea with monospace font | Or use specialized code editor component |
+
+**Component Comparison:**
+
+```typescript
+// ✅ Use Textarea for multi-line content
+<Textarea
+  label="Comment"
+  placeholder="Share your thoughts..."
+  rows={4}
+/>
+
+<Textarea
+  label="Bio"
+  placeholder="Tell us about yourself"
+  rows={6}
+/>
+
+// ❌ Don't use Textarea for single-line text - use Input
+<Textarea
+  label="Username"
+  rows={1}
+/>  // Wrong - single-line input should use Input
+
+<Input
+  label="Username"
+/>  // Correct
+
+// ❌ Don't use Textarea when options are predefined - use Select
+<Textarea
+  label="Country"
+  placeholder="Enter your country"
+/>  // Wrong - prone to typos and inconsistent data
+
+<Select.Root collection={countries}>
+  <Select.Label>Country</Select.Label>
+  <Select.Control>
+    <Select.Trigger>
+      <Select.ValueText placeholder="Select your country" />
+    </Select.Trigger>
+  </Select.Control>
+  <Select.Content>
+    {/* country options */}
+  </Select.Content>
+</Select.Root>  // Correct
+
+// ✅ Use Textarea for longer content that needs line breaks
+<form onSubmit={handleSubmit}>
+  <Input label="Title" />
+  <Textarea
+    label="Description"
+    rows={5}
+    placeholder="Provide a detailed description..."
+  />
+  <Button type="submit">Submit</Button>
+</form>
+```
+
 ## Import
 
 ```typescript

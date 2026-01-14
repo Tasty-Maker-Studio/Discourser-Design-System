@@ -20,6 +20,7 @@ Create a manual script to organize exported tokens from figma-token-sync into th
 ### Current State (After Round-Trip Test)
 
 **figma-token-sync exports:**
+
 ```
 Downloads/
 ├── primitives-colors.json    (78 tokens)
@@ -27,6 +28,7 @@ Downloads/
 ```
 
 **Discourser-Design-System has:**
+
 ```
 tokens/
 ├── tokens.json                     (combined - 146 tokens)
@@ -38,6 +40,7 @@ tokens/
 ### Problem
 
 No automated way to:
+
 1. Move downloaded files into project
 2. Split semantic-colors.json into light/dark
 3. Organize into proper directory structure
@@ -46,6 +49,7 @@ No automated way to:
 ### Solution
 
 Manual script (NOT auto-watch):
+
 ```bash
 npm run organize-tokens
 ```
@@ -63,6 +67,7 @@ npm run organize-tokens
 ### Functionality
 
 1. **Prompt for file locations**
+
    ```bash
    $ npm run organize-tokens
 
@@ -85,6 +90,7 @@ npm run organize-tokens
    - Handle missing modes gracefully
 
 4. **Move files to correct locations**
+
    ```
    tokens/
    ├── primitives-generated.json      ← from primitives-colors.json
@@ -102,6 +108,7 @@ npm run organize-tokens
    - Preserve Figma metadata ($extensions)
 
 7. **Summary report**
+
    ```bash
    ✅ Organization complete!
 
@@ -155,11 +162,14 @@ async function organizeFigmaExports() {
   const { light, dark } = splitSemanticModes(semantic);
 
   // 5. Write organized files
-  await writeTokenFiles({
-    primitives,
-    semanticLight: light,
-    semanticDark: dark
-  }, config.outputDir);
+  await writeTokenFiles(
+    {
+      primitives,
+      semanticLight: light,
+      semanticDark: dark,
+    },
+    config.outputDir,
+  );
 
   // 6. Generate combined tokens.json
   await generateCombinedTokens(config.outputDir);
@@ -176,7 +186,7 @@ async function organizeFigmaExports() {
 // 1. Figma plugin format (separate files already)
 // 2. Combined format with mode data
 
-function splitSemanticModes(semantic: any): { light: any, dark: any } {
+function splitSemanticModes(semantic: any): { light: any; dark: any } {
   const light: any = {};
   const dark: any = {};
 
@@ -216,7 +226,7 @@ async function promptForFiles(): Promise<FigmaExportConfig> {
       validate: (path: string) => {
         if (fs.existsSync(expandPath(path))) return true;
         return 'File not found. Please check the path.';
-      }
+      },
     },
     {
       type: 'input',
@@ -226,14 +236,14 @@ async function promptForFiles(): Promise<FigmaExportConfig> {
       validate: (path: string) => {
         if (fs.existsSync(expandPath(path))) return true;
         return 'File not found. Please check the path.';
-      }
-    }
+      },
+    },
   ]);
 
   return {
     primitivesPath: expandPath(answers.primitivesPath),
     semanticPath: expandPath(answers.semanticPath),
-    outputDir: path.join(__dirname, '..', 'tokens')
+    outputDir: path.join(__dirname, '..', 'tokens'),
   };
 }
 ```
@@ -269,6 +279,7 @@ async function promptForFiles(): Promise<FigmaExportConfig> {
 ## Testing Plan
 
 ### Test Case 1: Basic Organization
+
 ```bash
 # Given: Downloaded files in ~/Downloads
 # When: npm run organize-tokens
@@ -276,6 +287,7 @@ async function promptForFiles(): Promise<FigmaExportConfig> {
 ```
 
 ### Test Case 2: Backup Creation
+
 ```bash
 # Given: Existing token files
 # When: npm run organize-tokens
@@ -283,6 +295,7 @@ async function promptForFiles(): Promise<FigmaExportConfig> {
 ```
 
 ### Test Case 3: Mode Splitting
+
 ```bash
 # Given: semantic-colors.json with dark- prefixed tokens
 # When: Split is performed
@@ -290,6 +303,7 @@ async function promptForFiles(): Promise<FigmaExportConfig> {
 ```
 
 ### Test Case 4: Invalid Path
+
 ```bash
 # Given: Wrong file path provided
 # When: Validation runs
@@ -297,6 +311,7 @@ async function promptForFiles(): Promise<FigmaExportConfig> {
 ```
 
 ### Test Case 5: Missing Dark Mode
+
 ```bash
 # Given: Only light mode tokens in semantic
 # When: Split is performed
@@ -309,7 +324,7 @@ async function promptForFiles(): Promise<FigmaExportConfig> {
 
 ### Add to README.md
 
-```markdown
+````markdown
 ## Token Workflow
 
 ### After Exporting from Figma
@@ -322,15 +337,19 @@ async function promptForFiles(): Promise<FigmaExportConfig> {
    ```bash
    npm run organize-tokens
    ```
-   - Provide paths when prompted
-   - Review summary
+````
+
+- Provide paths when prompted
+- Review summary
 
 3. **Rebuild design system**
+
    ```bash
    npm run build:panda
    ```
 
 4. **Test in Storybook**
+
    ```bash
    npm run dev
    ```
@@ -340,6 +359,7 @@ async function promptForFiles(): Promise<FigmaExportConfig> {
    git add tokens/
    git commit -m "chore: update tokens from Figma"
    ```
+
 ```
 
 ---
@@ -462,3 +482,4 @@ None. All success criteria met.
 ---
 
 **Status:** ✅ Complete and verified with full round-trip test
+```

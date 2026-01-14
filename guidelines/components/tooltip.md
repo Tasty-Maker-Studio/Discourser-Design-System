@@ -2,6 +2,86 @@
 
 **Purpose:** Contextual information overlay that appears on hover or focus, providing supplementary details without cluttering the interface.
 
+## When to Use This Component
+
+Use Tooltip when you need to **provide brief, supplementary information that appears on hover or focus** to clarify icons, labels, or truncated text.
+
+### Decision Tree
+
+| Scenario                                       | Use Tooltip? | Alternative          | Reasoning                                            |
+| ---------------------------------------------- | ------------ | -------------------- | ---------------------------------------------------- |
+| Icon button labels or clarification            | ✅ Yes       | -                    | Tooltip reveals button purpose without cluttering UI |
+| Explaining truncated text or abbreviated terms | ✅ Yes       | -                    | Shows full content on hover                          |
+| Brief help text (1-2 sentences)                | ✅ Yes       | -                    | Quick contextual help without navigation             |
+| Interactive content (forms, buttons)           | ❌ No        | Popover              | Tooltips can't contain interactive elements          |
+| Critical information users must read           | ❌ No        | Inline text or Alert | Tooltips are dismissible and easily missed           |
+| Long explanations or documentation             | ❌ No        | Popover or Help page | Tooltip is limited to brief content                  |
+
+### Component Comparison
+
+```typescript
+// ✅ Tooltip - Icon button clarification
+<Tooltip content="Delete item permanently">
+  <IconButton aria-label="Delete">
+    <TrashIcon />
+  </IconButton>
+</Tooltip>
+
+// ❌ Don't use Tooltip for interactive content - Use Popover
+<Tooltip
+  content={
+    <div>
+      <Input label="Name" />
+      <Button>Save</Button>
+    </div>
+  }
+>
+  <Button>Edit</Button>
+</Tooltip>
+
+// ✅ Better: Use Popover for interactive forms
+<Popover.Root>
+  <Popover.Trigger asChild>
+    <Button>Edit</Button>
+  </Popover.Trigger>
+  <Popover.Positioner>
+    <Popover.Content>
+      <Input label="Name" />
+      <Button>Save</Button>
+    </Popover.Content>
+  </Popover.Positioner>
+</Popover.Root>
+
+// ❌ Don't use Tooltip for critical info - Use inline text
+<Tooltip content="You must accept terms to continue">
+  <Button>Continue</Button>
+</Tooltip>
+
+// ✅ Better: Show critical info inline
+<Stack gap="2">
+  <Text color="error.fg">You must accept terms to continue</Text>
+  <Button disabled>Continue</Button>
+</Stack>
+
+// ❌ Don't use Tooltip for long explanations - Use Popover
+<Tooltip content="This feature allows you to... [3 paragraphs]">
+  <IconButton><InfoIcon /></IconButton>
+</Tooltip>
+
+// ✅ Better: Use Popover for detailed explanations
+<Popover.Root>
+  <Popover.Trigger asChild>
+    <IconButton><InfoIcon /></IconButton>
+  </Popover.Trigger>
+  <Popover.Positioner>
+    <Popover.Content>
+      <Popover.Title>Feature Guide</Popover.Title>
+      <Popover.Description>Detailed explanation...</Popover.Description>
+    </Popover.Content>
+  </Popover.Positioner>
+</Popover.Root>
+```
+
 ## Import
 
 ```typescript

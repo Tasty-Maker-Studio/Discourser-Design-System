@@ -2,6 +2,76 @@
 
 **Purpose:** Visual representation of users or entities through images, initials, or icons, providing identity context throughout the application.
 
+## When to Use This Component
+
+Use Avatar when you need to **visually represent a user, person, or entity** with an image, initials, or icon to provide identity context.
+
+### Decision Tree
+
+| Scenario                  | Use Avatar? | Alternative                 | Reasoning                                        |
+| ------------------------- | ----------- | --------------------------- | ------------------------------------------------ |
+| User profile pictures     | ✅ Yes      | -                           | Avatar is designed for user representation       |
+| Comment author indicators | ✅ Yes      | -                           | Shows who created the content                    |
+| Team member lists         | ✅ Yes      | -                           | Visual identification of people                  |
+| Status labels or tags     | ❌ No       | Badge                       | Badge is for status, not identity                |
+| Decorative icons          | ❌ No       | Icon component              | Use semantic icons for UI elements               |
+| Company logos (non-user)  | ⚠️ Maybe    | Image with `shape="square"` | Avatar with square shape works for organizations |
+
+### Component Comparison
+
+```typescript
+// ✅ Avatar - User profile representation
+<Avatar.Root colorPalette="primary" size="md">
+  <Avatar.Fallback name="John Doe" />
+  <Avatar.Image src="/avatars/john.jpg" alt="John Doe" />
+</Avatar.Root>
+
+// ❌ Don't use Avatar for status indicators - Use Badge
+<Avatar.Root colorPalette="success" size="sm">
+  <Avatar.Fallback>✓</Avatar.Fallback>
+</Avatar.Root>
+
+// ✅ Better: Use Badge for status
+<Badge colorPalette="success">Active</Badge>
+
+// ❌ Don't use Avatar for UI icons - Use Icon
+<Avatar.Root size="sm">
+  <Avatar.Fallback>
+    <SettingsIcon />
+  </Avatar.Fallback>
+</Avatar.Root>
+
+// ✅ Better: Use IconButton for UI actions
+<IconButton aria-label="Settings">
+  <SettingsIcon />
+</IconButton>
+
+// ✅ Avatar - Comment author with status
+<HStack gap="3">
+  <Box position="relative">
+    <Avatar.Root colorPalette="primary" size="md">
+      <Avatar.Fallback name="Jane Smith" />
+      <Avatar.Image src="/avatars/jane.jpg" alt="Jane Smith" />
+    </Avatar.Root>
+    {/* Online status indicator */}
+    <Box
+      position="absolute"
+      bottom="0"
+      right="0"
+      width="3"
+      height="3"
+      borderRadius="full"
+      bg="success.solid"
+      border="2px solid white"
+    />
+  </Box>
+  <Stack gap="1">
+    <Text fontWeight="semibold">Jane Smith</Text>
+    <Text fontSize="sm" color="fg.muted">2 hours ago</Text>
+  </Stack>
+</HStack>
+```
+
 ## Import
 
 ```typescript

@@ -2,6 +2,101 @@
 
 **Purpose:** Provides mutually exclusive selection between multiple options, allowing users to choose exactly one item from a set of choices.
 
+## When to Use This Component
+
+Use RadioGroup when the user must **select exactly one option from a visible set of mutually exclusive choices** (typically 2-7 options).
+
+### Decision Tree
+
+| Scenario                                                   | Use RadioGroup? | Alternative              | Reasoning                                                |
+| ---------------------------------------------------------- | --------------- | ------------------------ | -------------------------------------------------------- |
+| User must pick exactly one option from 2-7 visible choices | ✅ Yes          | -                        | RadioGroup shows all options at once for easy comparison |
+| Single selection from many options (8+)                    | ❌ No           | Select                   | Dropdown saves vertical space for long lists             |
+| User can select multiple items                             | ❌ No           | Checkbox                 | Checkboxes allow multiple selections                     |
+| Single choice with on/off state only                       | ❌ No           | Switch                   | Switch is clearer for binary toggles                     |
+| Optional single selection (can select none)                | ⚠️ Maybe        | Select with empty option | RadioGroup typically requires a selection                |
+| Navigation between views                                   | ❌ No           | Tabs                     | Tabs are designed for view switching                     |
+
+### Component Comparison
+
+```typescript
+// ✅ RadioGroup - Single choice from visible options
+<RadioGroup.Root defaultValue="email">
+  <RadioGroup.Label>Notification Method</RadioGroup.Label>
+  <RadioGroup.Item value="email">
+    <RadioGroup.ItemControl>
+      <RadioGroup.Indicator />
+    </RadioGroup.ItemControl>
+    <RadioGroup.ItemText>Email notifications</RadioGroup.ItemText>
+    <RadioGroup.ItemHiddenInput />
+  </RadioGroup.Item>
+  <RadioGroup.Item value="sms">
+    <RadioGroup.ItemControl>
+      <RadioGroup.Indicator />
+    </RadioGroup.ItemControl>
+    <RadioGroup.ItemText>SMS notifications</RadioGroup.ItemText>
+    <RadioGroup.ItemHiddenInput />
+  </RadioGroup.Item>
+  <RadioGroup.Item value="none">
+    <RadioGroup.ItemControl>
+      <RadioGroup.Indicator />
+    </RadioGroup.ItemControl>
+    <RadioGroup.ItemText>No notifications</RadioGroup.ItemText>
+    <RadioGroup.ItemHiddenInput />
+  </RadioGroup.Item>
+</RadioGroup.Root>
+
+// ❌ Don't use RadioGroup for many options - Use Select instead
+<RadioGroup.Root defaultValue="country">
+  <RadioGroup.Item value="us">United States</RadioGroup.Item>
+  <RadioGroup.Item value="uk">United Kingdom</RadioGroup.Item>
+  {/* ...50 more countries - too many for radio buttons */}
+</RadioGroup.Root>
+
+// ✅ Better: Use Select for long lists
+<Select.Root>
+  <Select.Trigger>
+    <Select.ValueText placeholder="Select country" />
+  </Select.Trigger>
+  <Select.Content>
+    {countries.map((country) => (
+      <Select.Item key={country.value} item={country.value}>
+        <Select.ItemText>{country.label}</Select.ItemText>
+      </Select.Item>
+    ))}
+  </Select.Content>
+</Select.Root>
+
+// ❌ Don't use RadioGroup for multiple selections - Use Checkbox instead
+<RadioGroup.Root>
+  <RadioGroup.Label>Select features (can't pick multiple)</RadioGroup.Label>
+  <RadioGroup.Item value="feature1">Feature 1</RadioGroup.Item>
+  <RadioGroup.Item value="feature2">Feature 2</RadioGroup.Item>
+</RadioGroup.Root>
+
+// ✅ Better: Use Checkbox for multiple selections
+<Stack gap="2">
+  <Checkbox value="feature1">Feature 1</Checkbox>
+  <Checkbox value="feature2">Feature 2</Checkbox>
+  <Checkbox value="feature3">Feature 3</Checkbox>
+</Stack>
+
+// ❌ Don't use RadioGroup for binary on/off - Use Switch instead
+<RadioGroup.Root defaultValue="off">
+  <RadioGroup.Label>Notifications</RadioGroup.Label>
+  <RadioGroup.Item value="on">Enable notifications</RadioGroup.Item>
+  <RadioGroup.Item value="off">Disable notifications</RadioGroup.Item>
+</RadioGroup.Root>
+
+// ✅ Better: Use Switch for binary toggle
+<Switch.Root>
+  <Switch.Label>Enable notifications</Switch.Label>
+  <Switch.Control>
+    <Switch.Thumb />
+  </Switch.Control>
+</Switch.Root>
+```
+
 ## Import
 
 ```typescript

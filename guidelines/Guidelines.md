@@ -10,20 +10,24 @@ Before writing any code, follow these steps IN ORDER:
 
 Read ALL files with a name that starts with "overview-":
 
-- `overview-components.md` - Available components and usage patterns
+- **[overview-components.md](overview-components.md)** - Available components with quick reference tables
+- **[overview-imports.md](overview-imports.md)** - Package installation and import patterns
+- **[overview-patterns.md](overview-patterns.md)** - Common UI patterns combining multiple components
 
 ### Step 2: Read Design Token Files (REQUIRED)
 
 Read ALL files in the `design-tokens/` folder:
 
-- `design-tokens/colors.md`
-- `design-tokens/typography.md`
-- `design-tokens/spacing.md`
-- `design-tokens/elevation.md`
+- **[design-tokens/colors.md](design-tokens/colors.md)** - Semantic color tokens and usage
+- **[design-tokens/typography.md](design-tokens/typography.md)** - Typography scale and text styles
+- **[design-tokens/spacing.md](design-tokens/spacing.md)** - Spacing system and layout
+- **[design-tokens/elevation.md](design-tokens/elevation.md)** - Surface elevation and shadows
 
 ### Step 3: Plan Components Needed (REQUIRED)
 
-Identify which components you need to use.
+Identify which components you need to use based on your task.
+
+Refer to [overview-components.md](overview-components.md) for the complete list.
 
 ### Step 4: Read Component Guidelines BEFORE Using Components (REQUIRED)
 
@@ -31,44 +35,48 @@ BEFORE using ANY component, you MUST read its guidelines file first:
 
 **Interactive Elements:**
 
-- Using Button? → Read `components/button.md` FIRST
-- Using IconButton? → Read `components/icon-button.md` FIRST
-- Using Switch? → Read `components/switch.md` FIRST
-- Using Checkbox? → Read `components/checkbox.md` FIRST
-- Using RadioGroup? → Read `components/radio-group.md` FIRST
+- Using Button? → Read **[components/button.md](components/button.md)** FIRST
+- Using IconButton? → Read **[components/icon-button.md](components/icon-button.md)** FIRST
+- Using Switch? → Read **[components/switch.md](components/switch.md)** FIRST
+- Using Checkbox? → Read **[components/checkbox.md](components/checkbox.md)** FIRST
+- Using RadioGroup? → Read **[components/radio-group.md](components/radio-group.md)** FIRST
 
 **Form Elements:**
 
-- Using Input? → Read `components/input.md` FIRST
-- Using Textarea? → Read `components/textarea.md` FIRST
-- Using Select? → Read `components/select.md` FIRST
+- Using Input? → Read **[components/input.md](components/input.md)** FIRST
+- Using InputAddon? → Read **[components/input-addon.md](components/input-addon.md)** FIRST
+- Using InputGroup? → Read **[components/input-group.md](components/input-group.md)** FIRST
+- Using Textarea? → Read **[components/textarea.md](components/textarea.md)** FIRST
+- Using Select? → Read **[components/select.md](components/select.md)** FIRST
+- Using Slider? → Read **[components/slider.md](components/slider.md)** FIRST
 
 **Layout & Container:**
 
-- Using Card? → Read `components/card.md` FIRST
-- Using Accordion? → Read `components/accordion.md` FIRST
-- Using Tabs? → Read `components/tabs.md` FIRST
-- Using Drawer? → Read `components/drawer.md` FIRST
+- Using Card? → Read **[components/card.md](components/card.md)** FIRST
+- Using Accordion? → Read **[components/accordion.md](components/accordion.md)** FIRST
+- Using Tabs? → Read **[components/tabs.md](components/tabs.md)** FIRST
+- Using Drawer? → Read **[components/drawer.md](components/drawer.md)** FIRST
 
 **Overlay Elements:**
 
-- Using Dialog? → Read `components/dialog.md` FIRST
-- Using Popover? → Read `components/popover.md` FIRST
-- Using Tooltip? → Read `components/tooltip.md` FIRST
+- Using Dialog? → Read **[components/dialog.md](components/dialog.md)** FIRST
+- Using Popover? → Read **[components/popover.md](components/popover.md)** FIRST
+- Using Tooltip? → Read **[components/tooltip.md](components/tooltip.md)** FIRST
 
 **Feedback & Status:**
 
-- Using Badge? → Read `components/badge.md` FIRST
-- Using Avatar? → Read `components/avatar.md` FIRST
-- Using Toast? → Read `components/toast.md` FIRST
-- Using Progress? → Read `components/progress.md` FIRST
-- Using Skeleton? → Read `components/skeleton.md` FIRST
+- Using Badge? → Read **[components/badge.md](components/badge.md)** FIRST
+- Using Avatar? → Read **[components/avatar.md](components/avatar.md)** FIRST
+- Using Toast? → Read **[components/toast.md](components/toast.md)** FIRST
+- Using Progress? → Read **[components/progress.md](components/progress.md)** FIRST
+- Using Skeleton? → Read **[components/skeleton.md](components/skeleton.md)** FIRST
+- Using Spinner? → Read **[components/spinner.md](components/spinner.md)** FIRST
 
 **Typography:**
 
-- Using Heading? → Read `components/heading.md` FIRST
+- Using Heading? → Read **[components/heading.md](components/heading.md)** FIRST
 
-DO NOT write code using a component until you have read its specific guidelines.
+**DO NOT write code using a component until you have read its specific guidelines.**
 
 ## Core Principles
 
@@ -77,101 +85,16 @@ DO NOT write code using a component until you have read its specific guidelines.
 - **Follow M3 patterns** for variants, sizing, and state layers
 - **Do not override styles** unless absolutely necessary
 - **Never use inline styles** with raw color values
+- **Read component guidelines** before using any component
+- **Follow common patterns** documented in overview-patterns.md
 
-## Package Installation
+## Quick Start
 
-```bash
-npm install @discourser/design-system react react-dom
-```
-
-## Package Imports
-
-```typescript
-// Simple Components (exported directly)
-import {
-  Button,
-  Card,
-  Input,
-  Textarea,
-  Heading,
-  Badge,
-  Toaster,
-  toaster,
-} from '@discourser/design-system';
-
-// Compound Components (exported as namespaces)
-import * as Checkbox from '@discourser/design-system';
-import * as RadioGroup from '@discourser/design-system';
-import * as Select from '@discourser/design-system';
-import * as Dialog from '@discourser/design-system';
-import * as Drawer from '@discourser/design-system';
-import * as Popover from '@discourser/design-system';
-import * as Tooltip from '@discourser/design-system';
-import * as Accordion from '@discourser/design-system';
-import * as Tabs from '@discourser/design-system';
-import * as Avatar from '@discourser/design-system';
-import * as Progress from '@discourser/design-system';
-import * as Skeleton from '@discourser/design-system';
-import * as IconButton from '@discourser/design-system';
-import * as Switch from '@discourser/design-system';
-
-// For advanced styling (use sparingly)
-import { css } from '@discourser/design-system/styled-system/css';
-import { button } from '@discourser/design-system/styled-system/recipes';
-```
-
-## Quick Reference
-
-**Interactive Elements:**
-
-| Component  | Key Variants                            | Guidelines                  |
-| ---------- | --------------------------------------- | --------------------------- |
-| Button     | filled, outlined, text, elevated, tonal | `components/button.md`      |
-| IconButton | standard, filled, tonal, outlined       | `components/icon-button.md` |
-| Switch     | -                                       | `components/switch.md`      |
-| Checkbox   | solid, outline, subtle                  | `components/checkbox.md`    |
-| RadioGroup | solid                                   | `components/radio-group.md` |
-
-**Form Elements:**
-
-| Component | Key Variants                      | Guidelines               |
-| --------- | --------------------------------- | ------------------------ |
-| Input     | surface, outline, subtle          | `components/input.md`    |
-| Textarea  | surface, outline, subtle, flushed | `components/textarea.md` |
-| Select    | outline, surface                  | `components/select.md`   |
-
-**Layout & Containers:**
-
-| Component | Key Variants                        | Guidelines                |
-| --------- | ----------------------------------- | ------------------------- |
-| Card      | elevated, filled, outlined          | `components/card.md`      |
-| Accordion | outline, plain                      | `components/accordion.md` |
-| Tabs      | line, subtle, enclosed              | `components/tabs.md`      |
-| Drawer    | Placements: start, end, top, bottom | `components/drawer.md`    |
-
-**Overlays:**
-
-| Component | Key Features                  | Guidelines              |
-| --------- | ----------------------------- | ----------------------- |
-| Dialog    | Sizes: sm, md, lg, fullscreen | `components/dialog.md`  |
-| Popover   | 12 positioning options        | `components/popover.md` |
-| Tooltip   | Lightweight contextual help   | `components/tooltip.md` |
-
-**Feedback & Status:**
-
-| Component | Key Variants                                     | Guidelines               |
-| --------- | ------------------------------------------------ | ------------------------ |
-| Badge     | subtle, solid, surface, outline                  | `components/badge.md`    |
-| Avatar    | Sizes: 2xs to 2xl, Shapes: full, rounded, square | `components/avatar.md`   |
-| Toast     | Types: success, error, warning, loading          | `components/toast.md`    |
-| Progress  | Shapes: linear, circular                         | `components/progress.md` |
-| Skeleton  | Animations: pulse, shine, none                   | `components/skeleton.md` |
-
-**Typography:**
-
-| Component | Key Features                      | Guidelines              |
-| --------- | --------------------------------- | ----------------------- |
-| Heading   | Sizes: xs to 7xl (M3 text styles) | `components/heading.md` |
+1. Install the package (see [overview-imports.md](overview-imports.md))
+2. Import components you need
+3. Use components with their documented variants and props
+4. Apply semantic tokens for custom styling
+5. Follow accessibility best practices from component guidelines
 
 ## Theme Support
 
@@ -187,9 +110,30 @@ The design system supports light and dark themes. The theme is controlled by the
 
 All semantic color tokens automatically adapt to the current theme.
 
+## Documentation Structure
+
+```
+guidelines/
+├── Guidelines.md (this file)         # Main navigation
+├── overview-components.md            # Component catalog
+├── overview-imports.md               # Installation & imports
+├── overview-patterns.md              # Common UI patterns
+├── design-tokens/
+│   ├── colors.md                     # Color system
+│   ├── typography.md                 # Type scale
+│   ├── spacing.md                    # Spacing system
+│   └── elevation.md                  # Elevation system
+└── components/
+    ├── button.md                     # Component guidelines
+    ├── input.md
+    └── ...                           # (25 total components)
+```
+
 ## Getting Help
 
 For questions or issues, visit:
 
-- GitHub: https://github.com/Tasty-Maker-Studio/Discourser-Design-System
-- Documentation: Read the overview and component-specific guidelines in this folder
+- **GitHub:** https://github.com/Tasty-Maker-Studio/Discourser-Design-System
+- **Documentation:** Read the overview and component-specific guidelines in this folder
+- **Component Reference:** See [overview-components.md](overview-components.md)
+- **Patterns:** See [overview-patterns.md](overview-patterns.md)

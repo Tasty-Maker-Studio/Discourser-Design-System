@@ -2,6 +2,99 @@
 
 **Purpose:** Collapsible content panels for organizing and revealing information progressively, following Material Design 3 principles.
 
+## When to Use This Component
+
+Use Accordion when you need to **organize and progressively disclose related content in collapsible sections** to conserve space while keeping content accessible.
+
+### Decision Tree
+
+| Scenario                                            | Use Accordion? | Alternative               | Reasoning                                                       |
+| --------------------------------------------------- | -------------- | ------------------------- | --------------------------------------------------------------- |
+| Displaying FAQ with expandable answers              | ✅ Yes         | -                         | Perfect for progressively disclosing detailed information       |
+| Organizing settings into collapsible sections       | ✅ Yes         | -                         | Groups related settings while saving vertical space             |
+| User needs to view multiple sections simultaneously | ⚠️ Maybe       | Tabs or Separate sections | Accordion with `multiple={true}` works, but tabs may be clearer |
+| Navigation between different views                  | ❌ No          | Tabs                      | Tabs show one view at a time with clear navigation              |
+| Content where all sections should be visible        | ❌ No          | Regular sections          | Don't hide content that should always be visible                |
+| Quick comparison of all options                     | ❌ No          | Table or Grid             | Accordion requires clicking to see content                      |
+
+### Component Comparison
+
+```typescript
+// ✅ Accordion - FAQs with expandable answers
+<Accordion.Root defaultValue="faq-1">
+  <Accordion.Item value="faq-1">
+    <Accordion.ItemTrigger>
+      What is your return policy?
+      <Accordion.ItemIndicator />
+    </Accordion.ItemTrigger>
+    <Accordion.ItemContent>
+      <Accordion.ItemBody>
+        We accept returns within 30 days of purchase with original packaging.
+      </Accordion.ItemBody>
+    </Accordion.ItemContent>
+  </Accordion.Item>
+  <Accordion.Item value="faq-2">
+    <Accordion.ItemTrigger>
+      How long does shipping take?
+      <Accordion.ItemIndicator />
+    </Accordion.ItemTrigger>
+    <Accordion.ItemContent>
+      <Accordion.ItemBody>
+        Standard shipping takes 5-7 business days.
+      </Accordion.ItemBody>
+    </Accordion.ItemContent>
+  </Accordion.Item>
+</Accordion.Root>
+
+// ❌ Don't use Accordion for navigation - Use Tabs instead
+<Accordion.Root>
+  <Accordion.Item value="overview">
+    <Accordion.ItemTrigger>Overview</Accordion.ItemTrigger>
+    <Accordion.ItemContent>
+      <Dashboard />
+    </Accordion.ItemContent>
+  </Accordion.Item>
+  <Accordion.Item value="analytics">
+    <Accordion.ItemTrigger>Analytics</Accordion.ItemTrigger>
+    <Accordion.ItemContent>
+      <AnalyticsView />
+    </Accordion.ItemContent>
+  </Accordion.Item>
+</Accordion.Root>
+
+// ✅ Better: Use Tabs for view switching
+<Tabs.Root defaultValue="overview">
+  <Tabs.List>
+    <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
+    <Tabs.Trigger value="analytics">Analytics</Tabs.Trigger>
+    <Tabs.Indicator />
+  </Tabs.List>
+  <Tabs.Content value="overview"><Dashboard /></Tabs.Content>
+  <Tabs.Content value="analytics"><AnalyticsView /></Tabs.Content>
+</Tabs.Root>
+
+// ❌ Don't use Accordion when all content should be visible
+<Accordion.Root multiple defaultValue={['step1', 'step2', 'step3']}>
+  <Accordion.Item value="step1">
+    <Accordion.ItemTrigger>Step 1</Accordion.ItemTrigger>
+    <Accordion.ItemContent>Instructions</Accordion.ItemContent>
+  </Accordion.Item>
+  {/* If all steps need to be visible, don't hide them */}
+</Accordion.Root>
+
+// ✅ Better: Use regular sections for always-visible content
+<Stack gap="4">
+  <Section>
+    <Heading>Step 1</Heading>
+    <Text>Instructions...</Text>
+  </Section>
+  <Section>
+    <Heading>Step 2</Heading>
+    <Text>Instructions...</Text>
+  </Section>
+</Stack>
+```
+
 ## Import
 
 ```typescript

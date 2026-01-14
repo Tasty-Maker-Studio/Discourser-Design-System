@@ -24,6 +24,7 @@ All objectives achieved:
 6. ✅ **Added npm script** - `pnpm clean:old-backups`
 
 **Results:**
+
 - Clean token directory with only source files visible
 - Automated backup retention policy (keep last 5)
 - Clear documentation for workflow
@@ -104,7 +105,7 @@ mv tokens/STAGING-BEFORE-EXPORT tokens/.archive/
 
 Create `tokens/.archive/README.md`:
 
-```markdown
+````markdown
 # Token Archive
 
 This directory contains historical token files from testing and development.
@@ -124,10 +125,13 @@ These files are kept for reference but are not used in the build process.
 - Archive significant test baselines indefinitely
 
 To clean old backups:
+
 ```bash
 npm run clean:old-backups
 ```
-```
+````
+
+````
 
 ### 4. Update .gitignore
 
@@ -151,13 +155,13 @@ CLEAN-BASELINE-*/
 # Keep archive directory structure
 .archive/*
 !.archive/README.md
-```
+````
 
 ### 5. Add Reference README
 
 Create `tokens/README.md`:
 
-```markdown
+````markdown
 # Design Tokens
 
 This directory contains the design token files for Discourser-Design-System.
@@ -165,6 +169,7 @@ This directory contains the design token files for Discourser-Design-System.
 ## File Structure
 
 ### Working Files (Generated - Not in Git)
+
 These files are generated from Figma exports and should not be manually edited:
 
 - `primitives-generated.json` - Primitive color tokens from Figma
@@ -173,6 +178,7 @@ These files are generated from Figma exports and should not be manually edited:
 - `tokens.json` - Combined token file for import back to Figma
 
 ### Reference Files (In Git)
+
 These are the source files managed in subdirectories:
 
 - `primitives/colors.json` - Material 3 tonal palettes (read-only reference)
@@ -187,8 +193,10 @@ These are the source files managed in subdirectories:
    ```bash
    npm run organize-tokens
    ```
+````
 
 2. **Review changes**
+
    ```bash
    git diff tokens/primitives-generated.json
    ```
@@ -203,6 +211,7 @@ These are the source files managed in subdirectories:
 The organize-tokens script automatically creates backups in `.archive/backup-[timestamp]/`.
 
 To clean old backups:
+
 ```bash
 npm run clean:old-backups
 ```
@@ -214,7 +223,8 @@ npm run clean:old-backups
 ✅ **Reference files in subdirectories** are for documentation purposes
 
 📁 **`.archive/`** contains historical files from testing - safe to delete if needed
-```
+
+````
 
 ### 6. Create Cleanup Script
 
@@ -259,9 +269,10 @@ find "$ARCHIVE_DIR" -maxdepth 1 -type d -name "backup-*" | sort -r | while read 
   SIZE=$(du -sh "$backup" | cut -f1)
   echo "  • $(basename "$backup") ($SIZE)"
 done
-```
+````
 
 Make executable:
+
 ```bash
 chmod +x scripts/clean-old-backups.sh
 ```
@@ -283,21 +294,27 @@ chmod +x scripts/clean-old-backups.sh
 After cleanup:
 
 1. **Check directory structure**
+
    ```bash
    tree tokens/ -L 2
    ```
+
    Should show clean organization
 
 2. **Verify .gitignore**
+
    ```bash
    git status tokens/
    ```
+
    Should only show reference files and READMEs
 
 3. **Test backup cleanup**
+
    ```bash
    npm run clean:old-backups
    ```
+
    Should keep 5 most recent
 
 4. **Verify build still works**
