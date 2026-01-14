@@ -1,5 +1,51 @@
 # @discourser/design-system
 
+## 0.5.0
+
+### Minor Changes
+
+- [#39](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/39) [`452479e`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/452479e6284913eefd3c25f2e774d96b3e134508) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Add comprehensive token management and transformation scripts
+  - Add design language transformation scripts (DTCG to/from contract)
+  - Add Figma token export and organization scripts
+  - Add token backup, comparison, and round-trip testing utilities
+  - Update and complete task documentation (DS-003, DS-004, DS-004.5, DS-005)
+  - Fix multiple component styling issues (Drawer, Dialog, Popover, Tooltip, etc.)
+  - Add token directory structure with primitives and semantic tokens
+  - Improve Material Design 3 integration and type safety in scripts
+
+- [#39](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/39) [`452479e`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/452479e6284913eefd3c25f2e774d96b3e134508) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - feat: add pre-compiled CSS for zero-config integration
+
+  The package now ships with a pre-compiled `styles.css` file (144KB), enabling instant integration without build configuration:
+
+  **New Usage:**
+
+  ```tsx
+  import '@discourser/design-system/styles.css';
+  import { Button, Card } from '@discourser/design-system';
+  ```
+
+  **Features:**
+  - ✅ No build step required - just import and use
+  - ✅ All semantic tokens, component recipes, and theme support included
+  - ✅ Light/dark theme support via `data-theme` attribute
+  - ✅ Optimized for Figma Make integration
+  - ✅ 144KB uncompressed (~20-25KB gzipped)
+
+  **Breaking Changes:**
+  None - existing styled-system imports continue to work
+
+  **Documentation:**
+  - New CSS_USAGE.md with complete integration guide
+  - Updated README with quick start examples
+  - Framework-specific examples (Vite, Next.js)
+
+  **Build Changes:**
+  - Added `build:css` script: `panda cssgen --outfile dist/styles.css`
+  - Updated package.json exports to include `./styles.css`
+  - Build order: panda codegen → tsup → cssgen
+
+  This enables tools like Figma Make to consume the package without requiring Panda CSS configuration.
+
 ## 0.4.0
 
 ### Minor Changes
