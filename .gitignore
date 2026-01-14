@@ -82,6 +82,9 @@ temp/
 *.temp
 .sass-cache/
 
+# Archives
+archives/
+
 # Test output
 test-results/
 playwright-report/
