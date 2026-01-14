@@ -38,9 +38,15 @@ yarn add @discourser/design-system
 
 ## 🎯 Quick Start
 
+**New in v0.4.1:** Pre-compiled CSS is now included! No build step required.
+
 ```tsx
-import { Button, Card, IconButton } from '@discourser/design-system';
-import '@discourser/design-system/styled-system';
+// Import the pre-compiled CSS (do this once in your app entry point)
+import '@discourser/design-system/styles.css';
+
+// Import and use components
+import { Button, Card } from '@discourser/design-system';
+import * as IconButton from '@discourser/design-system';
 
 function App() {
   return (
@@ -50,13 +56,15 @@ function App() {
       <Button variant="filled" size="md">
         Get Started
       </Button>
-      <IconButton variant="tonal" aria-label="Settings">
+      <IconButton.Root variant="tonal" aria-label="Settings">
         <SettingsIcon />
-      </IconButton>
+      </IconButton.Root>
     </Card>
   );
 }
 ```
+
+**📘 See [CSS_USAGE.md](./CSS_USAGE.md) for complete usage guide including theme support, Figma Make integration, and framework-specific examples.**
 
 ## 📖 Components
 

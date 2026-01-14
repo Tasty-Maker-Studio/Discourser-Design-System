@@ -25,6 +25,7 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./styles.css": "./dist/styles.css",
     "./styled-system": {
       "types": "./styled-system/types/index.d.ts",
       "import": "./styled-system/index.mjs",
@@ -53,8 +54,9 @@
   ],
   "scripts": {
     "dev": "pnpm docs:generate && storybook dev -p 6006",
-    "build": "pnpm build:panda && pnpm build:lib",
+    "build": "pnpm build:panda && pnpm build:lib && pnpm build:css",
     "build:panda": "panda codegen",
+    "build:css": "panda cssgen --outfile dist/styles.css",
     "build:lib": "tsup",
     "build:storybook": "pnpm docs:generate && storybook build",
     "prepare": "panda codegen && husky",
