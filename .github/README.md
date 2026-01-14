@@ -7,8 +7,8 @@ This directory contains automated workflows for continuous integration and deplo
 ### CI (`ci.yml`)
 
 **Triggers:**
-- Push to `main` branch
-- Pull requests to `main` branch
+- Push to `main` or `dev` branches
+- Pull requests to `main` or `dev` branches
 
 **What it does:**
 1. Runs on Node.js 20.x
@@ -21,7 +21,21 @@ This directory contains automated workflows for continuous integration and deplo
 8. Builds Storybook documentation
 9. Uploads build artifacts (retained for 7 days)
 
-**Status:** Automatically runs on every PR and push to main.
+**Status:** Automatically runs on every PR and push to main or dev.
+
+---
+
+### Branch Protection (`branch-protection.yml`)
+
+**Triggers:**
+- Pull requests to `main` branch
+
+**What it does:**
+1. Validates that PRs to `main` only come from `dev` branch
+2. Provides helpful error messages if branching strategy is violated
+3. Validates branch naming conventions for PRs to `dev` (warning only)
+
+**Purpose:** Enforces the Git Flow branching strategy. See [BRANCHING_STRATEGY.md](../BRANCHING_STRATEGY.md) for details.
 
 ---
 

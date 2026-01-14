@@ -651,11 +651,13 @@ This design system uses [figma-token-sync](https://github.com/yourusername/figma
 
 **⚠️ IMPORTANT: We use Changesets for version management. Never manually edit the version in `package.json`.**
 
+**📋 Branching Strategy**: We use a Git Flow-inspired strategy. See [BRANCHING_STRATEGY.md](./BRANCHING_STRATEGY.md) for complete details.
+
 #### For Team Members (Write Access)
 
-1. **Create a feature branch from `main`:**
+1. **Create a feature branch from `dev`:**
    ```bash
-   git checkout main
+   git checkout dev
    git pull
    git checkout -b feature/my-feature  # or fix/bug-name, docs/readme-update
    ```
@@ -685,12 +687,14 @@ This design system uses [figma-token-sync](https://github.com/yourusername/figma
    git push -u origin feature/my-feature
    ```
 
-5. **Open a Pull Request to `main`:**
+5. **Open a Pull Request to `dev`:**
    - CI will run automatically (lint, test, typecheck, build)
    - Address any CI failures
    - Wait for review (if required)
 
-6. **After your PR is merged:**
+6. **After your PR is merged to `dev`:**
+   - Changes accumulate in `dev` branch
+   - Periodically, maintainers merge `dev` → `main` for releases
    - Changesets bot creates/updates a "Version Packages" PR automatically
    - When "Version Packages" PR is merged → package publishes to npm automatically via OIDC
 
@@ -702,13 +706,33 @@ This design system uses [figma-token-sync](https://github.com/yourusername/figma
    git clone https://github.com/YOUR_USERNAME/Discourser-Design-System.git
    ```
 
-3. **Follow steps 1-5 above** (feature branch, changeset, commit)
-4. **Open a Pull Request** from your fork to our `main` branch
+3. **Follow steps 1-5 above** (feature branch from `dev`, changeset, commit)
+4. **Open a Pull Request** from your fork to our `dev` branch
 5. **Wait for maintainer review** - we'll review and merge if approved
+
+### Branching Strategy
+
+We use a Git Flow-inspired branching strategy:
+
+- **`main`** - Production releases only. Only accepts PRs from `dev`.
+- **`dev`** - Integration branch. All feature development branches from here.
+- **`feature/*`** - New features (branch from `dev`, PR to `dev`)
+- **`fix/*`** - Bug fixes (branch from `dev`, PR to `dev`)
+- **`docs/*`** - Documentation (branch from `dev`, PR to `dev`)
+
+**Key Rules:**
+- ✅ Create feature branches from `dev`
+- ✅ Open PRs to `dev` (not `main`)
+- ✅ Only `dev` can merge to `main` (for releases)
+- ❌ Don't create feature branches from `main`
+- ❌ Don't open PRs directly to `main` from feature branches
+
+See [BRANCHING_STRATEGY.md](./BRANCHING_STRATEGY.md) for complete documentation.
 
 ### Branch Protection
 
-- ✅ `main` is protected - all changes require Pull Requests
+- ✅ `main` is protected - only accepts PRs from `dev`
+- ✅ `dev` is protected - all changes require Pull Requests
 - ✅ CI must pass before merging (lint, test, typecheck, build)
 - ✅ Only maintainers can merge to `main`
 - ✅ Releases only happen from `main` via automated workflow
@@ -717,22 +741,28 @@ This design system uses [figma-token-sync](https://github.com/yourusername/figma
 
 **You don't manually publish!** Our CI/CD handles it:
 
-1. **Changesets accumulate** - Multiple PRs can add changesets
-2. **"Version Packages" PR** - Created automatically when changesets exist
-3. **Review changelog** - Check the auto-generated CHANGELOG.md
-4. **Merge "Version Packages" PR** - Triggers automatic npm publish via OIDC
-5. **Published!** - Package is live on npm with provenance
+1. **Changesets accumulate in `dev`** - Multiple PRs can add changesets
+2. **Merge `dev` to `main`** - Create PR from `dev` to `main` when ready to release
+3. **"Version Packages" PR** - Created automatically when changesets exist on `main`
+4. **Review changelog** - Check the auto-generated CHANGELOG.md
+5. **Merge "Version Packages" PR** - Triggers automatic npm publish via OIDC
+6. **Published!** - Package is live on npm with provenance
 
 ### What NOT to Do
 
 ❌ Don't manually edit version in `package.json` - use `pnpm changeset`
-❌ Don't push directly to `main` - use Pull Requests
+❌ Don't push directly to `main` or `dev` - use Pull Requests
+❌ Don't create feature branches from `main` - use `dev`
+❌ Don't open PRs to `main` from feature branches - go to `dev` first
 ❌ Don't merge without CI passing - wait for checks
 ❌ Don't skip changesets - required for tracking changes
 ❌ Don't manually run `npm publish` - CI handles it
 
 ### Questions?
 
+- See [BRANCHING_STRATEGY.md](./BRANCHING_STRATEGY.md) for complete branching workflow
+- See [docs/BRANCHING_QUICK_REFERENCE.md](./docs/BRANCHING_QUICK_REFERENCE.md) for quick reference
+- See [docs/BRANCH_PROTECTION_SETUP.md](./docs/BRANCH_PROTECTION_SETUP.md) for maintainer setup guide
 - See [`.claude/skills/npm-oidc-publishing/SKILL.md`](.claude/skills/npm-oidc-publishing/SKILL.md) for OIDC setup details
 - See [.github/README.md](.github/README.md) for CI/CD workflow documentation
 - Ask in Discussions or open an Issue
