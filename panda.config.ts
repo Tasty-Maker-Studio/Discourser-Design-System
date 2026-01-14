@@ -53,9 +53,16 @@ export default defineConfig({
   // Base presets for Park UI compatibility
   presets: ['@pandacss/preset-base', '@pandacss/preset-panda'],
 
-  // Generate static CSS for all recipes
+  // Generate static CSS for all recipes and colorPalette utilities
   staticCss: {
     recipes: '*',
+    css: [
+      {
+        properties: {
+          colorPalette: ['primary', 'neutral', 'error', 'gray', 'red'],
+        },
+      },
+    ],
   },
 
   include: ['./src/**/*.{js,jsx,ts,tsx}', './stories/**/*.{js,jsx,ts,tsx}'],
