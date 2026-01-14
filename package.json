@@ -45,6 +45,16 @@
       "types": "./styled-system/recipes/index.d.ts",
       "import": "./styled-system/recipes/index.mjs",
       "require": "./styled-system/recipes/index.js"
+    },
+    "./styled-system/jsx": {
+      "types": "./styled-system/jsx/index.d.ts",
+      "import": "./styled-system/jsx/index.mjs",
+      "require": "./styled-system/jsx/index.js"
+    },
+    "./styled-system/patterns": {
+      "types": "./styled-system/patterns/index.d.ts",
+      "import": "./styled-system/patterns/index.mjs",
+      "require": "./styled-system/patterns/index.js"
     }
   },
   "files": [
