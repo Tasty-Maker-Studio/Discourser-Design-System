@@ -1,5 +1,137 @@
 # @discourser/design-system
 
+## 0.6.0
+
+### Minor Changes
+
+- [#42](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/42) [`a4c3d23`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/a4c3d2300b6d80b65b00e695f1570d743adfb1d4) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - fix: improve component export pattern for better developer experience
+
+  **Breaking Change:** Simple components are now directly usable without double-naming.
+
+  **Before:**
+
+  ```tsx
+  import { Button, Badge, Spinner, IconButton } from '@discourser/design-system';
+
+  // Confusing double-naming required
+  <Button.Button variant="filled">Click</Button.Button>
+  <Badge.Badge>New</Badge.Badge>
+  <Spinner.Spinner />
+  <IconButton.IconButton aria-label="Close" />
+  ```
+
+  **After:**
+
+  ```tsx
+  import { Button, Badge, Spinner, IconButton } from '@discourser/design-system';
+
+  // Direct, intuitive usage
+  <Button variant="filled">Click</Button>
+  <Badge>New</Badge>
+  <Spinner />
+  <IconButton aria-label="Close" />
+
+  // Sub-components still accessible
+  <Button.Group>
+    <Button>One</Button>
+    <Button>Two</Button>
+  </Button.Group>
+  ```
+
+  **Changes:**
+  - Simple components (Button, Badge, Spinner, IconButton, Input, Textarea, Heading, InputAddon, InputGroup) are now directly usable
+  - Button.Group is accessible via the Button namespace for sub-components
+  - Compound components (Card, Dialog, Switch, Accordion, etc.) retain their namespace pattern as expected
+
+  **Benefits:**
+  - Intuitive API that follows React conventions
+  - Enables Figma Make AI to correctly use components
+  - Fixes runtime errors: "React.jsx: type is invalid -- expected a string but got: object"
+  - Maintains access to sub-components via namespace (e.g., Button.Group)
+
+  **Migration:**
+  If you were using the namespace pattern for simple components, update your imports:
+
+  ```tsx
+  // Old (no longer works)
+  <Button.Button variant="filled">Click</Button.Button>
+
+  // New (correct)
+  <Button variant="filled">Click</Button>
+  ```
+
+  Compound components (Card, Dialog, etc.) are unchanged:
+
+  ```tsx
+  // Still correct
+  <Card.Root>
+    <Card.Header>
+      <Card.Title>Title</Card.Title>
+    </Card.Header>
+  </Card.Root>
+  ```
+
+- [#42](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/42) [`a4c3d23`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/a4c3d2300b6d80b65b00e695f1570d743adfb1d4) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Add comprehensive token management and transformation scripts
+  - Add design language transformation scripts (DTCG to/from contract)
+  - Add Figma token export and organization scripts
+  - Add token backup, comparison, and round-trip testing utilities
+  - Update and complete task documentation (DS-003, DS-004, DS-004.5, DS-005)
+  - Fix multiple component styling issues (Drawer, Dialog, Popover, Tooltip, etc.)
+  - Add token directory structure with primitives and semantic tokens
+  - Improve Material Design 3 integration and type safety in scripts
+
+- [#42](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/42) [`a4c3d23`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/a4c3d2300b6d80b65b00e695f1570d743adfb1d4) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - feat: add pre-compiled CSS for zero-config integration
+
+  The package now ships with a pre-compiled `styles.css` file (144KB), enabling instant integration without build configuration:
+
+  **New Usage:**
+
+  ```tsx
+  import '@discourser/design-system/styles.css';
+  import { Button, Card } from '@discourser/design-system';
+  ```
+
+  **Features:**
+  - ✅ No build step required - just import and use
+  - ✅ All semantic tokens, component recipes, and theme support included
+  - ✅ Light/dark theme support via `data-theme` attribute
+  - ✅ Optimized for Figma Make integration
+  - ✅ 144KB uncompressed (~20-25KB gzipped)
+
+  **Breaking Changes:**
+  None - existing styled-system imports continue to work
+
+  **Documentation:**
+  - New CSS_USAGE.md with complete integration guide
+  - Updated README with quick start examples
+  - Framework-specific examples (Vite, Next.js)
+
+  **Build Changes:**
+  - Added `build:css` script: `panda cssgen --outfile dist/styles.css`
+  - Updated package.json exports to include `./styles.css`
+  - Build order: panda codegen → tsup → cssgen
+
+  This enables tools like Figma Make to consume the package without requiring Panda CSS configuration.
+
+### Patch Changes
+
+- [#42](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/42) [`a4c3d23`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/a4c3d2300b6d80b65b00e695f1570d743adfb1d4) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - fix: add missing package exports for styled-system/jsx and styled-system/patterns
+
+  The package's compiled code imports from these paths internally, but they were not
+  exposed in the exports field of package.json. This caused build errors in consuming
+  projects:
+
+  ```
+  Missing "./styled-system/jsx" specifier in "@discourser/design-system" package
+  ```
+
+  Added exports for:
+  - `./styled-system/jsx`
+  - `./styled-system/patterns`
+
+  These exports enable consumers to import from these paths and resolve the build errors
+  when using the package in projects with strict module resolution.
+
 ## 0.5.0
 
 ### Minor Changes
