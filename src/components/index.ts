@@ -1,17 +1,11 @@
 // Simple Components (directly usable)
-// Button with sub-components attached
-import {
-  Button as ButtonComponent,
+// Button - export directly, Group available via separate ButtonGroup export
+export {
+  Button,
   ButtonGroup,
-  type ButtonProps as ButtonPropsType,
+  type ButtonProps,
   type ButtonGroupProps,
 } from './Button';
-
-export const Button = Object.assign(ButtonComponent, {
-  Group: ButtonGroup,
-});
-export type ButtonProps = ButtonPropsType;
-export type { ButtonGroupProps };
 
 // IconButton (simple component)
 export { IconButton, type IconButtonProps } from './IconButton';

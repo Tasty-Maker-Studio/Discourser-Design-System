@@ -3,7 +3,7 @@ import { ark } from '@ark-ui/react/factory';
 import { createContext, mergeProps } from '@ark-ui/react/utils';
 import type React from 'react';
 import { type ComponentProps, forwardRef, useMemo } from 'react';
-import { css, cx } from 'styled-system/css';
+import { cx } from 'styled-system/css';
 import { styled } from 'styled-system/jsx';
 import { type ButtonVariantProps, button } from 'styled-system/recipes';
 import { Group, type GroupProps } from './Group';
@@ -62,8 +62,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       ...rest
     } = buttonProps;
 
-    // Apply colorPalette using Panda's css() function
-    const colorPaletteClass = css({ colorPalette });
+    // Apply colorPalette using direct class name (avoids runtime css() issues with bundled output)
+    const colorPaletteClass = `color-palette_${colorPalette}`;
     const mergedClassName = cx(colorPaletteClass, className);
 
     return (
