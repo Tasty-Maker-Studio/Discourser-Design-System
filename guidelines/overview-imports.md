@@ -4,363 +4,311 @@ This guide explains how to install and import components from the Discourser Des
 
 ## Installation
 
-Install the design system package:
+Install the design system package and its peer dependencies:
 
 ```bash
-npm install @discourser/design-system
+npm install @discourser/design-system react react-dom
 ```
 
-## ⚠️ CRITICAL: Simple vs Compound Components
+Or with yarn:
 
-The design system has two types of components:
+```bash
+yarn add @discourser/design-system react react-dom
+```
 
-- **Simple Components** - Use directly (e.g., `<Button>`, `<Heading>`)
-- **Compound Components** - MUST use `.Root` pattern (e.g., `<Card.Root>`)
+Or with pnpm:
 
-## Import Pattern
+```bash
+pnpm add @discourser/design-system react react-dom
+```
 
-All components are imported from the main package:
+## Import Patterns
+
+The design system exports components in two patterns: **Simple Components** and **Compound Components**.
+
+### Simple Components
+
+These components are exported directly and can be imported using named imports:
 
 ```typescript
 import {
-  // Simple Components (use directly)
   Button,
-  Heading,
+  Card,
   Input,
   InputAddon,
   InputGroup,
   Textarea,
+  Heading,
   Badge,
   Spinner,
   Toaster,
   toaster,
-
-  // Compound Components (MUST use .Root)
-  Card,
-  Checkbox,
-  RadioGroup,
-  Select,
-  Dialog,
-  Drawer,
-  Popover,
-  Tooltip,
-  Accordion,
-  Tabs,
-  Avatar,
-  Progress,
-  Skeleton,
-  IconButton,
-  Switch,
-  Slider,
 } from '@discourser/design-system';
-
-// CSS function for custom styling
-import { css } from '@discourser/design-system/styled-system/css';
 ```
 
----
-
-## Simple Components
-
-These components are used **directly without `.Root`**:
-
-### Button
-
-```typescript
-// ✅ CORRECT - Button is a simple component
-<Button variant="solid" colorPalette="primary">Primary Action</Button>
-<Button variant="outline" colorPalette="neutral">Secondary</Button>
-<Button variant="plain" colorPalette="primary">Text Only</Button>
-```
-
-**Button Props:**
-| Prop | Values | Default | Description |
-|------|--------|---------|-------------|
-| `variant` | `solid`, `surface`, `subtle`, `outline`, `plain` | `solid` | Visual style |
-| `colorPalette` | `primary`, `neutral`, `error` | - | Color theme |
-| `size` | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | `md` | Button size |
-
-**⚠️ IMPORTANT:** Always include `colorPalette` for proper button styling!
-
-```typescript
-// ❌ WRONG - Missing colorPalette, wrong variant names
-<Button variant="filled">Click</Button>
-<Button variant="outlined">Click</Button>
-
-// ✅ CORRECT - Proper variant names with colorPalette
-<Button variant="solid" colorPalette="primary">Click</Button>
-<Button variant="outline" colorPalette="neutral">Click</Button>
-```
-
-### Heading
-
-```typescript
-// ✅ CORRECT - Heading is a simple component (no .Root needed)
-<Heading as="h1" size="3xl">Page Title</Heading>
-<Heading as="h2" size="2xl">Section Title</Heading>
-<Heading as="h3" size="xl">Subsection</Heading>
-```
-
-**Heading Props:**
-| Prop | Values | Default | Description |
-|------|--------|---------|-------------|
-| `as` | `h1`, `h2`, `h3`, `h4`, `h5`, `h6` | `h2` | HTML element |
-| `size` | `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `4xl`, `5xl`, `6xl`, `7xl` | `xl` | Text size |
-
-### Other Simple Components
-
-```typescript
-<Input label="Email" type="email" />
-<Textarea label="Message" rows={5} />
-<Badge>New</Badge>
-<Spinner />
-```
-
-**Simple components list:**
+**Simple components include:**
 
 - Button
-- Heading
+- Card
 - Input
 - InputAddon
 - InputGroup
 - Textarea
+- Heading
 - Badge
 - Spinner
-- Toaster / toaster
+- Toast (Toaster component and toaster API)
 
----
+### Compound Components
 
-## Compound Components
-
-**⚠️ CRITICAL: These components MUST use `.Root` - never use them directly!**
+These components use a compound pattern with multiple sub-components. Import them as namespaces:
 
 ```typescript
-// ❌ WRONG - Will cause "Element type is invalid" error
-<Card>Content</Card>
-
-// ✅ CORRECT - Use .Root for compound components
-<Card.Root>Content</Card.Root>
+import * as Checkbox from '@discourser/design-system';
+import * as RadioGroup from '@discourser/design-system';
+import * as Select from '@discourser/design-system';
+import * as Dialog from '@discourser/design-system';
+import * as Drawer from '@discourser/design-system';
+import * as Popover from '@discourser/design-system';
+import * as Tooltip from '@discourser/design-system';
+import * as Accordion from '@discourser/design-system';
+import * as Tabs from '@discourser/design-system';
+import * as Avatar from '@discourser/design-system';
+import * as Progress from '@discourser/design-system';
+import * as Skeleton from '@discourser/design-system';
+import * as IconButton from '@discourser/design-system';
+import * as Switch from '@discourser/design-system';
+import * as Slider from '@discourser/design-system';
 ```
 
-### Compound Component Reference
+**Compound components include:**
 
-| Component  | Root Element      | Sub-Components                                                              |
-| ---------- | ----------------- | --------------------------------------------------------------------------- |
-| Card       | `Card.Root`       | `Card.Header`, `Card.Title`, `Card.Description`, `Card.Body`, `Card.Footer` |
-| IconButton | `IconButton.Root` | (none - just use Root)                                                      |
-| Switch     | `Switch.Root`     | `Switch.Control`, `Switch.Thumb`, `Switch.Label`                            |
-| Checkbox   | `Checkbox.Root`   | `Checkbox.Control`, `Checkbox.Label`, `Checkbox.Indicator`                  |
-| RadioGroup | `RadioGroup.Root` | `RadioGroup.Item`, `RadioGroup.ItemControl`, `RadioGroup.ItemText`          |
-| Select     | `Select.Root`     | `Select.Control`, `Select.Trigger`, `Select.Content`, `Select.Item`         |
-| Dialog     | `Dialog.Root`     | `Dialog.Trigger`, `Dialog.Content`, `Dialog.Title`, `Dialog.Description`    |
-| Drawer     | `Drawer.Root`     | `Drawer.Trigger`, `Drawer.Content`                                          |
-| Popover    | `Popover.Root`    | `Popover.Trigger`, `Popover.Content`                                        |
-| Tooltip    | `Tooltip.Root`    | `Tooltip.Trigger`, `Tooltip.Content`                                        |
-| Accordion  | `Accordion.Root`  | `Accordion.Item`, `Accordion.Trigger`, `Accordion.Content`                  |
-| Tabs       | `Tabs.Root`       | `Tabs.List`, `Tabs.Trigger`, `Tabs.Content`                                 |
-| Avatar     | `Avatar.Root`     | `Avatar.Image`, `Avatar.Fallback`                                           |
-| Progress   | `Progress.Root`   | `Progress.Track`, `Progress.Range`                                          |
-| Skeleton   | `Skeleton.Root`   | `Skeleton.Item`                                                             |
-| Slider     | `Slider.Root`     | `Slider.Control`, `Slider.Track`, `Slider.Thumb`                            |
+- Checkbox (Checkbox.Root, Checkbox.Control, Checkbox.Label, Checkbox.Indicator)
+- RadioGroup (RadioGroup.Root, RadioGroup.Item, RadioGroup.ItemControl, RadioGroup.ItemText)
+- Select (Select.Root, Select.Control, Select.Trigger, Select.Content, Select.Item, etc.)
+- Dialog (Dialog.Root, Dialog.Trigger, Dialog.Content, Dialog.Title, etc.)
+- Drawer (Drawer.Root, Drawer.Trigger, Drawer.Content, etc.)
+- Popover (Popover.Root, Popover.Trigger, Popover.Content, etc.)
+- Tooltip (Tooltip.Root, Tooltip.Trigger, Tooltip.Content)
+- Accordion (Accordion.Root, Accordion.Item, Accordion.Trigger, Accordion.Content)
+- Tabs (Tabs.Root, Tabs.List, Tabs.Trigger, Tabs.Content, etc.)
+- Avatar (Avatar.Root, Avatar.Image, Avatar.Fallback)
+- Progress (Progress.Root, Progress.Track, Progress.Range, etc.)
+- Skeleton (Skeleton.Root, Skeleton.Item)
+- IconButton (IconButton.Root)
+- Switch (Switch.Root, Switch.Control, Switch.Thumb, Switch.Label)
+- Slider (Slider.Root, Slider.Control, Slider.Track, Slider.Thumb, etc.)
 
-### Card Component Example
+### Styling Utilities
+
+For advanced custom styling, import Panda CSS utilities:
 
 ```typescript
-import { Card, Button } from '@discourser/design-system';
+// CSS function for inline styles
+import { css } from '@discourser/design-system/styled-system/css';
 
-function ProductCard() {
+// Recipe functions for component variants
+import { button } from '@discourser/design-system/styled-system/recipes';
+
+// Styled function for creating styled components
+import { styled } from '@discourser/design-system/styled-system/jsx';
+```
+
+**When to use styling utilities:**
+
+- Use `css()` for one-off custom styles that don't belong in a component variant
+- Use recipe functions when you need to replicate component styles
+- Use `styled()` when creating new styled components
+- **Always prefer using component variants** over custom styling
+
+## Common Import Patterns
+
+### Basic Form
+
+```typescript
+import { Input, Textarea, Select, Button } from '@discourser/design-system';
+import { css } from '@discourser/design-system/styled-system/css';
+
+function ContactForm() {
   return (
-    <Card.Root variant="elevated">
-      <Card.Header>
-        <Card.Title>Product Name</Card.Title>
-        <Card.Description>Brief product description</Card.Description>
-      </Card.Header>
-      <Card.Body>
-        <p>Product details go here</p>
-      </Card.Body>
-      <Card.Footer>
-        <Button variant="outline" colorPalette="neutral">Cancel</Button>
-        <Button variant="solid" colorPalette="primary">Buy Now</Button>
-      </Card.Footer>
-    </Card.Root>
+    <form className={css({ display: 'flex', flexDirection: 'column', gap: 'lg' })}>
+      <Input label="Name" />
+      <Input label="Email" type="email" />
+      <Textarea label="Message" rows={5} />
+      <Button type="submit">Send</Button>
+    </form>
   );
 }
 ```
 
-### Dialog Component Example
+### Dialog with Form
 
 ```typescript
-import { Dialog, Button } from '@discourser/design-system';
+import * as Dialog from '@discourser/design-system';
+import { Input, Button } from '@discourser/design-system';
 
-function ConfirmDialog() {
+function CreateDialog() {
   return (
     <Dialog.Root>
-      <Dialog.Trigger asChild>
-        <Button variant="solid" colorPalette="primary">Open Dialog</Button>
+      <Dialog.Trigger>
+        <Button>Create Item</Button>
       </Dialog.Trigger>
       <Dialog.Content>
-        <Dialog.Title>Confirm Action</Dialog.Title>
-        <Dialog.Description>Are you sure you want to proceed?</Dialog.Description>
-        <Button variant="outline" colorPalette="neutral">Cancel</Button>
-        <Button variant="solid" colorPalette="primary">Confirm</Button>
+        <Dialog.Title>Create New Item</Dialog.Title>
+        <Input label="Name" />
+        <Input label="Description" />
+        <Button>Save</Button>
       </Dialog.Content>
     </Dialog.Root>
   );
 }
 ```
 
----
-
-## Styling Utilities
-
-For custom styling, use the `css()` function with semantic tokens:
+### Navigation with Drawer
 
 ```typescript
-import { css } from '@discourser/design-system/styled-system/css';
+import * as Drawer from '@discourser/design-system';
+import { IconButton } from '@discourser/design-system';
+import { MenuIcon } from 'your-icon-library';
 
-// ✅ CORRECT - Use semantic tokens
-const container = css({
-  bg: 'surface',
-  color: 'onSurface',
-  p: 'lg',
-  borderRadius: 'l2',
-});
-
-// ❌ WRONG - Never use raw values
-const wrong = css({
-  bg: '#ffffff',
-  color: '#1a1a1a',
-  padding: '24px',
-});
-```
-
----
-
-## Common Patterns
-
-### Card with Form
-
-```typescript
-import { Card, Input, Button, Heading } from '@discourser/design-system';
-import { css } from '@discourser/design-system/styled-system/css';
-
-function LoginCard() {
+function Navigation() {
   return (
-    <Card.Root variant="elevated" className={css({ maxWidth: '400px' })}>
-      <Card.Header>
-        <Card.Title>
-          <Heading as="h2" size="xl">Sign In</Heading>
-        </Card.Title>
-        <Card.Description>Enter your credentials</Card.Description>
-      </Card.Header>
-      <Card.Body className={css({ display: 'flex', flexDirection: 'column', gap: 'md' })}>
-        <Input label="Email" type="email" />
-        <Input label="Password" type="password" />
-      </Card.Body>
-      <Card.Footer>
-        <Button variant="solid" colorPalette="primary">Sign In</Button>
-      </Card.Footer>
-    </Card.Root>
+    <Drawer.Root>
+      <Drawer.Trigger asChild>
+        <IconButton aria-label="Open menu">
+          <MenuIcon />
+        </IconButton>
+      </Drawer.Trigger>
+      <Drawer.Content>
+        <nav>
+          <a href="/dashboard">Dashboard</a>
+          <a href="/settings">Settings</a>
+        </nav>
+      </Drawer.Content>
+    </Drawer.Root>
   );
 }
 ```
 
-### Page Layout with Heading
+### Search with InputGroup
 
 ```typescript
-import { Heading, Card, Button } from '@discourser/design-system';
-import { css } from '@discourser/design-system/styled-system/css';
+import { InputGroup, Input } from '@discourser/design-system';
+import { SearchIcon } from 'your-icon-library';
 
-function Dashboard() {
+function SearchBar() {
   return (
-    <div className={css({ p: 'xl', bg: 'surface', minHeight: '100vh' })}>
-      <Heading as="h1" size="3xl" className={css({ mb: 'lg', color: 'onSurface' })}>
-        Dashboard
-      </Heading>
-
-      <div className={css({ display: 'grid', gap: 'lg', gridTemplateColumns: 'repeat(3, 1fr)' })}>
-        <Card.Root variant="elevated">
-          <Card.Header>
-            <Card.Title>Stats</Card.Title>
-          </Card.Header>
-          <Card.Body>
-            <p>Content here</p>
-          </Card.Body>
-        </Card.Root>
-      </div>
-    </div>
+    <InputGroup startElement={<SearchIcon />}>
+      <Input placeholder="Search..." />
+    </InputGroup>
   );
 }
 ```
 
----
+### Toast Notifications
+
+```typescript
+import { Button, toaster } from '@discourser/design-system';
+
+function SaveButton() {
+  const handleSave = async () => {
+    try {
+      await saveData();
+      toaster.success({
+        title: 'Saved!',
+        description: 'Your changes have been saved.'
+      });
+    } catch (error) {
+      toaster.error({
+        title: 'Failed to save',
+        description: error.message
+      });
+    }
+  };
+
+  return <Button onClick={handleSave}>Save</Button>;
+}
+```
+
+## TypeScript Support
+
+All components are fully typed with TypeScript. Import types as needed:
+
+```typescript
+import { Button, type ButtonProps } from '@discourser/design-system';
+import type { InputProps } from '@discourser/design-system';
+import type * as Dialog from '@discourser/design-system';
+
+// Use component props in your custom components
+function CustomButton(props: ButtonProps) {
+  return <Button {...props} />;
+}
+
+// Type dialog state
+const [open, setOpen] = useState<boolean>(false);
+```
+
+## Tree Shaking
+
+The design system is optimized for tree shaking. Only import what you use:
+
+```typescript
+// ✅ Good - Only imports Button
+import { Button } from '@discourser/design-system';
+
+// ❌ Avoid - Imports entire package
+import * as DesignSystem from '@discourser/design-system';
+```
+
+## Package Structure
+
+The design system package includes:
+
+- **Components** - All React components
+- **Styled System** - Panda CSS utilities (`styled-system/`)
+  - `css` - CSS function
+  - `jsx` - JSX factory
+  - `patterns` - Layout patterns
+  - `recipes` - Component recipes
+  - `tokens` - Design tokens
+- **Types** - TypeScript definitions
+- **Guidelines** - This documentation folder
 
 ## Best Practices
 
 ### ✅ DO:
 
 ```typescript
-// Use simple components directly
-<Button variant="solid" colorPalette="primary">Submit</Button>
-<Heading as="h1" size="2xl">Title</Heading>
+// Import only what you need
+import { Button, Input } from '@discourser/design-system';
 
-// Use .Root for compound components
-<Card.Root variant="elevated">...</Card.Root>
+// Use TypeScript types
+import type { ButtonProps } from '@discourser/design-system';
 
-// Always include colorPalette for buttons
-<Button variant="solid" colorPalette="primary">Primary</Button>
-<Button variant="outline" colorPalette="neutral">Secondary</Button>
+// Import compound components as namespaces
+import * as Dialog from '@discourser/design-system';
 
-// Use semantic tokens
-css({ bg: 'surface', color: 'onSurface', gap: 'lg' })
+// Use semantic tokens via css()
+import { css } from '@discourser/design-system/styled-system/css';
+const style = css({ bg: 'primary', color: 'onPrimary' });
 ```
 
 ### ❌ DO NOT:
 
 ```typescript
-// Don't use compound components without .Root
-<Card>Content</Card>              // ❌ Runtime error!
+// Don't import the entire package
+import * as DS from '@discourser/design-system';
 
-// Don't use wrong variant names for Button
-<Button variant="filled">Click</Button>    // ❌ "filled" doesn't exist
-<Button variant="outlined">Click</Button>  // ❌ "outlined" doesn't exist
+// Don't mix import patterns
+import { Checkbox } from '@discourser/design-system'; // Wrong for compound components
+// Should be: import * as Checkbox from '@discourser/design-system';
 
-// Don't forget colorPalette for Button
-<Button variant="solid">Click</Button>     // ❌ Missing colorPalette
-
-// Don't use raw color values
-css({ bg: '#ffffff' })            // ❌ Use 'surface' instead
+// Don't bypass the design system
+import { Button as MUIButton } from '@mui/material'; // Use design system Button instead
 ```
-
----
-
-## Quick Reference
-
-### Button Variants
-
-| Variant   | colorPalette | Usage               |
-| --------- | ------------ | ------------------- |
-| `solid`   | `primary`    | Primary CTA         |
-| `solid`   | `error`      | Destructive action  |
-| `outline` | `neutral`    | Secondary action    |
-| `outline` | `primary`    | Alternative primary |
-| `plain`   | `primary`    | Text-only/tertiary  |
-| `subtle`  | `neutral`    | Low emphasis        |
-| `surface` | `primary`    | Elevated button     |
-
-### Component Type Quick Check
-
-| Component | Type     | Usage           |
-| --------- | -------- | --------------- |
-| Button    | Simple   | `<Button>`      |
-| Heading   | Simple   | `<Heading>`     |
-| Input     | Simple   | `<Input>`       |
-| Card      | Compound | `<Card.Root>`   |
-| Dialog    | Compound | `<Dialog.Root>` |
-| Switch    | Compound | `<Switch.Root>` |
 
 ## Related Files
 
-- **[overview-components.md](overview-components.md)** - Complete component catalog
-- **[design-tokens/colors.md](design-tokens/colors.md)** - Semantic color tokens
-- **[Guidelines.md](Guidelines.md)** - Main navigation
+- **[overview-components.md](overview-components.md)** - Complete list of available components
+- **[overview-patterns.md](overview-patterns.md)** - Common UI patterns and examples
+- **[Guidelines.md](Guidelines.md)** - Main navigation and workflow

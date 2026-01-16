@@ -2,276 +2,157 @@
 
 Always prefer components from `@discourser/design-system` if available. Do not use native HTML elements when a design system component exists.
 
-## ⚠️ CRITICAL: Simple vs Compound Components
-
-The design system has two types of components. Using them incorrectly causes runtime errors.
-
-### Simple Components (use directly)
-
-These components can be used directly without `.Root`:
-
-- `Button` → `<Button variant="solid" colorPalette="primary">Click</Button>`
-- `Heading` → `<Heading as="h1" size="2xl">Title</Heading>`
-- `Input` → `<Input label="Email" />`
-- `Textarea` → `<Textarea label="Message" />`
-- `Badge` → `<Badge>New</Badge>`
-- `Spinner` → `<Spinner />`
-
-### Compound Components (MUST use .Root)
-
-**These components require `.Root` - using them directly causes "Element type is invalid" error:**
-
-```typescript
-// ❌ WRONG - causes runtime error
-<Card>Content</Card>
-
-// ✅ CORRECT
-<Card.Root>Content</Card.Root>
-```
-
-**Compound components list:**
-
-- Card → `Card.Root`, `Card.Header`, `Card.Title`, `Card.Description`, `Card.Body`, `Card.Footer`
-- IconButton → `IconButton.Root`
-- Switch → `Switch.Root`, `Switch.Control`, `Switch.Thumb`, `Switch.Label`
-- Checkbox → `Checkbox.Root`, `Checkbox.Control`, `Checkbox.Label`
-- RadioGroup → `RadioGroup.Root`, `RadioGroup.Item`, `RadioGroup.ItemControl`, `RadioGroup.ItemText`
-- Select → `Select.Root`, `Select.Control`, `Select.Trigger`, `Select.Content`, `Select.Item`
-- Dialog → `Dialog.Root`, `Dialog.Trigger`, `Dialog.Content`, `Dialog.Title`
-- Drawer → `Drawer.Root`, `Drawer.Trigger`, `Drawer.Content`
-- Accordion → `Accordion.Root`, `Accordion.Item`, `Accordion.Trigger`, `Accordion.Content`
-- Tabs → `Tabs.Root`, `Tabs.List`, `Tabs.Trigger`, `Tabs.Content`
-- Avatar → `Avatar.Root`, `Avatar.Image`, `Avatar.Fallback`
-- Progress → `Progress.Root`, `Progress.Track`, `Progress.Range`
-- Skeleton → `Skeleton.Root`, `Skeleton.Item`
-- Popover → `Popover.Root`, `Popover.Trigger`, `Popover.Content`
-- Tooltip → `Tooltip.Root`, `Tooltip.Trigger`, `Tooltip.Content`
-- Slider → `Slider.Root`, `Slider.Control`, `Slider.Track`, `Slider.Thumb`
-
----
-
-## Button Component
-
-**Type:** Simple Component (use directly)
-
-### Variants & ColorPalette
-
-**⚠️ IMPORTANT:** Button requires BOTH `variant` AND `colorPalette` props for proper styling!
-
-| Prop           | Values                                           | Description  |
-| -------------- | ------------------------------------------------ | ------------ |
-| `variant`      | `solid`, `surface`, `subtle`, `outline`, `plain` | Visual style |
-| `colorPalette` | `primary`, `neutral`, `error`                    | Color theme  |
-| `size`         | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`       | Button size  |
-
-### Button Examples
-
-```typescript
-// Primary action
-<Button variant="solid" colorPalette="primary">Submit</Button>
-
-// Secondary action
-<Button variant="outline" colorPalette="neutral">Cancel</Button>
-
-// Destructive action
-<Button variant="solid" colorPalette="error">Delete</Button>
-
-// Text-only/tertiary
-<Button variant="plain" colorPalette="primary">Learn More</Button>
-```
-
-### Common Button Mistakes
-
-```typescript
-// ❌ WRONG - "filled" and "outlined" don't exist
-<Button variant="filled">Click</Button>
-<Button variant="outlined">Click</Button>
-
-// ❌ WRONG - Missing colorPalette
-<Button variant="solid">Click</Button>
-
-// ✅ CORRECT
-<Button variant="solid" colorPalette="primary">Click</Button>
-<Button variant="outline" colorPalette="neutral">Click</Button>
-```
-
----
-
-## Heading Component
-
-**Type:** Simple Component (use directly)
-
-```typescript
-// ✅ CORRECT - Heading is simple, no .Root needed
-<Heading as="h1" size="3xl">Page Title</Heading>
-<Heading as="h2" size="2xl">Section</Heading>
-<Heading as="h3" size="xl">Subsection</Heading>
-```
-
-| Prop   | Values                                                                 | Description  |
-| ------ | ---------------------------------------------------------------------- | ------------ |
-| `as`   | `h1`, `h2`, `h3`, `h4`, `h5`, `h6`                                     | HTML element |
-| `size` | `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `4xl`, `5xl`, `6xl`, `7xl` | Text size    |
-
----
-
-## Card Component
-
-**Type:** Compound Component (MUST use .Root)
-
-```typescript
-<Card.Root variant="elevated">
-  <Card.Header>
-    <Card.Title>Card Title</Card.Title>
-    <Card.Description>Optional description</Card.Description>
-  </Card.Header>
-  <Card.Body>
-    <p>Card content goes here</p>
-  </Card.Body>
-  <Card.Footer>
-    <Button variant="outline" colorPalette="neutral">Cancel</Button>
-    <Button variant="solid" colorPalette="primary">Confirm</Button>
-  </Card.Footer>
-</Card.Root>
-```
-
-**Card.Root Variants:** `outline`, `elevated`, `subtle`
-
----
-
 ## Available Components
 
 ### Interactive Elements
 
-| Component  | Type     | Purpose                                 |
-| ---------- | -------- | --------------------------------------- |
-| Button     | Simple   | Primary interactive element for actions |
-| IconButton | Compound | Icon-only interactive element           |
-| Switch     | Compound | Toggle control for binary on/off states |
-| Checkbox   | Compound | Binary selection control                |
-| RadioGroup | Compound | Mutually exclusive selection            |
+| Component  | Purpose                                            | Guidelines                                  |
+| ---------- | -------------------------------------------------- | ------------------------------------------- |
+| Button     | Primary interactive element for actions            | [button.md](components/button.md)           |
+| IconButton | Icon-only interactive element                      | [icon-button.md](components/icon-button.md) |
+| Switch     | Toggle control for binary on/off states            | [switch.md](components/switch.md)           |
+| Checkbox   | Binary selection control for toggling options      | [checkbox.md](components/checkbox.md)       |
+| RadioGroup | Mutually exclusive selection from multiple options | [radio-group.md](components/radio-group.md) |
 
 ### Form Elements
 
-| Component  | Type     | Purpose                       |
-| ---------- | -------- | ----------------------------- |
-| Input      | Simple   | Single-line text input        |
-| InputAddon | Simple   | Decorative element for inputs |
-| InputGroup | Simple   | Layout wrapper for inputs     |
-| Textarea   | Simple   | Multi-line text input         |
-| Select     | Compound | Dropdown selection            |
-| Slider     | Compound | Range selection control       |
+| Component  | Purpose                                                   | Guidelines                                  |
+| ---------- | --------------------------------------------------------- | ------------------------------------------- |
+| Input      | Single-line text input with label and validation          | [input.md](components/input.md)             |
+| InputAddon | Decorative element for enhancing inputs (icons, text)     | [input-addon.md](components/input-addon.md) |
+| InputGroup | Layout wrapper for inputs with start/end elements         | [input-group.md](components/input-group.md) |
+| Textarea   | Multi-line text input for longer content                  | [textarea.md](components/textarea.md)       |
+| Select     | Dropdown selection from list of options                   | [select.md](components/select.md)           |
+| Slider     | Range selection control for continuous or discrete values | [slider.md](components/slider.md)           |
 
 ### Layout & Container Elements
 
-| Component | Type     | Purpose                       |
-| --------- | -------- | ----------------------------- |
-| Card      | Compound | Container for related content |
-| Accordion | Compound | Collapsible sections          |
-| Tabs      | Compound | Tabbed navigation             |
-| Drawer    | Compound | Side panel                    |
+| Component | Purpose                                            | Guidelines                              |
+| --------- | -------------------------------------------------- | --------------------------------------- |
+| Card      | Container for related content with elevation       | [card.md](components/card.md)           |
+| Accordion | Collapsible sections for organizing content        | [accordion.md](components/accordion.md) |
+| Tabs      | Tabbed navigation for switching between views      | [tabs.md](components/tabs.md)           |
+| Drawer    | Side panel for navigation or supplementary content | [drawer.md](components/drawer.md)       |
 
 ### Overlay Elements
 
-| Component | Type     | Purpose              |
-| --------- | -------- | -------------------- |
-| Dialog    | Compound | Modal overlay        |
-| Popover   | Compound | Floating panel       |
-| Tooltip   | Compound | Contextual help text |
+| Component | Purpose                                          | Guidelines                          |
+| --------- | ------------------------------------------------ | ----------------------------------- |
+| Dialog    | Modal overlay for focused tasks or confirmations | [dialog.md](components/dialog.md)   |
+| Popover   | Floating panel for contextual content            | [popover.md](components/popover.md) |
+| Tooltip   | Brief contextual help text on hover              | [tooltip.md](components/tooltip.md) |
 
 ### Feedback & Status Elements
 
-| Component | Type     | Purpose                   |
-| --------- | -------- | ------------------------- |
-| Badge     | Simple   | Status indicator          |
-| Avatar    | Compound | User profile image        |
-| Toast     | Simple   | Notification messages     |
-| Progress  | Compound | Task completion indicator |
-| Skeleton  | Compound | Loading placeholder       |
-| Spinner   | Simple   | Loading indicator         |
+| Component | Purpose                                       | Guidelines                            |
+| --------- | --------------------------------------------- | ------------------------------------- |
+| Badge     | Compact visual indicator for status or labels | [badge.md](components/badge.md)       |
+| Avatar    | User profile image with fallback initials     | [avatar.md](components/avatar.md)     |
+| Toast     | Temporary notification messages               | [toast.md](components/toast.md)       |
+| Progress  | Visual indicator for task completion          | [progress.md](components/progress.md) |
+| Skeleton  | Loading placeholder for content               | [skeleton.md](components/skeleton.md) |
+| Spinner   | Loading indicator for asynchronous operations | [spinner.md](components/spinner.md)   |
 
 ### Typography Elements
 
-| Component | Type   | Purpose          |
-| --------- | ------ | ---------------- |
-| Heading   | Simple | Semantic heading |
+| Component | Purpose                                | Guidelines                          |
+| --------- | -------------------------------------- | ----------------------------------- |
+| Heading   | Semantic heading for content hierarchy | [heading.md](components/heading.md) |
 
----
+## Common Props
+
+Most components accept these standard props:
+
+- `variant` - Visual style variant (e.g., filled, outlined, text)
+- `size` - Size variant (sm, md, lg)
+- `disabled` - Disable interaction
+- `className` - Additional CSS classes (use sparingly)
+- `ref` - React ref for DOM access (all components use forwardRef)
 
 ## Styling Guidelines
 
 ### ✅ DO:
 
 ```typescript
-// Use simple components directly with proper props
-<Button variant="solid" colorPalette="primary">Submit</Button>
-<Heading as="h1" size="2xl">Page Title</Heading>
+// Use design system components with variants
+<Button variant="filled" size="md">Submit</Button>
+<Card variant="elevated">Content</Card>
+<Input variant="outlined" label="Email" />
 
-// Use compound components with .Root
-<Card.Root variant="elevated">
-  <Card.Header>
-    <Card.Title>Form</Card.Title>
-  </Card.Header>
-  <Card.Body>
-    <Input label="Email" />
-  </Card.Body>
-  <Card.Footer>
-    <Button variant="solid" colorPalette="primary">Submit</Button>
-  </Card.Footer>
-</Card.Root>
-
-// Use semantic color tokens for custom styling
+// Use semantic color tokens when custom styling is needed
 import { css } from '@discourser/design-system/styled-system/css';
-const style = css({ bg: 'surface', color: 'onSurface' });
+const customStyle = css({ bg: 'primary', color: 'onPrimary' });
+
+// Compose multiple components together
+<Card variant="elevated">
+  <Input label="Username" />
+  <Button variant="filled">Submit</Button>
+</Card>
 ```
 
 ### ❌ DO NOT:
 
 ```typescript
-// Don't use compound components without .Root
-<Card>Content</Card>  // ❌ Runtime error!
-
-// Don't use wrong Button variant names
-<Button variant="filled">Click</Button>   // ❌ "filled" doesn't exist
-<Button variant="outlined">Click</Button> // ❌ "outlined" doesn't exist
-
-// Don't forget colorPalette for Button
-<Button variant="solid">Click</Button>    // ❌ Missing colorPalette
-
 // Don't use raw HTML when components exist
-<button>Submit</button>  // ❌ Use <Button>
-<h1>Title</h1>           // ❌ Use <Heading>
+<button className="...">Submit</button>  // Use <Button> instead
+<input type="text" />                     // Use <Input> instead
+<div className="card">...</div>           // Use <Card> instead
+
+// Don't override styles with inline styles
+<Button style={{ backgroundColor: 'blue' }}>Submit</Button>
 
 // Don't use raw color values
-css({ bg: '#ffffff' })   // ❌ Use 'surface' instead
+<div style={{ backgroundColor: '#4C662B' }}>...</div>
+const style = css({ bg: '#4C662B' });  // Use semantic tokens instead
+
+// Don't skip required props like labels
+<Input placeholder="Email" />  // Missing label (accessibility issue)
 ```
 
----
+## Component Categories
 
-## Quick Reference
+### Interactive Elements
 
-### Component Type Lookup
+- **Button** - For user actions (submit, cancel, etc.)
+- **IconButton** - For icon-only actions (close, menu, etc.)
+- **Switch** - For toggle states (enable/disable features)
 
-| Component | Type     | Correct Usage                                     |
-| --------- | -------- | ------------------------------------------------- |
-| Button    | Simple   | `<Button variant="solid" colorPalette="primary">` |
-| Heading   | Simple   | `<Heading as="h1" size="2xl">`                    |
-| Input     | Simple   | `<Input label="Email" />`                         |
-| Card      | Compound | `<Card.Root variant="elevated">`                  |
-| Dialog    | Compound | `<Dialog.Root>`                                   |
-| Switch    | Compound | `<Switch.Root>`                                   |
+### Input Elements
 
-### Button Variant Quick Reference
+- **Input** - For text input fields with built-in label and validation
 
-| Use Case      | Code                                                |
-| ------------- | --------------------------------------------------- |
-| Primary CTA   | `<Button variant="solid" colorPalette="primary">`   |
-| Secondary     | `<Button variant="outline" colorPalette="neutral">` |
-| Destructive   | `<Button variant="solid" colorPalette="error">`     |
-| Text/Tertiary | `<Button variant="plain" colorPalette="primary">`   |
-| Low emphasis  | `<Button variant="subtle" colorPalette="neutral">`  |
+### Layout Elements
 
----
+- **Card** - For grouping related content with visual hierarchy
+
+### Overlay Elements
+
+- **Dialog** - For modal dialogs and confirmations
+
+## Controlled vs Uncontrolled
+
+### Controlled Components
+
+Component receives `value` and `onChange` props from parent:
+
+```typescript
+const [email, setEmail] = useState('');
+<Input
+  label="Email"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+/>
+```
+
+### Uncontrolled Components
+
+Component manages own state, use `defaultValue`:
+
+```typescript
+<Input label="Email" defaultValue="user@example.com" />
+```
+
+**Recommendation**: Prefer controlled components for form inputs to maintain single source of truth.
 
 ## Accessibility
 
@@ -280,7 +161,7 @@ All components follow WCAG 2.1 Level AA standards:
 - Keyboard navigation is built-in
 - Focus management is automatic
 - ARIA attributes are applied correctly
-- Color contrast meets requirements
+- Color contrast meets accessibility requirements
 - Screen reader support is included
 
 **Important**: Always provide labels for form inputs:
@@ -293,13 +174,35 @@ All components follow WCAG 2.1 Level AA standards:
 <Input placeholder="Enter email" />
 ```
 
+## Responsive Design
+
+Components are designed to work on all screen sizes. Use the `size` prop to control component sizing:
+
+```typescript
+// Mobile-friendly larger touch targets
+<Button size="lg">Submit</Button>
+
+// Desktop compact layouts
+<Button size="sm">Save</Button>
+
+// Default for most use cases
+<Button size="md">Submit</Button>
+```
+
 ## Theme Integration
 
 All components automatically respond to theme changes via `data-theme` attribute:
 
 ```typescript
-<html data-theme="light">  // Light theme
-<html data-theme="dark">   // Dark theme
+// Light theme
+<html data-theme="light">
+  <Button variant="filled">Submit</Button>  // Uses light theme colors
+</html>
+
+// Dark theme
+<html data-theme="dark">
+  <Button variant="filled">Submit</Button>  // Uses dark theme colors
+</html>
 ```
 
-No additional code needed - it works automatically.
+No additional code is needed for theme support - it works automatically.
