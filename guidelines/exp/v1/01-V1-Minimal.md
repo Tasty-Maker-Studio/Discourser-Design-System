@@ -1,0 +1,66 @@
+# Discourser Design System
+
+Package: `@discourser/design-system`
+
+## CRITICAL RULES
+
+1. **ALWAYS** import from `@discourser/design-system`
+2. **NEVER** use Tailwind classes or raw CSS values
+3. **NEVER** create custom components when design system components exist
+4. **ALWAYS** use `.Root` for compound components (Card, Dialog, Switch, etc.)
+
+## Two Component Types
+
+### Simple Components (use directly)
+
+```tsx
+<Button variant="solid" colorPalette="primary">Click</Button>
+<Heading as="h1" size="2xl">Title</Heading>
+<Input label="Email" />
+```
+
+### Compound Components (MUST use .Root)
+
+```tsx
+<Card.Root>...</Card.Root>
+<Dialog.Root>...</Dialog.Root>
+<Switch.Root>...</Switch.Root>
+```
+
+⚠️ `<Card>Content</Card>` = RUNTIME ERROR. Must be `<Card.Root>Content</Card.Root>`
+
+## Import Pattern
+
+```tsx
+import {
+  Button,
+  Heading,
+  Input,
+  Textarea,
+  Badge,
+  Spinner,
+  Card,
+  Dialog,
+  Switch,
+  Checkbox,
+  Select,
+  Tabs,
+  Avatar,
+} from '@discourser/design-system';
+import { css } from '@discourser/design-system/styled-system/css';
+```
+
+## Styling
+
+```tsx
+// ✅ CORRECT - semantic tokens
+css({ bg: 'surface', color: 'onSurface', p: 'lg', gap: 'md' });
+
+// ❌ WRONG - raw values
+css({ bg: '#fff', padding: '24px' });
+className = 'bg-white p-6';
+```
+
+## Quick Reference Tables
+
+See: [quick-ref.md](quick-ref.md) for component selection and variants.
