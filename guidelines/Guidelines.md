@@ -78,6 +78,83 @@ BEFORE using ANY component, you MUST read its guidelines file first:
 
 **DO NOT write code using a component until you have read its specific guidelines.**
 
+## CRITICAL: Working with Figma Designs
+
+**When building from a Figma frame, DO NOT pixel-match or extract values from the design.**
+
+Instead, follow these rules:
+
+### NEVER Do This:
+
+- ❌ Extract hex colors from the Figma design (e.g., `#4A4A4A`, `#f5f1eb`)
+- ❌ Copy exact pixel values for spacing (e.g., `padding: '20px 10px'`)
+- ❌ Copy exact font sizes (e.g., `fontSize: '16px'`)
+- ❌ Copy exact border radius values (e.g., `borderRadius: '13px'`)
+- ❌ Create inline SVGs for logos or icons
+- ❌ Override component styles with `className={css({...})}` containing hardcoded values
+- ❌ Use `<span>` or `<div>` when a design system component exists
+
+### ALWAYS Do This:
+
+- ✅ Map visual colors to semantic tokens (green → `primary`, light bg → `surface`)
+- ✅ Use spacing tokens (`sm`, `md`, `lg`) not pixel values
+- ✅ Use typography tokens (`bodyMedium`, `titleLarge`) not font sizes
+- ✅ Use radius tokens (`small`, `medium`, `large`) not pixel values
+- ✅ Use placeholder elements or icon components for logos/icons
+- ✅ Use component variants (`variant="filled"`) not style overrides
+- ✅ Use `<Badge>` component, not styled spans
+- ✅ Use `<Button>` component, not styled divs
+
+### Color Mapping Guide
+
+When you see these colors in a Figma design, use these tokens:
+
+| Figma Color          | Semantic Token                  | Usage                       |
+| -------------------- | ------------------------------- | --------------------------- |
+| Green/olive tones    | `primary`                       | Brand color, CTAs           |
+| Light cream/beige    | `surface` or `surfaceContainer` | Backgrounds                 |
+| Dark gray/black text | `onSurface`                     | Primary text                |
+| Medium gray text     | `onSurfaceVariant`              | Secondary text              |
+| White                | `onPrimary`                     | Text on primary backgrounds |
+| Borders/dividers     | `outline` or `outlineVariant`   | Borders                     |
+| Error/red tones      | `error`                         | Error states                |
+
+### Component Override Rules
+
+**Acceptable overrides:**
+
+```tsx
+// ✅ OK - Layout positioning only
+<Card.Root className={css({ width: '100%', maxWidth: '400px' })}>
+```
+
+**Unacceptable overrides:**
+
+```tsx
+// ❌ WRONG - Overriding colors, fonts, spacing
+<Card.Root className={css({ bg: '#f5f1eb', borderRadius: '13px', padding: '20px' })}>
+```
+
+### Logo and Icon Handling
+
+- **Logos**: Use a placeholder `<div>` with text or import from an assets folder. NEVER create inline SVGs.
+- **Icons**: Use Lucide React icons or a placeholder. NEVER create custom SVG icon components.
+
+```tsx
+// ✅ OK - Placeholder for logo
+<div className={css({ display: 'flex', alignItems: 'center', gap: 'sm' })}>
+  <span>🎯</span>
+  <span>Discourser</span>
+</div>;
+
+// ❌ WRONG - Inline SVG
+function Logo() {
+  return <svg>...</svg>; // Never do this
+}
+```
+
+---
+
 ## Core Principles
 
 - **Always prefer design system components** over native HTML elements
@@ -87,6 +164,7 @@ BEFORE using ANY component, you MUST read its guidelines file first:
 - **Never use inline styles** with raw color values
 - **Read component guidelines** before using any component
 - **Follow common patterns** documented in overview-patterns.md
+- **Map Figma designs to tokens** — never extract exact values
 
 ## Quick Start
 
