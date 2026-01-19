@@ -1,5 +1,13 @@
 # @discourser/design-system
 
+## 0.9.2
+
+### Patch Changes
+
+- fix: remove styled-system from external dependencies to enable proper import rewriting
+
+  Fixed tsup configuration to allow styled-system imports to be properly rewritten to @discourser/design-system/styled-system/* instead of being externalized. This resolves "Module not found: Can't resolve 'styled-system/css'" errors in consuming applications during build.
+
 ## 0.9.1
 
 ### Patch Changes
