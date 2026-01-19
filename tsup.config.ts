@@ -4,12 +4,12 @@ export default defineConfig({
   entry: ['src/index.ts'],
   format: ['esm', 'cjs'],
   dts: {
-    resolve: true,
+    resolve: false,
   },
   splitting: true,
   sourcemap: true,
   clean: true,
-  external: ['react', 'react-dom'],
+  external: ['react', 'react-dom', /^styled-system\//],
   treeshake: true,
   minify: false,
   esbuildPlugins: [
