@@ -1,5 +1,13 @@
 # @discourser/design-system
 
+## 0.9.1
+
+### Patch Changes
+
+- fix: resolve malformed TypeScript type definitions in tsup build
+
+  Fixed tsup configuration to properly generate TypeScript types for components using createStyleContext. The type resolver was incorrectly generating `undefined<...>` types instead of proper `StyleContextProvider<...>` types, causing build failures in consuming packages with "Type error: ',' expected".
+
 ## 0.9.0
 
 ### Minor Changes
