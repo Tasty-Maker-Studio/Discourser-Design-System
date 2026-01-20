@@ -1,12 +1,20 @@
 # @discourser/design-system
 
+## 0.9.3
+
+### Patch Changes
+
+- Export panda preset for consuming applications to use
+
+  Added `discourserPandaPreset` export that provides all the design system's theme tokens, recipes, and configuration. Consuming applications can now include the design system source files in their panda config and generate their own local styled-system with all design system features.
+
 ## 0.9.2
 
 ### Patch Changes
 
 - fix: remove styled-system from external dependencies to enable proper import rewriting
 
-  Fixed tsup configuration to allow styled-system imports to be properly rewritten to @discourser/design-system/styled-system/* instead of being externalized. This resolves "Module not found: Can't resolve 'styled-system/css'" errors in consuming applications during build.
+  Fixed tsup configuration to allow styled-system imports to be properly rewritten to @discourser/design-system/styled-system/\* instead of being externalized. This resolves "Module not found: Can't resolve 'styled-system/css'" errors in consuming applications during build.
 
 ## 0.9.1
 
