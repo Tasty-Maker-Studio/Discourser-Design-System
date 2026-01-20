@@ -7,7 +7,7 @@ export default defineConfig({
   splitting: true,
   sourcemap: true,
   clean: true,
-  external: ['react', 'react-dom'],
+  external: ['react', 'react-dom', /^styled-system\//],
   treeshake: true,
   minify: false,
   esbuildPlugins: [
