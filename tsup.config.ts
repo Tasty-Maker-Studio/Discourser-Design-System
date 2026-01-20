@@ -3,9 +3,7 @@ import { defineConfig } from 'tsup';
 export default defineConfig({
   entry: ['src/index.ts'],
   format: ['esm', 'cjs'],
-  dts: {
-    resolve: false,
-  },
+  dts: false, // Disable tsup's DTS generation - use tsc instead
   splitting: true,
   sourcemap: true,
   clean: true,
