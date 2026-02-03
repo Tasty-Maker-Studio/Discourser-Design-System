@@ -189,7 +189,6 @@
   },
   "dependencies": {
     "@ark-ui/react": "^5.30.0",
-    "@discourser/design-system": "file:/tmp/discourser-design-system-0.9.6.tgz",
     "clsx": "^2.1.1"
   },
   "devDependencies": {

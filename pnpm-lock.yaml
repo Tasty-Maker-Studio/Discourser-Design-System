@@ -11,9 +11,6 @@ importers:
       '@ark-ui/react':
         specifier: ^5.30.0
         version: 5.30.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@discourser/design-system':
-        specifier: file:/tmp/discourser-design-system-0.9.6.tgz
-        version: file:../../../../../../tmp/discourser-design-system-0.9.6.tgz(@pandacss/dev@1.8.1(hono@4.11.4)(jsdom@27.4.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -356,14 +353,6 @@ packages:
     engines: {node: '>=18'}
     peerDependencies:
       postcss-selector-parser: ^7.0.0
-
-  '@discourser/design-system@file:../../../../../../tmp/discourser-design-system-0.9.6.tgz':
-    resolution: {integrity: sha512-Xok0aSwZsgx+GHaMfcFJrM1rXcw8UyQGXhWxDg/YjBQ8BdzxVXWJf7k3GWFlCDJm+Te4Vk1knlHeXBJXO9UoVw==, tarball: file:../../../../../../tmp/discourser-design-system-0.9.6.tgz}
-    version: 0.9.6
-    peerDependencies:
-      '@pandacss/dev': ^1.8.0
-      react: '>=19.0.0'
-      react-dom: '>=19.0.0'
 
   '@emotion/use-insertion-effect-with-fallbacks@1.2.0':
     resolution: {integrity: sha512-yJMtVdH59sxi/aVJBpk9FQq+OR8ll5GT8oWd57UpeaKEVGab41JWaCFA7FRLoMLloOZF/c/wsPoe+bfGmRKgDg==}
@@ -6150,14 +6139,6 @@ snapshots:
   '@csstools/selector-specificity@5.0.0(postcss-selector-parser@7.1.1)':
     dependencies:
       postcss-selector-parser: 7.1.1
-
-  '@discourser/design-system@file:../../../../../../tmp/discourser-design-system-0.9.6.tgz(@pandacss/dev@1.8.1(hono@4.11.4)(jsdom@27.4.0)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
-    dependencies:
-      '@ark-ui/react': 5.30.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@pandacss/dev': 1.8.1(hono@4.11.4)(jsdom@27.4.0)(typescript@5.9.3)
-      clsx: 2.1.1
-      react: 19.2.3
-      react-dom: 19.2.3(react@19.2.3)
 
   '@emotion/use-insertion-effect-with-fallbacks@1.2.0(react@19.2.3)':
     dependencies:
