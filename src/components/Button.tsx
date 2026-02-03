@@ -3,7 +3,6 @@ import { ark } from '@ark-ui/react/factory';
 import { createContext, mergeProps } from '@ark-ui/react/utils';
 import type React from 'react';
 import { type ComponentProps, forwardRef, useMemo } from 'react';
-import { cx } from 'styled-system/css';
 import { styled } from 'styled-system/jsx';
 import { type ButtonVariantProps, button } from 'styled-system/recipes';
 import { Group, type GroupProps } from './Group';
