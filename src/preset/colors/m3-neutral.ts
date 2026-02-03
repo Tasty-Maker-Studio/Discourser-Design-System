@@ -17,19 +17,19 @@ export const neutral = defineSemanticTokens.colors({
   '11': { value: { base: m3[30], _dark: m3[80] } },
   '12': { value: { base: m3[10], _dark: m3[90] } },
 
-  // Alpha variants
-  a1: { value: { base: '#00000003', _dark: '#ffffff05' } },
-  a2: { value: { base: '#00000006', _dark: '#ffffff09' } },
-  a3: { value: { base: '#0000000f', _dark: '#ffffff12' } },
-  a4: { value: { base: '#00000017', _dark: '#ffffff1b' } },
-  a5: { value: { base: '#0000001f', _dark: '#ffffff22' } },
-  a6: { value: { base: '#00000026', _dark: '#ffffff2c' } },
-  a7: { value: { base: '#00000031', _dark: '#ffffff3b' } },
-  a8: { value: { base: '#00000044', _dark: '#ffffff55' } },
-  a9: { value: { base: '#00000072', _dark: '#ffffff64' } },
-  a10: { value: { base: '#0000007c', _dark: '#ffffff72' } },
-  a11: { value: { base: '#0000009b', _dark: '#ffffffaf' } },
-  a12: { value: { base: '#000000df', _dark: '#ffffffed' } },
+  // Alpha variants (increased opacity for better visibility)
+  a1: { value: { base: '#00000008', _dark: '#ffffff08' } },
+  a2: { value: { base: '#00000020', _dark: '#ffffff20' } }, // ~13% for surface bg
+  a3: { value: { base: '#00000030', _dark: '#ffffff30' } }, // ~19% for subtle bg
+  a4: { value: { base: '#00000040', _dark: '#ffffff40' } }, // ~25% for hover states
+  a5: { value: { base: '#00000050', _dark: '#ffffff50' } }, // ~31% for active states
+  a6: { value: { base: '#00000080', _dark: '#ffffff80' } }, // ~50% for visible borders
+  a7: { value: { base: '#000000A0', _dark: '#ffffffA0' } }, // ~63% for prominent borders
+  a8: { value: { base: '#000000B0', _dark: '#ffffffB0' } }, // ~69%
+  a9: { value: { base: '#000000C0', _dark: '#ffffffC0' } }, // ~75%
+  a10: { value: { base: '#000000D0', _dark: '#ffffffD0' } }, // ~81%
+  a11: { value: { base: '#000000E0', _dark: '#ffffffE0' } }, // ~88% for text colors
+  a12: { value: { base: '#000000F0', _dark: '#ffffffF0' } }, // ~94% for high contrast
 
   // Semantic variants
   solid: {
@@ -67,6 +67,7 @@ export const neutral = defineSemanticTokens.colors({
   },
   outline: {
     bg: {
+      DEFAULT: { value: { base: 'transparent', _dark: 'transparent' } },
       hover: { value: { base: '{colors.neutral.a2}', _dark: '{colors.neutral.a2}' } },
       active: { value: { base: '{colors.neutral.a3}', _dark: '{colors.neutral.a3}' } },
     },
@@ -79,6 +80,7 @@ export const neutral = defineSemanticTokens.colors({
   },
   plain: {
     bg: {
+      DEFAULT: { value: { base: 'transparent', _dark: 'transparent' } },
       hover: { value: { base: '{colors.neutral.a3}', _dark: '{colors.neutral.a3}' } },
       active: { value: { base: '{colors.neutral.a4}', _dark: '{colors.neutral.a4}' } },
     },

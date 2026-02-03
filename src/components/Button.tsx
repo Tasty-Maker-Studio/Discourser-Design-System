@@ -3,7 +3,6 @@ import { ark } from '@ark-ui/react/factory';
 import { createContext, mergeProps } from '@ark-ui/react/utils';
 import type React from 'react';
 import { type ComponentProps, forwardRef, useMemo } from 'react';
-import { cx } from 'styled-system/css';
 import { styled } from 'styled-system/jsx';
 import { type ButtonVariantProps, button } from 'styled-system/recipes';
 import { Group, type GroupProps } from './Group';
@@ -33,15 +32,7 @@ interface ButtonLoadingProps {
 type BaseButtonProps = ComponentProps<typeof BaseButton>;
 const BaseButton = styled(ark.button, button);
 
-// Override colorPalette type to provide specific values
-export interface ButtonProps
-  extends Omit<BaseButtonProps, 'colorPalette'>, ButtonLoadingProps {
-  /**
-   * The color palette to use for the button.
-   * @default "primary"
-   */
-  colorPalette?: 'primary' | 'neutral' | 'error' | 'gray' | 'red' | undefined;
-}
+export interface ButtonProps extends BaseButtonProps, ButtonLoadingProps {}
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   function Button(props, ref) {
@@ -57,21 +48,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       children,
       spinner,
       spinnerPlacement,
-      colorPalette = 'primary',
-      className,
       ...rest
     } = buttonProps;
-
-    // Apply colorPalette using direct class name (avoids runtime css() issues with bundled output)
-    const colorPaletteClass = `color-palette_${colorPalette}`;
-    const mergedClassName = cx(colorPaletteClass, className);
 
     return (
       <BaseButton
         type="button"
         ref={ref}
         {...rest}
-        className={mergedClassName}
         data-loading={loading ? '' : undefined}
         disabled={loading || rest.disabled}
       >

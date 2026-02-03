@@ -12,7 +12,7 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['solid', 'surface', 'subtle', 'outline', 'plain'],
+      options: ['solid', 'elevated', 'surface', 'subtle', 'outline', 'plain'],
       description: 'Button variant style',
     },
     size: {
@@ -55,6 +55,7 @@ export const AllVariants: Story = {
     <VStack gap="4" alignItems="start">
       <HStack gap="3">
         <Button variant="solid" colorPalette="primary">Solid</Button>
+        <Button variant="elevated" colorPalette="primary">Elevated</Button>
         <Button variant="surface" colorPalette="primary">Surface</Button>
         <Button variant="subtle" colorPalette="primary">Subtle</Button>
         <Button variant="outline" colorPalette="primary">Outline</Button>
@@ -72,6 +73,7 @@ export const ColorPalettes: Story = {
         <h4>Primary (M3 Green)</h4>
         <HStack gap="3">
           <Button variant="solid" colorPalette="primary">Solid</Button>
+          <Button variant="elevated" colorPalette="primary">Elevated</Button>
           <Button variant="surface" colorPalette="primary">Surface</Button>
           <Button variant="subtle" colorPalette="primary">Subtle</Button>
           <Button variant="outline" colorPalette="primary">Outline</Button>
@@ -82,6 +84,7 @@ export const ColorPalettes: Story = {
         <h4>Neutral (Gray)</h4>
         <HStack gap="3">
           <Button variant="solid" colorPalette="neutral">Solid</Button>
+          <Button variant="elevated" colorPalette="neutral">Elevated</Button>
           <Button variant="surface" colorPalette="neutral">Surface</Button>
           <Button variant="subtle" colorPalette="neutral">Subtle</Button>
           <Button variant="outline" colorPalette="neutral">Outline</Button>
@@ -92,6 +95,7 @@ export const ColorPalettes: Story = {
         <h4>Error (Red)</h4>
         <HStack gap="3">
           <Button variant="solid" colorPalette="error">Solid</Button>
+          <Button variant="elevated" colorPalette="error">Elevated</Button>
           <Button variant="surface" colorPalette="error">Surface</Button>
           <Button variant="subtle" colorPalette="error">Subtle</Button>
           <Button variant="outline" colorPalette="error">Outline</Button>

@@ -1,5 +1,4 @@
-import type { DesignLanguageContract, TonalPalette, SemanticColors } from '../contracts/design-language.contract';
-
+import type { DesignLanguageContract, TonalPalette, SemanticColors } from '../contracts/design-language.contract'
 /**
  * Transforms a DesignLanguageContract into Panda CSS theme configuration
  */
