@@ -11,13 +11,7 @@ export default defineConfig({
   splitting: true,
   sourcemap: true,
   clean: true,
-  external: [
-    'react',
-    'react-dom',
-    '@pandacss/dev',
-    '@ark-ui/react',
-    /^styled-system/,  // Don't bundle styled-system imports (consumer generates this)
-  ],
+  external: ['react', 'react-dom'],
   treeshake: true,
   minify: false,
   esbuildOptions(options) {
