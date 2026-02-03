@@ -11,7 +11,11 @@ export default defineConfig({
   splitting: true,
   sourcemap: true,
   clean: true,
-  external: ['react', 'react-dom'],
+  external: [
+    'react',
+    'react-dom',
+    /^styled-system/, // Keep Panda CSS generated imports as external
+  ],
   treeshake: true,
   minify: false,
   esbuildOptions(options) {
