@@ -25,47 +25,139 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./styles.css": "./dist/styles.css",
-    "./styled-system": {
-      "types": "./styled-system/types/index.d.ts",
-      "import": "./styled-system/index.mjs",
-      "require": "./styled-system/index.js"
+    "./preset": {
+      "types": "./dist/preset/index.d.ts",
+      "import": "./dist/preset/index.js",
+      "require": "./dist/preset/index.cjs"
     },
-    "./styled-system/css": {
-      "types": "./styled-system/css/index.d.ts",
-      "import": "./styled-system/css/index.mjs",
-      "require": "./styled-system/css/index.js"
+    "./components": {
+      "types": "./src/components/index.ts",
+      "import": "./src/components/index.ts"
     },
-    "./styled-system/tokens": {
-      "types": "./styled-system/tokens/index.d.ts",
-      "import": "./styled-system/tokens/index.mjs",
-      "require": "./styled-system/tokens/index.js"
+    "./Button": {
+      "types": "./src/components/Button.tsx",
+      "import": "./src/components/Button.tsx"
     },
-    "./styled-system/recipes": {
-      "types": "./styled-system/recipes/index.d.ts",
-      "import": "./styled-system/recipes/index.mjs",
-      "require": "./styled-system/recipes/index.js"
+    "./Input": {
+      "types": "./src/components/Input.tsx",
+      "import": "./src/components/Input.tsx"
     },
-    "./styled-system/jsx": {
-      "types": "./styled-system/jsx/index.d.ts",
-      "import": "./styled-system/jsx/index.mjs",
-      "require": "./styled-system/jsx/index.js"
+    "./Card": {
+      "types": "./src/components/Card.tsx",
+      "import": "./src/components/Card.tsx"
     },
-    "./styled-system/patterns": {
-      "types": "./styled-system/patterns/index.d.ts",
-      "import": "./styled-system/patterns/index.mjs",
-      "require": "./styled-system/patterns/index.js"
+    "./Dialog": {
+      "types": "./src/components/Dialog.tsx",
+      "import": "./src/components/Dialog.tsx"
+    },
+    "./Switch": {
+      "types": "./src/components/Switch.tsx",
+      "import": "./src/components/Switch.tsx"
+    },
+    "./Accordion": {
+      "types": "./src/components/Accordion.tsx",
+      "import": "./src/components/Accordion.tsx"
+    },
+    "./Drawer": {
+      "types": "./src/components/Drawer.tsx",
+      "import": "./src/components/Drawer.tsx"
+    },
+    "./Tabs": {
+      "types": "./src/components/Tabs.tsx",
+      "import": "./src/components/Tabs.tsx"
+    },
+    "./Checkbox": {
+      "types": "./src/components/Checkbox.tsx",
+      "import": "./src/components/Checkbox.tsx"
+    },
+    "./RadioGroup": {
+      "types": "./src/components/RadioGroup.tsx",
+      "import": "./src/components/RadioGroup.tsx"
+    },
+    "./Select": {
+      "types": "./src/components/Select.tsx",
+      "import": "./src/components/Select.tsx"
+    },
+    "./Slider": {
+      "types": "./src/components/Slider.tsx",
+      "import": "./src/components/Slider.tsx"
+    },
+    "./Avatar": {
+      "types": "./src/components/Avatar.tsx",
+      "import": "./src/components/Avatar.tsx"
+    },
+    "./Badge": {
+      "types": "./src/components/Badge.tsx",
+      "import": "./src/components/Badge.tsx"
+    },
+    "./Progress": {
+      "types": "./src/components/Progress.tsx",
+      "import": "./src/components/Progress.tsx"
+    },
+    "./Skeleton": {
+      "types": "./src/components/Skeleton.tsx",
+      "import": "./src/components/Skeleton.tsx"
+    },
+    "./Popover": {
+      "types": "./src/components/Popover.tsx",
+      "import": "./src/components/Popover.tsx"
+    },
+    "./Tooltip": {
+      "types": "./src/components/Tooltip.tsx",
+      "import": "./src/components/Tooltip.tsx"
+    },
+    "./Heading": {
+      "types": "./src/components/Heading.tsx",
+      "import": "./src/components/Heading.tsx"
+    },
+    "./Textarea": {
+      "types": "./src/components/Textarea.tsx",
+      "import": "./src/components/Textarea.tsx"
+    },
+    "./Spinner": {
+      "types": "./src/components/Spinner.tsx",
+      "import": "./src/components/Spinner.tsx"
+    },
+    "./Toast": {
+      "types": "./src/components/Toast.tsx",
+      "import": "./src/components/Toast.tsx"
+    },
+    "./IconButton": {
+      "types": "./src/components/IconButton.tsx",
+      "import": "./src/components/IconButton.tsx"
+    },
+    "./InputAddon": {
+      "types": "./src/components/InputAddon.tsx",
+      "import": "./src/components/InputAddon.tsx"
+    },
+    "./InputGroup": {
+      "types": "./src/components/InputGroup.tsx",
+      "import": "./src/components/InputGroup.tsx"
+    },
+    "./CloseButton": {
+      "types": "./src/components/CloseButton.tsx",
+      "import": "./src/components/CloseButton.tsx"
+    },
+    "./Icon": {
+      "types": "./src/components/Icon.tsx",
+      "import": "./src/components/Icon.tsx"
+    },
+    "./AbsoluteCenter": {
+      "types": "./src/components/AbsoluteCenter.tsx",
+      "import": "./src/components/AbsoluteCenter.tsx"
+    },
+    "./Group": {
+      "types": "./src/components/Group.tsx",
+      "import": "./src/components/Group.tsx"
     }
   },
   "files": [
     "dist",
-    "styled-system",
-    "src",
-    "guidelines"
+    "src"
   ],
   "scripts": {
     "dev": "pnpm docs:generate && storybook dev -p 6006",
-    "build": "pnpm build:panda && pnpm build:lib && pnpm build:types && pnpm build:css",
+    "build": "pnpm build:panda && pnpm build:lib && pnpm build:types",
     "build:panda": "panda codegen",
     "build:css": "panda cssgen --outfile dist/styles.css",
     "build:lib": "tsup",
@@ -91,6 +183,7 @@
     "release": "pnpm build && changeset publish --access public"
   },
   "peerDependencies": {
+    "@pandacss/dev": "^1.8.0",
     "react": ">=19.0.0",
     "react-dom": ">=19.0.0"
   },

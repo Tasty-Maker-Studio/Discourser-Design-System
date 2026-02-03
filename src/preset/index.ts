@@ -1,4 +1,4 @@
-import type { Preset } from '@pandacss/dev';
+import { definePreset } from '@pandacss/dev';
 import { activeLanguage, transformToPandaTheme } from '../languages';
 import { colors as m3Colors } from './colors';
 import { m3SemanticTokens } from './semantic-tokens';
@@ -48,8 +48,11 @@ import { shadows as parkShadows } from './shadows';
 
 const theme = transformToPandaTheme(activeLanguage);
 
-export const discourserPandaPreset: Preset = {
+export const discourserPandaPreset = definePreset({
   name: 'discourser-design-system-preset',
+
+  // Include Panda base presets like Park UI
+  presets: ['@pandacss/preset-base', '@pandacss/preset-panda'],
 
   theme: {
     extend: {
@@ -62,6 +65,7 @@ export const discourserPandaPreset: Preset = {
         fontWeights: theme.tokens.fontWeights,
         letterSpacings: theme.tokens.letterSpacings,
         spacing: theme.tokens.spacing,
+        // Remove manual sizes - inherit from @pandacss/preset-panda
         radii: theme.tokens.radii,
         shadows: theme.tokens.shadows,
         durations: theme.tokens.durations,
@@ -186,4 +190,4 @@ export const discourserPandaPreset: Preset = {
       textStyle: 'bodyMedium',
     },
   },
-};
+});

@@ -17,19 +17,19 @@ export const error = defineSemanticTokens.colors({
   '11': { value: { base: m3[30], _dark: m3[90] } },
   '12': { value: { base: m3[10], _dark: m3[95] } },
 
-  // Alpha variants
+  // Alpha variants (increased opacity for better visibility)
   a1: { value: { base: `${m3[40]}08`, _dark: `${m3[80]}08` } },
-  a2: { value: { base: `${m3[40]}10`, _dark: `${m3[80]}10` } },
-  a3: { value: { base: `${m3[40]}18`, _dark: `${m3[80]}18` } },
-  a4: { value: { base: `${m3[40]}24`, _dark: `${m3[80]}24` } },
-  a5: { value: { base: `${m3[40]}32`, _dark: `${m3[80]}32` } },
-  a6: { value: { base: `${m3[40]}48`, _dark: `${m3[80]}48` } },
-  a7: { value: { base: `${m3[40]}64`, _dark: `${m3[80]}64` } },
-  a8: { value: { base: `${m3[40]}80`, _dark: `${m3[80]}80` } },
-  a9: { value: { base: `${m3[40]}96`, _dark: `${m3[80]}96` } },
-  a10: { value: { base: `${m3[40]}AA`, _dark: `${m3[80]}AA` } },
-  a11: { value: { base: `${m3[40]}CC`, _dark: `${m3[80]}CC` } },
-  a12: { value: { base: `${m3[40]}EE`, _dark: `${m3[80]}EE` } },
+  a2: { value: { base: `${m3[40]}20`, _dark: `${m3[80]}20` } }, // ~13% for surface bg
+  a3: { value: { base: `${m3[40]}30`, _dark: `${m3[80]}30` } }, // ~19% for subtle bg
+  a4: { value: { base: `${m3[40]}40`, _dark: `${m3[80]}40` } }, // ~25% for hover states
+  a5: { value: { base: `${m3[40]}50`, _dark: `${m3[80]}50` } }, // ~31% for active states
+  a6: { value: { base: `${m3[40]}80`, _dark: `${m3[80]}80` } }, // ~50% for visible borders
+  a7: { value: { base: `${m3[40]}A0`, _dark: `${m3[80]}A0` } }, // ~63% for prominent borders
+  a8: { value: { base: `${m3[40]}B0`, _dark: `${m3[80]}B0` } }, // ~69%
+  a9: { value: { base: `${m3[40]}C0`, _dark: `${m3[80]}C0` } }, // ~75%
+  a10: { value: { base: `${m3[40]}D0`, _dark: `${m3[80]}D0` } }, // ~81%
+  a11: { value: { base: `${m3[40]}E0`, _dark: `${m3[80]}E0` } }, // ~88% for text colors
+  a12: { value: { base: `${m3[40]}F0`, _dark: `${m3[80]}F0` } }, // ~94% for high contrast
 
   // Semantic variants
   solid: {
@@ -60,6 +60,7 @@ export const error = defineSemanticTokens.colors({
   },
   outline: {
     bg: {
+      DEFAULT: { value: { base: 'transparent', _dark: 'transparent' } },
       hover: { value: { base: '{colors.error.a2}', _dark: '{colors.error.a2}' } },
       active: { value: { base: '{colors.error.a3}', _dark: '{colors.error.a3}' } },
     },
@@ -68,6 +69,7 @@ export const error = defineSemanticTokens.colors({
   },
   plain: {
     bg: {
+      DEFAULT: { value: { base: 'transparent', _dark: 'transparent' } },
       hover: { value: { base: '{colors.error.a3}', _dark: '{colors.error.a3}' } },
       active: { value: { base: '{colors.error.a4}', _dark: '{colors.error.a4}' } },
     },

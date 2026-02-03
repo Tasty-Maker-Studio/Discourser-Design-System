@@ -10,6 +10,7 @@ export const button = defineRecipe({
     cursor: 'pointer',
     display: 'inline-flex',
     flexShrink: '0',
+    fontFamily: 'body',
     fontWeight: 'semibold',
     gap: '2',
     isolation: 'isolate',
@@ -38,6 +39,7 @@ export const button = defineRecipe({
       solid: {
         bg: 'colorPalette.solid.bg',
         color: 'colorPalette.solid.fg',
+        border: 'none',
         _hover: {
           bg: 'colorPalette.solid.bg.hover',
         },
@@ -60,6 +62,7 @@ export const button = defineRecipe({
       subtle: {
         bg: 'colorPalette.subtle.bg',
         color: 'colorPalette.subtle.fg',
+        border: 'none',
         _hover: {
           bg: 'colorPalette.subtle.bg.hover',
         },
@@ -71,6 +74,7 @@ export const button = defineRecipe({
         },
       },
       outline: {
+        backgroundColor: 'transparent',
         borderWidth: '1px',
         borderColor: 'colorPalette.outline.border',
         color: 'colorPalette.outline.fg',
@@ -85,7 +89,9 @@ export const button = defineRecipe({
         },
       },
       plain: {
+        backgroundColor: 'transparent',
         color: 'colorPalette.plain.fg',
+        border: 'none',
         _hover: {
           bg: 'colorPalette.plain.bg.hover',
         },
@@ -96,15 +102,28 @@ export const button = defineRecipe({
           bg: 'colorPalette.plain.bg.active',
         },
       },
+      elevated: {
+        bg: 'colorPalette.surface.bg',
+        color: 'colorPalette.solid.fg',
+        boxShadow: 'level2',
+        border: 'none',
+        _hover: {
+          bg: 'colorPalette.surface.bg',
+          boxShadow: 'level3',
+        },
+        _active: {
+          boxShadow: 'level1',
+        },
+      },
     },
     size: {
-      '2xs': { h: '6', minW: '6', textStyle: 'xs', px: '2', _icon: { boxSize: '3.5' } },
-      xs: { h: '8', minW: '8', textStyle: 'sm', px: '2.5', _icon: { boxSize: '4' } },
-      sm: { h: '9', minW: '9', textStyle: 'sm', px: '3', _icon: { boxSize: '4' } },
-      md: { h: '10', minW: '10', textStyle: 'sm', px: '3.5', _icon: { boxSize: '5' } },
-      lg: { h: '11', minW: '11', textStyle: 'md', px: '4', _icon: { boxSize: '5' } },
-      xl: { h: '12', minW: '12', textStyle: 'md', px: '4.5', _icon: { boxSize: '5.5' } },
-      '2xl': { h: '16', minW: '16', textStyle: 'xl', px: '6', _icon: { boxSize: '6' } },
+      '2xs': { h: '6', minW: '6', textStyle: 'xs', paddingX: '2', _icon: { boxSize: '3.5' } },
+      xs: { h: '8', minW: '8', textStyle: 'sm', paddingX: '2.5', _icon: { boxSize: '4' } },
+      sm: { h: '9', minW: '9', textStyle: 'sm', paddingX: '3', _icon: { boxSize: '4' } },
+      md: { h: '10', minW: '10', textStyle: 'sm', paddingX: '3.5', _icon: { boxSize: '5' } },
+      lg: { h: '11', minW: '11', textStyle: 'md', paddingX: '4', _icon: { boxSize: '5' } },
+      xl: { h: '12', minW: '12', textStyle: 'md', paddingX: '4.5', _icon: { boxSize: '5.5' } },
+      '2xl': { h: '16', minW: '16', textStyle: 'xl', paddingX: '6', _icon: { boxSize: '6' } },
     },
   },
 })
