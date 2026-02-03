@@ -37,7 +37,28 @@
       "Bash(chmod:*)",
       "Bash(tsx scripts/generate-storybook-docs.ts:*)",
       "mcp__chrome-devtools__handle_dialog",
-      "mcp__chrome-devtools__list_console_messages"
+      "mcp__chrome-devtools__list_console_messages",
+      "mcp__panda__get_config",
+      "mcp__panda__get_tokens",
+      "Bash(pnpm install)",
+      "Bash(rsync:*)",
+      "Bash(pnpm prepare)",
+      "Bash(pnpm panda codegen:*)",
+      "Bash(pnpm panda cssgen:*)",
+      "mcp__chrome-devtools__select_page",
+      "mcp__chrome-devtools__press_key",
+      "WebFetch(domain:panda-css.com)",
+      "Bash(ls:*)",
+      "Bash(osascript:*)",
+      "Bash(curl:*)",
+      "Bash(pkill:*)",
+      "mcp__chrome-devtools__get_console_message",
+      "WebSearch",
+      "Bash(pnpm install:*)"
     ]
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "panda"
+  ]
 }

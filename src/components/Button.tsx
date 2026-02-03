@@ -33,15 +33,7 @@ interface ButtonLoadingProps {
 type BaseButtonProps = ComponentProps<typeof BaseButton>;
 const BaseButton = styled(ark.button, button);
 
-// Override colorPalette type to provide specific values
-export interface ButtonProps
-  extends Omit<BaseButtonProps, 'colorPalette'>, ButtonLoadingProps {
-  /**
-   * The color palette to use for the button.
-   * @default "primary"
-   */
-  colorPalette?: 'primary' | 'neutral' | 'error' | 'gray' | 'red' | undefined;
-}
+export interface ButtonProps extends BaseButtonProps, ButtonLoadingProps {}
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   function Button(props, ref) {
@@ -57,21 +49,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       children,
       spinner,
       spinnerPlacement,
-      colorPalette = 'primary',
-      className,
       ...rest
     } = buttonProps;
-
-    // Apply colorPalette using direct class name (avoids runtime css() issues with bundled output)
-    const colorPaletteClass = `color-palette_${colorPalette}`;
-    const mergedClassName = cx(colorPaletteClass, className);
 
     return (
       <BaseButton
         type="button"
         ref={ref}
         {...rest}
-        className={mergedClassName}
         data-loading={loading ? '' : undefined}
         disabled={loading || rest.disabled}
       >
