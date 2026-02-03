@@ -54,7 +54,9 @@
       "Bash(pkill:*)",
       "mcp__chrome-devtools__get_console_message",
       "WebSearch",
-      "Bash(pnpm install:*)"
+      "Bash(pnpm install:*)",
+      "Bash(git push)",
+      "Bash(git pull:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
