@@ -56,7 +56,19 @@
       "WebSearch",
       "Bash(pnpm install:*)",
       "Bash(git push)",
-      "Bash(git pull:*)"
+      "Bash(git pull:*)",
+      "Bash(gh pr create:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh pr view:*)",
+      "Bash(npm search:*)",
+      "Bash(npx:*)",
+      "mcp__ark-ui__list_components",
+      "mcp__ark-ui__get_component_props",
+      "mcp__ark-ui__list_examples",
+      "mcp__ark-ui__get_example",
+      "Bash(pnpm vitest run:*)",
+      "mcp__ark-ui__styling_guide",
+      "Bash(grep:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
