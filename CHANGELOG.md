@@ -1,5 +1,17 @@
 # @discourser/design-system
 
+## 0.10.0
+
+### Minor Changes
+
+- [#77](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/77) [`af75c36`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/af75c360776d17f118d29c61821da9ec0ed7afaf) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Add Stepper component for multi-step workflows with Material Design 3 styling. Features include:
+  - Three visual states (current, completed, upcoming) based on Figma designs
+  - ColorPalette theming support (primary, secondary, tertiary, error, neutral)
+  - Size variants (sm, md, lg) and orientation support (horizontal, vertical)
+  - Linear and non-linear navigation modes with optional step content
+  - Full accessibility support with proper ARIA attributes
+  - Custom separator component with fixed completion state logic
+
 ## 0.9.8
 
 ### Patch Changes
