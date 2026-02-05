@@ -46,10 +46,6 @@
       "types": "./src/components/Card.tsx",
       "import": "./src/components/Card.tsx"
     },
-    "./Dialog": {
-      "types": "./src/components/Dialog.tsx",
-      "import": "./src/components/Dialog.tsx"
-    },
     "./Switch": {
       "types": "./src/components/Switch.tsx",
       "import": "./src/components/Switch.tsx"
@@ -149,6 +145,10 @@
     "./Group": {
       "types": "./src/components/Group.tsx",
       "import": "./src/components/Group.tsx"
+    },
+    "./Stepper": {
+      "types": "./src/components/Stepper/index.ts",
+      "import": "./src/components/Stepper/index.ts"
     }
   },
   "files": [
