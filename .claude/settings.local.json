@@ -69,7 +69,10 @@
       "Bash(pnpm vitest run:*)",
       "mcp__ark-ui__styling_guide",
       "Bash(grep:*)",
-      "Bash(pnpm eslint:*)"
+      "Bash(pnpm eslint:*)",
+      "Bash(git merge:*)",
+      "Bash(git push:*)",
+      "Bash(gh pr list:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
