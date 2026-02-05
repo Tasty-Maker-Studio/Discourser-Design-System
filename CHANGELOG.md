@@ -1,5 +1,11 @@
 # @discourser/design-system
 
+## 0.9.8
+
+### Patch Changes
+
+- [#69](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/69) [`0a78983`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/0a78983ce07fa2a84ad75edf1ac34b964f6fbd49) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Fix build configuration for npm package consumption by adding styled-system to external array in tsup config. This prevents bundling of Panda CSS generated imports and resolves "Could not resolve styled-system/\*" errors.
+
 ## 0.9.7
 
 ### Patch Changes
