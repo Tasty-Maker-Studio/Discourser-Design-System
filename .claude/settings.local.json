@@ -68,7 +68,8 @@
       "mcp__ark-ui__get_example",
       "Bash(pnpm vitest run:*)",
       "mcp__ark-ui__styling_guide",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(pnpm eslint:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
