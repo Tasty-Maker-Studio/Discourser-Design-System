@@ -45,6 +45,9 @@ import { layerStyles } from './src/preset/layer-styles';
 import { textStyles as parkTextStyles } from './src/preset/text-styles';
 import { shadows as parkShadows } from './src/preset/shadows';
 
+// Custom component recipes
+import { stepperRecipe } from './src/recipes/stepper.recipe';
+
 const theme = transformToPandaTheme(activeLanguage);
 
 export default defineConfig({
@@ -59,7 +62,15 @@ export default defineConfig({
     css: [
       {
         properties: {
-          colorPalette: ['primary', 'neutral', 'error', 'gray', 'red'],
+          colorPalette: [
+            'primary',
+            'secondary',
+            'tertiary',
+            'error',
+            'neutral',
+            'gray',
+            'red',
+          ],
         },
       },
     ],
@@ -196,6 +207,8 @@ export default defineConfig({
         dialog,
         popover,
         tooltip,
+        // Custom Components
+        stepper: stepperRecipe,
       },
     },
   },
@@ -203,6 +216,9 @@ export default defineConfig({
   conditions: {
     light: '[data-theme=light] &, .light &',
     dark: '[data-theme=dark] &, .dark &',
+    current: '&[data-current]',
+    complete: '&[data-complete]',
+    incomplete: '&[data-incomplete]',
   },
 
   globalCss: {

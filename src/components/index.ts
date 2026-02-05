@@ -46,3 +46,6 @@ export * as CloseButton from './CloseButton';
 export * as Icon from './Icon';
 export * as AbsoluteCenter from './AbsoluteCenter';
 export * as Group from './Group';
+
+// Navigation & Progress Components
+export { Stepper, type StepperRootProps, type StepItem } from './Stepper';
