@@ -1,20 +1,10 @@
 # @discourser/design-system
 
-## 0.10.0
-
-### Minor Changes
-
-- 65351bb: Add Stepper component for multi-step workflows with Material Design 3 styling. Features include:
-  - Three visual states (current, completed, upcoming) based on Figma designs
-  - ColorPalette theming support (primary, secondary, tertiary, error, neutral)
-  - Size variants (sm, md, lg) and orientation support (horizontal, vertical)
-  - Linear and non-linear navigation modes with optional step content
-  - Full accessibility support with proper ARIA attributes
-  - Custom separator component with fixed completion state logic
+## 0.9.8
 
 ### Patch Changes
 
-- 0a78983: Fix build configuration for npm package consumption by adding styled-system to external array in tsup config. This prevents bundling of Panda CSS generated imports and resolves "Could not resolve styled-system/\*" errors.
+- [#69](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/69) [`0a78983`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/0a78983ce07fa2a84ad75edf1ac34b964f6fbd49) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Fix build configuration for npm package consumption by adding styled-system to external array in tsup config. This prevents bundling of Panda CSS generated imports and resolves "Could not resolve styled-system/\*" errors.
 
 ## 0.9.7
 
