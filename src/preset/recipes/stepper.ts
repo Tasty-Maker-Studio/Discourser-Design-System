@@ -14,7 +14,7 @@ import { defineSlotRecipe } from '@pandacss/dev';
  * - colorPalette.subtle.* for secondary/completed state
  * - neutral.subtle.* and fg.muted for default/upcoming state
  */
-export const stepperRecipe = defineSlotRecipe({
+export const stepper = defineSlotRecipe({
   className: 'stepper',
   description: 'Multi-step progress indicator for guided workflows',
 
