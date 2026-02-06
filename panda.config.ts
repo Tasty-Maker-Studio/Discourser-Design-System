@@ -44,9 +44,7 @@ import { heading } from './src/preset/recipes/heading';
 import { layerStyles } from './src/preset/layer-styles';
 import { textStyles as parkTextStyles } from './src/preset/text-styles';
 import { shadows as parkShadows } from './src/preset/shadows';
-
-// Custom component recipes
-import { stepperRecipe } from './src/recipes/stepper.recipe';
+import { stepper } from './src/preset/recipes/stepper';
 
 const theme = transformToPandaTheme(activeLanguage);
 
@@ -208,7 +206,7 @@ export default defineConfig({
         popover,
         tooltip,
         // Custom Components
-        stepper: stepperRecipe,
+        stepper,
       },
     },
   },

@@ -2,9 +2,6 @@
 // Pipeline validation: Testing automated release workflow
 export * from './components';
 
-// Recipes (for direct usage)
-export * from './recipes';
-
 // Language system
 export * from './languages';
 
