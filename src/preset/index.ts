@@ -41,6 +41,10 @@ import { tooltip } from './recipes/tooltip';
 
 // Park UI recipes - Typography
 import { heading } from './recipes/heading';
+
+// Custom Components
+import { stepper } from './recipes/stepper';
+
 // Park UI theme extensions
 import { layerStyles } from './layer-styles';
 import { textStyles as parkTextStyles } from './text-styles';
@@ -170,6 +174,8 @@ export const discourserPandaPreset = definePreset({
         dialog,
         popover,
         tooltip,
+        // Custom Components
+        stepper,
       },
     },
   },
