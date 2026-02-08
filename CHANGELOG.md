@@ -1,5 +1,23 @@
 # @discourser/design-system
 
+## 0.13.0
+
+### Minor Changes
+
+- [#91](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/91) [`859d42a`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/859d42aa10334c1e3aa7993d4fea655fe9cb3910) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - ## Stepper Component Fixes
+  - Fix label text wrapping by adding `whiteSpace: nowrap` styling
+  - Fix missing connector lines by adding `minWidth: 40px` and proper color token (`neutral.surface.border`)
+  - Fix uneven spacing by adding `flexShrink: 0` to trigger
+  - Add dedicated `label` slot to stepper recipe
+
+  ## Development Workflow Improvements
+  - Add comprehensive `pnpm verify` script with colored output
+  - Add pre-push hook to run all checks automatically before pushing
+  - Update pre-commit hook to auto-regenerate Panda types when recipes change
+  - Update build process to include typecheck step
+
+  These changes ensure the stepper component displays correctly in consuming applications and prevent CI failures by catching errors locally.
+
 ## 0.12.0
 
 ### Minor Changes
