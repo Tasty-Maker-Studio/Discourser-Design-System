@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Skip hooks in CI environment
+if [ -n "$CI" ]; then
+  exit 0
+fi
+
+echo ""
+echo "🚀 Running pre-push verification..."
+echo ""
+
+# Run the comprehensive verify script
+pnpm verify
+
+exit $?
