@@ -72,7 +72,8 @@
       "Bash(pnpm eslint:*)",
       "Bash(git merge:*)",
       "Bash(git push:*)",
-      "Bash(gh pr list:*)"
+      "Bash(gh pr list:*)",
+      "Bash(xargs git branch:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

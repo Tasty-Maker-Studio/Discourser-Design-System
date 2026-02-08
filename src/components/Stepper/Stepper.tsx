@@ -23,7 +23,7 @@ export interface StepperRootProps
   extends
     Omit<
       React.ComponentPropsWithoutRef<typeof Steps.Root>,
-      'count' | 'size' | 'orientation'
+      'count' | 'size' | 'orientation' | 'step' | 'defaultStep'
     >,
     Omit<StepperVariantProps, 'colorPalette'> {
   /** Array of step configurations */
@@ -38,6 +38,10 @@ export interface StepperRootProps
   prevLabel?: string;
   /** Next button label */
   nextLabel?: string;
+  /** Current step (controlled mode) */
+  step?: number;
+  /** Default step (uncontrolled mode) */
+  defaultStep?: number;
   /** Custom class name */
   className?: string;
 }
@@ -113,6 +117,8 @@ export const StepperRoot = forwardRef<HTMLDivElement, StepperRootProps>(
       nextLabel = 'Next',
       className,
       children,
+      step,
+      defaultStep,
       ...props
     },
     ref,
@@ -126,6 +132,8 @@ export const StepperRoot = forwardRef<HTMLDivElement, StepperRootProps>(
         count={steps.length}
         orientation={stepOrientation as 'horizontal' | 'vertical'}
         className={cx(classes.root, css({ colorPalette }), className)}
+        step={step}
+        defaultStep={defaultStep}
         {...props}
       >
         <Steps.List className={classes.list}>
@@ -135,7 +143,9 @@ export const StepperRoot = forwardRef<HTMLDivElement, StepperRootProps>(
                 <Steps.Indicator className={classes.indicator}>
                   {index + 1}
                 </Steps.Indicator>
-                {step.title && <span>{step.title}</span>}
+                {step.title && (
+                  <span className={classes.label}>{step.title}</span>
+                )}
               </Steps.Trigger>
               {index < steps.length - 1 && (
                 <CustomSeparator index={index} className={classes.separator} />
