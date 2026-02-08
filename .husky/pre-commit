@@ -43,8 +43,11 @@ done
 # Run lint-staged for linting and formatting
 pnpm exec lint-staged
 
-# Generate styled-system if needed (required for type checking)
-if [ ! -d "styled-system" ]; then
+# Regenerate styled-system if recipes or tokens changed
+if git diff --cached --name-only | grep -q "src/preset/"; then
+  echo "Recipe/token changes detected, regenerating styled-system..."
+  pnpm build:panda --silent
+elif [ ! -d "styled-system" ]; then
   echo "Generating styled-system..."
   pnpm build:panda --silent
 fi
