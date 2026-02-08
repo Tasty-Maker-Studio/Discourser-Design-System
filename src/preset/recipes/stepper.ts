@@ -24,6 +24,7 @@ export const stepper = defineSlotRecipe({
     'item',
     'trigger',
     'indicator',
+    'label',
     'separator',
     'content',
     'progress',
@@ -68,6 +69,7 @@ export const stepper = defineSlotRecipe({
       padding: '0',
       position: 'relative',
       zIndex: '2',
+      flexShrink: '0',
 
       _disabled: {
         cursor: 'not-allowed',
@@ -117,10 +119,22 @@ export const stepper = defineSlotRecipe({
       },
     },
 
+    label: {
+      whiteSpace: 'nowrap',
+      textAlign: 'center',
+      fontSize: 'sm',
+      fontWeight: 'medium',
+      color: 'fg.default',
+      maxWidth: '120px',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+    },
+
     separator: {
       flex: '1',
+      minWidth: '40px',
       height: '2px',
-      bg: 'border',
+      bg: 'neutral.surface.border',
       transition: 'background',
       transitionDuration: 'normal',
       marginInline: '4',
