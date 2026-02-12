@@ -138,8 +138,9 @@ When semantic tokens or base tokens are added or modified, update the appropriat
    - Match existing column structure exactly
    - Add usage notes in the third column
 
-4. **Run verification tests** (if available)
-   - `pnpm test -- --grep translation` (future test suite from STORY-011)
+4. **Run verification tests**
+   - `pnpm test -- --grep translation` — Automated token accuracy tests
+   - `bash scripts/verify-translation-docs.sh` — Quick structure check
    - Manually verify in Storybook that the token renders correctly
 
 ### Example Addition
@@ -238,18 +239,25 @@ Re-verify and update translation documentation when ANY of these occur:
 
 ### How to Verify
 
-#### Automated Verification (Future)
+#### Automated Verification
 
 ```bash
-# Run all translation verification tests (STORY-011)
+# Run all translation verification tests
 pnpm test -- --grep translation
+
+# Quick file structure check
+bash scripts/verify-translation-docs.sh
+
+# Full Storybook build (catches MDX parse errors)
+pnpm build-storybook
 ```
 
-**Note:** Translation verification tests are planned for STORY-011. Once implemented, this command will verify:
-- All tokens referenced in MDX exist in `panda.config.ts`
-- All components referenced exist in `src/components/index.ts`
-- All variant values match recipe definitions
-- Cross-reference links are valid
+**What the tests verify:**
+- **Token accuracy** — All tokens referenced in translation MDX files exist in `panda.config.ts`, preset files, or are valid CSS values
+- **Component completeness** — All exported components from `src/components/index.ts` are documented in `05-Components.mdx`
+- **Cross-reference integrity** — Internal links to Guidelines documentation resolve correctly
+- **File structure** — All expected translation files exist with proper Meta tags
+- **Phantom tokens** — No invalid tokens like `bg.default`, `bg.muted`, or `primary.contrast`
 
 #### Manual Verification
 

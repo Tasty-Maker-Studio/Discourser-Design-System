@@ -139,7 +139,7 @@ Discourser uses the **Radix Colors scale** (1-12) for all color palettes:
 
 ```tsx
 // ❌ WRONG: Hardcoded hex
-<Box bg="#4C662B" color="#FFFFFF">
+<Box style={{ backgroundColor: '#4C662B', color: '#FFFFFF' }}>
   Brand section
 </Box>
 ```
@@ -220,7 +220,7 @@ Discourser uses the **Radix Colors scale** (1-12) for all color palettes:
 ```tsx
 // ❌ WRONG: Mixing Shadcn vocabulary with M3 explicit tokens
 <Box bg="m3Primary">
-  <Text color="text-primary-foreground">Mixed vocabulary</Text>
+  <Text style={{ color: 'var(--text-primary-foreground)' }}>Mixed vocabulary</Text>
 </Box>
 ```
 
