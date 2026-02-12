@@ -108,12 +108,7 @@ export const discourserPandaPreset = definePreset({
             value: { base: '{colors.gray.1}', _dark: '{colors.gray.1}' },
           },
           border: {
-            default: {
-              value: { base: '{colors.gray.6}', _dark: '{colors.gray.6}' },
-            },
-            muted: {
-              value: { base: '{colors.gray.4}', _dark: '{colors.gray.4}' },
-            },
+            value: { base: '{colors.gray.6}', _dark: '{colors.gray.6}' },
           },
 
           // M3 semantic tokens (surface, onSurface, etc.)

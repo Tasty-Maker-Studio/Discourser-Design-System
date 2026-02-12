@@ -39,22 +39,22 @@ export const m3SemanticTokens = defineSemanticTokens.colors({
     container: { value: { base: semantic.onPrimaryContainer, _dark: semanticDark.onPrimaryContainer } },
   },
 
-  // M3 Secondary
-  secondary: {
+  // M3 Secondary (prefixed to avoid conflict with Park UI Radix-scale bridge)
+  m3Secondary: {
     DEFAULT: { value: { base: semantic.secondary, _dark: semanticDark.secondary } },
     container: { value: { base: semantic.secondaryContainer, _dark: semanticDark.secondaryContainer } },
   },
-  onSecondary: {
+  onM3Secondary: {
     DEFAULT: { value: { base: semantic.onSecondary, _dark: semanticDark.onSecondary } },
     container: { value: { base: semantic.onSecondaryContainer, _dark: semanticDark.onSecondaryContainer } },
   },
 
-  // M3 Tertiary
-  tertiary: {
+  // M3 Tertiary (prefixed to avoid conflict with Park UI Radix-scale bridge)
+  m3Tertiary: {
     DEFAULT: { value: { base: semantic.tertiary, _dark: semanticDark.tertiary } },
     container: { value: { base: semantic.tertiaryContainer, _dark: semanticDark.tertiaryContainer } },
   },
-  onTertiary: {
+  onM3Tertiary: {
     DEFAULT: { value: { base: semantic.onTertiary, _dark: semanticDark.onTertiary } },
     container: { value: { base: semantic.onTertiaryContainer, _dark: semanticDark.onTertiaryContainer } },
   },

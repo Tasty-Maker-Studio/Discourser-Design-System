@@ -1,4 +1,4 @@
-import { Meta } from '@storybook/blocks';
+import { Meta } from '@storybook/addon-docs/blocks';
 import { ElevationGrid } from './components/ElevationCard';
 import { material3Language } from '../../languages/material3.language';
 
@@ -7,6 +7,35 @@ import { material3Language } from '../../languages/material3.language';
 # Elevation
 
 Elevation in Material Design 3 creates depth and hierarchy through the use of shadows. The Discourser Design System provides 6 elevation levels, from no elevation to the highest prominence.
+
+## Token Architecture
+
+The elevation system uses a **three-layer architecture** for flexibility and consistency:
+
+### Layer 1: Base Tokens (Material 3 Values)
+The foundation layer contains actual M3 elevation values:
+- `level0` through `level5` — Registered via `transform.ts`
+- Contains raw shadow CSS values from Material Design 3 spec
+- **Do not use directly in components**
+
+### Layer 2: Semantic Tokens (Design Intent)
+The middle layer maps design intent to base tokens:
+- `xs`, `sm`, `md`, `lg`, `xl`, `2xl` — Defined in `src/preset/shadows.ts`
+- Each semantic token references a base token (e.g., `sm` → `{shadows.level2}`)
+- Provides meaningful names that express elevation purpose
+
+### Layer 3: Component Usage
+Components use semantic tokens for flexibility:
+```tsx
+// ✅ Use semantic tokens in components
+boxShadow: 'sm'
+boxShadow: 'md'
+
+// ❌ Don't use base tokens directly
+boxShadow: 'level2'
+```
+
+This architecture allows the design language to be swapped by changing which base tokens the semantic layer references, without touching component code.
 
 ## Elevation Scale
 
@@ -76,10 +105,10 @@ Use elevation changes to indicate interactivity:
 import { css } from 'styled-system/css';
 
 const interactiveCardStyle = css({
-  boxShadow: 'level1',
+  boxShadow: 'xs',
   transition: 'box-shadow 200ms',
   _hover: {
-    boxShadow: 'level2'
+    boxShadow: 'sm'
   }
 });
 ```
@@ -202,7 +231,7 @@ Elevation works differently in dark themes:
 import { css } from 'styled-system/css';
 
 const cardStyle = css({
-  boxShadow: 'level1',
+  boxShadow: 'xs',
   borderRadius: 'medium',
   padding: 'lg'
 });
@@ -214,14 +243,14 @@ const cardStyle = css({
 import { css } from 'styled-system/css';
 
 const elevatedButtonStyle = css({
-  boxShadow: 'level2',
+  boxShadow: 'sm',
   transition: 'all',
   transitionDuration: 'fast',
   _hover: {
-    boxShadow: 'level3'
+    boxShadow: 'md'
   },
   _active: {
-    boxShadow: 'level1'
+    boxShadow: 'xs'
   }
 });
 ```
@@ -236,7 +265,7 @@ const modalStyle = css({
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  boxShadow: 'level3',
+  boxShadow: 'md',
   borderRadius: 'large',
   backgroundColor: 'surface',
   padding: 'xl'

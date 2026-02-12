@@ -73,7 +73,20 @@
       "Bash(git merge:*)",
       "Bash(git push:*)",
       "Bash(gh pr list:*)",
-      "Bash(xargs git branch:*)"
+      "Bash(xargs git branch:*)",
+      "Bash(pnpm docs:generate:*)",
+      "Bash(wc:*)",
+      "mcp__panda__get_recipes",
+      "Bash(pnpm list:*)",
+      "Bash(pnpm build:storybook:*)",
+      "Bash(./scripts/test-storybook-mcp.sh:*)",
+      "Bash(xargs basename:*)",
+      "Bash(node -e:*)",
+      "Bash(tee:*)",
+      "Bash(pnpm storybook:*)",
+      "Bash(node --input-type=module -e:*)",
+      "Bash(pgrep:*)",
+      "Bash(pnpm run verify:*)"=
     ]
   },
   "enableAllProjectMcpServers": true,
