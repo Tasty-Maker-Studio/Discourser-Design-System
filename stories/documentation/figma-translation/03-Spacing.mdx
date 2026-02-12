@@ -1,0 +1,279 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation/Figma Translation/03-Spacing" />
+
+# Spacing Translation Guide
+
+This page translates spacing values from Tailwind CSS and Figma auto-layout to Discourser's Panda CSS spacing system.
+
+## Tailwind Numeric → Panda CSS Numeric Mapping
+
+Discourser uses the **same numeric scale as Tailwind** (4px base unit). You can translate directly:
+
+| Source (Tailwind) | Discourser | Pixels | Notes |
+|---|---|---|---|
+| `p-0`, `gap-0`, `m-0` | `p="0"`, `gap="0"`, `m="0"` | 0px | Direct match |
+| `p-0.5` | `p="0.5"` | 2px | Half unit (rare) |
+| `p-1` | `p="1"` | 4px | Minimum spacing |
+| `p-2` | `p="2"` | 8px | Tight spacing |
+| `p-3` | `p="3"` | 12px | Comfortable tight |
+| `p-4` | `p="4"` | 16px | **Most common default** |
+| `p-5` | `p="5"` | 20px | Medium-large |
+| `p-6` | `p="6"` | 24px | Large spacing |
+| `p-8` | `p="8"` | 32px | Extra large |
+| `p-10` | `p="10"` | 40px | Section spacing |
+| `p-12` | `p="12"` | 48px | Major section spacing |
+| `p-16` | `p="16"` | 64px | Maximum spacing |
+| `p-20` | `p="20"` | 80px | Extra maximum |
+| `p-24` | `p="24"` | 96px | Rare, very large |
+
+**Rule:** Tailwind's numeric scale translates 1:1 to Panda CSS. `p-4` → `p="4"` (16px).
+
+## Named Token Mapping
+
+Discourser also provides **semantic spacing tokens** for common use cases:
+
+| Named Token | Numeric Equivalent | Pixels | Usage |
+|---|---|---|---|
+| `none` | `0` | 0px | Reset spacing |
+| `xxs` | `0.5` | 2px | Minimal gaps (rare) |
+| `xs` | `1` | 4px | Tight spacing (icon-text gaps) |
+| `sm` | `2` | 8px | Compact layouts (form fields) |
+| `md` | `4` | 16px | Default spacing (card padding, button gaps) |
+| `lg` | `6` | 24px | Comfortable spacing (section padding) |
+| `xl` | `8` | 32px | Major sections |
+| `xxl` | `12` | 48px | Large sections |
+| `xxxl` | `16` | 64px | Maximum spacing |
+
+**When to use named tokens:**
+- Use **numeric** (`4`, `6`, `8`) when you need precise control or following a design spec
+- Use **named** (`md`, `lg`, `xl`) when expressing semantic intent (default card padding = `md`)
+
+## Spacing Properties
+
+Panda CSS supports all standard spacing properties:
+
+| Property | Shorthand | Example | Notes |
+|---|---|---|---|
+| `padding` | `p` | `p="4"` | All sides |
+| `paddingX` | `px` | `px="6"` | Left + Right |
+| `paddingY` | `py` | `py="4"` | Top + Bottom |
+| `paddingTop` | `pt` | `pt="8"` | Top only |
+| `paddingRight` | `pr` | `pr="4"` | Right only |
+| `paddingBottom` | `pb` | `pb="6"` | Bottom only |
+| `paddingLeft` | `pl` | `pl="2"` | Left only |
+| `margin` | `m` | `m="4"` | All sides |
+| `marginX` | `mx` | `mx="auto"` | Left + Right (auto for centering) |
+| `marginY` | `my` | `my="6"` | Top + Bottom |
+| `marginTop` | `mt` | `mt="8"` | Top only |
+| `marginRight` | `mr` | `mr="4"` | Right only |
+| `marginBottom` | `mb` | `mb="6"` | Bottom only |
+| `marginLeft` | `ml` | `ml="2"` | Left only |
+| `gap` | `gap` | `gap="4"` | Flexbox/Grid gap |
+| `rowGap` | `rowGap` | `rowGap="6"` | Grid row gap |
+| `columnGap` | `columnGap` | `columnGap="4"` | Grid column gap |
+
+## Figma Auto-Layout Translation
+
+Figma's Auto-Layout maps directly to CSS Flexbox. Here's the translation:
+
+### Vertical Stack (Column)
+
+| Figma Property | Discourser | Example Use Case |
+|---|---|---|
+| Auto-layout: Vertical, gap: 8 | `display="flex" flexDir="column" gap="2"` or `<VStack gap="2">` | Tight form fields |
+| Auto-layout: Vertical, gap: 16 | `display="flex" flexDir="column" gap="4"` or `<VStack gap="4">` | Default form layout |
+| Auto-layout: Vertical, gap: 24 | `display="flex" flexDir="column" gap="6"` or `<VStack gap="6">` | Section content |
+
+### Horizontal Stack (Row)
+
+| Figma Property | Discourser | Example Use Case |
+|---|---|---|
+| Auto-layout: Horizontal, gap: 4 | `display="flex" flexDir="row" gap="1"` or `<HStack gap="1">` | Icon + text (tight) |
+| Auto-layout: Horizontal, gap: 8 | `display="flex" flexDir="row" gap="2"` or `<HStack gap="2">` | Button groups |
+| Auto-layout: Horizontal, gap: 16 | `display="flex" flexDir="row" gap="4"` or `<HStack gap="4">` | Toolbar items |
+
+### Wrapping Layout
+
+| Figma Property | Discourser | Example Use Case |
+|---|---|---|
+| Auto-layout: Wrap, gap: 8 | `<Flex wrap="wrap" gap="2">` | Tag chips |
+| Auto-layout: Wrap, gap: 16 | `<Flex wrap="wrap" gap="4">` | Card grid (responsive) |
+
+### Padding
+
+| Figma Property | Discourser | Example Use Case |
+|---|---|---|
+| Padding: 8px all sides | `p="2"` | Compact button, small chip |
+| Padding: 12px all sides | `p="3"` | Default button padding |
+| Padding: 16px all sides | `p="4"` | Card content padding |
+| Padding: 24px all sides | `p="6"` | Page section padding |
+| Padding: 24px H, 16px V | `px="6" py="4"` | Wide button |
+| Padding: 16px top, 8px bottom | `pt="4" pb="2"` | Asymmetric spacing |
+
+### Alignment
+
+| Figma Property | Discourser | Notes |
+|---|---|---|
+| Align: Top-left | `alignItems="flex-start" justifyContent="flex-start"` | Default |
+| Align: Top-center | `alignItems="flex-start" justifyContent="center"` | Centered header |
+| Align: Center-center | `alignItems="center" justifyContent="center"` | Centered content |
+| Align: Space-between | `justifyContent="space-between"` | Header with actions |
+
+## Common Patterns
+
+### Card with Consistent Padding
+
+```tsx
+// Figma: Card with 16px padding
+<Card.Root p="4">
+  <Card.Header>Title</Card.Header>
+  <Card.Body>Content</Card.Body>
+</Card.Root>
+```
+
+### Form with Vertical Spacing
+
+```tsx
+// Figma: Vertical stack, gap: 16px
+<VStack gap="4">
+  <Field>
+    <Field.Label>Email</Field.Label>
+    <Field.Input />
+  </Field>
+  <Field>
+    <Field.Label>Password</Field.Label>
+    <Field.Input type="password" />
+  </Field>
+  <Button>Submit</Button>
+</VStack>
+```
+
+### Button Group with Horizontal Spacing
+
+```tsx
+// Figma: Horizontal stack, gap: 8px
+<HStack gap="2">
+  <Button variant="outline">Cancel</Button>
+  <Button>Save</Button>
+</HStack>
+```
+
+## Common Mistakes
+
+### ❌ Using Pixel Values
+
+```tsx
+// ❌ WRONG: Hardcoded pixel value
+<Box p="16px" gap="8px">
+  Content
+</Box>
+```
+
+**Why wrong:** Not theme-aware, doesn't scale with design system updates.
+
+```tsx
+// ✅ CORRECT: Token value
+<Box p="4" gap="2">
+  Content
+</Box>
+```
+
+---
+
+### ❌ Using Tailwind Class Syntax
+
+```tsx
+// ❌ WRONG: Tailwind class
+<Box className="p-4 gap-2">
+  Content
+</Box>
+```
+
+**Why wrong:** Discourser uses Panda CSS, not Tailwind. Classes won't work.
+
+```tsx
+// ✅ CORRECT: Panda CSS props
+<Box p="4" gap="2">
+  Content
+</Box>
+```
+
+---
+
+### ❌ Inconsistent Spacing Scale
+
+```tsx
+// ❌ WRONG: Arbitrary values breaking the 4px grid
+<Box pt="7" pb="11">
+  Content
+</Box>
+```
+
+**Why wrong:** Breaks the 8px grid system, creates visual inconsistency.
+
+```tsx
+// ✅ CORRECT: Standard scale values
+<Box pt="8" pb="12">
+  Content
+</Box>
+```
+
+---
+
+### ❌ Manual Flexbox When Stack Components Exist
+
+```tsx
+// ❌ WRONG: Manual flex setup
+<Box display="flex" flexDirection="column" gap="4">
+  <Text>Item 1</Text>
+  <Text>Item 2</Text>
+  <Text>Item 3</Text>
+</Box>
+```
+
+**Why wrong:** Verbose, misses VStack's built-in behavior.
+
+```tsx
+// ✅ CORRECT: VStack component
+<VStack gap="4">
+  <Text>Item 1</Text>
+  <Text>Item 2</Text>
+  <Text>Item 3</Text>
+</VStack>
+```
+
+---
+
+### ❌ Mixing Semantic and Numeric Tokens Inconsistently
+
+```tsx
+// ❌ WRONG: Mixed semantic and numeric in same context
+<Box p="md" gap="4">
+  Content
+</Box>
+```
+
+**Why wrong:** Inconsistent — both are 16px, pick one style.
+
+```tsx
+// ✅ CORRECT: Consistent numeric
+<Box p="4" gap="4">
+  Content
+</Box>
+
+// ✅ ALSO CORRECT: Consistent semantic
+<Box p="md" gap="md">
+  Content
+</Box>
+```
+
+---
+
+## Cross-References
+
+For comprehensive spacing details:
+- [Guidelines: Spacing](/docs/documentation-guidelines-design-tokens-99-spacing--docs) — Full spacing scale and 8px grid documentation
+
+For layout patterns:
+- Coming soon: Pattern Translation pages (07)
