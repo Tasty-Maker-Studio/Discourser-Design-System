@@ -13,7 +13,7 @@ export interface BadgeProps extends Omit<BaseBadgeProps, 'colorPalette'> {
    * The color palette to use for the badge.
    * @default "primary"
    */
-  colorPalette?: 'primary' | 'neutral' | 'error' | 'gray' | 'red' | undefined;
+  colorPalette?: 'primary' | 'secondary' | 'tertiary' | 'neutral' | 'error' | 'gray' | 'red' | undefined;
 }
 
 export const Badge = forwardRef<HTMLDivElement, BadgeProps>(

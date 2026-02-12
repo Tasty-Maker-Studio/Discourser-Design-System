@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import * as Dialog from '../src/components/Dialog';
 import { Button } from '../src/components/Button';
 import { VStack } from '../styled-system/jsx';

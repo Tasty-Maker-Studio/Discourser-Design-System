@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import * as Slider from '../src/components/Slider';
 import { VStack, HStack, Box } from '../styled-system/jsx';
 

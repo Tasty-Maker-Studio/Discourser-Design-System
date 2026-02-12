@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import * as Select from '../src/components/Select';
 import { createListCollection } from '@ark-ui/react/select';
 import { VStack } from '../styled-system/jsx';

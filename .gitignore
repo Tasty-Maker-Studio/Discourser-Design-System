@@ -90,7 +90,7 @@ test-results/
 playwright-report/
 .screenshots/
 gemini/
-
+./docs/context-share
 # Debug
 *.cpuprofile
 *.heapsnapshot

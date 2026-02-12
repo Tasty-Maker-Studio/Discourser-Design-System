@@ -55,7 +55,7 @@ function convertToMDX(
   // Remove any existing frontmatter
   const contentWithoutFrontmatter = mdContent.replace(/^---[\s\S]*?---\n/, '');
 
-  return `import { Meta } from '@storybook/blocks';
+  return `import { Meta } from '@storybook/addon-docs/blocks';
 
 <Meta title="${title}" />
 

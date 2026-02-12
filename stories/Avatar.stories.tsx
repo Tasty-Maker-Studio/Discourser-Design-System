@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import * as Avatar from '../src/components/Avatar';
 import { VStack, HStack } from '../styled-system/jsx';
 
