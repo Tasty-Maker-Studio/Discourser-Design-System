@@ -1,0 +1,131 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation/Figma Translation/00-Overview" />
+
+# Figma Translation System
+
+## What This Is
+
+This documentation suite is a **translation layer** between external design system vocabulary (Figma, Tailwind CSS, Shadcn/UI) and the Discourser Design System vocabulary (Panda CSS, Park UI, Ark UI).
+
+Think of it as a Rosetta Stone for design tokens — look up the term from your source (Figma variable, Tailwind class, or Shadcn component prop) and get the exact Discourser equivalent.
+
+## Who This Is For
+
+1. **Kai Design Engineer Agent** — Reads these docs via Storybook MCP to make accurate token and component decisions when translating designs
+2. **Human Developers** — Onboarding from Tailwind/Shadcn projects to Discourser
+3. **Design System as a Service Clients** — Receiving implementation specifications in Discourser vocabulary
+
+## How to Use This Documentation
+
+1. **Identify your source term** (e.g., Figma: "Surface Container", Tailwind: `bg-primary`, Shadcn: `text-muted-foreground`)
+2. **Navigate to the relevant page** (Colors, Typography, Spacing, Shadows, Components, or Patterns)
+3. **Look up the term in the mapping table** — each entry is self-contained with source term, Discourser equivalent, and usage notes
+4. **Copy the Discourser syntax** directly into your code
+
+## Translation Flow
+
+```
+Figma/Shadcn Design Specs
+         ↓
+Tailwind Utility Classes
+         ↓
+Discourser Semantic Tokens (Panda CSS props)
+         ↓
+Generated CSS Output
+```
+
+**Example:**
+- Figma: "Apply Primary color to background"
+- Tailwind: `className="bg-primary"`
+- Discourser: `colorPalette="primary"` (on Button) or `bg="primary.9"` (on Box)
+- Output: CSS with correct M3 primary color value
+
+## Three-Layer Token Architecture
+
+Discourser uses a **aesthetic-agnostic architecture** that separates infrastructure from design language:
+
+### Layer 1: Infrastructure (Unchanging)
+
+Park UI and Panda CSS provide the **naming conventions** and **scale structure**:
+- Size tokens: `xs`, `sm`, `md`, `lg`, `xl`, `2xl`
+- Semantic tokens: `fg.default`, `fg.muted`, `canvas`, `border`
+- Radii tokens: `l1`, `l2`, `l3`
+- Shadow tokens: `xs`, `sm`, `md`, `lg`, `xl`, `2xl`
+
+**These names never change.** Components reference these names only.
+
+### Layer 2: Design Language (Swappable)
+
+Material Design 3 (M3) provides the **values** mapped to Layer 1 names:
+- M3 tonal palettes → Radix color scales (1-12)
+- M3 type scale → textStyle tokens (`bodyMedium`, `titleLarge`, etc.)
+- M3 elevation levels → shadow levels (level0-5)
+- M3 surface container system → semantic color tokens
+
+**You can swap M3 for a different design language** by changing `src/languages/index.ts` — the component recipes automatically adapt.
+
+### Layer 3: Components (Derived)
+
+Component recipes (Button, Card, Dialog, etc.) reference **only Layer 1 tokens**:
+- `bg="canvas"` (not `bg="#fafafa"`)
+- `shadow="md"` (not `shadow="0 4px 6px rgba(0,0,0,0.1)"`)
+- `colorPalette="primary"` (not `bg="primary.9" color="onM3Primary"`)
+
+**Components are decoupled from aesthetic.** If you swap from M3 to another design language, components continue working without changes.
+
+## Table of Contents
+
+### Token Translation
+- [01 — Colors](/docs/documentation-figma-translation-01-colors--docs) — Background, text, border, M3 surface system, colorPalette
+- [02 — Typography](/docs/documentation-figma-translation-02-typography--docs) — Text sizes, font families, weights, Heading component
+- [03 — Spacing](/docs/documentation-figma-translation-03-spacing--docs) — Padding, margin, gap, Figma auto-layout
+- [04 — Shadows & Radii](/docs/documentation-figma-translation-04-shadows-radii--docs) — Elevation, border radius
+
+### Component Translation (Coming Soon)
+- 05 — Form Components — Button, Input, Select, Checkbox, Radio, Switch
+- 06 — Layout Components — Card, Dialog, Drawer, Tabs, Accordion
+- 07 — Pattern Components — VStack, HStack, Grid, Container
+
+## Quick Tips
+
+### Always Use Semantic Tokens
+```tsx
+// ❌ WRONG: Hardcoded value
+<Box bg="#ffffff" />
+
+// ✅ CORRECT: Semantic token
+<Box bg="canvas" />
+```
+
+### Prefer colorPalette on Components
+```tsx
+// ❌ WRONG: Manual color styling
+<Button bg="primary.9" color="onM3Primary">Submit</Button>
+
+// ✅ CORRECT: colorPalette prop
+<Button colorPalette="primary">Submit</Button>
+```
+
+### Use Heading Component for Headings
+```tsx
+// ❌ WRONG: Raw textStyle
+<Box as="h2" textStyle="titleLarge">Section Title</Box>
+
+// ✅ CORRECT: Heading component
+<Heading as="h2" size="xl">Section Title</Heading>
+```
+
+## Need More Details?
+
+Each translation page includes:
+- **Complete mapping tables** with source term → Discourser equivalent
+- **Usage notes** for each token
+- **Common Mistakes** sections with ❌/✅ examples
+- **Cross-references** to detailed Guidelines documentation
+
+For architectural deep-dives, see:
+- [Guidelines: Colors](/docs/documentation-guidelines-design-tokens-99-colors--docs)
+- [Guidelines: Typography](/docs/documentation-guidelines-design-tokens-99-typography--docs)
+- [Guidelines: Spacing](/docs/documentation-guidelines-design-tokens-99-spacing--docs)
+- [Guidelines: Elevation](/docs/documentation-guidelines-design-tokens-99-elevation--docs)
