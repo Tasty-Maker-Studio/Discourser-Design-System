@@ -86,7 +86,7 @@
       "Bash(pnpm storybook:*)",
       "Bash(node --input-type=module -e:*)",
       "Bash(pgrep:*)",
-      "Bash(pnpm run verify:*)"
+      "Bash(pnpm run verify:*)"=
     ]
   },
   "enableAllProjectMcpServers": true,
