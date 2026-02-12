@@ -1,5 +1,11 @@
 # @discourser/design-system
 
+## 0.14.0
+
+### Minor Changes
+
+- [#94](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/94) [`baa4a3b`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/baa4a3b518766c92e8a09054e60ace11276629af) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Just fixing tokens and make sure that material tokens and translating correctly to discourser-design-system notion of token, in preperation for build designer-engineer agent for discourser.ai"
+
 ## 0.13.0
 
 ### Minor Changes
