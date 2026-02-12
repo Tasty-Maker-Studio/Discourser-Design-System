@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import * as Progress from '../src/components/Progress';
 import { VStack, HStack, Box } from '../styled-system/jsx';
 import { useState, useEffect } from 'react';

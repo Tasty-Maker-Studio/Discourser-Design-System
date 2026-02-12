@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Checkbox } from '../src';
 
 const meta: Meta = {
@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
-    <Checkbox.Root>
+    <Checkbox.Root colorPalette="primary">
       <Checkbox.HiddenInput />
       <Checkbox.Control>
         <Checkbox.Indicator></Checkbox.Indicator>
@@ -27,7 +27,7 @@ export const Default: Story = {
 
 export const Disabled: Story = {
   render: () => (
-    <Checkbox.Root disabled>
+    <Checkbox.Root disabled colorPalette="primary">
       <Checkbox.HiddenInput />
       <Checkbox.Control>
         <Checkbox.Indicator></Checkbox.Indicator>
@@ -39,7 +39,7 @@ export const Disabled: Story = {
 
 export const WithDescription: Story = {
   render: () => (
-    <Checkbox.Root>
+    <Checkbox.Root colorPalette="primary">
       <Checkbox.Control>
         <Checkbox.Indicator></Checkbox.Indicator>
       </Checkbox.Control>

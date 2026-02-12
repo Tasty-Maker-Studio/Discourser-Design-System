@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button } from '../src/components/Button';
 import { HStack, VStack } from '../styled-system/jsx';
 
@@ -22,7 +22,7 @@ const meta = {
     },
     colorPalette: {
       control: 'select',
-      options: ['primary', 'neutral', 'error'],
+      options: ['primary', 'secondary', 'tertiary', 'neutral', 'error'],
       description: 'Color palette (M3 colors)',
     },
     loading: {
@@ -88,6 +88,28 @@ export const ColorPalettes: Story = {
           <Button variant="surface" colorPalette="neutral">Surface</Button>
           <Button variant="subtle" colorPalette="neutral">Subtle</Button>
           <Button variant="outline" colorPalette="neutral">Outline</Button>
+        </HStack>
+      </VStack>
+
+      <VStack gap="2" alignItems="start">
+        <h4>Secondary (Olive-Green)</h4>
+        <HStack gap="3">
+          <Button variant="solid" colorPalette="secondary">Solid</Button>
+          <Button variant="elevated" colorPalette="secondary">Elevated</Button>
+          <Button variant="surface" colorPalette="secondary">Surface</Button>
+          <Button variant="subtle" colorPalette="secondary">Subtle</Button>
+          <Button variant="outline" colorPalette="secondary">Outline</Button>
+        </HStack>
+      </VStack>
+
+      <VStack gap="2" alignItems="start">
+        <h4>Tertiary (Teal)</h4>
+        <HStack gap="3">
+          <Button variant="solid" colorPalette="tertiary">Solid</Button>
+          <Button variant="elevated" colorPalette="tertiary">Elevated</Button>
+          <Button variant="surface" colorPalette="tertiary">Surface</Button>
+          <Button variant="subtle" colorPalette="tertiary">Subtle</Button>
+          <Button variant="outline" colorPalette="tertiary">Outline</Button>
         </HStack>
       </VStack>
 

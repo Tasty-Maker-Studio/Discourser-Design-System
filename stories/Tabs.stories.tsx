@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import * as Tabs from '../src/components/Tabs';
 import { Box, VStack } from '../styled-system/jsx';
 

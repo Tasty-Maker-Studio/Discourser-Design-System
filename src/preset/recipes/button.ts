@@ -105,14 +105,14 @@ export const button = defineRecipe({
       elevated: {
         bg: 'colorPalette.surface.bg',
         color: 'colorPalette.solid.fg',
-        boxShadow: 'level2',
+        boxShadow: 'sm',
         border: 'none',
         _hover: {
           bg: 'colorPalette.surface.bg',
-          boxShadow: 'level3',
+          boxShadow: 'md',
         },
         _active: {
-          boxShadow: 'level1',
+          boxShadow: 'xs',
         },
       },
     },

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Input, InputGroup } from '../src';
 
 const meta: Meta<typeof InputGroup> = {

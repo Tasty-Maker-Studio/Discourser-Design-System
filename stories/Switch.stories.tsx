@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import * as Switch from '../src/components/Switch';
 import { VStack, HStack } from '../styled-system/jsx';
 
