@@ -1,0 +1,581 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation/Guidelines/99-Heading" />
+
+# Heading
+
+**Purpose:** Semantic heading component for establishing content hierarchy and structure following Material Design 3 typography patterns.
+
+## When to Use This Component
+
+Use Heading when you need to **establish semantic document structure and visual hierarchy** with properly ordered heading levels (h1-h6).
+
+### Decision Tree
+
+| Scenario                     | Use Heading? | Alternative                   | Reasoning                                             |
+| ---------------------------- | ------------ | ----------------------------- | ----------------------------------------------------- |
+| Page titles, section headers | ✅ Yes       | -                             | Headings provide semantic structure for accessibility |
+| Article titles, card headers | ✅ Yes       | -                             | Establishes content hierarchy                         |
+| Document outline structure   | ✅ Yes       | -                             | Screen readers use headings for navigation            |
+| Emphasized body text         | ❌ No        | Text with `fontWeight="bold"` | Don't use headings just for styling                   |
+| Navigation labels            | ❌ No        | Text or label elements        | Navigation isn't part of content hierarchy            |
+| Button labels or UI text     | ❌ No        | Button or Text                | Headings are for content structure                    |
+
+### Component Comparison
+
+```typescript
+// ✅ Heading - Page and section structure
+<article>
+  <Heading as="h1" size="4xl">
+    Main Article Title
+  </Heading>
+
+  <Heading as="h2" size="2xl">
+    Section One
+  </Heading>
+  <p>Content...</p>
+
+  <Heading as="h3" size="xl">
+    Subsection
+  </Heading>
+  <p>More content...</p>
+
+  <Heading as="h2" size="2xl">
+    Section Two
+  </Heading>
+  <p>Content...</p>
+</article>
+
+// ❌ Don't use Heading for emphasized text - Use Text
+<Heading as="h3" size="md">
+  Just some bold text
+</Heading>
+
+// ✅ Better: Use Text with fontWeight for emphasis
+<Text fontSize="md" fontWeight="bold">
+  Just some bold text
+</Text>
+
+// ❌ Don't skip heading levels (h1 → h3)
+<Heading as="h1" size="3xl">Title</Heading>
+<Heading as="h3" size="xl">Section</Heading> {/* Should be h2 */}
+
+// ✅ Better: Use proper heading hierarchy
+<Heading as="h1" size="3xl">Title</Heading>
+<Heading as="h2" size="xl">Section</Heading>
+
+// ❌ Don't use Heading for navigation - Use Text
+<nav>
+  <Heading as="h3" size="sm">Menu</Heading>
+  <a href="/home">Home</a>
+</nav>
+
+// ✅ Better: Use Text for navigation labels
+<nav aria-label="Main navigation">
+  <Text fontSize="sm" fontWeight="medium">Menu</Text>
+  <a href="/home">Home</a>
+</nav>
+```
+
+## Import
+
+```typescript
+import { Heading } from '@discourser/design-system';
+```
+
+## Sizes
+
+The Heading component supports 11 size variants, each corresponding to Material Design 3 text styles:
+
+| Size  | Material Design 3 Style | Font Size | Line Height | Font Weight | Usage                                              |
+| ----- | ----------------------- | --------- | ----------- | ----------- | -------------------------------------------------- |
+| `xs`  | labelLarge              | 14px      | 20px        | 500         | Overlines, captions, small section labels          |
+| `sm`  | titleSmall              | 14px      | 20px        | 500         | Card titles, list headers, tertiary headings       |
+| `md`  | titleMedium             | 16px      | 24px        | 500         | Secondary headings, dialog titles, section headers |
+| `lg`  | titleLarge              | 22px      | 28px        | 400         | Primary page headings, prominent section titles    |
+| `xl`  | headlineSmall           | 24px      | 32px        | 400         | Main page headings, article titles (default)       |
+| `2xl` | headlineMedium          | 28px      | 36px        | 400         | Major section headings, featured content titles    |
+| `3xl` | headlineLarge           | 32px      | 40px        | 400         | Page heroes, landing page headings                 |
+| `4xl` | displaySmall            | 36px      | 44px        | 400         | Large promotional headings, marketing content      |
+| `5xl` | displayMedium           | 45px      | 52px        | 400         | Hero sections, major announcements                 |
+| `6xl` | displayLarge            | 57px      | 64px        | 400         | Landing page heroes, splash screens                |
+| `7xl` | displayLarge            | 57px      | 64px        | 400         | Maximum emphasis (same as 6xl)                     |
+
+### Visual Characteristics
+
+- **Default Color**: Uses `fg.default` token for consistent foreground color
+- **Semantic HTML**: Renders as `<h2>` by default, but can be overridden with `as` prop
+- **Responsive**: Font sizes and line heights follow Material Design 3 type scale
+
+## Props
+
+| Prop        | Type                                                                                         | Default  | Description                                                   |
+| ----------- | -------------------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------- |
+| `size`      | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl' \| '3xl' \| '4xl' \| '5xl' \| '6xl' \| '7xl'` | `'xl'`   | Heading size using Material Design 3 text styles              |
+| `as`        | `ElementType`                                                                                | `'h2'`   | HTML heading element (h1, h2, h3, h4, h5, h6, or any element) |
+| `children`  | `ReactNode`                                                                                  | Required | Heading text content                                          |
+| `className` | `string`                                                                                     | -        | Additional CSS classes (use sparingly)                        |
+
+**Note:** Heading extends all standard HTML element attributes for the specified element type.
+
+## Examples
+
+### Basic Usage
+
+```typescript
+// Default heading (h2, xl size)
+<Heading>Welcome to Our Platform</Heading>
+
+// Different sizes
+<Heading size="xs">Small Label</Heading>
+<Heading size="sm">Card Title</Heading>
+<Heading size="md">Section Header</Heading>
+<Heading size="lg">Page Title</Heading>
+<Heading size="xl">Main Heading</Heading>
+<Heading size="2xl">Featured Title</Heading>
+<Heading size="3xl">Hero Heading</Heading>
+<Heading size="4xl">Large Display</Heading>
+<Heading size="5xl">Promotional Banner</Heading>
+<Heading size="6xl">Landing Hero</Heading>
+```
+
+### Semantic HTML Elements
+
+```typescript
+// Use appropriate heading levels for document structure
+<Heading as="h1" size="3xl">Page Title</Heading>
+<Heading as="h2" size="2xl">Major Section</Heading>
+<Heading as="h3" size="xl">Subsection Title</Heading>
+<Heading as="h4" size="lg">Content Block Header</Heading>
+<Heading as="h5" size="md">Minor Section</Heading>
+<Heading as="h6" size="sm">Smallest Heading</Heading>
+
+// Use non-heading element when semantic heading isn't appropriate
+<Heading as="div" size="lg">Stylistic Display Text</Heading>
+<Heading as="span" size="md">Inline Heading</Heading>
+```
+
+### Page Structure
+
+```typescript
+// Article layout
+<article>
+  <Heading as="h1" size="4xl">
+    The Future of Web Development
+  </Heading>
+
+  <Heading as="h2" size="2xl">
+    Introduction
+  </Heading>
+  <p>Article introduction...</p>
+
+  <Heading as="h2" size="2xl">
+    Main Concepts
+  </Heading>
+
+  <Heading as="h3" size="xl">
+    Core Principles
+  </Heading>
+  <p>Content about principles...</p>
+
+  <Heading as="h3" size="xl">
+    Best Practices
+  </Heading>
+  <p>Content about practices...</p>
+</article>
+```
+
+### Dashboard Layout
+
+```typescript
+// Dashboard with sections
+<div>
+  <Heading as="h1" size="3xl">Dashboard</Heading>
+
+  <section>
+    <Heading as="h2" size="xl">Recent Activity</Heading>
+    {/* Activity content */}
+  </section>
+
+  <section>
+    <Heading as="h2" size="xl">Analytics Overview</Heading>
+    {/* Analytics content */}
+  </section>
+
+  <section>
+    <Heading as="h2" size="xl">Team Members</Heading>
+    {/* Team members list */}
+  </section>
+</div>
+```
+
+### Card Headers
+
+```typescript
+// Card with heading
+<Card>
+  <Heading as="h3" size="sm">Project Overview</Heading>
+  <p>Project details and information...</p>
+</Card>
+
+// Feature card
+<Card>
+  <Heading as="h3" size="md">Advanced Analytics</Heading>
+  <p>Track and analyze your data with powerful tools.</p>
+  <Button>Learn More</Button>
+</Card>
+```
+
+### Hero Sections
+
+```typescript
+// Landing page hero
+<section className={css({ textAlign: 'center', py: '20' })}>
+  <Heading as="h1" size="6xl">
+    Build Better Products Faster
+  </Heading>
+  <Heading as="h2" size="lg" className={css({ mt: '4', opacity: 0.8 })}>
+    The complete platform for modern teams
+  </Heading>
+  <Button size="lg" className={css({ mt: '8' })}>
+    Get Started
+  </Button>
+</section>
+
+// Marketing banner
+<section className={css({ bg: 'primary', color: 'white', p: '16' })}>
+  <Heading as="h2" size="5xl">
+    Special Offer - 50% Off
+  </Heading>
+  <Heading as="h3" size="xl" className={css({ mt: '2' })}>
+    Limited time only
+  </Heading>
+</section>
+```
+
+### Modal and Dialog Titles
+
+```typescript
+// Dialog with heading
+<Dialog>
+  <Dialog.Content>
+    <Heading as="h2" size="lg">
+      Confirm Action
+    </Heading>
+    <p>Are you sure you want to proceed with this action?</p>
+    <div className={css({ display: 'flex', gap: 'sm', justifyContent: 'flex-end' })}>
+      <Button variant="text">Cancel</Button>
+      <Button>Confirm</Button>
+    </div>
+  </Dialog.Content>
+</Dialog>
+
+// Modal with structured content
+<Dialog>
+  <Dialog.Content>
+    <Heading as="h2" size="xl">
+      User Settings
+    </Heading>
+
+    <Heading as="h3" size="md" className={css({ mt: '6' })}>
+      Profile Information
+    </Heading>
+    {/* Profile fields */}
+
+    <Heading as="h3" size="md" className={css({ mt: '4' })}>
+      Privacy Settings
+    </Heading>
+    {/* Privacy fields */}
+  </Dialog.Content>
+</Dialog>
+```
+
+## Common Patterns
+
+### Visual Hierarchy
+
+```typescript
+// Establish clear content hierarchy
+<div>
+  <Heading as="h1" size="4xl">Main Topic</Heading>
+  <Heading as="h2" size="2xl" className={css({ mt: '8' })}>
+    Subtopic One
+  </Heading>
+  <Heading as="h3" size="xl" className={css({ mt: '6' })}>
+    Detail Section
+  </Heading>
+  <Heading as="h4" size="md" className={css({ mt: '4' })}>
+    Subsection
+  </Heading>
+</div>
+```
+
+### Section with Description
+
+```typescript
+// Heading with supporting text
+<section>
+  <Heading as="h2" size="2xl">Features</Heading>
+  <p className={css({ fontSize: 'lg', opacity: 0.8, mt: '2' })}>
+    Discover what makes our platform unique
+  </p>
+  {/* Feature content */}
+</section>
+```
+
+### Grid Layout Headers
+
+```typescript
+// Headers for grid sections
+<div className={css({ display: 'grid', gridTemplateColumns: '3', gap: '6' })}>
+  <div>
+    <Heading as="h3" size="md">Performance</Heading>
+    <p>Lightning-fast load times</p>
+  </div>
+  <div>
+    <Heading as="h3" size="md">Security</Heading>
+    <p>Enterprise-grade protection</p>
+  </div>
+  <div>
+    <Heading as="h3" size="md">Scalability</Heading>
+    <p>Grows with your needs</p>
+  </div>
+</div>
+```
+
+### List Headers
+
+```typescript
+// Heading for list sections
+<div>
+  <Heading as="h3" size="lg">Team Members</Heading>
+  <ul className={css({ mt: '4' })}>
+    {members.map(member => (
+      <li key={member.id}>
+        <Heading as="h4" size="sm">{member.name}</Heading>
+        <p>{member.role}</p>
+      </li>
+    ))}
+  </ul>
+</div>
+```
+
+## DO NOT
+
+```typescript
+// ❌ Don't skip heading levels (affects screen readers)
+<Heading as="h1" size="3xl">Main Title</Heading>
+<Heading as="h4" size="md">Subsection</Heading>  // Should be h2, not h4
+
+// ❌ Don't use multiple h1 elements on a page
+<Heading as="h1" size="3xl">First Title</Heading>
+<Heading as="h1" size="2xl">Second Title</Heading>  // Should be h2
+
+// ❌ Don't use headings for styling text (use Text component instead)
+<Heading as="h2" size="sm">Just some bold text</Heading>  // Use <Text> instead
+
+// ❌ Don't mismatch size and semantic level
+<Heading as="h1" size="xs">Main Page Title</Heading>  // h1 should be visually prominent
+
+// ❌ Don't use headings inside paragraphs
+<p>
+  <Heading as="h3" size="md">Title</Heading>  // Invalid HTML
+  Some content here
+</p>
+
+// ❌ Don't use empty headings
+<Heading as="h2" size="xl"></Heading>  // No accessible name
+
+// ✅ Use proper heading hierarchy
+<Heading as="h1" size="3xl">Main Title</Heading>
+<Heading as="h2" size="2xl">Section</Heading>
+<Heading as="h3" size="xl">Subsection</Heading>
+
+// ✅ Single h1 per page
+<Heading as="h1" size="4xl">Page Title</Heading>
+<Heading as="h2" size="2xl">Section One</Heading>
+<Heading as="h2" size="2xl">Section Two</Heading>
+
+// ✅ Match visual size to importance
+<Heading as="h1" size="4xl">Most Important</Heading>
+<Heading as="h2" size="2xl">Secondary</Heading>
+<Heading as="h3" size="xl">Tertiary</Heading>
+
+// ✅ Use Text component for non-heading bold text
+<Text fontSize="lg" fontWeight="bold">Emphasized text</Text>
+```
+
+## Accessibility
+
+The Heading component follows WCAG 2.1 Level AA standards:
+
+- **Semantic HTML**: Uses proper heading elements (h1-h6) for document structure
+- **Heading Hierarchy**: Screen readers rely on heading levels for navigation
+- **Color Contrast**: Default color meets 4.5:1 contrast ratio requirement
+- **Keyboard Navigation**: Heading landmarks allow users to jump between sections
+- **Screen Readers**: Announce heading level and content
+
+### Accessibility Best Practices
+
+```typescript
+// ✅ Maintain logical heading order
+<Heading as="h1" size="3xl">Page Title</Heading>
+<Heading as="h2" size="2xl">Main Section</Heading>
+<Heading as="h3" size="xl">Subsection</Heading>
+<Heading as="h3" size="xl">Another Subsection</Heading>
+<Heading as="h2" size="2xl">Next Main Section</Heading>
+
+// ✅ Only one h1 per page
+<Heading as="h1" size="4xl">Dashboard Overview</Heading>
+
+// ✅ Don't skip levels (h1 → h3 without h2)
+<Heading as="h1" size="3xl">Title</Heading>
+<Heading as="h2" size="xl">Section</Heading>  // Not h3
+
+// ✅ Use descriptive heading text
+<Heading as="h2" size="xl">Shipping Information</Heading>  // Clear and descriptive
+
+// ✅ Separate visual size from semantic level
+<Heading as="h1" size="6xl">Hero Title</Heading>
+<Heading as="h2" size="sm">Card Subtitle</Heading>  // Small visually, but correct level
+
+// ✅ Provide meaningful content
+<Heading as="h2" size="lg">
+  {userName}'s Profile
+</Heading>
+```
+
+### Screen Reader Considerations
+
+```typescript
+// Screen readers announce: "Heading level 1, Dashboard"
+<Heading as="h1" size="3xl">Dashboard</Heading>
+
+// Screen readers can list all headings to navigate
+<Heading as="h1" size="4xl">Product Overview</Heading>
+<Heading as="h2" size="2xl">Features</Heading>
+<Heading as="h2" size="2xl">Pricing</Heading>
+<Heading as="h2" size="2xl">FAQ</Heading>
+
+// Users can jump to specific sections using heading navigation
+```
+
+## Size Selection Guide
+
+| Context       | Recommended Size | Semantic Level       | Reasoning                                       |
+| ------------- | ---------------- | -------------------- | ----------------------------------------------- |
+| Page title    | `4xl` - `6xl`    | `h1`                 | Maximum visual prominence for main page heading |
+| Hero section  | `5xl` - `6xl`    | `h1`                 | Large display for landing pages                 |
+| Main sections | `2xl` - `3xl`    | `h2`                 | Clear hierarchy, major content divisions        |
+| Subsections   | `xl` - `2xl`     | `h3`                 | Secondary content organization                  |
+| Card titles   | `sm` - `md`      | `h3` or `h4`         | Compact, readable headers                       |
+| List headers  | `md` - `lg`      | `h3` or `h4`         | Clear labeling without overwhelming             |
+| Dialog titles | `lg` - `xl`      | `h2`                 | Prominent but not overpowering                  |
+| Small labels  | `xs` - `sm`      | `h4` - `h6` or `div` | Minimal hierarchy markers                       |
+
+## Responsive Typography
+
+```typescript
+// Responsive heading sizes using Panda CSS
+<Heading
+  as="h1"
+  size={{ base: '3xl', md: '5xl', lg: '6xl' }}
+>
+  Responsive Hero Title
+</Heading>
+
+// Scale down on mobile
+<Heading
+  as="h1"
+  className={css({
+    fontSize: { base: '3xl', md: '4xl' },
+    lineHeight: { base: 'tight', md: 'normal' }
+  })}
+>
+  Mobile-Optimized Title
+</Heading>
+
+// Adjust spacing between headings responsively
+<div>
+  <Heading as="h2" size="2xl">Section Title</Heading>
+  <Heading
+    as="h3"
+    size="xl"
+    className={css({ mt: { base: '4', md: '6' } })}
+  >
+    Subsection
+  </Heading>
+</div>
+```
+
+## Testing
+
+When testing Heading components:
+
+```typescript
+import { render, screen } from '@testing-library/react';
+
+test('renders heading with correct text', () => {
+  render(<Heading as="h1" size="3xl">Test Heading</Heading>);
+
+  const heading = screen.getByRole('heading', {
+    name: 'Test Heading',
+    level: 1
+  });
+
+  expect(heading).toBeInTheDocument();
+});
+
+test('renders with specified element type', () => {
+  const { container } = render(
+    <Heading as="h3" size="lg">Section Title</Heading>
+  );
+
+  const heading = container.querySelector('h3');
+  expect(heading).toBeInTheDocument();
+  expect(heading).toHaveTextContent('Section Title');
+});
+
+test('applies correct size variant', () => {
+  render(<Heading size="2xl">Large Heading</Heading>);
+
+  const heading = screen.getByRole('heading', { name: 'Large Heading' });
+  expect(heading).toHaveClass('heading');
+});
+
+test('maintains heading hierarchy', () => {
+  render(
+    <div>
+      <Heading as="h1" size="4xl">Main Title</Heading>
+      <Heading as="h2" size="2xl">Section</Heading>
+      <Heading as="h3" size="xl">Subsection</Heading>
+    </div>
+  );
+
+  const h1 = screen.getByRole('heading', { level: 1 });
+  const h2 = screen.getByRole('heading', { level: 2 });
+  const h3 = screen.getByRole('heading', { level: 3 });
+
+  expect(h1).toHaveTextContent('Main Title');
+  expect(h2).toHaveTextContent('Section');
+  expect(h3).toHaveTextContent('Subsection');
+});
+
+test('accepts custom className', () => {
+  const { container } = render(
+    <Heading className="custom-class">Custom Heading</Heading>
+  );
+
+  const heading = container.firstChild;
+  expect(heading).toHaveClass('custom-class');
+});
+```
+
+## Related Components
+
+- **Text**: For body text and non-heading typography
+- **Badge**: For labels and small status indicators
+- **Button**: Often paired with headings in hero sections
+- **Card**: Headings commonly used as card titles
+- **Dialog**: Headings used for dialog titles
+

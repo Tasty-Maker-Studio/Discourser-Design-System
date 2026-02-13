@@ -1,0 +1,529 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation/Guidelines/99-Switch" />
+
+# Switch
+
+**Purpose:** Toggle control for binary on/off states following Material Design 3 patterns.
+
+## When to Use This Component
+
+Use Switch when you need to **toggle a setting or preference** that takes effect immediately (no submit button required).
+
+**Decision Tree:**
+
+| Scenario                                                        | Use This   | Why                                                   |
+| --------------------------------------------------------------- | ---------- | ----------------------------------------------------- |
+| Toggle setting with immediate effect (dark mode, notifications) | Switch ✅  | Visual metaphor for on/off, instant feedback          |
+| Selection that requires form submission                         | Checkbox   | Part of form data, submitted together                 |
+| Mutually exclusive choices (select one from many)               | RadioGroup | Only one option can be selected                       |
+| Action that triggers behavior (save, delete)                    | Button     | Actions need explicit confirmation                    |
+| Binary choice in a list or group                                | Checkbox   | Better for lists where multiple items can be selected |
+
+**Component Comparison:**
+
+```typescript
+// ✅ Use Switch for immediate toggle settings
+<Switch.Root checked={isDarkMode} onCheckedChange={({ checked }) => setDarkMode(checked)}>
+  <Switch.Label>Dark mode</Switch.Label>
+  <Switch.Control>
+    <Switch.Thumb />
+  </Switch.Control>
+</Switch.Root>
+
+// ❌ Don't use Switch for form selections - use Checkbox
+<form onSubmit={handleSubmit}>
+  <Switch.Root name="terms">
+    <Switch.Label>I accept the terms</Switch.Label>
+    <Switch.Control><Switch.Thumb /></Switch.Control>
+  </Switch.Root>
+  <Button type="submit">Sign Up</Button>
+</form>  // Wrong - use Checkbox for form consent
+
+<form onSubmit={handleSubmit}>
+  <Checkbox.Root name="terms">
+    <Checkbox.Label>I accept the terms</Checkbox.Label>
+    <Checkbox.Control>
+      <Checkbox.Indicator />
+    </Checkbox.Control>
+  </Checkbox.Root>
+  <Button type="submit">Sign Up</Button>
+</form>  // Correct
+
+// ❌ Don't use Switch for actions - use Button
+<Switch.Root onCheckedChange={deleteAccount}>
+  <Switch.Label>Delete account</Switch.Label>
+  <Switch.Control><Switch.Thumb /></Switch.Control>
+</Switch.Root>  // Wrong - destructive action needs confirmation
+
+<Button variant="filled" onClick={() => setShowDeleteDialog(true)}>
+  Delete Account
+</Button>  // Correct
+
+// ✅ Use Switch for settings that apply immediately
+<Switch.Root checked={notificationsEnabled} onCheckedChange={toggleNotifications}>
+  <Switch.Label>Enable push notifications</Switch.Label>
+  <Switch.Control>
+    <Switch.Thumb />
+  </Switch.Control>
+</Switch.Root>
+```
+
+## Import
+
+```typescript
+import { Switch } from '@discourser/design-system';
+```
+
+## Overview
+
+The Switch component provides:
+
+- Binary on/off toggle functionality
+- Visual feedback for state changes
+- Smooth animation between states
+- Built-in label support
+- Form integration capabilities
+- Keyboard accessibility
+
+## Sizes
+
+| Size | Track Width | Track Height | Thumb Size (off) | Thumb Size (on) | Label Size |
+| ---- | ----------- | ------------ | ---------------- | --------------- | ---------- |
+| `sm` | 44px        | 24px         | 12×12px          | 16×16px         | bodySmall  |
+| `md` | 52px        | 32px         | 16×16px          | 24×24px         | bodyMedium |
+
+**Note:** The thumb (circle) grows larger when the switch is in the "on" state, following M3 specifications.
+
+## Props
+
+| Prop              | Type                                      | Default | Description                         |
+| ----------------- | ----------------------------------------- | ------- | ----------------------------------- |
+| `label`           | `string`                                  | -       | Label text displayed next to switch |
+| `checked`         | `boolean`                                 | -       | Controlled checked state            |
+| `defaultChecked`  | `boolean`                                 | -       | Uncontrolled default checked state  |
+| `onCheckedChange` | `(details: { checked: boolean }) => void` | -       | Callback when checked state changes |
+| `disabled`        | `boolean`                                 | `false` | Disable switch interaction          |
+| `name`            | `string`                                  | -       | Name attribute for form submission  |
+| `value`           | `string`                                  | -       | Value attribute for form submission |
+| `required`        | `boolean`                                 | `false` | Whether switch is required in form  |
+| `size`            | `'sm' \| 'md'`                            | `'md'`  | Switch size                         |
+
+## Examples
+
+### Basic Usage
+
+```typescript
+// Uncontrolled switch (default off)
+<Switch label="Enable notifications" />
+
+// Uncontrolled with default checked
+<Switch label="Dark mode" defaultChecked />
+
+// Controlled switch
+const [enabled, setEnabled] = useState(false);
+
+<Switch
+  label="Email notifications"
+  checked={enabled}
+  onCheckedChange={({ checked }) => setEnabled(checked)}
+/>
+```
+
+### Different Sizes
+
+```typescript
+// Small switch
+<Switch size="sm" label="Compact toggle" />
+
+// Medium switch (default)
+<Switch size="md" label="Standard toggle" />
+```
+
+### Disabled State
+
+```typescript
+<Switch label="Disabled (off)" disabled />
+
+<Switch label="Disabled (on)" disabled defaultChecked />
+```
+
+### Without Label
+
+```typescript
+// Switch without label (ensure you provide accessibility context elsewhere)
+<Switch />
+```
+
+## Common Patterns
+
+### Settings Panel
+
+```typescript
+const [settings, setSettings] = useState({
+  notifications: true,
+  darkMode: false,
+  autoSave: true,
+});
+
+<div className={css({ display: 'flex', flexDirection: 'column', gap: 'md' })}>
+  <Switch
+    label="Push notifications"
+    checked={settings.notifications}
+    onCheckedChange={({ checked }) =>
+      setSettings({ ...settings, notifications: checked })
+    }
+  />
+  <Switch
+    label="Dark mode"
+    checked={settings.darkMode}
+    onCheckedChange={({ checked }) =>
+      setSettings({ ...settings, darkMode: checked })
+    }
+  />
+  <Switch
+    label="Auto-save"
+    checked={settings.autoSave}
+    onCheckedChange={({ checked }) =>
+      setSettings({ ...settings, autoSave: checked })
+    }
+  />
+</div>
+```
+
+### Form Integration
+
+```typescript
+<form onSubmit={handleSubmit}>
+  <Switch
+    name="terms"
+    value="accepted"
+    label="I agree to the terms and conditions"
+    required
+  />
+
+  <Switch
+    name="newsletter"
+    value="subscribed"
+    label="Subscribe to newsletter (optional)"
+  />
+
+  <Button type="submit">Submit</Button>
+</form>
+```
+
+### With Description
+
+```typescript
+import { css } from '@discourser/design-system/styled-system/css';
+
+<div className={css({ display: 'flex', alignItems: 'flex-start', gap: 'sm' })}>
+  <Switch
+    checked={autoBackup}
+    onCheckedChange={({ checked }) => setAutoBackup(checked)}
+  />
+  <div>
+    <label className={css({ textStyle: 'bodyMedium', fontWeight: 500 })}>
+      Automatic backups
+    </label>
+    <p className={css({ textStyle: 'bodySmall', color: 'onSurfaceVariant', mt: 'xxs' })}>
+      Your data will be backed up automatically every 24 hours
+    </p>
+  </div>
+</div>
+```
+
+### Dynamic Enable/Disable
+
+```typescript
+const [featureEnabled, setFeatureEnabled] = useState(false);
+const [advancedMode, setAdvancedMode] = useState(false);
+
+<>
+  <Switch
+    label="Enable advanced features"
+    checked={featureEnabled}
+    onCheckedChange={({ checked }) => {
+      setFeatureEnabled(checked);
+      if (!checked) setAdvancedMode(false);  // Reset dependent switch
+    }}
+  />
+
+  <Switch
+    label="Advanced mode"
+    checked={advancedMode}
+    onCheckedChange={({ checked }) => setAdvancedMode(checked)}
+    disabled={!featureEnabled}  // Only enabled when feature is on
+  />
+</>
+```
+
+### List of Toggleable Items
+
+```typescript
+const [items, setItems] = useState([
+  { id: 1, name: 'Feature A', enabled: true },
+  { id: 2, name: 'Feature B', enabled: false },
+  { id: 3, name: 'Feature C', enabled: true },
+]);
+
+const toggleItem = (id: number) => {
+  setItems(items.map(item =>
+    item.id === id ? { ...item, enabled: !item.enabled } : item
+  ));
+};
+
+<div className={css({ display: 'flex', flexDirection: 'column', gap: 'sm' })}>
+  {items.map(item => (
+    <Switch
+      key={item.id}
+      label={item.name}
+      checked={item.enabled}
+      onCheckedChange={() => toggleItem(item.id)}
+    />
+  ))}
+</div>
+```
+
+## DO NOT
+
+```typescript
+// ❌ Don't use checkbox for on/off toggles (use Switch instead)
+<input type="checkbox" /> Enable feature
+
+// ✅ Use Switch for binary toggles
+<Switch label="Enable feature" />
+
+// ❌ Don't use Switch for multiple choice (use radio or checkbox)
+<Switch label="Option A" />
+<Switch label="Option B" />
+<Switch label="Option C" />  // Wrong for mutually exclusive options
+
+// ✅ Use radio buttons for mutually exclusive choices
+<input type="radio" name="option" value="a" /> Option A
+<input type="radio" name="option" value="b" /> Option B
+
+// ❌ Don't use Switch for submit actions (use Button instead)
+<Switch label="Submit form" />  // Wrong
+
+// ✅ Use Button for actions
+<Button type="submit">Submit</Button>
+
+// ❌ Don't nest switches or use as navigation
+<Switch label="Navigate to settings" onClick={() => navigate('/settings')} />  // Wrong
+```
+
+## Accessibility
+
+The Switch component follows WCAG 2.1 Level AA standards:
+
+- **Keyboard Navigation**: Toggle with Space key, focus with Tab
+- **ARIA Attributes**: Uses role="switch", aria-checked for state
+- **Labels**: Label associated with switch for screen readers
+- **Focus Indicator**: Visible focus state
+- **State Announcement**: State changes announced to screen readers
+- **Touch Target**: Adequate size for touch interaction
+
+### Accessibility Best Practices
+
+```typescript
+// ✅ Always provide labels for clarity
+<Switch label="Enable notifications" />
+
+// ✅ Use descriptive labels
+<Switch label="Receive email updates" />  // Clear what it toggles
+
+// ❌ Vague labels
+<Switch label="Enable" />  // Enable what?
+
+// ✅ Indicate state in label if needed
+<Switch
+  label={darkMode ? 'Dark mode (on)' : 'Dark mode (off)'}
+  checked={darkMode}
+  onCheckedChange={({ checked }) => setDarkMode(checked)}
+/>
+
+// ✅ Provide context for switch without visible label
+<Switch
+  aria-label="Enable push notifications for this conversation"
+/>
+```
+
+## State Behaviors
+
+| State         | Visual Change                                                                                            | Behavior                            |
+| ------------- | -------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| **Unchecked** | Track: `surfaceContainerHighest` with `outline` border<br />Thumb: Small, `outline` color, left position | Off state                           |
+| **Checked**   | Track: `primary` color<br />Thumb: Larger, `onPrimary` color, right position                             | On state                            |
+| **Hover**     | Subtle visual feedback                                                                                   | Interactive feedback                |
+| **Focus**     | Focus indicator (handled by Ark UI)                                                                      | Keyboard accessibility              |
+| **Disabled**  | 38% opacity, greyed out                                                                                  | Cannot be toggled                   |
+| **Animation** | Smooth thumb transition (fast easing)                                                                    | Visual confirmation of state change |
+
+## Visual States
+
+### Unchecked (Off)
+
+- Track background: `surfaceContainerHighest`
+- Track border: 2px `outline`
+- Thumb: Small (16×16px for md), `outline` color
+- Thumb position: Left
+
+### Checked (On)
+
+- Track background: `primary`
+- Track border: 2px `primary`
+- Thumb: Large (24×24px for md), `onPrimary` color
+- Thumb position: Right
+
+### Disabled
+
+- Track background: `surfaceVariant`
+- Track border: `onSurface` (12% opacity)
+- Thumb: `onSurface` (38% opacity)
+- Overall opacity: 38%
+
+## Form Integration
+
+```typescript
+// React Hook Form
+import { useForm, Controller } from 'react-hook-form';
+
+const { control, handleSubmit } = useForm();
+
+<form onSubmit={handleSubmit(onSubmit)}>
+  <Controller
+    name="notifications"
+    control={control}
+    defaultValue={false}
+    render={({ field }) => (
+      <Switch
+        label="Enable notifications"
+        checked={field.value}
+        onCheckedChange={({ checked }) => field.onChange(checked)}
+      />
+    )}
+  />
+</form>
+
+// Formik
+import { useFormik } from 'formik';
+
+const formik = useFormik({
+  initialValues: { darkMode: false },
+  onSubmit: values => { /* ... */ },
+});
+
+<Switch
+  label="Dark mode"
+  name="darkMode"
+  checked={formik.values.darkMode}
+  onCheckedChange={({ checked }) => formik.setFieldValue('darkMode', checked)}
+/>
+```
+
+## Use Cases
+
+| Use Case                   | Recommendation       |
+| -------------------------- | -------------------- |
+| Enable/disable feature     | ✅ Perfect use case  |
+| On/off settings            | ✅ Perfect use case  |
+| Binary preferences         | ✅ Perfect use case  |
+| Show/hide sections         | ✅ Good use case     |
+| Mutually exclusive options | ❌ Use radio buttons |
+| Multiple selections        | ❌ Use checkboxes    |
+| Trigger actions            | ❌ Use buttons       |
+
+## Responsive Considerations
+
+```typescript
+// Mobile: Consider using md (default) for better touch targets
+<Switch size="md" label="Enable feature" />
+
+// Desktop: Can use sm for denser layouts
+<Switch size={{ base: 'md', lg: 'sm' }} label="Enable feature" />
+
+// Settings panel with responsive spacing
+<div className={css({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: { base: 'md', lg: 'sm' }
+})}>
+  <Switch label="Notification 1" />
+  <Switch label="Notification 2" />
+  <Switch label="Notification 3" />
+</div>
+```
+
+## Testing
+
+```typescript
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+test('switch toggles checked state', async () => {
+  const handleChange = vi.fn();
+  render(
+    <Switch
+      label="Enable feature"
+      checked={false}
+      onCheckedChange={handleChange}
+    />
+  );
+
+  const switchControl = screen.getByRole('switch', { name: 'Enable feature' });
+  expect(switchControl).not.toBeChecked();
+
+  await userEvent.click(switchControl);
+
+  expect(handleChange).toHaveBeenCalledWith({ checked: true });
+});
+
+test('switch respects disabled state', async () => {
+  const handleChange = vi.fn();
+  render(
+    <Switch
+      label="Disabled switch"
+      disabled
+      onCheckedChange={handleChange}
+    />
+  );
+
+  const switchControl = screen.getByRole('switch', { name: 'Disabled switch' });
+  await userEvent.click(switchControl);
+
+  expect(handleChange).not.toHaveBeenCalled();
+});
+
+test('switch works with keyboard', async () => {
+  const handleChange = vi.fn();
+  render(
+    <Switch
+      label="Keyboard test"
+      checked={false}
+      onCheckedChange={handleChange}
+    />
+  );
+
+  const switchControl = screen.getByRole('switch', { name: 'Keyboard test' });
+  switchControl.focus();
+
+  await userEvent.keyboard(' ');  // Space key
+
+  expect(handleChange).toHaveBeenCalledWith({ checked: true });
+});
+```
+
+## When to Use Switch vs Checkbox
+
+| Feature         | Switch                | Checkbox                |
+| --------------- | --------------------- | ----------------------- |
+| **Purpose**     | Toggle state (on/off) | Select option(s)        |
+| **Effect**      | Immediate             | Usually requires submit |
+| **State**       | Active/inactive       | Selected/unselected     |
+| **Typical Use** | Settings, preferences | Forms, multi-select     |
+| **Example**     | "Enable dark mode"    | "I agree to terms"      |
+| **Visual**      | Track + thumb         | Box + checkmark         |
+
+**Rule of thumb**: Use Switch when the change takes effect immediately. Use Checkbox when part of a form that needs submission.
+
