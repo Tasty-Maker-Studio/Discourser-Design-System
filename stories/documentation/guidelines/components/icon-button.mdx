@@ -1,0 +1,477 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation/Guidelines/99-Icon Button" />
+
+# IconButton
+
+**Purpose:** Icon-only interactive button for compact actions following Material Design 3 patterns.
+
+## When to Use This Component
+
+Use IconButton when you need an **icon-only action** without accompanying text, typically for common, recognizable actions.
+
+**Decision Tree:**
+
+| Scenario                                         | Use This               | Why                                                   |
+| ------------------------------------------------ | ---------------------- | ----------------------------------------------------- |
+| Icon-only action (close, menu, settings, delete) | IconButton ✅          | Optimized for icons, proper sizing and spacing        |
+| Action with text label                           | Button                 | Text provides clarity, better for less common actions |
+| Toggle state (on/off, enabled/disabled)          | Switch                 | Visual metaphor for binary states                     |
+| Select from options                              | RadioGroup or Checkbox | Better for multi-choice scenarios                     |
+| Brief contextual help on icon                    | IconButton + Tooltip   | Combine for accessibility                             |
+
+**Component Comparison:**
+
+```typescript
+// ✅ Use IconButton for icon-only actions
+<IconButton aria-label="Close dialog">
+  <CloseIcon />
+</IconButton>
+
+<IconButton aria-label="Open menu">
+  <MenuIcon />
+</IconButton>
+
+// ❌ Don't use Button without text for icon-only actions
+<Button onClick={handleClose}>
+  <CloseIcon />
+</Button>  // Wrong - Button expects text content
+
+<IconButton aria-label="Close">
+  <CloseIcon />
+</IconButton>  // Correct
+
+// ❌ Don't use IconButton when text label is needed
+<IconButton aria-label="Submit form">
+  <SendIcon />
+</IconButton>  // Wrong - "Submit" action needs visible text
+
+<Button leftIcon={<SendIcon />}>
+  Submit
+</Button>  // Correct
+
+// ✅ Use IconButton with Tooltip for clarity
+<Tooltip.Root>
+  <Tooltip.Trigger asChild>
+    <IconButton aria-label="Add to favorites">
+      <HeartIcon />
+    </IconButton>
+  </Tooltip.Trigger>
+  <Tooltip.Content>Add to favorites</Tooltip.Content>
+</Tooltip.Root>
+```
+
+## Import
+
+```typescript
+import { IconButton } from '@discourser/design-system';
+```
+
+## Variants
+
+The IconButton component supports 4 Material Design 3 variants:
+
+| Variant    | Visual Style                   | Usage                      | When to Use                                  |
+| ---------- | ------------------------------ | -------------------------- | -------------------------------------------- |
+| `standard` | Transparent background         | Default icon actions       | Most common, minimal emphasis                |
+| `filled`   | Primary color background       | High emphasis icon actions | Important actions that need prominence       |
+| `tonal`    | Secondary container background | Medium emphasis actions    | Supportive actions with some emphasis        |
+| `outlined` | Outlined border                | Secondary icon actions     | Alternative to standard with more definition |
+
+### Visual Characteristics
+
+- **standard**: Transparent, `onSurfaceVariant` color, subtle hover background
+- **filled**: `primary` background, `onPrimary` icon color
+- **tonal**: `secondaryContainer` background, `onSecondaryContainer` icon color
+- **outlined**: Transparent with 1px `outline` border
+
+## Sizes
+
+| Size | Dimensions | Icon Size | Usage                                     |
+| ---- | ---------- | --------- | ----------------------------------------- |
+| `sm` | 32×32px    | 18×18px   | Compact UI, dense layouts, inline actions |
+| `md` | 40×40px    | 24×24px   | Default, most use cases                   |
+| `lg` | 48×48px    | 24×24px   | Touch targets, mobile emphasis, FAB       |
+
+**Important:** Icon sizes are automatically set by the component via CSS. Ensure your SVG icons inherit currentColor and size.
+
+## Props
+
+| Prop         | Type                                              | Default      | Description                            |
+| ------------ | ------------------------------------------------- | ------------ | -------------------------------------- |
+| `children`   | `ReactNode`                                       | Required     | Icon element (SVG, icon component)     |
+| `aria-label` | `string`                                          | **Required** | Accessible label for screen readers    |
+| `variant`    | `'standard' \| 'filled' \| 'tonal' \| 'outlined'` | `'standard'` | Visual style variant                   |
+| `size`       | `'sm' \| 'md' \| 'lg'`                            | `'md'`       | Button size                            |
+| `disabled`   | `boolean`                                         | `false`      | Disable button interaction             |
+| `onClick`    | `(event: MouseEvent) => void`                     | -            | Click handler                          |
+| `type`       | `'button' \| 'submit' \| 'reset'`                 | `'button'`   | HTML button type                       |
+| `className`  | `string`                                          | -            | Additional CSS classes (use sparingly) |
+
+**Critical:** `aria-label` is **required** for accessibility. Icon buttons have no visible text, so screen readers need this label.
+
+## Examples
+
+### Basic Usage
+
+```typescript
+import { XIcon, PencilIcon, TrashIcon, HeartIcon } from 'your-icon-library';
+
+// Standard icon button (default)
+<IconButton aria-label="Close">
+  <XIcon />
+</IconButton>
+
+// Filled (high emphasis)
+<IconButton variant="filled" aria-label="Edit">
+  <PencilIcon />
+</IconButton>
+
+// Tonal (medium emphasis)
+<IconButton variant="tonal" aria-label="Delete">
+  <TrashIcon />
+</IconButton>
+
+// Outlined
+<IconButton variant="outlined" aria-label="Like">
+  <HeartIcon />
+</IconButton>
+```
+
+### Different Sizes
+
+```typescript
+// Small (compact)
+<IconButton size="sm" aria-label="Close">
+  <XIcon />
+</IconButton>
+
+// Medium (default)
+<IconButton size="md" aria-label="Close">
+  <XIcon />
+</IconButton>
+
+// Large (mobile-friendly)
+<IconButton size="lg" aria-label="Close">
+  <XIcon />
+</IconButton>
+```
+
+### Common Actions
+
+```typescript
+// Close button (dialogs, modals)
+<IconButton variant="standard" aria-label="Close" onClick={onClose}>
+  <XIcon />
+</IconButton>
+
+// Edit button
+<IconButton variant="tonal" aria-label="Edit item" onClick={handleEdit}>
+  <PencilIcon />
+</IconButton>
+
+// Delete button
+<IconButton variant="outlined" aria-label="Delete item" onClick={handleDelete}>
+  <TrashIcon />
+</IconButton>
+
+// Menu toggle
+<IconButton variant="standard" aria-label="Open menu" onClick={toggleMenu}>
+  <MenuIcon />
+</IconButton>
+
+// Like/Favorite button (toggleable)
+<IconButton
+  variant={isLiked ? 'filled' : 'outlined'}
+  aria-label={isLiked ? 'Unlike' : 'Like'}
+  onClick={toggleLike}
+>
+  <HeartIcon />
+</IconButton>
+```
+
+## Common Patterns
+
+### Dialog/Modal Close Button
+
+```typescript
+<Dialog.Content>
+  <IconButton
+    variant="standard"
+    aria-label="Close dialog"
+    onClick={onClose}
+    className={css({ position: 'absolute', top: 'md', right: 'md' })}
+  >
+    <XIcon />
+  </IconButton>
+
+  <Dialog.Title>Dialog Title</Dialog.Title>
+  <Dialog.Description>Dialog content...</Dialog.Description>
+</Dialog.Content>
+```
+
+### Action Bar
+
+```typescript
+<div className={css({ display: 'flex', gap: 'xs', alignItems: 'center' })}>
+  <IconButton variant="standard" aria-label="Edit">
+    <PencilIcon />
+  </IconButton>
+  <IconButton variant="standard" aria-label="Share">
+    <ShareIcon />
+  </IconButton>
+  <IconButton variant="standard" aria-label="Delete">
+    <TrashIcon />
+  </IconButton>
+</div>
+```
+
+### Floating Action Button (FAB)
+
+```typescript
+<IconButton
+  variant="filled"
+  size="lg"
+  aria-label="Create new item"
+  className={css({
+    position: 'fixed',
+    bottom: 'lg',
+    right: 'lg',
+    shadow: 'level3'
+  })}
+  onClick={handleCreate}
+>
+  <PlusIcon />
+</IconButton>
+```
+
+### Toggle Icon Button
+
+```typescript
+const [isStarred, setIsStarred] = useState(false);
+
+<IconButton
+  variant={isStarred ? 'filled' : 'standard'}
+  aria-label={isStarred ? 'Unstar' : 'Star'}
+  aria-pressed={isStarred}
+  onClick={() => setIsStarred(!isStarred)}
+>
+  {isStarred ? <StarFilledIcon /> : <StarOutlineIcon />}
+</IconButton>
+```
+
+## DO NOT
+
+```typescript
+// ❌ Don't use IconButton with text (use Button instead)
+<IconButton aria-label="Save">
+  <SaveIcon /> Save
+</IconButton>  // Use <Button leftIcon={<SaveIcon />}>Save</Button>
+
+// ❌ Don't forget aria-label (accessibility violation)
+<IconButton>
+  <XIcon />
+</IconButton>  // TypeScript will error - aria-label is required
+
+// ❌ Don't use vague labels
+<IconButton aria-label="Icon">  // Not descriptive
+  <TrashIcon />
+</IconButton>
+
+// ✅ Use descriptive labels
+<IconButton aria-label="Delete item">
+  <TrashIcon />
+</IconButton>
+
+// ❌ Don't use icons that don't inherit size/color
+<IconButton aria-label="Close">
+  <img src="/icon.png" />  // Won't scale properly
+</IconButton>
+
+// ✅ Use SVG icons that inherit currentColor
+<IconButton aria-label="Close">
+  <XIcon />  // SVG with currentColor
+</IconButton>
+```
+
+## Accessibility
+
+IconButton has strict accessibility requirements:
+
+- **aria-label Required**: Must describe the action (e.g., "Close dialog", "Edit item")
+- **Keyboard Navigation**: Focusable via Tab, activates with Enter/Space
+- **Focus Indicator**: 2px outline on focus-visible
+- **Touch Target**: Minimum 40×40px (use `md` or `lg` size)
+- **State Indication**: Use `aria-pressed` for toggle buttons
+
+### Accessibility Best Practices
+
+```typescript
+// ✅ Descriptive aria-label
+<IconButton aria-label="Delete comment by John">
+  <TrashIcon />
+</IconButton>
+
+// ✅ Toggle state indication
+<IconButton
+  aria-label={isMuted ? 'Unmute' : 'Mute'}
+  aria-pressed={isMuted}
+  onClick={toggleMute}
+>
+  {isMuted ? <MuteIcon /> : <VolumeIcon />}
+</IconButton>
+
+// ✅ Disabled state
+<IconButton aria-label="Save" disabled={!hasChanges}>
+  <SaveIcon />
+</IconButton>
+
+// ✅ Loading state
+<IconButton aria-label="Save" disabled={isSaving} aria-busy={isSaving}>
+  {isSaving ? <SpinnerIcon /> : <SaveIcon />}
+</IconButton>
+```
+
+## Icon Requirements
+
+Icons must meet these requirements:
+
+```typescript
+// ✅ Correct: SVG with currentColor
+const CheckIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+    <path d="M5 12l5 5L20 7" strokeWidth="2" />
+  </svg>
+);
+
+<IconButton aria-label="Confirm">
+  <CheckIcon />
+</IconButton>
+
+// ❌ Wrong: Fixed colors
+const WrongIcon = () => (
+  <svg viewBox="0 0 24 24">
+    <path fill="#000" d="..." />  // Fixed color won't adapt
+  </svg>
+);
+```
+
+## Variant Selection Guide
+
+| Scenario                | Recommended Variant      | Reasoning                          |
+| ----------------------- | ------------------------ | ---------------------------------- |
+| Close button (dialogs)  | `standard`               | Minimal emphasis, common action    |
+| Primary action (FAB)    | `filled`                 | High emphasis, main action         |
+| Edit/Modify action      | `tonal`                  | Medium emphasis, supportive        |
+| Delete action           | `outlined`               | Secondary action, needs definition |
+| Menu/Navigation         | `standard`               | Minimal emphasis, frequently used  |
+| Toggle (active state)   | `filled`                 | Shows active state clearly         |
+| Toggle (inactive state) | `standard` or `outlined` | Shows inactive state               |
+| Action bar items        | `standard`               | Consistent, minimal emphasis       |
+
+## State Behaviors
+
+| State        | Visual Change                      | Behavior                                                     |
+| ------------ | ---------------------------------- | ------------------------------------------------------------ |
+| **Hover**    | Background color change or opacity | `standard`: 8% background<br />`filled`/`tonal`: 92% opacity |
+| **Active**   | Slight opacity change              | Further visual feedback on click                             |
+| **Focus**    | 2px outline                        | Primary color outline, 2px offset                            |
+| **Disabled** | 38% opacity, no interaction        | Cannot be clicked, greyed out                                |
+
+## Responsive Considerations
+
+```typescript
+// Mobile-first: Larger touch targets
+<IconButton size="lg" aria-label="Menu">
+  <MenuIcon />
+</IconButton>
+
+// Responsive sizing
+<IconButton
+  size={{ base: 'lg', md: 'md' }}
+  aria-label="Close"
+>
+  <XIcon />
+</IconButton>
+
+// Dense desktop layouts
+<div className={css({
+  display: 'flex',
+  gap: { base: 'sm', md: 'xs' }
+})}>
+  <IconButton size={{ base: 'md', md: 'sm' }} aria-label="Edit">
+    <PencilIcon />
+  </IconButton>
+  <IconButton size={{ base: 'md', md: 'sm' }} aria-label="Delete">
+    <TrashIcon />
+  </IconButton>
+</div>
+```
+
+## Testing
+
+```typescript
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+test('icon button has accessible label', () => {
+  render(
+    <IconButton aria-label="Close dialog">
+      <XIcon />
+    </IconButton>
+  );
+
+  const button = screen.getByRole('button', { name: 'Close dialog' });
+  expect(button).toBeInTheDocument();
+});
+
+test('icon button handles clicks', async () => {
+  const handleClick = vi.fn();
+  render(
+    <IconButton aria-label="Delete" onClick={handleClick}>
+      <TrashIcon />
+    </IconButton>
+  );
+
+  const button = screen.getByRole('button', { name: 'Delete' });
+  await userEvent.click(button);
+
+  expect(handleClick).toHaveBeenCalledOnce();
+});
+
+test('disabled icon button cannot be clicked', async () => {
+  const handleClick = vi.fn();
+  render(
+    <IconButton aria-label="Delete" disabled onClick={handleClick}>
+      <TrashIcon />
+    </IconButton>
+  );
+
+  const button = screen.getByRole('button', { name: 'Delete' });
+  await userEvent.click(button);
+
+  expect(handleClick).not.toHaveBeenCalled();
+  expect(button).toBeDisabled();
+});
+
+test('toggle button has correct aria-pressed state', () => {
+  const { rerender } = render(
+    <IconButton aria-label="Star" aria-pressed={false}>
+      <StarIcon />
+    </IconButton>
+  );
+
+  let button = screen.getByRole('button', { name: 'Star', pressed: false });
+  expect(button).toBeInTheDocument();
+
+  rerender(
+    <IconButton aria-label="Star" aria-pressed={true}>
+      <StarIcon />
+    </IconButton>
+  );
+
+  button = screen.getByRole('button', { name: 'Star', pressed: true });
+  expect(button).toBeInTheDocument();
+});
+```
+

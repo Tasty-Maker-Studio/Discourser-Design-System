@@ -1,0 +1,1276 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation/Guidelines/99-Popover" />
+
+# Popover
+
+**Purpose:** A floating panel that appears near a trigger element to display contextual content, menus, forms, or additional information. Built on Ark UI's Popover primitive with intelligent positioning and smooth animations.
+
+## When to Use This Component
+
+Use Popover when you need to **display rich contextual content or interactive elements near a trigger** without navigating away from the current page.
+
+### Decision Tree
+
+| Scenario                                   | Use Popover? | Alternative | Reasoning                                          |
+| ------------------------------------------ | ------------ | ----------- | -------------------------------------------------- |
+| Contextual menus with actions              | ✅ Yes       | -           | Popover shows rich content near the trigger        |
+| Forms or color pickers attached to element | ✅ Yes       | -           | Perfect for inline editing without page navigation |
+| User profile preview on hover/click        | ✅ Yes       | -           | Shows detailed info without full page load         |
+| Simple text hints or labels                | ❌ No        | Tooltip     | Tooltip is lighter and better for brief help text  |
+| Critical actions requiring focus           | ❌ No        | Dialog      | Dialog centers attention and is modal              |
+| Navigation menus (mobile)                  | ❌ No        | Drawer      | Drawer slides from edge, better for mobile menus   |
+
+### Component Comparison
+
+```typescript
+// ✅ Popover - Rich contextual menu with form
+<Popover.Root>
+  <Popover.Trigger asChild>
+    <Button>Add Comment</Button>
+  </Popover.Trigger>
+  <Popover.Positioner>
+    <Popover.Content>
+      <Popover.Title>New Comment</Popover.Title>
+      <Popover.Description>Add your thoughts below</Popover.Description>
+      <Textarea placeholder="Type your comment..." />
+      <Button>Submit</Button>
+    </Popover.Content>
+  </Popover.Positioner>
+</Popover.Root>
+
+// ❌ Don't use Popover for simple hints - Use Tooltip
+<Popover.Root>
+  <Popover.Trigger asChild>
+    <IconButton><InfoIcon /></IconButton>
+  </Popover.Trigger>
+  <Popover.Positioner>
+    <Popover.Content>
+      This is a simple hint
+    </Popover.Content>
+  </Popover.Positioner>
+</Popover.Root>
+
+// ✅ Better: Use Tooltip for brief hints
+<Tooltip content="This is a simple hint">
+  <IconButton><InfoIcon /></IconButton>
+</Tooltip>
+
+// ❌ Don't use Popover for critical modals - Use Dialog
+<Popover.Root>
+  <Popover.Content>
+    <Popover.Title>Delete Account?</Popover.Title>
+    <Button>Confirm Delete</Button>
+  </Popover.Content>
+</Popover.Root>
+
+// ✅ Better: Use Dialog for important confirmations
+<Dialog.Root>
+  <Dialog.Content>
+    <Dialog.Title>Delete Account?</Dialog.Title>
+    <Dialog.Description>This cannot be undone.</Dialog.Description>
+    <Dialog.Footer>
+      <Button variant="outlined">Cancel</Button>
+      <Button colorPalette="error">Delete</Button>
+    </Dialog.Footer>
+  </Dialog.Content>
+</Dialog.Root>
+```
+
+## Import
+
+```typescript
+import { Popover } from '@discourser/design-system';
+```
+
+## Component Structure
+
+Popover is a compound component built using Ark UI's Popover primitive. It consists of several parts that work together:
+
+### Core Components
+
+| Component              | Purpose                                 | Required    |
+| ---------------------- | --------------------------------------- | ----------- |
+| `Popover.Root`         | Main container and state manager        | Yes         |
+| `Popover.Trigger`      | Element that opens the popover          | Yes         |
+| `Popover.Positioner`   | Positions popover relative to trigger   | Yes         |
+| `Popover.Content`      | Main popover panel                      | Yes         |
+| `Popover.Title`        | Popover heading (for accessibility)     | Recommended |
+| `Popover.Description`  | Popover description (for accessibility) | Optional    |
+| `Popover.CloseTrigger` | Button to close popover                 | Optional    |
+
+### Layout Components
+
+| Component        | Purpose                                | Usage       |
+| ---------------- | -------------------------------------- | ----------- |
+| `Popover.Header` | Top section for title and close button | Optional    |
+| `Popover.Body`   | Main scrollable content area           | Recommended |
+| `Popover.Footer` | Bottom section for actions             | Optional    |
+
+### Positioning Components
+
+| Component           | Purpose                                       | Usage                    |
+| ------------------- | --------------------------------------------- | ------------------------ |
+| `Popover.Anchor`    | Alternative anchor point (instead of trigger) | Optional                 |
+| `Popover.Arrow`     | Visual arrow pointing to trigger              | Optional                 |
+| `Popover.ArrowTip`  | Arrow border styling                          | Auto-included with Arrow |
+| `Popover.Indicator` | Visual indicator on trigger                   | Optional                 |
+
+### Context
+
+| Component         | Purpose                               |
+| ----------------- | ------------------------------------- |
+| `Popover.Context` | Access popover state programmatically |
+
+## Variants
+
+Popover uses intelligent positioning based on available space. Unlike Drawer, it doesn't have visual variants but relies on positioning logic.
+
+### Default Behavior
+
+- **Width**: `sm` (384px/24rem) by default
+- **Positioning**: Auto-adjusts based on viewport space
+- **Animation**: Scale + fade (fast duration)
+- **Arrow**: Optional, points to trigger element
+- **Max Height**: Constrained by available viewport height
+
+## Props
+
+### Root Props
+
+| Prop                     | Type                                   | Default        | Description                                   |
+| ------------------------ | -------------------------------------- | -------------- | --------------------------------------------- |
+| `open`                   | `boolean`                              | -              | Controlled open state                         |
+| `defaultOpen`            | `boolean`                              | `false`        | Initial open state (uncontrolled)             |
+| `onOpenChange`           | `(details: { open: boolean }) => void` | -              | Callback when open state changes              |
+| `closeOnInteractOutside` | `boolean`                              | `true`         | Close when clicking outside                   |
+| `closeOnEscapeKeyDown`   | `boolean`                              | `true`         | Close when pressing Escape                    |
+| `autoFocus`              | `boolean`                              | `true`         | Auto-focus first element when opened          |
+| `modal`                  | `boolean`                              | `false`        | Whether popover is modal (blocks interaction) |
+| `portalled`              | `boolean`                              | `true`         | Render in portal (outside DOM hierarchy)      |
+| `positioning`            | `PositioningOptions`                   | -              | Custom positioning configuration              |
+| `unmountOnExit`          | `boolean`                              | `true`         | Remove from DOM when closed                   |
+| `lazyMount`              | `boolean`                              | `true`         | Mount content only when first opened          |
+| `id`                     | `string`                               | auto-generated | Unique ID for accessibility                   |
+
+### Positioning Options
+
+```typescript
+interface PositioningOptions {
+  placement?:
+    | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end';
+  offset?: { mainAxis?: number; crossAxis?: number };
+  gutter?: number;
+  flip?: boolean;
+  slide?: boolean;
+  overlap?: boolean;
+  sameWidth?: boolean;
+  fitViewport?: boolean;
+}
+```
+
+### Content Props
+
+All compound components accept standard HTML attributes plus styling props from Panda CSS.
+
+## Examples
+
+### Basic Usage
+
+```typescript
+import { Popover, Button } from '@discourser/design-system';
+
+function BasicPopover() {
+  return (
+    <Popover.Root>
+      <Popover.Trigger asChild>
+        <Button variant="outlined">Open Popover</Button>
+      </Popover.Trigger>
+
+      <Popover.Positioner>
+        <Popover.Content>
+          <Popover.Arrow>
+            <Popover.ArrowTip />
+          </Popover.Arrow>
+
+          <Popover.Header>
+            <Popover.Title>Popover Title</Popover.Title>
+          </Popover.Header>
+
+          <Popover.Body>
+            <p>This is the popover content. It can contain any elements.</p>
+          </Popover.Body>
+        </Popover.Content>
+      </Popover.Positioner>
+    </Popover.Root>
+  );
+}
+```
+
+### With Close Button
+
+```typescript
+import { Popover, Button, IconButton } from '@discourser/design-system';
+import { XIcon } from 'your-icon-library';
+
+function PopoverWithClose() {
+  return (
+    <Popover.Root>
+      <Popover.Trigger asChild>
+        <Button>Info</Button>
+      </Popover.Trigger>
+
+      <Popover.Positioner>
+        <Popover.Content>
+          <Popover.Arrow />
+
+          <Popover.Header>
+            <Popover.Title>Information</Popover.Title>
+            <Popover.Description>
+              Additional details about this feature
+            </Popover.Description>
+            <Popover.CloseTrigger asChild>
+              <IconButton aria-label="Close" variant="text" size="sm">
+                <XIcon />
+              </IconButton>
+            </Popover.CloseTrigger>
+          </Popover.Header>
+
+          <Popover.Body>
+            <p>Detailed explanation goes here...</p>
+          </Popover.Body>
+
+          <Popover.Footer>
+            <Button size="sm" variant="text">Learn More</Button>
+          </Popover.Footer>
+        </Popover.Content>
+      </Popover.Positioner>
+    </Popover.Root>
+  );
+}
+```
+
+### Controlled Popover
+
+```typescript
+import { useState } from 'react';
+import { Popover, Button } from '@discourser/design-system';
+
+function ControlledPopover() {
+  const [open, setOpen] = useState(false);
+
+  const handleConfirm = () => {
+    console.log('Confirmed!');
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Show Options</Button>
+
+      <Popover.Root open={open} onOpenChange={(details) => setOpen(details.open)}>
+        <Popover.Positioner>
+          <Popover.Content>
+            <Popover.Arrow />
+
+            <Popover.Header>
+              <Popover.Title>Choose Action</Popover.Title>
+            </Popover.Header>
+
+            <Popover.Body>
+              <p>Select an option below:</p>
+            </Popover.Body>
+
+            <Popover.Footer>
+              <Button variant="outlined" size="sm" onClick={() => setOpen(false)}>
+                Cancel
+              </Button>
+              <Button size="sm" onClick={handleConfirm}>
+                Confirm
+              </Button>
+            </Popover.Footer>
+          </Popover.Content>
+        </Popover.Positioner>
+      </Popover.Root>
+    </>
+  );
+}
+```
+
+### Custom Positioning
+
+```typescript
+// Position at top
+<Popover.Root positioning={{ placement: 'top' }}>
+  <Popover.Trigger asChild>
+    <Button>Top Popover</Button>
+  </Popover.Trigger>
+  <Popover.Positioner>
+    <Popover.Content>
+      <Popover.Arrow />
+      <Popover.Body>Content appears above trigger</Popover.Body>
+    </Popover.Content>
+  </Popover.Positioner>
+</Popover.Root>
+
+// Position at bottom-start (left-aligned)
+<Popover.Root positioning={{ placement: 'bottom-start' }}>
+  <Popover.Trigger asChild>
+    <Button>Menu</Button>
+  </Popover.Trigger>
+  <Popover.Positioner>
+    <Popover.Content>
+      <Popover.Body>Aligned to left edge of trigger</Popover.Body>
+    </Popover.Content>
+  </Popover.Positioner>
+</Popover.Root>
+
+// Custom offset and gutter
+<Popover.Root
+  positioning={{
+    placement: 'right',
+    gutter: 16, // Space from trigger
+    offset: { mainAxis: 10, crossAxis: 0 },
+  }}
+>
+  <Popover.Trigger asChild>
+    <Button>Right Popover</Button>
+  </Popover.Trigger>
+  <Popover.Positioner>
+    <Popover.Content>
+      <Popover.Body>Custom spacing from trigger</Popover.Body>
+    </Popover.Content>
+  </Popover.Positioner>
+</Popover.Root>
+
+// Same width as trigger
+<Popover.Root positioning={{ sameWidth: true }}>
+  <Popover.Trigger asChild>
+    <Button>Select Option</Button>
+  </Popover.Trigger>
+  <Popover.Positioner>
+    <Popover.Content>
+      <Popover.Body>Width matches trigger button</Popover.Body>
+    </Popover.Content>
+  </Popover.Positioner>
+</Popover.Root>
+```
+
+### Form in Popover
+
+```typescript
+import { Popover, Button, Input } from '@discourser/design-system';
+import { useState } from 'react';
+
+function FormPopover() {
+  const [email, setEmail] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Email:', email);
+    setSubmitted(true);
+  };
+
+  return (
+    <Popover.Root>
+      <Popover.Trigger asChild>
+        <Button>Subscribe</Button>
+      </Popover.Trigger>
+
+      <Popover.Positioner>
+        <Popover.Content>
+          <Popover.Arrow />
+
+          {!submitted ? (
+            <form onSubmit={handleSubmit}>
+              <Popover.Header>
+                <Popover.Title>Newsletter Signup</Popover.Title>
+                <Popover.Description>
+                  Get weekly updates delivered to your inbox
+                </Popover.Description>
+              </Popover.Header>
+
+              <Popover.Body>
+                <Input
+                  type="email"
+                  label="Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </Popover.Body>
+
+              <Popover.Footer>
+                <Popover.CloseTrigger asChild>
+                  <Button variant="outlined" size="sm" type="button">
+                    Cancel
+                  </Button>
+                </Popover.CloseTrigger>
+                <Button size="sm" type="submit">
+                  Subscribe
+                </Button>
+              </Popover.Footer>
+            </form>
+          ) : (
+            <Popover.Body>
+              <p>Thank you for subscribing!</p>
+            </Popover.Body>
+          )}
+        </Popover.Content>
+      </Popover.Positioner>
+    </Popover.Root>
+  );
+}
+```
+
+### Action Menu Popover
+
+```typescript
+import { Popover, Button } from '@discourser/design-system';
+import { MoreVerticalIcon, EditIcon, DeleteIcon, ShareIcon } from 'your-icon-library';
+
+function ActionMenuPopover() {
+  const actions = [
+    { icon: <EditIcon />, label: 'Edit', onClick: () => console.log('Edit') },
+    { icon: <ShareIcon />, label: 'Share', onClick: () => console.log('Share') },
+    { icon: <DeleteIcon />, label: 'Delete', onClick: () => console.log('Delete') },
+  ];
+
+  return (
+    <Popover.Root>
+      <Popover.Trigger asChild>
+        <Button variant="text" size="sm">
+          <MoreVerticalIcon />
+        </Button>
+      </Popover.Trigger>
+
+      <Popover.Positioner>
+        <Popover.Content>
+          <Popover.Body
+            className={css({
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1',
+              p: '2',
+            })}
+          >
+            {actions.map((action) => (
+              <Popover.CloseTrigger key={action.label} asChild>
+                <button
+                  onClick={action.onClick}
+                  className={css({
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '2',
+                    p: '2',
+                    borderRadius: 'md',
+                    cursor: 'pointer',
+                    bg: 'transparent',
+                    color: 'fg.default',
+                    textAlign: 'left',
+                    width: '100%',
+                    border: 'none',
+                    _hover: { bg: 'gray.a3' },
+                  })}
+                >
+                  {action.icon}
+                  <span>{action.label}</span>
+                </button>
+              </Popover.CloseTrigger>
+            ))}
+          </Popover.Body>
+        </Popover.Content>
+      </Popover.Positioner>
+    </Popover.Root>
+  );
+}
+```
+
+### User Profile Popover
+
+```typescript
+import { Popover, Button, Avatar } from '@discourser/design-system';
+
+function UserProfilePopover({ user }) {
+  return (
+    <Popover.Root>
+      <Popover.Trigger asChild>
+        <button className={css({ cursor: 'pointer', border: 'none', bg: 'transparent' })}>
+          <Avatar src={user.avatar} name={user.name} />
+        </button>
+      </Popover.Trigger>
+
+      <Popover.Positioner>
+        <Popover.Content>
+          <Popover.Arrow />
+
+          <Popover.Header>
+            <div className={css({ display: 'flex', alignItems: 'center', gap: '3' })}>
+              <Avatar src={user.avatar} name={user.name} size="lg" />
+              <div>
+                <Popover.Title>{user.name}</Popover.Title>
+                <Popover.Description>{user.email}</Popover.Description>
+              </div>
+            </div>
+          </Popover.Header>
+
+          <Popover.Body>
+            <div className={css({ display: 'flex', flexDirection: 'column', gap: '2' })}>
+              <a href="/profile">View Profile</a>
+              <a href="/settings">Settings</a>
+              <a href="/help">Help & Support</a>
+            </div>
+          </Popover.Body>
+
+          <Popover.Footer>
+            <Button size="sm" variant="outlined" fullWidth>
+              Sign Out
+            </Button>
+          </Popover.Footer>
+        </Popover.Content>
+      </Popover.Positioner>
+    </Popover.Root>
+  );
+}
+```
+
+### Using Anchor (Separate Trigger and Anchor)
+
+```typescript
+import { Popover, Button } from '@discourser/design-system';
+import { useRef } from 'react';
+
+function AnchorPopover() {
+  const anchorRef = useRef<HTMLDivElement>(null);
+
+  return (
+    <div>
+      <div ref={anchorRef} className={css({ p: '4', bg: 'gray.a3', borderRadius: 'md' })}>
+        This div is the anchor point
+      </div>
+
+      <Popover.Root>
+        <Popover.Anchor ref={anchorRef} />
+
+        <Popover.Trigger asChild>
+          <Button>Show Popover</Button>
+        </Popover.Trigger>
+
+        <Popover.Positioner>
+          <Popover.Content>
+            <Popover.Arrow />
+            <Popover.Body>
+              Popover appears near the anchor div, not the button
+            </Popover.Body>
+          </Popover.Content>
+        </Popover.Positioner>
+      </Popover.Root>
+    </div>
+  );
+}
+```
+
+### Using Context
+
+```typescript
+import { Popover, Button } from '@discourser/design-system';
+
+function PopoverWithContext() {
+  return (
+    <Popover.Root>
+      <Popover.Trigger asChild>
+        <Button>Open</Button>
+      </Popover.Trigger>
+
+      <Popover.Positioner>
+        <Popover.Content>
+          <Popover.Arrow />
+
+          <Popover.Body>
+            <Popover.Context>
+              {(context) => (
+                <div>
+                  <p>Popover is {context.open ? 'open' : 'closed'}</p>
+                  <Button size="sm" onClick={() => context.setOpen(false)}>
+                    Close Programmatically
+                  </Button>
+                </div>
+              )}
+            </Popover.Context>
+          </Popover.Body>
+        </Popover.Content>
+      </Popover.Positioner>
+    </Popover.Root>
+  );
+}
+```
+
+### Hover Trigger Popover
+
+```typescript
+function HoverPopover() {
+  const [open, setOpen] = useState(false);
+  let timeoutId: NodeJS.Timeout;
+
+  const handleMouseEnter = () => {
+    clearTimeout(timeoutId);
+    setOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutId = setTimeout(() => setOpen(false), 300);
+  };
+
+  return (
+    <Popover.Root open={open} onOpenChange={(e) => setOpen(e.open)}>
+      <Popover.Trigger
+        asChild
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <Button variant="text">Hover Me</Button>
+      </Popover.Trigger>
+
+      <Popover.Positioner>
+        <Popover.Content
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <Popover.Arrow />
+          <Popover.Body>
+            <p>This popover appears on hover</p>
+          </Popover.Body>
+        </Popover.Content>
+      </Popover.Positioner>
+    </Popover.Root>
+  );
+}
+```
+
+## Common Patterns
+
+### Confirmation Popover
+
+```typescript
+function ConfirmationPopover({ onConfirm, children }) {
+  const [open, setOpen] = useState(false);
+
+  const handleConfirm = () => {
+    onConfirm();
+    setOpen(false);
+  };
+
+  return (
+    <Popover.Root open={open} onOpenChange={(e) => setOpen(e.open)}>
+      <Popover.Trigger asChild>
+        {children}
+      </Popover.Trigger>
+
+      <Popover.Positioner>
+        <Popover.Content>
+          <Popover.Arrow />
+
+          <Popover.Header>
+            <Popover.Title>Are you sure?</Popover.Title>
+            <Popover.Description>
+              This action cannot be undone
+            </Popover.Description>
+          </Popover.Header>
+
+          <Popover.Footer>
+            <Button variant="outlined" size="sm" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
+            <Button size="sm" onClick={handleConfirm}>
+              Confirm
+            </Button>
+          </Popover.Footer>
+        </Popover.Content>
+      </Popover.Positioner>
+    </Popover.Root>
+  );
+}
+
+// Usage
+<ConfirmationPopover onConfirm={() => console.log('Deleted')}>
+  <Button variant="tonal">Delete</Button>
+</ConfirmationPopover>
+```
+
+### Color Picker Popover
+
+```typescript
+function ColorPickerPopover() {
+  const [color, setColor] = useState('#3b82f6');
+
+  const colors = [
+    '#ef4444', '#f59e0b', '#10b981', '#3b82f6',
+    '#8b5cf6', '#ec4899', '#64748b', '#000000',
+  ];
+
+  return (
+    <Popover.Root>
+      <Popover.Trigger asChild>
+        <button
+          className={css({
+            width: '40px',
+            height: '40px',
+            borderRadius: 'md',
+            border: '2px solid',
+            borderColor: 'gray.a7',
+            cursor: 'pointer',
+          })}
+          style={{ backgroundColor: color }}
+          aria-label="Choose color"
+        />
+      </Popover.Trigger>
+
+      <Popover.Positioner>
+        <Popover.Content>
+          <Popover.Arrow />
+
+          <Popover.Header>
+            <Popover.Title>Choose Color</Popover.Title>
+          </Popover.Header>
+
+          <Popover.Body>
+            <div className={css({ display: 'grid', gridTemplateColumns: '4', gap: '2' })}>
+              {colors.map((c) => (
+                <Popover.CloseTrigger key={c} asChild>
+                  <button
+                    onClick={() => setColor(c)}
+                    className={css({
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: 'md',
+                      border: '2px solid',
+                      borderColor: color === c ? 'gray.12' : 'transparent',
+                      cursor: 'pointer',
+                    })}
+                    style={{ backgroundColor: c }}
+                    aria-label={`Color ${c}`}
+                  />
+                </Popover.CloseTrigger>
+              ))}
+            </div>
+          </Popover.Body>
+        </Popover.Content>
+      </Popover.Positioner>
+    </Popover.Root>
+  );
+}
+```
+
+### Date Picker Popover
+
+```typescript
+function DatePickerPopover() {
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  return (
+    <Popover.Root>
+      <Popover.Trigger asChild>
+        <Button variant="outlined" leftIcon={<CalendarIcon />}>
+          {selectedDate ? selectedDate.toLocaleDateString() : 'Select Date'}
+        </Button>
+      </Popover.Trigger>
+
+      <Popover.Positioner>
+        <Popover.Content>
+          <Popover.Arrow />
+
+          <Popover.Header>
+            <Popover.Title>Select Date</Popover.Title>
+          </Popover.Header>
+
+          <Popover.Body>
+            {/* Insert your date picker component here */}
+            <DatePickerComponent
+              value={selectedDate}
+              onChange={(date) => {
+                setSelectedDate(date);
+              }}
+            />
+          </Popover.Body>
+        </Popover.Content>
+      </Popover.Positioner>
+    </Popover.Root>
+  );
+}
+```
+
+### Share Menu Popover
+
+```typescript
+function SharePopover({ url, title }) {
+  const shareOptions = [
+    { name: 'Twitter', icon: <TwitterIcon />, action: () => window.open(`https://twitter.com/intent/tweet?url=${url}&text=${title}`) },
+    { name: 'Facebook', icon: <FacebookIcon />, action: () => window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`) },
+    { name: 'LinkedIn', icon: <LinkedInIcon />, action: () => window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`) },
+    { name: 'Copy Link', icon: <LinkIcon />, action: () => navigator.clipboard.writeText(url) },
+  ];
+
+  return (
+    <Popover.Root>
+      <Popover.Trigger asChild>
+        <Button variant="outlined" leftIcon={<ShareIcon />}>
+          Share
+        </Button>
+      </Popover.Trigger>
+
+      <Popover.Positioner>
+        <Popover.Content>
+          <Popover.Arrow />
+
+          <Popover.Header>
+            <Popover.Title>Share this page</Popover.Title>
+          </Popover.Header>
+
+          <Popover.Body>
+            <div className={css({ display: 'flex', flexDirection: 'column', gap: '1' })}>
+              {shareOptions.map((option) => (
+                <Popover.CloseTrigger key={option.name} asChild>
+                  <button
+                    onClick={option.action}
+                    className={css({
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '3',
+                      p: '2',
+                      borderRadius: 'md',
+                      bg: 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                      width: '100%',
+                      textAlign: 'left',
+                      _hover: { bg: 'gray.a3' },
+                    })}
+                  >
+                    {option.icon}
+                    <span>{option.name}</span>
+                  </button>
+                </Popover.CloseTrigger>
+              ))}
+            </div>
+          </Popover.Body>
+        </Popover.Content>
+      </Popover.Positioner>
+    </Popover.Root>
+  );
+}
+```
+
+## DO NOT
+
+```typescript
+// ❌ Don't forget Positioner wrapper
+<Popover.Root>
+  <Popover.Trigger asChild>
+    <Button>Open</Button>
+  </Popover.Trigger>
+  <Popover.Content>...</Popover.Content>  // Missing Positioner
+</Popover.Root>
+
+// ❌ Don't use for critical alerts (use Dialog instead)
+<Popover.Root>
+  <Popover.Content>
+    <Popover.Title>Error: Data Lost!</Popover.Title>
+    <Popover.Body>Your data has been permanently deleted</Popover.Body>
+  </Popover.Content>
+</Popover.Root>
+
+// ❌ Don't nest popovers
+<Popover.Root>
+  <Popover.Content>
+    <Popover.Root>  // Don't nest
+      <Popover.Content>...</Popover.Content>
+    </Popover.Root>
+  </Popover.Content>
+</Popover.Root>
+
+// ❌ Don't use for long-form content (use Drawer or Dialog)
+<Popover.Root>
+  <Popover.Content>
+    <Popover.Body>
+      {/* Multiple paragraphs of text */}
+      {/* Large forms */}
+      {/* Complex layouts */}
+    </Popover.Body>
+  </Popover.Content>
+</Popover.Root>
+
+// ❌ Don't use without proper trigger
+<Popover.Root open={true}>  // Always controlled without trigger
+  <Popover.Content>...</Popover.Content>
+</Popover.Root>
+
+// ❌ Don't omit Title when using complex content
+<Popover.Content>
+  <Popover.Body>
+    <form>
+      {/* Complex form without title */}
+    </form>
+  </Popover.Body>
+</Popover.Content>
+
+// ❌ Don't use fixed widths (let content dictate or use positioning.sameWidth)
+<Popover.Content style={{ width: '500px' }}>
+  ...
+</Popover.Content>
+
+// ✅ Correct usage
+<Popover.Root>
+  <Popover.Trigger asChild>
+    <Button>Quick Actions</Button>
+  </Popover.Trigger>
+
+  <Popover.Positioner>
+    <Popover.Content>
+      <Popover.Arrow />
+
+      <Popover.Header>
+        <Popover.Title>Quick Actions</Popover.Title>
+      </Popover.Header>
+
+      <Popover.Body>
+        <div className={css({ display: 'flex', flexDirection: 'column', gap: '2' })}>
+          <Button size="sm" variant="text">Action 1</Button>
+          <Button size="sm" variant="text">Action 2</Button>
+        </div>
+      </Popover.Body>
+    </Popover.Content>
+  </Popover.Positioner>
+</Popover.Root>
+```
+
+## Accessibility
+
+The Popover component follows WCAG 2.1 Level AA standards:
+
+- **Focus Management**:
+  - Auto-focus first focusable element (configurable)
+  - Focus returns to trigger on close
+  - Focus trap optional (modal mode)
+- **Keyboard Navigation**:
+  - `Escape` key closes popover
+  - `Tab` cycles through focusable elements
+  - Arrow keys for menu-style popovers
+- **Screen Reader Support**:
+  - Announced as dialog or menu
+  - Title provides accessible name
+  - Description provides context
+- **ARIA Attributes**:
+  - `role="dialog"` on Content
+  - `aria-haspopup="dialog"` on Trigger
+  - `aria-expanded` reflects open state
+  - `aria-labelledby` references Title
+  - `aria-describedby` references Description
+- **Pointer Interaction**:
+  - Click outside closes by default
+  - Hover support (requires custom implementation)
+
+### Accessibility Best Practices
+
+```typescript
+// ✅ Always provide Title for complex content
+<Popover.Content>
+  <Popover.Header>
+    <Popover.Title>Filter Options</Popover.Title>
+  </Popover.Header>
+  <Popover.Body>
+    {/* Filter form */}
+  </Popover.Body>
+</Popover.Content>
+
+// ✅ Add Description for additional context
+<Popover.Header>
+  <Popover.Title>Export Data</Popover.Title>
+  <Popover.Description>
+    Choose format and date range for export
+  </Popover.Description>
+</Popover.Header>
+
+// ✅ Label icon-only triggers
+<Popover.Trigger asChild>
+  <IconButton aria-label="More options">
+    <MoreIcon />
+  </IconButton>
+</Popover.Trigger>
+
+// ✅ Label close buttons
+<Popover.CloseTrigger asChild>
+  <IconButton aria-label="Close popover">
+    <XIcon />
+  </IconButton>
+</Popover.CloseTrigger>
+
+// ✅ Use proper roles for menu-style popovers
+<Popover.Body role="menu">
+  <button role="menuitem">Action 1</button>
+  <button role="menuitem">Action 2</button>
+</Popover.Body>
+
+// ✅ Announce dynamic changes
+<Popover.Body>
+  <form aria-live="polite">
+    {/* Form with validation messages */}
+  </form>
+</Popover.Body>
+```
+
+## Usage Guidelines
+
+### When to Use Popover
+
+| Use Case           | Why Popover                                  |
+| ------------------ | -------------------------------------------- |
+| Contextual menus   | Small actions related to trigger element     |
+| Quick forms        | Short inputs (1-3 fields) without navigation |
+| Additional info    | Tooltips with interactive content            |
+| Color/date pickers | Compact UI widgets                           |
+| User profiles      | Quick preview without full page              |
+| Filter panels      | Temporary filtering UI                       |
+| Share menus        | Social sharing options                       |
+
+### When NOT to Use Popover
+
+| Use Case           | Use Instead     | Why                                     |
+| ------------------ | --------------- | --------------------------------------- |
+| Critical alerts    | Dialog          | Center attention, harder to dismiss     |
+| Long forms         | Drawer/Page     | More space, better UX for complex input |
+| Simple hints       | Tooltip         | Popover is too heavy for read-only text |
+| Primary navigation | Drawer/Menu     | Better for main nav structure           |
+| Full content       | Page/Route      | Popover is temporary/contextual         |
+| Mobile sheets      | Drawer (bottom) | Better mobile UX                        |
+
+## Placement Guidelines
+
+### Placement Options
+
+| Placement      | Best For                        | Arrow Position    |
+| -------------- | ------------------------------- | ----------------- |
+| `top`          | Content above trigger           | Points down       |
+| `top-start`    | Left-aligned top                | Points down-right |
+| `top-end`      | Right-aligned top               | Points down-left  |
+| `bottom`       | Content below trigger (default) | Points up         |
+| `bottom-start` | Left-aligned bottom             | Points up-right   |
+| `bottom-end`   | Right-aligned bottom            | Points up-left    |
+| `left`         | Content left of trigger         | Points right      |
+| `left-start`   | Top-aligned left                | Points right-down |
+| `left-end`     | Bottom-aligned left             | Points right-up   |
+| `right`        | Content right of trigger        | Points left       |
+| `right-start`  | Top-aligned right               | Points left-down  |
+| `right-end`    | Bottom-aligned right            | Points left-up    |
+
+**Auto-positioning**: Popover automatically flips to the opposite side if there's insufficient space.
+
+## Content Guidelines
+
+### Size Recommendations
+
+| Content Type        | Max Width  | Max Height |
+| ------------------- | ---------- | ---------- |
+| Action menu         | 280px      | auto       |
+| Quick form          | 384px (sm) | auto       |
+| Info panel          | 384px (sm) | 400px      |
+| Rich content        | 480px      | 500px      |
+| Picker (color/date) | auto       | auto       |
+
+### Content Structure
+
+```typescript
+// Simple (no header/footer)
+<Popover.Content>
+  <Popover.Arrow />
+  <Popover.Body>
+    Simple content
+  </Popover.Body>
+</Popover.Content>
+
+// Standard (with header)
+<Popover.Content>
+  <Popover.Arrow />
+  <Popover.Header>
+    <Popover.Title>Title</Popover.Title>
+  </Popover.Header>
+  <Popover.Body>
+    Content
+  </Popover.Body>
+</Popover.Content>
+
+// Complete (header + footer)
+<Popover.Content>
+  <Popover.Arrow />
+  <Popover.Header>
+    <Popover.Title>Title</Popover.Title>
+    <Popover.Description>Description</Popover.Description>
+  </Popover.Header>
+  <Popover.Body>
+    Content
+  </Popover.Body>
+  <Popover.Footer>
+    <Button>Action</Button>
+  </Popover.Footer>
+</Popover.Content>
+```
+
+## State Behaviors
+
+| State             | Visual Change         | Behavior                 |
+| ----------------- | --------------------- | ------------------------ |
+| **Opening**       | Scale up + fade in    | Duration: fast (150ms)   |
+| **Open**          | Fully visible         | Auto-focus first element |
+| **Closing**       | Scale down + fade out | Duration: faster (100ms) |
+| **Closed**        | Removed from DOM      | Focus returns to trigger |
+| **Repositioning** | Smooth transition     | Follows scroll/resize    |
+
+## Testing
+
+When testing Popover components:
+
+```typescript
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Popover, Button } from '@discourser/design-system';
+
+test('popover opens and closes', async () => {
+  const user = userEvent.setup();
+
+  render(
+    <Popover.Root>
+      <Popover.Trigger asChild>
+        <Button>Open</Button>
+      </Popover.Trigger>
+      <Popover.Positioner>
+        <Popover.Content>
+          <Popover.Title>Test Popover</Popover.Title>
+          <Popover.Body>Content</Popover.Body>
+          <Popover.CloseTrigger asChild>
+            <Button>Close</Button>
+          </Popover.CloseTrigger>
+        </Popover.Content>
+      </Popover.Positioner>
+    </Popover.Root>
+  );
+
+  // Initially closed
+  expect(screen.queryByText('Test Popover')).not.toBeInTheDocument();
+
+  // Open popover
+  await user.click(screen.getByText('Open'));
+
+  await waitFor(() => {
+    expect(screen.getByText('Test Popover')).toBeInTheDocument();
+  });
+
+  // Close popover
+  await user.click(screen.getByText('Close'));
+
+  await waitFor(() => {
+    expect(screen.queryByText('Test Popover')).not.toBeInTheDocument();
+  });
+});
+
+test('popover closes on outside click', async () => {
+  const user = userEvent.setup();
+
+  render(
+    <div>
+      <button>Outside</button>
+      <Popover.Root>
+        <Popover.Trigger asChild>
+          <Button>Open</Button>
+        </Popover.Trigger>
+        <Popover.Positioner>
+          <Popover.Content>
+            <Popover.Title>Test</Popover.Title>
+          </Popover.Content>
+        </Popover.Positioner>
+      </Popover.Root>
+    </div>
+  );
+
+  await user.click(screen.getByText('Open'));
+  expect(screen.getByText('Test')).toBeInTheDocument();
+
+  await user.click(screen.getByText('Outside'));
+
+  await waitFor(() => {
+    expect(screen.queryByText('Test')).not.toBeInTheDocument();
+  });
+});
+
+test('popover closes on escape key', async () => {
+  const user = userEvent.setup();
+
+  render(
+    <Popover.Root defaultOpen>
+      <Popover.Positioner>
+        <Popover.Content>
+          <Popover.Title>Test</Popover.Title>
+        </Popover.Content>
+      </Popover.Positioner>
+    </Popover.Root>
+  );
+
+  expect(screen.getByText('Test')).toBeInTheDocument();
+
+  await user.keyboard('{Escape}');
+
+  await waitFor(() => {
+    expect(screen.queryByText('Test')).not.toBeInTheDocument();
+  });
+});
+
+test('controlled popover updates on state change', async () => {
+  const user = userEvent.setup();
+
+  function ControlledTest() {
+    const [open, setOpen] = useState(false);
+    return (
+      <>
+        <button onClick={() => setOpen(true)}>External Open</button>
+        <Popover.Root open={open} onOpenChange={(e) => setOpen(e.open)}>
+          <Popover.Positioner>
+            <Popover.Content>
+              <Popover.Title>Controlled</Popover.Title>
+            </Popover.Content>
+          </Popover.Positioner>
+        </Popover.Root>
+      </>
+    );
+  }
+
+  render(<ControlledTest />);
+
+  expect(screen.queryByText('Controlled')).not.toBeInTheDocument();
+
+  await user.click(screen.getByText('External Open'));
+
+  await waitFor(() => {
+    expect(screen.getByText('Controlled')).toBeInTheDocument();
+  });
+});
+```
+
+## Related Components
+
+- **Tooltip**: Use for simple, non-interactive hints
+- **Menu**: Use for dropdown menus with keyboard navigation
+- **Drawer**: Use for larger panels or mobile sheets
+- **Dialog**: Use for centered modals and critical alerts
+- **Select**: Use for form dropdowns with options
+- **Dropdown**: Use for trigger-based menus
+

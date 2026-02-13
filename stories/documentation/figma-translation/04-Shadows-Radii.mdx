@@ -143,7 +143,7 @@ You can apply border-radius to specific corners:
 
 ```tsx
 // ❌ WRONG: Hardcoded pixel value
-<Box shadow="0 4px 6px rgba(0,0,0,0.1)" rounded="8px">
+<Box style={{ boxShadow: '0 4px 6px rgba(0,0,0,0.1)', borderRadius: '8px' }}>
   Content
 </Box>
 ```
@@ -272,7 +272,7 @@ You can apply border-radius to specific corners:
 ## Cross-References
 
 For comprehensive elevation and shadow details:
-- [Guidelines: Elevation](/docs/documentation-guidelines-design-tokens-99-elevation--docs) — Full M3 elevation system documentation
+- [Guidelines: Elevation](/docs/documentation-guidelines-99-elevation--docs) — Full M3 elevation system documentation
 
 For component-specific elevation usage:
 - Coming soon: Component Translation pages (05-07)

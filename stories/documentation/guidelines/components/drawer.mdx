@@ -1,0 +1,1621 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation/Guidelines/99-Drawer" />
+
+# Drawer
+
+**Purpose:** A panel that slides in from the edge of the screen, used for navigation, forms, or additional content without leaving the current context. Built on Ark UI's Dialog primitive with specialized styling for edge-anchored panels.
+
+## When to Use This Component
+
+Use Drawer when you need to **display secondary content, navigation, or forms that slide in from the screen edge** without interrupting the user's context.
+
+### Decision Tree
+
+| Scenario                             | Use Drawer? | Alternative        | Reasoning                                         |
+| ------------------------------------ | ----------- | ------------------ | ------------------------------------------------- |
+| Navigation menu (mobile)             | ✅ Yes      | -                  | Drawer slides from side, perfect for mobile menus |
+| Displaying filters or settings panel | ✅ Yes      | -                  | Keeps main content visible while showing options  |
+| Shopping cart or preview panel       | ✅ Yes      | -                  | Non-modal context, easy to dismiss                |
+| Critical confirmations or alerts     | ❌ No       | Dialog             | Dialog is centered and demands more attention     |
+| Small contextual information         | ❌ No       | Popover or Tooltip | Drawer is too heavy for brief hints               |
+| Multi-step form as primary content   | ❌ No       | Full page          | Complex forms deserve dedicated space             |
+
+### Component Comparison
+
+```typescript
+// ✅ Drawer - Navigation menu from side
+<Drawer.Root placement="start" size="sm">
+  <Drawer.Trigger asChild>
+    <Button leftIcon={<MenuIcon />}>Menu</Button>
+  </Drawer.Trigger>
+  <Drawer.Backdrop />
+  <Drawer.Positioner>
+    <Drawer.Content>
+      <Drawer.Header>
+        <Drawer.Title>Navigation</Drawer.Title>
+        <Drawer.CloseTrigger asChild>
+          <IconButton aria-label="Close"><XIcon /></IconButton>
+        </Drawer.CloseTrigger>
+      </Drawer.Header>
+      <Drawer.Body>
+        <nav>
+          <a href="/home">Home</a>
+          <a href="/about">About</a>
+        </nav>
+      </Drawer.Body>
+    </Drawer.Content>
+  </Drawer.Positioner>
+</Drawer.Root>
+
+// ❌ Don't use Drawer for critical alerts - Use Dialog
+<Drawer.Root placement="bottom">
+  <Drawer.Content>
+    <Drawer.Title>Delete Account?</Drawer.Title>
+    <Drawer.Body>This action cannot be undone.</Drawer.Body>
+    {/* Critical actions need centered Dialog */}
+  </Drawer.Content>
+</Drawer.Root>
+
+// ✅ Better: Use Dialog for critical confirmations
+<Dialog.Root>
+  <Dialog.Backdrop />
+  <Dialog.Positioner>
+    <Dialog.Content>
+      <Dialog.Title>Delete Account?</Dialog.Title>
+      <Dialog.Description>
+        This action cannot be undone.
+      </Dialog.Description>
+      <Dialog.Footer>
+        <Button variant="outlined">Cancel</Button>
+        <Button colorPalette="error">Delete</Button>
+      </Dialog.Footer>
+    </Dialog.Content>
+  </Dialog.Positioner>
+</Dialog.Root>
+
+// ❌ Don't use Drawer for small hints - Use Popover
+<Drawer.Root size="xs">
+  <Drawer.Content>
+    <Drawer.Body>
+      Click here for more info
+    </Drawer.Body>
+  </Drawer.Content>
+</Drawer.Root>
+
+// ✅ Better: Use Popover for contextual info
+<Popover.Root>
+  <Popover.Trigger asChild>
+    <Button>Info</Button>
+  </Popover.Trigger>
+  <Popover.Positioner>
+    <Popover.Content>
+      <Popover.Title>Quick Info</Popover.Title>
+      <Popover.Description>Click here for more info</Popover.Description>
+    </Popover.Content>
+  </Popover.Positioner>
+</Popover.Root>
+```
+
+## Import
+
+```typescript
+import { Drawer } from '@discourser/design-system';
+```
+
+## Component Structure
+
+Drawer is a compound component built using Ark UI's Dialog primitive. It consists of several parts that work together:
+
+### Core Components
+
+| Component             | Purpose                                | Required    |
+| --------------------- | -------------------------------------- | ----------- |
+| `Drawer.Root`         | Main container and state manager       | Yes         |
+| `Drawer.Trigger`      | Element that opens the drawer          | Yes         |
+| `Drawer.Backdrop`     | Semi-transparent overlay behind drawer | Recommended |
+| `Drawer.Positioner`   | Positions drawer at screen edge        | Yes         |
+| `Drawer.Content`      | Main drawer panel                      | Yes         |
+| `Drawer.Title`        | Drawer heading (for accessibility)     | Yes         |
+| `Drawer.Description`  | Drawer description (for accessibility) | Recommended |
+| `Drawer.CloseTrigger` | Button to close drawer                 | Recommended |
+
+### Layout Components
+
+| Component       | Purpose                                | Usage       |
+| --------------- | -------------------------------------- | ----------- |
+| `Drawer.Header` | Top section for title and close button | Recommended |
+| `Drawer.Body`   | Main scrollable content area           | Recommended |
+| `Drawer.Footer` | Bottom section for actions             | Optional    |
+
+### Context
+
+| Component        | Purpose                              |
+| ---------------- | ------------------------------------ |
+| `Drawer.Context` | Access drawer state programmatically |
+
+## Variants
+
+### Placement
+
+Controls which edge of the screen the drawer slides from:
+
+| Placement | Behavior                        | Usage                                   |
+| --------- | ------------------------------- | --------------------------------------- |
+| `start`   | Slides from left (right in RTL) | Navigation menus, filters               |
+| `end`     | Slides from right (left in RTL) | Settings, detail panels, shopping carts |
+| `top`     | Slides from top                 | Notifications, announcements            |
+| `bottom`  | Slides from bottom              | Mobile sheets, quick actions            |
+
+**Default:** `end`
+
+**Animation Details:**
+
+- `start/end`: Slides horizontally with fade, duration: slowest (open), normal (close)
+- `top/bottom`: Slides vertically with fade, duration: slowest (open), normal (close)
+- Uses emphasized easing curves for smooth, natural motion
+
+### Size
+
+Controls the width (start/end) or height (top/bottom) of the drawer:
+
+| Size   | Dimension     | Usage                                 |
+| ------ | ------------- | ------------------------------------- |
+| `xs`   | 320px (20rem) | Minimal content, mobile-first         |
+| `sm`   | 384px (24rem) | Standard navigation, compact forms    |
+| `md`   | 448px (28rem) | Detailed forms, rich content          |
+| `lg`   | 512px (32rem) | Complex panels, multi-section content |
+| `xl`   | 576px (36rem) | Full-featured panels, dashboards      |
+| `full` | 100vw/100dvh  | Fullscreen mode, mobile takeover      |
+
+**Default:** `sm`
+
+**Note:** For `top` and `bottom` placements, size controls height. For `start` and `end`, it controls width.
+
+## Props
+
+### Root Props
+
+| Prop                     | Type                                             | Default        | Description                          |
+| ------------------------ | ------------------------------------------------ | -------------- | ------------------------------------ |
+| `placement`              | `'start' \| 'end' \| 'top' \| 'bottom'`          | `'end'`        | Screen edge to slide from            |
+| `size`                   | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'sm'`         | Width/height of drawer               |
+| `open`                   | `boolean`                                        | -              | Controlled open state                |
+| `defaultOpen`            | `boolean`                                        | `false`        | Initial open state (uncontrolled)    |
+| `onOpenChange`           | `(details: { open: boolean }) => void`           | -              | Callback when open state changes     |
+| `closeOnInteractOutside` | `boolean`                                        | `true`         | Close when clicking backdrop         |
+| `closeOnEscapeKeyDown`   | `boolean`                                        | `true`         | Close when pressing Escape           |
+| `preventScroll`          | `boolean`                                        | `true`         | Prevent body scroll when open        |
+| `unmountOnExit`          | `boolean`                                        | `true`         | Remove from DOM when closed          |
+| `lazyMount`              | `boolean`                                        | `true`         | Mount content only when first opened |
+| `modal`                  | `boolean`                                        | `true`         | Trap focus within drawer             |
+| `id`                     | `string`                                         | auto-generated | Unique ID for accessibility          |
+
+### Content Props
+
+All compound components accept standard HTML attributes plus styling props from Panda CSS.
+
+## Examples
+
+### Basic Usage
+
+```typescript
+import { Drawer, Button } from '@discourser/design-system';
+import { XIcon } from 'your-icon-library';
+
+function BasicDrawer() {
+  return (
+    <Drawer.Root>
+      <Drawer.Trigger asChild>
+        <Button>Open Drawer</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Backdrop />
+
+      <Drawer.Positioner>
+        <Drawer.Content>
+          <Drawer.Header>
+            <Drawer.Title>Drawer Title</Drawer.Title>
+            <Drawer.Description>
+              This is a description of what the drawer contains
+            </Drawer.Description>
+            <Drawer.CloseTrigger asChild>
+              <Button variant="text" size="sm">
+                <XIcon />
+              </Button>
+            </Drawer.CloseTrigger>
+          </Drawer.Header>
+
+          <Drawer.Body>
+            <p>Main content goes here</p>
+          </Drawer.Body>
+
+          <Drawer.Footer>
+            <Drawer.CloseTrigger asChild>
+              <Button variant="outlined">Cancel</Button>
+            </Drawer.CloseTrigger>
+            <Button>Save</Button>
+          </Drawer.Footer>
+        </Drawer.Content>
+      </Drawer.Positioner>
+    </Drawer.Root>
+  );
+}
+```
+
+### Controlled Drawer
+
+```typescript
+import { useState } from 'react';
+import { Drawer, Button } from '@discourser/design-system';
+
+function ControlledDrawer() {
+  const [open, setOpen] = useState(false);
+
+  const handleSave = () => {
+    // Save logic here
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open Settings</Button>
+
+      <Drawer.Root open={open} onOpenChange={(details) => setOpen(details.open)}>
+        <Drawer.Backdrop />
+        <Drawer.Positioner>
+          <Drawer.Content>
+            <Drawer.Header>
+              <Drawer.Title>Settings</Drawer.Title>
+              <Drawer.CloseTrigger asChild>
+                <Button variant="text" size="sm">
+                  <XIcon />
+                </Button>
+              </Drawer.CloseTrigger>
+            </Drawer.Header>
+
+            <Drawer.Body>
+              {/* Settings form */}
+            </Drawer.Body>
+
+            <Drawer.Footer>
+              <Button variant="outlined" onClick={() => setOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={handleSave}>Save Changes</Button>
+            </Drawer.Footer>
+          </Drawer.Content>
+        </Drawer.Positioner>
+      </Drawer.Root>
+    </>
+  );
+}
+```
+
+### Different Placements
+
+```typescript
+// Navigation drawer (left side)
+<Drawer.Root placement="start" size="sm">
+  <Drawer.Trigger asChild>
+    <Button leftIcon={<MenuIcon />}>Menu</Button>
+  </Drawer.Trigger>
+  <Drawer.Backdrop />
+  <Drawer.Positioner>
+    <Drawer.Content>
+      <Drawer.Header>
+        <Drawer.Title>Navigation</Drawer.Title>
+      </Drawer.Header>
+      <Drawer.Body>
+        <nav>
+          <a href="/home">Home</a>
+          <a href="/about">About</a>
+          <a href="/contact">Contact</a>
+        </nav>
+      </Drawer.Body>
+    </Drawer.Content>
+  </Drawer.Positioner>
+</Drawer.Root>
+
+// Shopping cart drawer (right side)
+<Drawer.Root placement="end" size="md">
+  <Drawer.Trigger asChild>
+    <Button rightIcon={<CartIcon />}>Cart (3)</Button>
+  </Drawer.Trigger>
+  <Drawer.Backdrop />
+  <Drawer.Positioner>
+    <Drawer.Content>
+      <Drawer.Header>
+        <Drawer.Title>Shopping Cart</Drawer.Title>
+      </Drawer.Header>
+      <Drawer.Body>
+        {/* Cart items */}
+      </Drawer.Body>
+      <Drawer.Footer>
+        <Button variant="filled">Checkout</Button>
+      </Drawer.Footer>
+    </Drawer.Content>
+  </Drawer.Positioner>
+</Drawer.Root>
+
+// Mobile bottom sheet
+<Drawer.Root placement="bottom" size="md">
+  <Drawer.Trigger asChild>
+    <Button>Share</Button>
+  </Drawer.Trigger>
+  <Drawer.Backdrop />
+  <Drawer.Positioner>
+    <Drawer.Content>
+      <Drawer.Header>
+        <Drawer.Title>Share Options</Drawer.Title>
+      </Drawer.Header>
+      <Drawer.Body>
+        {/* Share options */}
+      </Drawer.Body>
+    </Drawer.Content>
+  </Drawer.Positioner>
+</Drawer.Root>
+```
+
+### Different Sizes
+
+```typescript
+// Compact drawer for filters
+<Drawer.Root size="xs">
+  <Drawer.Trigger asChild>
+    <Button>Filters</Button>
+  </Drawer.Trigger>
+  <Drawer.Backdrop />
+  <Drawer.Positioner>
+    <Drawer.Content>
+      <Drawer.Header>
+        <Drawer.Title>Filter Results</Drawer.Title>
+      </Drawer.Header>
+      <Drawer.Body>
+        {/* Compact filter options */}
+      </Drawer.Body>
+    </Drawer.Content>
+  </Drawer.Positioner>
+</Drawer.Root>
+
+// Large drawer for detailed content
+<Drawer.Root size="lg">
+  <Drawer.Trigger asChild>
+    <Button>View Details</Button>
+  </Drawer.Trigger>
+  <Drawer.Backdrop />
+  <Drawer.Positioner>
+    <Drawer.Content>
+      <Drawer.Header>
+        <Drawer.Title>Product Details</Drawer.Title>
+      </Drawer.Header>
+      <Drawer.Body>
+        {/* Rich content with images, descriptions, etc. */}
+      </Drawer.Body>
+    </Drawer.Content>
+  </Drawer.Positioner>
+</Drawer.Root>
+
+// Fullscreen drawer for mobile
+<Drawer.Root size="full">
+  <Drawer.Trigger asChild>
+    <Button>Edit Profile</Button>
+  </Drawer.Trigger>
+  <Drawer.Positioner>
+    <Drawer.Content>
+      <Drawer.Header>
+        <Drawer.Title>Edit Profile</Drawer.Title>
+      </Drawer.Header>
+      <Drawer.Body>
+        {/* Full editing interface */}
+      </Drawer.Body>
+      <Drawer.Footer>
+        <Button>Save Changes</Button>
+      </Drawer.Footer>
+    </Drawer.Content>
+  </Drawer.Positioner>
+</Drawer.Root>
+```
+
+### Form in Drawer
+
+```typescript
+import { Drawer, Button, Input, Textarea } from '@discourser/design-system';
+import { useState } from 'react';
+
+function FormDrawer() {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Submit form
+    console.log('Form submitted:', formData);
+  };
+
+  return (
+    <Drawer.Root placement="end" size="md">
+      <Drawer.Trigger asChild>
+        <Button>Contact Us</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Backdrop />
+
+      <Drawer.Positioner>
+        <Drawer.Content>
+          <form onSubmit={handleSubmit}>
+            <Drawer.Header>
+              <Drawer.Title>Contact Form</Drawer.Title>
+              <Drawer.Description>
+                Send us a message and we'll get back to you soon
+              </Drawer.Description>
+              <Drawer.CloseTrigger asChild>
+                <Button variant="text" size="sm" type="button">
+                  <XIcon />
+                </Button>
+              </Drawer.CloseTrigger>
+            </Drawer.Header>
+
+            <Drawer.Body>
+              <Input
+                label="Name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                required
+              />
+              <Input
+                label="Email"
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                required
+              />
+              <Textarea
+                label="Message"
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                rows={5}
+                required
+              />
+            </Drawer.Body>
+
+            <Drawer.Footer>
+              <Drawer.CloseTrigger asChild>
+                <Button variant="outlined" type="button">Cancel</Button>
+              </Drawer.CloseTrigger>
+              <Button type="submit">Send Message</Button>
+            </Drawer.Footer>
+          </form>
+        </Drawer.Content>
+      </Drawer.Positioner>
+    </Drawer.Root>
+  );
+}
+```
+
+### Navigation Menu Drawer
+
+```typescript
+import { Drawer, Button, IconButton } from '@discourser/design-system';
+import { MenuIcon, HomeIcon, SettingsIcon, UserIcon, XIcon } from 'your-icon-library';
+
+function NavigationDrawer() {
+  const menuItems = [
+    { icon: <HomeIcon />, label: 'Home', href: '/' },
+    { icon: <UserIcon />, label: 'Profile', href: '/profile' },
+    { icon: <SettingsIcon />, label: 'Settings', href: '/settings' },
+  ];
+
+  return (
+    <Drawer.Root placement="start" size="sm">
+      <Drawer.Trigger asChild>
+        <IconButton aria-label="Open menu">
+          <MenuIcon />
+        </IconButton>
+      </Drawer.Trigger>
+
+      <Drawer.Backdrop />
+
+      <Drawer.Positioner>
+        <Drawer.Content>
+          <Drawer.Header>
+            <Drawer.Title>Menu</Drawer.Title>
+            <Drawer.CloseTrigger asChild>
+              <IconButton aria-label="Close menu" variant="text" size="sm">
+                <XIcon />
+              </IconButton>
+            </Drawer.CloseTrigger>
+          </Drawer.Header>
+
+          <Drawer.Body>
+            <nav className={css({ display: 'flex', flexDirection: 'column', gap: '2' })}>
+              {menuItems.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className={css({
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '3',
+                    p: '3',
+                    borderRadius: 'md',
+                    color: 'fg.default',
+                    textDecoration: 'none',
+                    _hover: { bg: 'gray.a3' },
+                  })}
+                >
+                  {item.icon}
+                  <span>{item.label}</span>
+                </a>
+              ))}
+            </nav>
+          </Drawer.Body>
+        </Drawer.Content>
+      </Drawer.Positioner>
+    </Drawer.Root>
+  );
+}
+```
+
+### Using Context
+
+```typescript
+import { Drawer } from '@discourser/design-system';
+
+function DrawerWithContext() {
+  return (
+    <Drawer.Root>
+      <Drawer.Trigger asChild>
+        <Button>Open</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Backdrop />
+
+      <Drawer.Positioner>
+        <Drawer.Content>
+          <Drawer.Header>
+            <Drawer.Title>Custom Content</Drawer.Title>
+          </Drawer.Header>
+
+          <Drawer.Body>
+            <Drawer.Context>
+              {(context) => (
+                <div>
+                  <p>Drawer is {context.open ? 'open' : 'closed'}</p>
+                  <Button onClick={() => context.setOpen(false)}>
+                    Close Programmatically
+                  </Button>
+                </div>
+              )}
+            </Drawer.Context>
+          </Drawer.Body>
+        </Drawer.Content>
+      </Drawer.Positioner>
+    </Drawer.Root>
+  );
+}
+```
+
+## Common Patterns
+
+### Confirmation Before Close
+
+```typescript
+function ConfirmCloseDrawer() {
+  const [hasChanges, setHasChanges] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const handleInteractOutside = (e: Event) => {
+    if (hasChanges) {
+      e.preventDefault();
+      setShowConfirm(true);
+    }
+  };
+
+  return (
+    <>
+      <Drawer.Root onInteractOutside={handleInteractOutside}>
+        <Drawer.Trigger asChild>
+          <Button>Edit Settings</Button>
+        </Drawer.Trigger>
+
+        <Drawer.Backdrop />
+
+        <Drawer.Positioner>
+          <Drawer.Content>
+            <Drawer.Header>
+              <Drawer.Title>Settings</Drawer.Title>
+            </Drawer.Header>
+
+            <Drawer.Body>
+              <Input onChange={() => setHasChanges(true)} />
+            </Drawer.Body>
+
+            <Drawer.Footer>
+              <Button>Save</Button>
+            </Drawer.Footer>
+          </Drawer.Content>
+        </Drawer.Positioner>
+      </Drawer.Root>
+
+      {showConfirm && (
+        <Dialog.Root open onOpenChange={(e) => setShowConfirm(e.open)}>
+          <Dialog.Content>
+            <Dialog.Title>Unsaved Changes</Dialog.Title>
+            <Dialog.Description>
+              You have unsaved changes. Are you sure you want to close?
+            </Dialog.Description>
+            <Dialog.Footer>
+              <Button variant="outlined" onClick={() => setShowConfirm(false)}>
+                Cancel
+              </Button>
+              <Button onClick={() => {
+                setShowConfirm(false);
+                setHasChanges(false);
+              }}>
+                Discard Changes
+              </Button>
+            </Dialog.Footer>
+          </Dialog.Content>
+        </Dialog.Root>
+      )}
+    </>
+  );
+}
+```
+
+### Multi-Step Drawer
+
+```typescript
+function MultiStepDrawer() {
+  const [step, setStep] = useState(1);
+
+  return (
+    <Drawer.Root size="md">
+      <Drawer.Trigger asChild>
+        <Button>Start Wizard</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Backdrop />
+
+      <Drawer.Positioner>
+        <Drawer.Content>
+          <Drawer.Header>
+            <Drawer.Title>Setup Wizard - Step {step} of 3</Drawer.Title>
+            <Drawer.CloseTrigger asChild>
+              <IconButton aria-label="Close" variant="text" size="sm">
+                <XIcon />
+              </IconButton>
+            </Drawer.CloseTrigger>
+          </Drawer.Header>
+
+          <Drawer.Body>
+            {step === 1 && <div>Step 1 content</div>}
+            {step === 2 && <div>Step 2 content</div>}
+            {step === 3 && <div>Step 3 content</div>}
+          </Drawer.Body>
+
+          <Drawer.Footer>
+            {step > 1 && (
+              <Button variant="outlined" onClick={() => setStep(step - 1)}>
+                Back
+              </Button>
+            )}
+            {step < 3 ? (
+              <Button onClick={() => setStep(step + 1)}>Next</Button>
+            ) : (
+              <Button>Finish</Button>
+            )}
+          </Drawer.Footer>
+        </Drawer.Content>
+      </Drawer.Positioner>
+    </Drawer.Root>
+  );
+}
+```
+
+### Responsive Drawer
+
+```typescript
+function ResponsiveDrawer() {
+  return (
+    <Drawer.Root
+      placement={{ base: 'bottom', md: 'end' }}
+      size={{ base: 'md', md: 'sm' }}
+    >
+      <Drawer.Trigger asChild>
+        <Button>Open Filters</Button>
+      </Drawer.Trigger>
+
+      <Drawer.Backdrop />
+
+      <Drawer.Positioner>
+        <Drawer.Content>
+          <Drawer.Header>
+            <Drawer.Title>Filters</Drawer.Title>
+            <Drawer.CloseTrigger asChild>
+              <IconButton aria-label="Close" variant="text" size="sm">
+                <XIcon />
+              </IconButton>
+            </Drawer.CloseTrigger>
+          </Drawer.Header>
+
+          <Drawer.Body>
+            {/* Filter options - layout adapts to placement */}
+          </Drawer.Body>
+
+          <Drawer.Footer>
+            <Button variant="outlined">Clear</Button>
+            <Button>Apply Filters</Button>
+          </Drawer.Footer>
+        </Drawer.Content>
+      </Drawer.Positioner>
+    </Drawer.Root>
+  );
+}
+```
+
+## Edge Cases
+
+This section covers common edge cases and how to handle them properly.
+
+### Stacked Drawers - Multiple Drawers Open
+
+**Scenario:** Multiple drawers need to be open simultaneously, such as a navigation drawer with an overlay drawer for details.
+
+**Solution:**
+
+```typescript
+const [navDrawerOpen, setNavDrawerOpen] = useState(false);
+const [detailsDrawerOpen, setDetailsDrawerOpen] = useState(false);
+
+// Track z-index levels for proper stacking
+const navDrawerZIndex = 1000;
+const detailsDrawerZIndex = 1100;
+
+<>
+  {/* Primary navigation drawer from left */}
+  <Drawer.Root
+    placement="start"
+    size="sm"
+    open={navDrawerOpen}
+    onOpenChange={(details) => setNavDrawerOpen(details.open)}
+  >
+    <Drawer.Trigger asChild>
+      <Button leftIcon={<MenuIcon />}>Menu</Button>
+    </Drawer.Trigger>
+
+    <Drawer.Backdrop style={{ zIndex: navDrawerZIndex }} />
+
+    <Drawer.Positioner style={{ zIndex: navDrawerZIndex + 1 }}>
+      <Drawer.Content>
+        <Drawer.Header>
+          <Drawer.Title>Navigation</Drawer.Title>
+          <Drawer.CloseTrigger asChild>
+            <IconButton aria-label="Close menu" variant="text" size="sm">
+              <XIcon />
+            </IconButton>
+          </Drawer.CloseTrigger>
+        </Drawer.Header>
+
+        <Drawer.Body>
+          <nav className={css({ display: 'flex', flexDirection: 'column', gap: '2' })}>
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <button
+              onClick={() => setDetailsDrawerOpen(true)}
+              className={css({ textAlign: 'left', p: '2' })}
+            >
+              View Details
+            </button>
+          </nav>
+        </Drawer.Body>
+      </Drawer.Content>
+    </Drawer.Positioner>
+  </Drawer.Root>
+
+  {/* Secondary details drawer from right - higher z-index */}
+  <Drawer.Root
+    placement="end"
+    size="md"
+    open={detailsDrawerOpen}
+    onOpenChange={(details) => setDetailsDrawerOpen(details.open)}
+  >
+    <Drawer.Backdrop style={{ zIndex: detailsDrawerZIndex }} />
+
+    <Drawer.Positioner style={{ zIndex: detailsDrawerZIndex + 1 }}>
+      <Drawer.Content>
+        <Drawer.Header>
+          <Drawer.Title>Details</Drawer.Title>
+          <Drawer.CloseTrigger asChild>
+            <IconButton aria-label="Close details" variant="text" size="sm">
+              <XIcon />
+            </IconButton>
+          </Drawer.CloseTrigger>
+        </Drawer.Header>
+
+        <Drawer.Body>
+          <div className={css({ p: '4' })}>
+            <p>This drawer appears on top of the navigation drawer.</p>
+            <p className={css({ mt: '2', fontSize: 'sm', color: 'fg.muted' })}>
+              Both drawers remain independently interactive.
+            </p>
+          </div>
+        </Drawer.Body>
+
+        <Drawer.Footer>
+          <Button variant="outlined" onClick={() => setDetailsDrawerOpen(false)}>
+            Close
+          </Button>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Positioner>
+  </Drawer.Root>
+</>
+```
+
+**Best practices:**
+
+- Limit stacked drawers to two maximum to avoid confusion
+- Use different placements for stacked drawers (e.g., start + end)
+- Ensure proper z-index stacking so upper drawers overlay lower ones
+- Make each drawer independently closable
+- Consider closing lower drawers when opening upper ones for simplicity
+
+---
+
+### Mobile Considerations - Full-Screen Behavior
+
+**Scenario:** Drawers should adapt to mobile screens, potentially becoming full-screen to maximize usable space.
+
+**Solution:**
+
+```typescript
+import { useMediaQuery } from '@/hooks/useMediaQuery';
+
+const [open, setOpen] = useState(false);
+const isMobile = useMediaQuery('(max-width: 768px)');
+
+<Drawer.Root
+  placement={isMobile ? 'bottom' : 'end'}
+  size={isMobile ? 'full' : 'md'}
+  open={open}
+  onOpenChange={(details) => setOpen(details.open)}
+>
+  <Drawer.Trigger asChild>
+    <Button>Open Filters</Button>
+  </Drawer.Trigger>
+
+  <Drawer.Backdrop />
+
+  <Drawer.Positioner>
+    <Drawer.Content
+      className={css({
+        // On mobile, add safe area padding for notched devices
+        paddingBottom: isMobile ? 'env(safe-area-inset-bottom)' : undefined,
+      })}
+    >
+      <Drawer.Header>
+        <Drawer.Title>Filter Options</Drawer.Title>
+        <Drawer.CloseTrigger asChild>
+          <IconButton aria-label="Close filters" variant="text" size="sm">
+            <XIcon />
+          </IconButton>
+        </Drawer.CloseTrigger>
+      </Drawer.Header>
+
+      <Drawer.Body>
+        {/* Filter options */}
+        <div className={css({ display: 'flex', flexDirection: 'column', gap: '4' })}>
+          <div>
+            <label className={css({ display: 'block', mb: '2' })}>Price Range</label>
+            <input type="range" min="0" max="1000" />
+          </div>
+          <div>
+            <label className={css({ display: 'block', mb: '2' })}>Category</label>
+            <Select.Root items={['All', 'Electronics', 'Clothing']}>
+              <Select.Control>
+                <Select.Trigger>
+                  <Select.ValueText placeholder="Select category" />
+                </Select.Trigger>
+              </Select.Control>
+            </Select.Root>
+          </div>
+        </div>
+      </Drawer.Body>
+
+      <Drawer.Footer
+        className={css({
+          // Stick footer to bottom on mobile
+          position: isMobile ? 'sticky' : 'relative',
+          bottom: 0,
+          bg: 'bg.canvas',
+          borderTop: '1px solid',
+          borderColor: 'gray.4',
+        })}
+      >
+        <Button variant="outlined" onClick={() => setOpen(false)}>
+          Clear
+        </Button>
+        <Button variant="filled">Apply Filters</Button>
+      </Drawer.Footer>
+    </Drawer.Content>
+  </Drawer.Positioner>
+</Drawer.Root>
+```
+
+**Best practices:**
+
+- Use `placement="bottom"` and `size="full"` for mobile screens
+- Add safe area insets for devices with notches
+- Make close buttons large and accessible on touch devices (min 44x44px)
+- Stick important actions (footer) to viewport bottom
+- Test gesture interactions (swipe to close) on mobile devices
+
+---
+
+### Nested Scrolling - Content Overflow
+
+**Scenario:** Drawer content is taller than the viewport, requiring scrollable areas while keeping header and footer fixed.
+
+**Solution:**
+
+```typescript
+const [open, setOpen] = useState(false);
+
+// Generate long content for demo
+const longContent = Array.from({ length: 50 }, (_, i) => `Item ${i + 1}`);
+
+<Drawer.Root placement="end" size="md" open={open} onOpenChange={(details) => setOpen(details.open)}>
+  <Drawer.Trigger asChild>
+    <Button>View Long List</Button>
+  </Drawer.Trigger>
+
+  <Drawer.Backdrop />
+
+  <Drawer.Positioner>
+    <Drawer.Content
+      className={css({
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100dvh', // Use dvh for mobile viewport height
+        maxHeight: '100dvh',
+      })}
+    >
+      {/* Fixed header */}
+      <Drawer.Header
+        className={css({
+          flexShrink: 0, // Prevent shrinking
+          borderBottom: '1px solid',
+          borderColor: 'gray.4',
+          position: 'sticky',
+          top: 0,
+          bg: 'bg.canvas',
+          zIndex: 1,
+        })}
+      >
+        <Drawer.Title>Scrollable Content</Drawer.Title>
+        <Drawer.Description>
+          This drawer has a long list that scrolls independently
+        </Drawer.Description>
+        <Drawer.CloseTrigger asChild>
+          <IconButton aria-label="Close" variant="text" size="sm">
+            <XIcon />
+          </IconButton>
+        </Drawer.CloseTrigger>
+      </Drawer.Header>
+
+      {/* Scrollable body */}
+      <Drawer.Body
+        className={css({
+          flex: 1, // Take remaining space
+          overflowY: 'auto', // Enable scrolling
+          overflowX: 'hidden',
+          WebkitOverflowScrolling: 'touch', // Smooth scrolling on iOS
+        })}
+      >
+        <div className={css({ display: 'flex', flexDirection: 'column', gap: '2', p: '4' })}>
+          {longContent.map((item) => (
+            <div
+              key={item}
+              className={css({
+                p: '3',
+                bg: 'gray.a2',
+                borderRadius: 'md',
+              })}
+            >
+              {item}
+            </div>
+          ))}
+        </div>
+      </Drawer.Body>
+
+      {/* Fixed footer */}
+      <Drawer.Footer
+        className={css({
+          flexShrink: 0, // Prevent shrinking
+          borderTop: '1px solid',
+          borderColor: 'gray.4',
+          position: 'sticky',
+          bottom: 0,
+          bg: 'bg.canvas',
+        })}
+      >
+        <Button variant="outlined" onClick={() => setOpen(false)}>
+          Cancel
+        </Button>
+        <Button variant="filled">Confirm</Button>
+      </Drawer.Footer>
+    </Drawer.Content>
+  </Drawer.Positioner>
+</Drawer.Root>
+```
+
+**Best practices:**
+
+- Use flexbox layout with `flex: 1` on body for proper scrolling
+- Make header and footer sticky with explicit backgrounds
+- Use `100dvh` instead of `100vh` for accurate mobile viewport height
+- Enable smooth scrolling on iOS with `-webkit-overflow-scrolling`
+- Test scrolling performance with large lists
+- Consider virtual scrolling for very long lists
+
+---
+
+### Backdrop Click - Preventing Close
+
+**Scenario:** Prevent users from accidentally closing the drawer by clicking outside, requiring explicit close action.
+
+**Solution:**
+
+```typescript
+const [open, setOpen] = useState(false);
+const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+const [showWarning, setShowWarning] = useState(false);
+
+const handleInteractOutside = (event: Event) => {
+  if (hasUnsavedChanges) {
+    event.preventDefault(); // Prevent drawer from closing
+    setShowWarning(true);
+  }
+  // If no unsaved changes, allow default behavior (drawer closes)
+};
+
+const confirmClose = () => {
+  setHasUnsavedChanges(false);
+  setShowWarning(false);
+  setOpen(false);
+};
+
+<>
+  <Drawer.Root
+    open={open}
+    onOpenChange={(details) => setOpen(details.open)}
+    // closeOnInteractOutside={!hasUnsavedChanges} // Simple approach
+    onInteractOutside={handleInteractOutside} // Advanced approach with warning
+    closeOnEscapeKeyDown={!hasUnsavedChanges}
+  >
+    <Drawer.Trigger asChild>
+      <Button>Edit Document</Button>
+    </Drawer.Trigger>
+
+    <Drawer.Backdrop />
+
+    <Drawer.Positioner>
+      <Drawer.Content>
+        <Drawer.Header>
+          <Drawer.Title>
+            Edit Document
+            {hasUnsavedChanges && (
+              <span className={css({ ml: '2', fontSize: 'sm', color: 'warning.fg' })}>
+                • Unsaved changes
+              </span>
+            )}
+          </Drawer.Title>
+          <Drawer.CloseTrigger asChild>
+            <IconButton
+              aria-label="Close"
+              variant="text"
+              size="sm"
+              onClick={(e) => {
+                if (hasUnsavedChanges) {
+                  e.preventDefault();
+                  setShowWarning(true);
+                }
+              }}
+            >
+              <XIcon />
+            </IconButton>
+          </Drawer.CloseTrigger>
+        </Drawer.Header>
+
+        <Drawer.Body>
+          <Textarea
+            label="Content"
+            rows={10}
+            onChange={() => setHasUnsavedChanges(true)}
+            placeholder="Start typing to trigger unsaved changes..."
+          />
+        </Drawer.Body>
+
+        <Drawer.Footer>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              if (hasUnsavedChanges) {
+                setShowWarning(true);
+              } else {
+                setOpen(false);
+              }
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="filled"
+            onClick={() => {
+              // Save logic
+              setHasUnsavedChanges(false);
+              setOpen(false);
+            }}
+          >
+            Save
+          </Button>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Positioner>
+  </Drawer.Root>
+
+  {/* Warning dialog */}
+  {showWarning && (
+    <Dialog
+      open={showWarning}
+      onOpenChange={({ open }) => setShowWarning(open)}
+      title="Unsaved Changes"
+      size="sm"
+    >
+      <div className={css({ p: 'lg' })}>
+        <p className={css({ mb: 'lg' })}>
+          You have unsaved changes. Are you sure you want to close without saving?
+        </p>
+        <div className={css({ display: 'flex', gap: 'sm', justifyContent: 'flex-end' })}>
+          <Button variant="outlined" onClick={() => setShowWarning(false)}>
+            Keep Editing
+          </Button>
+          <Button variant="filled" colorPalette="error" onClick={confirmClose}>
+            Discard Changes
+          </Button>
+        </div>
+      </div>
+    </Dialog>
+  )}
+</>
+```
+
+**Best practices:**
+
+- Use `closeOnInteractOutside={false}` for critical forms
+- Show clear visual indicators for unsaved changes
+- Provide explicit save/discard options
+- Use confirmation dialogs for destructive actions
+- Allow Escape key close only when safe
+- Communicate blocked close actions with visual feedback
+
+---
+
+### Animation Interruption - Opening/Closing During Animation
+
+**Scenario:** User rapidly toggles drawer open/close, causing animation interruptions and potential state issues.
+
+**Solution:**
+
+```typescript
+const [open, setOpen] = useState(false);
+const [isAnimating, setIsAnimating] = useState(false);
+const animationTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+const handleOpenChange = (details: { open: boolean }) => {
+  // Clear any pending animation timeout
+  if (animationTimeoutRef.current) {
+    clearTimeout(animationTimeoutRef.current);
+  }
+
+  // Set animating state
+  setIsAnimating(true);
+
+  // Update open state
+  setOpen(details.open);
+
+  // Animation durations from design system
+  // Opening: slowest (500ms), Closing: normal (250ms)
+  const animationDuration = details.open ? 500 : 250;
+
+  // Clear animating state after animation completes
+  animationTimeoutRef.current = setTimeout(() => {
+    setIsAnimating(false);
+  }, animationDuration);
+};
+
+// Cleanup on unmount
+useEffect(() => {
+  return () => {
+    if (animationTimeoutRef.current) {
+      clearTimeout(animationTimeoutRef.current);
+    }
+  };
+}, []);
+
+<div>
+  <div className={css({ mb: '4' })}>
+    <Button onClick={() => handleOpenChange({ open: true })} disabled={isAnimating}>
+      Open Drawer
+    </Button>
+    <span className={css({ ml: '2', fontSize: 'sm', color: 'fg.muted' })}>
+      {isAnimating ? 'Animating...' : 'Ready'}
+    </span>
+  </div>
+
+  <Drawer.Root
+    open={open}
+    onOpenChange={handleOpenChange}
+    // Disable interactions during animation
+    modal={!isAnimating}
+  >
+    <Drawer.Backdrop
+      className={css({
+        // Ensure backdrop respects animation state
+        pointerEvents: isAnimating ? 'none' : 'auto',
+      })}
+    />
+
+    <Drawer.Positioner>
+      <Drawer.Content
+        className={css({
+          // Prevent content interaction during animation
+          pointerEvents: isAnimating ? 'none' : 'auto',
+        })}
+      >
+        <Drawer.Header>
+          <Drawer.Title>Animated Drawer</Drawer.Title>
+          <Drawer.CloseTrigger asChild>
+            <IconButton
+              aria-label="Close"
+              variant="text"
+              size="sm"
+              disabled={isAnimating}
+            >
+              <XIcon />
+            </IconButton>
+          </Drawer.CloseTrigger>
+        </Drawer.Header>
+
+        <Drawer.Body>
+          <div className={css({ p: '4' })}>
+            <p>Try rapidly toggling the drawer to see smooth animation handling.</p>
+            <Button
+              className={css({ mt: '4' })}
+              onClick={() => handleOpenChange({ open: false })}
+              disabled={isAnimating}
+            >
+              Close from Inside
+            </Button>
+          </div>
+        </Drawer.Body>
+      </Drawer.Content>
+    </Drawer.Positioner>
+  </Drawer.Root>
+</div>
+```
+
+**Best practices:**
+
+- Track animation state to prevent interaction during transitions
+- Clear pending timeouts when animations are interrupted
+- Disable trigger buttons during animation to prevent rapid toggling
+- Use design system animation durations for consistency
+- Set `pointer-events: none` on animating elements
+- Cleanup animation timers on component unmount
+- Consider using animation events (`onAnimationEnd`) for more precise timing
+
+---
+
+## DO NOT
+
+```typescript
+// ❌ Don't omit Backdrop (unless intentional)
+<Drawer.Root>
+  <Drawer.Positioner>
+    <Drawer.Content>...</Drawer.Content>
+  </Drawer.Positioner>
+</Drawer.Root>
+
+// ❌ Don't forget Positioner wrapper
+<Drawer.Root>
+  <Drawer.Backdrop />
+  <Drawer.Content>...</Drawer.Content>  // Missing Positioner
+</Drawer.Root>
+
+// ❌ Don't omit Title (required for accessibility)
+<Drawer.Content>
+  <Drawer.Body>
+    Content without title
+  </Drawer.Body>
+</Drawer.Content>
+
+// ❌ Don't use for critical alerts or confirmations (use Dialog instead)
+<Drawer.Root>
+  <Drawer.Content>
+    <Drawer.Title>Delete Account?</Drawer.Title>
+    <Drawer.Body>This action cannot be undone</Drawer.Body>
+  </Drawer.Content>
+</Drawer.Root>
+
+// ❌ Don't nest drawers
+<Drawer.Root>
+  <Drawer.Content>
+    <Drawer.Root>  // Don't nest
+      <Drawer.Content>...</Drawer.Content>
+    </Drawer.Root>
+  </Drawer.Content>
+</Drawer.Root>
+
+// ❌ Don't use oversized drawers for simple content
+<Drawer.Root size="xl">
+  <Drawer.Content>
+    <Drawer.Body>
+      <p>Just a simple message</p>  // Use smaller size
+    </Drawer.Body>
+  </Drawer.Content>
+</Drawer.Root>
+
+// ❌ Don't put primary navigation in end-placed drawer
+<Drawer.Root placement="end">  // Use placement="start" for navigation
+  <Drawer.Content>
+    <nav>Main navigation menu</nav>
+  </Drawer.Content>
+</Drawer.Root>
+
+// ✅ Correct usage
+<Drawer.Root placement="start">
+  <Drawer.Trigger asChild>
+    <Button>Menu</Button>
+  </Drawer.Trigger>
+  <Drawer.Backdrop />
+  <Drawer.Positioner>
+    <Drawer.Content>
+      <Drawer.Header>
+        <Drawer.Title>Navigation</Drawer.Title>
+        <Drawer.CloseTrigger asChild>
+          <IconButton aria-label="Close menu">
+            <XIcon />
+          </IconButton>
+        </Drawer.CloseTrigger>
+      </Drawer.Header>
+      <Drawer.Body>
+        <nav>Navigation items</nav>
+      </Drawer.Body>
+    </Drawer.Content>
+  </Drawer.Positioner>
+</Drawer.Root>
+```
+
+## Accessibility
+
+The Drawer component follows WCAG 2.1 Level AA standards:
+
+- **Focus Management**: Focus trapped within drawer when open
+- **Keyboard Navigation**:
+  - `Escape` key closes drawer
+  - `Tab` cycles through focusable elements
+  - Focus returns to trigger on close
+- **Screen Reader Support**:
+  - Announced as dialog/modal
+  - Title required for proper announcement
+  - Description recommended for context
+- **ARIA Attributes**:
+  - `role="dialog"` on Content
+  - `aria-modal="true"` when modal
+  - `aria-labelledby` references Title
+  - `aria-describedby` references Description
+- **Body Scroll Lock**: Prevents background scrolling when open
+
+### Accessibility Best Practices
+
+```typescript
+// ✅ Always provide Title
+<Drawer.Content>
+  <Drawer.Header>
+    <Drawer.Title>Settings</Drawer.Title>
+  </Drawer.Header>
+</Drawer.Content>
+
+// ✅ Add Description for complex drawers
+<Drawer.Header>
+  <Drawer.Title>Export Data</Drawer.Title>
+  <Drawer.Description>
+    Choose format and options for exporting your data
+  </Drawer.Description>
+</Drawer.Header>
+
+// ✅ Label close buttons
+<Drawer.CloseTrigger asChild>
+  <IconButton aria-label="Close drawer">
+    <XIcon />
+  </IconButton>
+</Drawer.CloseTrigger>
+
+// ✅ Use semantic HTML in content
+<Drawer.Body>
+  <nav aria-label="Main navigation">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+</Drawer.Body>
+
+// ✅ Announce dynamic changes
+<Drawer.Body>
+  <form aria-live="polite">
+    {/* Form with validation messages */}
+  </form>
+</Drawer.Body>
+```
+
+## Usage Guidelines
+
+### When to Use Drawer
+
+| Use Case        | Why Drawer                                    |
+| --------------- | --------------------------------------------- |
+| Navigation menu | Slides from side, doesn't block entire screen |
+| Filter panel    | Related to page content, easy to dismiss      |
+| Shopping cart   | Contextual preview without leaving page       |
+| Settings panel  | Secondary actions, can stay on current page   |
+| Detail view     | Additional info without full page navigation  |
+| Form/wizard     | Multi-step process without modal interruption |
+
+### When NOT to Use Drawer
+
+| Use Case               | Use Instead     | Why                                          |
+| ---------------------- | --------------- | -------------------------------------------- |
+| Critical confirmations | Dialog          | Center focus, harder to dismiss accidentally |
+| Short messages         | Toast/Alert     | Drawer is too heavy for simple notifications |
+| Quick tips             | Tooltip/Popover | Drawer is overkill for small hints           |
+| Full page forms        | Separate route  | Better for complex, primary content          |
+| Nested panels          | Tabs/Accordion  | Avoid drawer inception                       |
+
+## Placement Guidelines
+
+| Placement | Best For                  | Direction Support         |
+| --------- | ------------------------- | ------------------------- |
+| `start`   | Primary navigation, menus | LTR: left, RTL: right     |
+| `end`     | Carts, details, settings  | LTR: right, RTL: left     |
+| `top`     | Notifications, banners    | Top edge (all locales)    |
+| `bottom`  | Mobile sheets, actions    | Bottom edge (all locales) |
+
+## Size Guidelines
+
+| Size   | Width/Height | Best For                          |
+| ------ | ------------ | --------------------------------- |
+| `xs`   | 320px        | Minimal menus, quick filters      |
+| `sm`   | 384px        | Standard navigation, simple forms |
+| `md`   | 448px        | Detailed content, shopping cart   |
+| `lg`   | 512px        | Rich panels, multi-section forms  |
+| `xl`   | 576px        | Dashboard panels, complex content |
+| `full` | 100%         | Mobile takeover, full editing     |
+
+## State Behaviors
+
+| State       | Visual Change          | Behavior                                  |
+| ----------- | ---------------------- | ----------------------------------------- |
+| **Opening** | Slides in + fades in   | Duration: slowest (emphasized-in easing)  |
+| **Open**    | Fully visible          | Focus trapped, body scroll locked         |
+| **Closing** | Slides out + fades out | Duration: normal (emphasized-out easing)  |
+| **Closed**  | Removed from DOM       | Focus returns to trigger, scroll restored |
+
+## Testing
+
+When testing Drawer components:
+
+```typescript
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Drawer, Button } from '@discourser/design-system';
+
+test('drawer opens and closes', async () => {
+  const user = userEvent.setup();
+
+  render(
+    <Drawer.Root>
+      <Drawer.Trigger asChild>
+        <Button>Open</Button>
+      </Drawer.Trigger>
+      <Drawer.Backdrop />
+      <Drawer.Positioner>
+        <Drawer.Content>
+          <Drawer.Title>Test Drawer</Drawer.Title>
+          <Drawer.Body>Content</Drawer.Body>
+          <Drawer.CloseTrigger asChild>
+            <Button>Close</Button>
+          </Drawer.CloseTrigger>
+        </Drawer.Content>
+      </Drawer.Positioner>
+    </Drawer.Root>
+  );
+
+  // Initially closed
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+
+  // Open drawer
+  await user.click(screen.getByText('Open'));
+
+  await waitFor(() => {
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(screen.getByText('Test Drawer')).toBeInTheDocument();
+  });
+
+  // Close drawer
+  await user.click(screen.getByText('Close'));
+
+  await waitFor(() => {
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+});
+
+test('drawer closes on backdrop click', async () => {
+  const user = userEvent.setup();
+  const onOpenChange = vi.fn();
+
+  render(
+    <Drawer.Root onOpenChange={onOpenChange}>
+      <Drawer.Trigger asChild>
+        <Button>Open</Button>
+      </Drawer.Trigger>
+      <Drawer.Backdrop />
+      <Drawer.Positioner>
+        <Drawer.Content>
+          <Drawer.Title>Test</Drawer.Title>
+        </Drawer.Content>
+      </Drawer.Positioner>
+    </Drawer.Root>
+  );
+
+  await user.click(screen.getByText('Open'));
+
+  const backdrop = screen.getByRole('dialog').parentElement;
+  await user.click(backdrop!);
+
+  expect(onOpenChange).toHaveBeenCalledWith({ open: false });
+});
+
+test('drawer closes on escape key', async () => {
+  const user = userEvent.setup();
+
+  render(
+    <Drawer.Root defaultOpen>
+      <Drawer.Positioner>
+        <Drawer.Content>
+          <Drawer.Title>Test</Drawer.Title>
+        </Drawer.Content>
+      </Drawer.Positioner>
+    </Drawer.Root>
+  );
+
+  expect(screen.getByRole('dialog')).toBeInTheDocument();
+
+  await user.keyboard('{Escape}');
+
+  await waitFor(() => {
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+});
+```
+
+## Related Components
+
+- **Dialog**: Use for centered modals and critical confirmations
+- **Popover**: Use for contextual menus and tooltips
+- **Sheet**: Mobile-specific bottom sheet (Drawer with `placement="bottom"`)
+- **Menu**: Use for dropdown menus and context menus
+- **Tooltip**: Use for simple hints and help text
+

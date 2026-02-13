@@ -139,7 +139,7 @@ Discourser uses the **Radix Colors scale** (1-12) for all color palettes:
 
 ```tsx
 // ❌ WRONG: Hardcoded hex
-<Box bg="#4C662B" color="#FFFFFF">
+<Box style={{ backgroundColor: '#4C662B', color: '#FFFFFF' }}>
   Brand section
 </Box>
 ```
@@ -220,7 +220,7 @@ Discourser uses the **Radix Colors scale** (1-12) for all color palettes:
 ```tsx
 // ❌ WRONG: Mixing Shadcn vocabulary with M3 explicit tokens
 <Box bg="m3Primary">
-  <Text color="text-primary-foreground">Mixed vocabulary</Text>
+  <Text style={{ color: 'var(--text-primary-foreground)' }}>Mixed vocabulary</Text>
 </Box>
 ```
 
@@ -243,8 +243,8 @@ Discourser uses the **Radix Colors scale** (1-12) for all color palettes:
 ## Cross-References
 
 For comprehensive color system details:
-- [Guidelines: Colors](/docs/documentation-guidelines-design-tokens-99-colors--docs) — Full M3 color role documentation
-- [Guidelines: Elevation](/docs/documentation-guidelines-design-tokens-99-elevation--docs) — Surface container elevation system
+- [Guidelines: Colors](/docs/documentation-guidelines-99-colors--docs) — Full M3 color role documentation
+- [Guidelines: Elevation](/docs/documentation-guidelines-99-elevation--docs) — Surface container elevation system
 
 For component-specific colorPalette usage:
 - Coming soon: Component Translation pages (05-07)
