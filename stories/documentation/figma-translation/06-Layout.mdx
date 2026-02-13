@@ -1,0 +1,487 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation/Figma Translation/06-Layout Patterns" />
+
+# Layout Patterns Translation Guide
+
+This page translates layout patterns from Figma auto-layout and Tailwind CSS to Discourser's Panda CSS layout primitives.
+
+## Flexbox Layout Mapping
+
+| Source (Figma/Tailwind) | Discourser | When to Use |
+|---|---|---|
+| `flex flex-col` | `display="flex" flexDir="column"` or `<VStack>` | Vertical stacking with uniform spacing |
+| `flex flex-row` | `display="flex" flexDir="row"` or `<HStack>` | Horizontal layout with uniform spacing |
+| `flex flex-wrap` | `<Flex wrap="wrap">` | Items that wrap to next line (tags, chips) |
+| `items-start` | `alignItems="flex-start"` | Align items to start (top in column, left in row) |
+| `items-center` | `alignItems="center"` | Vertically center items |
+| `items-end` | `alignItems="flex-end"` | Align items to end (bottom in column, right in row) |
+| `justify-start` | `justifyContent="flex-start"` | Distribute to start (default) |
+| `justify-center` | `justifyContent="center"` | Center items along main axis |
+| `justify-between` | `justifyContent="space-between"` | Space items with gaps between |
+| `justify-end` | `justifyContent="flex-end"` | Distribute to end |
+| `space-y-4` | `display="flex" flexDir="column" gap="4"` | **Use gap, not space utilities** |
+| `space-x-4` | `display="flex" flexDir="row" gap="4"` | **Use gap, not space utilities** |
+
+**Important:** Tailwind's `space-*` utilities are not available in Panda CSS. Always use `gap` for spacing between flex/grid children.
+
+## Grid Layout Mapping
+
+| Source (Figma/Tailwind) | Discourser | When to Use |
+|---|---|---|
+| `grid grid-cols-2` | `display="grid" gridTemplateColumns="repeat(2, 1fr)"` or `<Grid columns={2}>` | Fixed 2-column grid |
+| `grid grid-cols-3` | `display="grid" gridTemplateColumns="repeat(3, 1fr)"` or `<Grid columns={3}>` | Fixed 3-column grid |
+| `grid grid-cols-4` | `<Grid columns={4}>` | Fixed 4-column grid |
+| `grid grid-cols-[200px_1fr]` | `gridTemplateColumns="200px 1fr"` | Sidebar + main content |
+| `grid grid-rows-3` | `gridTemplateRows="repeat(3, 1fr)"` | Fixed row structure |
+| `gap-4` | `gap="4"` | 16px gap between grid items |
+| `gap-x-4 gap-y-6` | `columnGap="4" rowGap="6"` | Different horizontal/vertical gaps |
+
+## Responsive Grid Patterns
+
+| Pattern | Discourser | Usage |
+|---|---|---|
+| Mobile 1-col, Desktop 3-col | `<Grid columns={{ base: 1, md: 2, lg: 3 }}>` | Card grid, product grid |
+| Mobile 1-col, Tablet 2-col, Desktop 4-col | `<Grid columns={{ base: 1, md: 2, xl: 4 }}>` | Dashboard widgets |
+| Responsive column template | `gridTemplateColumns={{ base: '1fr', md: '200px 1fr' }}` | Sidebar layout (mobile stacks, desktop side-by-side) |
+
+## Container & Width Mapping
+
+| Source (Tailwind) | Discourser | Notes |
+|---|---|---|
+| `container mx-auto` | `maxW="breakpoint-xl" mx="auto"` | Centered container with max-width |
+| `w-full` | `w="full"` | 100% width |
+| `w-1/2` | `w="50%"` | 50% width |
+| `w-screen` | `w="100vw"` | Full viewport width |
+| `max-w-md` | `maxW="md"` | 448px max-width |
+| `max-w-lg` | `maxW="lg"` | 512px max-width |
+| `max-w-xl` | `maxW="xl"` | 576px max-width |
+| `max-w-2xl` | `maxW="2xl"` | 672px max-width |
+| `max-w-4xl` | `maxW="4xl"` | 896px max-width |
+| `max-w-6xl` | `maxW="6xl"` | 1152px max-width |
+
+## Height Mapping
+
+| Source (Tailwind) | Discourser | Notes |
+|---|---|---|
+| `h-screen` | `h="100vh"` | Full viewport height (use `dvh` for mobile) |
+| `min-h-screen` | `minH="100vh"` or `minH="dvh"` | Minimum full viewport height (dvh accounts for mobile browser chrome) |
+| `h-full` | `h="full"` | 100% height |
+| `h-auto` | `h="auto"` | Auto height based on content |
+
+## VStack vs HStack vs Grid vs Flex Decision Tree
+
+| Layout Need | Use | Example Use Case |
+|---|---|---|
+| Stack items vertically with uniform gap | `<VStack gap="...">` | Form fields, card list, vertical menu |
+| Stack items horizontally with uniform gap | `<HStack gap="...">` | Button groups, icon + text, toolbar items |
+| Items need to wrap to next line | `<Flex wrap="wrap" gap="...">` | Tags, chips, badges, responsive button groups |
+| Fixed column/row grid structure | `<Grid columns={...}>` or `<Grid rows={...}>` | Card grid, dashboard layout, table-like structure |
+| Responsive grid (mobile 1-col, desktop multi-col) | `<Grid columns={{ base: 1, md: 2, lg: 3 }}>` | Product grid, image gallery |
+| Complex alignment + spacing needs | `display="flex"` with explicit props | Custom layouts requiring specific alignment |
+| Sidebar + main content | `<Grid columns={{ base: '1fr', md: '250px 1fr' }}>` | App shell, settings page |
+
+## Responsive Breakpoint Translation
+
+| Source (Tailwind) | Discourser (Panda CSS) | Min Width | Usage |
+|---|---|---|---|
+| `sm:` | `sm:` or `{ sm: value }` | 640px | Small tablets (portrait) |
+| `md:` | `md:` or `{ md: value }` | 768px | Tablets (landscape), small laptops |
+| `lg:` | `lg:` or `{ lg: value }` | 1024px | Desktops, large tablets |
+| `xl:` | `xl:` or `{ xl: value }` | 1280px | Large desktops |
+| `2xl:` | `2xl:` or `{ '2xl': value }` | 1536px | Extra-large screens |
+
+**Note:** Breakpoints use min-width queries (mobile-first). `base` is the default (mobile) value, then values override at larger breakpoints.
+
+## Responsive Syntax Forms
+
+Panda CSS supports two responsive syntax forms. Use the **object syntax for component props**, and the **CSS utility syntax for css() calls**.
+
+### Object Syntax (Preferred for JSX Props)
+
+```tsx
+// ✅ CORRECT: Object syntax on component props
+<Box p={{ base: '4', md: '6', lg: '8' }}>
+  Content with responsive padding
+</Box>
+
+<Grid columns={{ base: 1, md: 2, lg: 3 }}>
+  <Card.Root>Item 1</Card.Root>
+  <Card.Root>Item 2</Card.Root>
+  <Card.Root>Item 3</Card.Root>
+</Grid>
+
+<VStack gap={{ base: '4', md: '6' }}>
+  <Text>Responsive gap between items</Text>
+  <Text>Mobile: 16px, Desktop: 24px</Text>
+</VStack>
+```
+
+### CSS Utility Syntax (Preferred for css() Calls)
+
+```tsx
+import { css } from 'styled-system/css';
+
+// ✅ CORRECT: CSS utility syntax in css() calls
+const responsiveContainer = css({
+  p: { base: '4', md: '6', lg: '8' },
+  display: { base: 'block', md: 'grid' },
+  gridTemplateColumns: { md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' },
+});
+
+<div className={responsiveContainer}>
+  Content
+</div>
+```
+
+## Common Page Layout Patterns
+
+### Pattern 1: Page Shell (Sidebar + Main Content)
+
+**Figma:** Auto-layout horizontal, sidebar 250px fixed, main content fills remaining space.
+
+**Discourser:**
+```tsx
+import { css } from 'styled-system/css';
+
+<div className={css({
+  display: 'grid',
+  gridTemplateColumns: { base: '1fr', md: '250px 1fr' },
+  minH: '100vh',
+  gap: '0',
+})}>
+  {/* Sidebar */}
+  <aside className={css({
+    bg: 'surface.container',
+    p: '6',
+    borderRightWidth: { md: '1px' },
+    borderRightColor: 'border',
+    display: { base: 'none', md: 'block' }, // Hidden on mobile
+  })}>
+    Sidebar navigation
+  </aside>
+
+  {/* Main content */}
+  <main className={css({
+    p: { base: '4', md: '6', lg: '8' },
+  })}>
+    Page content
+  </main>
+</div>
+```
+
+### Pattern 2: Form Layout (Vertical Fields + Action Buttons)
+
+**Figma:** Auto-layout vertical, gap 16px, action buttons at bottom with 8px gap.
+
+**Discourser:**
+```tsx
+import { VStack, HStack, Button, Input } from '@discourser/design-system';
+
+<VStack gap="4" align="stretch" w="full" maxW="lg">
+  {/* Form fields */}
+  <Input placeholder="Full Name" />
+  <Input type="email" placeholder="Email" />
+  <Input type="tel" placeholder="Phone" />
+
+  {/* Action buttons */}
+  <HStack gap="2" justify="flex-end">
+    <Button variant="outline">Cancel</Button>
+    <Button variant="solid">Submit</Button>
+  </HStack>
+</VStack>
+```
+
+### Pattern 3: Card Grid (Responsive)
+
+**Figma:** Auto-layout wrap, 3 columns on desktop, 1 column on mobile, gap 24px.
+
+**Discourser:**
+```tsx
+import { Grid } from 'styled-system/jsx';
+import { Card } from '@discourser/design-system';
+
+<Grid columns={{ base: 1, md: 2, lg: 3 }} gap="6">
+  <Card.Root>
+    <Card.Header>
+      <Card.Title>Card Title 1</Card.Title>
+    </Card.Header>
+    <Card.Body>Card content</Card.Body>
+  </Card.Root>
+
+  <Card.Root>
+    <Card.Header>
+      <Card.Title>Card Title 2</Card.Title>
+    </Card.Header>
+    <Card.Body>Card content</Card.Body>
+  </Card.Root>
+
+  <Card.Root>
+    <Card.Header>
+      <Card.Title>Card Title 3</Card.Title>
+    </Card.Header>
+    <Card.Body>Card content</Card.Body>
+  </Card.Root>
+</Grid>
+```
+
+### Pattern 4: Centered Content Container
+
+**Figma:** Content centered horizontally, max-width 600px, padding 16px mobile / 32px desktop.
+
+**Discourser:**
+```tsx
+import { Box } from 'styled-system/jsx';
+
+<Box
+  maxW="2xl"
+  mx="auto"
+  p={{ base: '4', md: '8' }}
+>
+  <Heading size="4xl" mb="6">
+    Page Title
+  </Heading>
+
+  <Text textStyle="bodyLarge">
+    Centered content with maximum width and responsive padding.
+  </Text>
+</Box>
+```
+
+## Figma Auto-Layout → Panda CSS Translation
+
+### Vertical Stack (Column)
+
+| Figma Property | Discourser Equivalent |
+|---|---|
+| Direction: Vertical | `display="flex" flexDir="column"` or `<VStack>` |
+| Gap: 8px | `gap="2"` |
+| Gap: 16px | `gap="4"` |
+| Gap: 24px | `gap="6"` |
+| Padding: 16px | `p="4"` |
+| Padding: 24px horizontal, 16px vertical | `px="6" py="4"` |
+| Align: Top-left (default) | `alignItems="flex-start" justifyContent="flex-start"` |
+| Align: Top-center | `alignItems="flex-start" justifyContent="center"` |
+| Align: Center-center | `alignItems="center" justifyContent="center"` |
+
+### Horizontal Stack (Row)
+
+| Figma Property | Discourser Equivalent |
+|---|---|
+| Direction: Horizontal | `display="flex" flexDir="row"` or `<HStack>` |
+| Gap: 4px | `gap="1"` |
+| Gap: 8px | `gap="2"` |
+| Gap: 16px | `gap="4"` |
+| Align: Space-between | `justifyContent="space-between"` |
+| Align: Center | `alignItems="center"` |
+
+### Wrapping Layout
+
+| Figma Property | Discourser Equivalent |
+|---|---|
+| Wrap: On | `<Flex wrap="wrap" gap="...">` |
+| Wrap: On, Gap: 8px | `<Flex wrap="wrap" gap="2">` |
+| Wrap: On, Gap: 16px | `<Flex wrap="wrap" gap="4">` |
+
+## Dividers Between Items
+
+| Source (Tailwind) | Discourser | Notes |
+|---|---|---|
+| `divide-y` | Use `borderBottom` on items or gap + border approach | No direct equivalent for divide utilities |
+| `divide-x` | Use `borderRight` on items or gap + border approach | No direct equivalent |
+
+**Alternative Pattern (Using Borders):**
+
+```tsx
+import { VStack } from 'styled-system/jsx';
+import { css } from 'styled-system/css';
+
+<VStack gap="0">
+  {items.map((item, index) => (
+    <div
+      key={item.id}
+      className={css({
+        p: '4',
+        borderBottomWidth: index < items.length - 1 ? '1px' : '0',
+        borderBottomColor: 'border',
+      })}
+    >
+      {item.content}
+    </div>
+  ))}
+</VStack>
+```
+
+## Common Mistakes
+
+### ❌ Using Tailwind's space Utilities
+
+```tsx
+// ❌ WRONG: Tailwind space utilities don't exist in Panda CSS
+<div className="space-y-4">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</div>
+```
+
+**Why wrong:** Panda CSS doesn't support Tailwind's `space-*` utilities.
+
+```tsx
+// ✅ CORRECT: Use flex + gap or VStack
+<VStack gap="4">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</VStack>
+
+// ✅ ALSO CORRECT: Using flex directly
+<Box display="flex" flexDir="column" gap="4">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</Box>
+```
+
+---
+
+### ❌ Fixed Breakpoint Pixel Values
+
+```tsx
+// ❌ WRONG: Using pixel values for media queries
+<Box display={{ '640px': 'grid' }}>
+  Content
+</Box>
+```
+
+**Why wrong:** Panda CSS uses named breakpoint tokens, not pixel values.
+
+```tsx
+// ✅ CORRECT: Named breakpoint tokens
+<Box display={{ base: 'block', sm: 'grid' }}>
+  Content
+</Box>
+
+// ✅ ALSO CORRECT: In css() calls
+const styles = css({
+  display: { base: 'block', sm: 'grid' },
+});
+```
+
+---
+
+### ❌ Using px for Responsive Queries in CSS
+
+```tsx
+// ❌ WRONG: Manual media queries with pixels
+const styles = css({
+  padding: '16px',
+});
+
+// Then manually adding:
+@media (min-width: 768px) {
+  padding: 24px;
+}
+```
+
+**Why wrong:** Not using Panda CSS responsive syntax, harder to maintain.
+
+```tsx
+// ✅ CORRECT: Panda CSS responsive syntax
+const styles = css({
+  p: { base: '4', md: '6' },
+});
+```
+
+---
+
+### ❌ Manual Flex Setup When Stack Components Exist
+
+```tsx
+// ❌ WRONG: Verbose manual flex setup
+<Box display="flex" flexDirection="column" gap="4">
+  <Text>Item 1</Text>
+  <Text>Item 2</Text>
+</Box>
+```
+
+**Why wrong:** VStack/HStack components are more semantic and concise.
+
+```tsx
+// ✅ CORRECT: VStack component
+<VStack gap="4">
+  <Text>Item 1</Text>
+  <Text>Item 2</Text>
+</VStack>
+```
+
+---
+
+### ❌ Forgetting Mobile-First Approach
+
+```tsx
+// ❌ WRONG: Desktop styles as base, then overriding for mobile
+<Box p="8" md:p="4">
+  Content
+</Box>
+```
+
+**Why wrong:** Panda CSS is mobile-first. Base should be mobile, larger breakpoints override.
+
+```tsx
+// ✅ CORRECT: Mobile base, desktop override
+<Box p={{ base: '4', md: '8' }}>
+  Content
+</Box>
+```
+
+---
+
+### ❌ Using Tailwind Container Classes
+
+```tsx
+// ❌ WRONG: Tailwind container class
+<div className="container mx-auto">
+  Content
+</div>
+```
+
+**Why wrong:** Panda CSS doesn't have a `container` class.
+
+```tsx
+// ✅ CORRECT: Max-width + auto margin
+<Box maxW="breakpoint-xl" mx="auto" px={{ base: '4', md: '8' }}>
+  Content
+</Box>
+```
+
+---
+
+### ❌ Missing gap When Converting from space-*
+
+```tsx
+// ❌ WRONG: Converting Tailwind space-y without gap
+<div className="flex flex-col">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</div>
+```
+
+**Why wrong:** Original Tailwind `space-y-4` provided spacing, this has none.
+
+```tsx
+// ✅ CORRECT: Add gap when converting
+<VStack gap="4">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</VStack>
+```
+
+---
+
+## Cross-References
+
+For comprehensive layout guidance:
+- [Guidelines: 99-Overview Patterns](/docs/documentation-guidelines-99-overview-patterns--docs) — Complete composition examples and real-world patterns
+- [03-Spacing](/docs/documentation-figma-translation-03-spacing--docs) — Spacing scale and usage
+- [05-Components](/docs/documentation-figma-translation-05-components--docs) — Component-specific layout patterns
+
+For deep-dives on layout primitives:
+- [Guidelines: Spacing](/docs/documentation-guidelines-99-spacing--docs) — Spacing system details and the 8px grid

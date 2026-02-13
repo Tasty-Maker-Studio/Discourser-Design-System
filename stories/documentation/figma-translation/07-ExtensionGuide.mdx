@@ -1,0 +1,537 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation/Figma Translation/07-Extension Guide" />
+
+# Extension Guide
+
+This document explains how to maintain and extend the Figma Translation suite as the design system evolves. It's the meta-documentation that ensures consistency across all translation files.
+
+---
+
+## Purpose of This Guide
+
+The Figma Translation suite (files 00-06) is **living documentation**. When the design system changes—new components, updated tokens, modified recipes—these translation files must stay synchronized.
+
+This guide provides:
+1. **Templates** for adding new entries (components, tokens, palettes)
+2. **Processes** for verifying and maintaining translation accuracy
+3. **Conventions** for keeping the suite consistent
+4. **Versioning guidance** for knowing when to update
+
+---
+
+## Adding a New Component Mapping
+
+When a new component is added to `src/components/`, it must be documented in `05-Components.mdx`.
+
+### Template
+
+Use this exact template when adding a new component:
+
+```markdown
+### [ComponentName]
+
+**Maps from:** [Figma equivalent], [Shadcn equivalent]
+**Import:** `import { [ComponentName] } from '@discourser/design-system'`
+**Type:** Simple (recipe) | Compound (slot recipe)
+**Added in:** v[X.Y.Z]
+
+| Source (Figma/Shadcn) Prop | Discourser Prop | Values | Notes |
+|---|---|---|---|
+
+**Compound Anatomy (if applicable):**
+- `<ComponentName.Root>` — [purpose]
+- `<ComponentName.Part>` — [purpose]
+
+**See:** [Guidelines/99-ComponentName](/docs/documentation-guidelines-99-component-name--docs)
+```
+
+### Step-by-Step Process
+
+1. **Determine component type**
+   - Open `panda.config.ts`
+   - Check if component is in `recipes` (simple) or `slotRecipes` (compound)
+
+2. **Read component source**
+   - File location: `src/components/[ComponentName]/[ComponentName].tsx`
+   - Note: Props, variants, default values
+   - For compound components: List all sub-components (Root, Trigger, Content, etc.)
+
+3. **Check component guideline MDX**
+   - File location: `stories/documentation/guidelines/components/[name].mdx` or `stories/documentation/guidelines/99-[ComponentName].mdx`
+   - Extract: Variant names, size options, usage notes
+
+4. **Find Shadcn equivalent**
+   - Visit [shadcn/ui docs](https://ui.shadcn.com)
+   - Identify closest match (if any)
+   - Note any naming differences (e.g., Shadcn `CardContent` → Discourser `Card.Body`)
+
+5. **Add entry to 05-Components.mdx**
+   - Place in the appropriate section (1. Interactive Elements, 2. Layout & Containers, etc.)
+   - Use the template above
+   - Fill in all fields accurately
+
+6. **Add cross-reference**
+   - In the component's guideline MDX, add a link back to the translation page
+   - Ensure bidirectional linkage for discoverability
+
+### Example Addition
+
+```markdown
+### Chip
+
+**Maps from:** Material Design 3 Chip, Shadcn Badge
+**Import:** `import { Chip } from '@discourser/design-system'`
+**Type:** Simple (recipe)
+**Added in:** v0.15.0
+
+| Source (Shadcn) | Discourser | Notes |
+|---|---|---|
+| `<Badge>` | `<Chip>` | Shadcn Badge → Discourser Chip (different name) |
+| `variant="default"` | `variant="solid"` | Filled background |
+| `variant="outline"` | `variant="outline"` | Border only |
+
+**Props:**
+- `size` — `sm`, `md` (default), `lg`
+- `colorPalette` — `primary`, `secondary`, `tertiary`, `neutral`, `error`
+- `onRemove` — Optional callback for removable chips
+
+**See:** [Guidelines/99-Chip](/docs/documentation-guidelines-99-chip--docs)
+```
+
+---
+
+## Adding a New Token Mapping
+
+When semantic tokens or base tokens are added or modified, update the appropriate translation file.
+
+### Token Type → File Mapping
+
+| Token Type | File to Update | Table to Add Entry To |
+|---|---|---|
+| Background color | `01-Colors.mdx` | Background colors table |
+| Text color | `01-Colors.mdx` | Text colors table |
+| Border color | `01-Colors.mdx` | Border colors table |
+| M3 surface token | `01-Colors.mdx` | M3 Surface System table |
+| M3 color role | `01-Colors.mdx` | M3 Primary/Secondary/Tertiary Tokens table |
+| Typography scale | `02-Typography.mdx` | Tailwind → M3 textStyle Mapping or Complete M3 Type Scale table |
+| Font family | `02-Typography.mdx` | Font Family Mapping table |
+| Font weight | `02-Typography.mdx` | Font Weight Mapping table |
+| Spacing | `03-Spacing.mdx` | Tailwind Numeric → Panda CSS Numeric Mapping or Named Token Mapping |
+| Shadow | `04-Shadows-Radii.mdx` | Shadow Mapping (Elevation) table |
+| Border radius | `04-Shadows-Radii.mdx` | Tailwind → Discourser Radii or Park UI Semantic Radii (l1, l2, l3) |
+
+### Process
+
+1. **Verify token exists in config**
+   - Check `panda.config.ts` or `src/preset/semantic-tokens/` for the new token
+   - Run `pnpm prepare` to regenerate `styled-system/` output
+   - Verify token appears in `styled-system/tokens/index.d.ts`
+
+2. **Find Tailwind/Shadcn equivalent**
+   - Consult [Tailwind CSS docs](https://tailwindcss.com/docs)
+   - Consult [Shadcn/UI docs](https://ui.shadcn.com)
+   - Identify the closest match (if any)
+
+3. **Add row to appropriate table**
+   - Use the format: **Source | Discourser | Notes** (3 columns minimum)
+   - Match existing column structure exactly
+   - Add usage notes in the third column
+
+4. **Run verification tests**
+   - `pnpm test -- --grep translation` — Automated token accuracy tests
+   - `bash scripts/verify-translation-docs.sh` — Quick structure check
+   - Manually verify in Storybook that the token renders correctly
+
+### Example Addition
+
+**Scenario:** New semantic shadow token `shadow.focus` added for focus rings.
+
+**File:** `04-Shadows-Radii.mdx`
+
+**Table:** Shadow Mapping (Elevation)
+
+**New Row:**
+```markdown
+| `ring ring-primary` | `boxShadow="focus"` | Focus ring shadow (0 0 0 3px with primary color) | Focus states for inputs |
+```
+
+---
+
+## Adding a New Color Palette
+
+When a new Radix color palette bridge is created (using `create-palette-bridge.ts`), update the color documentation.
+
+### Process
+
+1. **Add palette name to 01-Colors.mdx**
+   - Section: **Color Palette System → Available Palettes**
+   - Add new palette to the list with description
+
+2. **Add background/text/border entries**
+   - Section: **Background Colors**, **Text Colors**, **Border Colors**
+   - Add rows for the new palette (e.g., `bg="newPalette.9"`, `color="newPalette.11"`)
+
+3. **Update component colorPalette references**
+   - Section in `05-Components.mdx`: Each component that supports `colorPalette`
+   - Add the new palette to the "Values" column (e.g., `primary | secondary | tertiary | error | newPalette`)
+
+4. **Update panda.config.ts staticCss**
+   - Ensure new palette is in the `colorPalette` array in `staticCss` config
+   - This pre-generates CSS for the new palette
+
+5. **Run verification tests**
+   - Verify the palette renders correctly in Storybook
+   - Test on a Button or Badge component with `colorPalette="newPalette"`
+
+### Example Addition
+
+**Scenario:** New `success` palette bridge created for success states.
+
+**01-Colors.mdx Changes:**
+
+**Available Palettes section:**
+```markdown
+- `success` — Success states (green tones)
+```
+
+**Background Colors table:**
+```markdown
+| `bg-success` | `colorPalette="success"` or `bg="success.9"` | Success surfaces |
+```
+
+**05-Components.mdx Changes:**
+
+**Button Props table (Values column):**
+```markdown
+| `colorPalette` | `primary \| secondary \| tertiary \| neutral \| error \| success` | **Use for color theming** |
+```
+
+---
+
+## Versioning & Maintenance
+
+### When to Re-Verify Translation Docs
+
+Re-verify and update translation documentation when ANY of these occur:
+
+1. **Semantic token changes**
+   - Any modification to `src/preset/semantic-tokens/`
+   - Any change to `panda.config.ts` theme extension
+
+2. **New component added**
+   - New export in `src/components/index.ts`
+   - New recipe or slotRecipe in `panda.config.ts`
+
+3. **Recipe/slotRecipe modifications**
+   - New variants added to existing components
+   - Variant names changed (breaking change)
+   - Props renamed (breaking change)
+   - Default values changed
+
+4. **Design system version bump**
+   - Any minor or major version release
+   - Especially before publishing to npm
+
+5. **After running `pnpm prepare`**
+   - If `styled-system/` output changes significantly
+   - If new tokens appear in `styled-system/tokens/`
+
+### How to Verify
+
+#### Automated Verification
+
+```bash
+# Run all translation verification tests
+pnpm test -- --grep translation
+
+# Quick file structure check
+bash scripts/verify-translation-docs.sh
+
+# Full Storybook build (catches MDX parse errors)
+pnpm build-storybook
+```
+
+**What the tests verify:**
+- **Token accuracy** — All tokens referenced in translation MDX files exist in `panda.config.ts`, preset files, or are valid CSS values
+- **Component completeness** — All exported components from `src/components/index.ts` are documented in `05-Components.mdx`
+- **Cross-reference integrity** — Internal links to Guidelines documentation resolve correctly
+- **File structure** — All expected translation files exist with proper Meta tags
+- **Phantom tokens** — No invalid tokens like `bg.default`, `bg.muted`, or `primary.contrast`
+
+#### Manual Verification
+
+```bash
+# Start Storybook
+pnpm storybook
+
+# Navigate to each page:
+# - Documentation/Figma Translation/00-Overview
+# - Documentation/Figma Translation/01-Colors
+# - Documentation/Figma Translation/02-Typography
+# - Documentation/Figma Translation/03-Spacing
+# - Documentation/Figma Translation/04-Shadows & Radii
+# - Documentation/Figma Translation/05-Components
+# - Documentation/Figma Translation/06-Layout Patterns
+# - Documentation/Figma Translation/07-Extension Guide (this page)
+
+# Verify:
+# 1. No MDX parse errors
+# 2. All tables render correctly
+# 3. Code examples highlight properly
+# 4. Cross-reference links work
+```
+
+#### Spot-Check Verification
+
+For quick verification after small changes:
+
+1. **Pick 3-5 random entries** from each translation file
+2. **Verify the token/prop exists** in `styled-system/` or component source
+3. **Test in Storybook** — Create a component using the documented syntax
+4. **Check that it renders correctly**
+
+---
+
+## Relationship to Kai Sidecar Knowledge
+
+The Figma Translation MDX files are **comprehensive** (optimized for human reading + MCP consumption).
+
+Kai's sidecar knowledge fragments (`_bmad/_memory/kai-sidecar/knowledge/`) are **condensed extracts** optimized for agent context:
+
+### Differences
+
+| Translation MDX (00-06) | Kai Sidecar Knowledge |
+|---|---|---|
+| **Comprehensive** — Prose explanations, examples, cross-references | **Condensed** — Tables only, minimal prose |
+| **All Common Mistakes sections** | **No Common Mistakes** (Kai's instructions.md handles error prevention) |
+| **One file per concern** (Colors, Typography, etc.) | **Fragment per concern** (colors.md, typography.md, components.md, layout.md) |
+| **Full Storybook pages** with MDX formatting | **Markdown fragments** for embedding in prompts |
+| **Includes "When to Use" guidance** | **Just mapping tables** (agent instructions guide usage) |
+
+### When to Update Sidecar Knowledge
+
+When you update a translation MDX file, also update the corresponding sidecar fragment:
+
+| Translation File | Sidecar Fragment | Update Needed |
+|---|---|---|
+| `01-Colors.mdx` | `_bmad/_memory/kai-sidecar/knowledge/colors.md` | Extract mapping tables, remove prose |
+| `02-Typography.mdx` | `_bmad/_memory/kai-sidecar/knowledge/typography.md` | Extract textStyle mappings |
+| `03-Spacing.mdx` | `_bmad/_memory/kai-sidecar/knowledge/spacing.md` | Extract spacing scale |
+| `04-Shadows-Radii.mdx` | `_bmad/_memory/kai-sidecar/knowledge/elevation.md` | Extract shadow/radii mappings |
+| `05-Components.mdx` | `_bmad/_memory/kai-sidecar/knowledge/components.md` | Extract component mappings (condensed) |
+| `06-Layout.mdx` | `_bmad/_memory/kai-sidecar/knowledge/layout.md` | Extract layout pattern mappings |
+
+**Note:** Sidecar knowledge updates are tracked in STORY-008 (Kai Sidecar Knowledge).
+
+---
+
+## Document Conventions
+
+To maintain consistency across all translation files (00-06 and future additions), follow these conventions exactly:
+
+### File Naming
+
+- **Format:** `XX-Name.mdx` where XX is zero-padded number (00, 01, 02...)
+- **Examples:** `00-Overview.mdx`, `01-Colors.mdx`, `05-Components.mdx`
+- **Purpose:** Zero-padding ensures correct alphabetical sort order in file systems
+
+### MDX Front Matter
+
+Every file starts with:
+```tsx
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation/Figma Translation/[XX-Name]" />
+```
+
+**Important:** The `title` must match the sidebar structure exactly.
+
+### Table Column Order
+
+**All mapping tables use this column order:**
+1. **Source** (Figma/Tailwind/Shadcn equivalent)
+2. **Discourser** (Discourser Design System equivalent)
+3. **Notes** or additional columns (Usage, Values, etc.)
+
+**Example:**
+```markdown
+| Source (Tailwind) | Discourser | Notes |
+|---|---|---|
+| `text-xs` | `textStyle="labelSmall"` | Smallest readable text |
+```
+
+### Common Mistakes Sections
+
+Every translation file (except 00-Overview and 07-ExtensionGuide) includes a **Common Mistakes** section at the end.
+
+**Format:**
+```markdown
+## Common Mistakes
+
+### ❌ [Mistake Title]
+
+```tsx
+// ❌ WRONG: [Explanation of what's wrong]
+<BadExample />
+```
+
+**Why wrong:** [Detailed explanation]
+
+```tsx
+// ✅ CORRECT: [Explanation of correct approach]
+<GoodExample />
+```
+
+---
+
+### ❌ [Next Mistake]
+
+[... repeat pattern ...]
+```
+
+### Cross-References
+
+**Format:**
+- Always link to Storybook page titles, NOT file paths
+- Use full Storybook URL format: `/docs/documentation-guidelines-99-component-name--docs`
+
+**Example:**
+```markdown
+For comprehensive details:
+- [Guidelines: Colors](/docs/documentation-guidelines-99-colors--docs)
+- [Guidelines: Typography](/docs/documentation-guidelines-99-typography--docs)
+```
+
+### Code Examples
+
+**Syntax:**
+- Always use `tsx` for TypeScript React examples
+- Always use `markdown` for non-code examples
+
+**Good/Bad Pattern:**
+```tsx
+// ❌ WRONG: [Brief explanation]
+<WrongExample />
+
+// ✅ CORRECT: [Brief explanation]
+<CorrectExample />
+```
+
+### Tone & Voice
+
+- **Imperative** for instructions ("Use gap, not space utilities")
+- **Declarative** for facts ("Discourser uses Panda CSS")
+- **Active voice** preferred over passive ("Components reference tokens" not "Tokens are referenced by components")
+- **Concise** — Avoid unnecessary words
+- **Technical** but readable — Assume audience knows React/CSS basics
+
+---
+
+## File Structure Reference
+
+Current translation suite structure:
+
+```
+stories/documentation/figma-translation/
+├── 00-FigmaTranslation.mdx      ← Overview, purpose, three-layer architecture
+├── 01-Colors.mdx                ← Background, text, border, M3 surface system, colorPalette
+├── 02-Typography.mdx            ← Text sizes, font families, weights, Heading component
+├── 03-Spacing.mdx               ← Padding, margin, gap, Figma auto-layout
+├── 04-Shadows-Radii.mdx         ← Elevation (shadows), border radius (l1, l2, l3)
+├── 05-Components.mdx            ← Component mappings, props, variants, anatomy
+├── 06-Layout.mdx                ← Flexbox, grid, responsive patterns, page layouts
+└── 07-ExtensionGuide.mdx        ← This file (maintenance, templates, conventions)
+```
+
+**File order matters:** 00 is the entry point, 01-04 cover tokens, 05-06 cover usage, 07 is meta.
+
+---
+
+## Checklist for Adding New Translation Content
+
+Use this checklist when adding new entries to ensure nothing is missed:
+
+### New Component
+
+- [ ] Component type determined (simple recipe or compound slot recipe)
+- [ ] Source code read (`src/components/[ComponentName].tsx`)
+- [ ] Guideline MDX read (`stories/documentation/guidelines/99-[ComponentName].mdx`)
+- [ ] Shadcn equivalent identified (if any)
+- [ ] Entry added to `05-Components.mdx` in correct section
+- [ ] Template filled out completely (Maps from, Import, Type, Props, Anatomy)
+- [ ] Cross-reference added to component's guideline MDX
+- [ ] Common mistakes added (if applicable)
+- [ ] Verified in Storybook (no MDX parse errors)
+- [ ] Spot-tested component usage with documented syntax
+
+### New Token
+
+- [ ] Token verified in `panda.config.ts` or `src/preset/semantic-tokens/`
+- [ ] `pnpm prepare` run to regenerate `styled-system/`
+- [ ] Token confirmed in `styled-system/tokens/index.d.ts`
+- [ ] Tailwind/Shadcn equivalent identified
+- [ ] Correct translation file identified (01-Colors, 02-Typography, etc.)
+- [ ] Row added to appropriate table
+- [ ] Column format matches existing entries (Source | Discourser | Notes)
+- [ ] Usage notes added
+- [ ] Verified in Storybook (token renders correctly)
+- [ ] Spot-tested on a component
+
+### New Palette
+
+- [ ] Palette verified in `src/preset/colors/` (Radix bridge)
+- [ ] Added to `01-Colors.mdx` Available Palettes list
+- [ ] Background color entry added to Background Colors table
+- [ ] Text color entry added to Text Colors table
+- [ ] Border color entry added to Border Colors table
+- [ ] Updated component `colorPalette` values in `05-Components.mdx`
+- [ ] Added to `panda.config.ts` staticCss colorPalette array
+- [ ] Verified in Storybook (palette renders on Button/Badge)
+- [ ] Tested on multiple components
+
+### Version Bump
+
+- [ ] All translation files reviewed
+- [ ] Deprecated entries removed
+- [ ] New features documented
+- [ ] Cross-references verified
+- [ ] Links tested (no 404s)
+- [ ] Storybook rendered (all pages)
+- [ ] Kai sidecar knowledge updated (if applicable)
+
+---
+
+## Getting Help
+
+If you're unsure about:
+- **Where to add an entry** → Check the File Structure Reference above
+- **Template format** → Copy an existing entry and modify
+- **Token verification** → Run `pnpm prepare` and check `styled-system/tokens/`
+- **Component type** → Check `panda.config.ts` recipes vs slotRecipes
+- **Cross-reference links** → Test in Storybook (click the link, verify it works)
+
+**For questions about the design system itself:**
+- See [CLAUDE.md](/CLAUDE.md) for architecture overview
+- See `docs/design-system-setup-prompt.md` for full architecture details
+
+---
+
+## Maintenance Schedule
+
+**Recommended cadence:**
+
+- **Daily (during active development):** Verify new components/tokens added today
+- **Weekly:** Spot-check 3-5 random entries from each file
+- **Before each minor version release:** Full verification pass
+- **Before each major version release:** Comprehensive review + Kai sidecar knowledge sync
+
+---
+
+## Version History
+
+| Version | Date | Changes |
+|---|---|---|
+| v0.14.0 | 2026-02-12 | Initial translation suite (files 00-06) created as part of STORY-006 |
+
+Future versions will be tracked here as the translation suite evolves.

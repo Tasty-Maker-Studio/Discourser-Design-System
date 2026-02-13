@@ -20,8 +20,10 @@ styled-system/
 storybook-static/
 .storybook-out/
 
-# Generated Storybook documentation
-stories/documentation/
+# Generated Storybook documentation (but not figma-translation or guidelines)
+stories/documentation/*
+!stories/documentation/figma-translation/
+!stories/documentation/guidelines/
 
 # Test coverage
 coverage/

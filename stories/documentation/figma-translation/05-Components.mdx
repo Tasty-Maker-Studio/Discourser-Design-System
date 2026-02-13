@@ -1,0 +1,1152 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation/Figma Translation/05-Components" />
+
+# Component Mappings
+
+This document maps every Discourser component from its Figma/Shadcn equivalent, including props, variants, import paths, and compound component anatomy.
+
+**Critical:** Every import path, prop name, variant value, and compound anatomy is verified against actual source files in `src/components/`.
+
+---
+
+## 1. Interactive Elements
+
+### Button
+
+**Maps from:** Material Design 3 Button, Shadcn Button
+**Import:** `import { Button } from '@discourser/design-system'`
+**Type:** Simple (recipe)
+
+**Variants:**
+
+| Source (Shadcn) | Discourser | Notes |
+|---|---|---|
+| `default` | `variant="solid"` | Filled background with solid color |
+| `outline` | `variant="outline"` | Transparent background with border |
+| `ghost` | `variant="plain"` | Transparent background, no border |
+| `destructive` | `variant="solid" colorPalette="error"` | **Color is prop, not variant** |
+| `secondary` | `variant="subtle"` | Subtle filled background |
+| `link` | `variant="plain"` | Text-only appearance |
+| - | `variant="surface"` | Surface background with border |
+| - | `variant="elevated"` | Surface background with shadow elevation |
+
+**Sizes:**
+
+| Shadcn | Discourser | Height |
+|---|---|---|
+| `sm` | `size="sm"` | 36px (9) |
+| `default` | `size="md"` | 40px (10) |
+| `lg` | `size="lg"` | 44px (11) |
+| - | `size="2xs"` | 24px (6) |
+| - | `size="xs"` | 32px (8) |
+| - | `size="xl"` | 48px (12) |
+| - | `size="2xl"` | 64px (16) |
+
+**Props:**
+
+| Source Prop | Discourser Prop | Values | Notes |
+|---|---|---|---|
+| `variant` | `variant` | `solid \| surface \| subtle \| outline \| plain \| elevated` | Default: `solid` |
+| `size` | `size` | `2xs \| xs \| sm \| md \| lg \| xl \| 2xl` | Default: `md` |
+| `disabled` | `disabled` | `boolean` | Disables interaction |
+| - | `colorPalette` | `primary \| secondary \| tertiary \| neutral \| error` | **Use for color theming** |
+| - | `loading` | `boolean` | Shows loading spinner |
+| - | `loadingText` | `ReactNode` | Text to show while loading |
+| - | `spinnerPlacement` | `start \| end` | Spinner position (default: `start`) |
+
+**See:** [Guidelines/99-Button](/docs/documentation-guidelines-99-button--docs)
+
+---
+
+### IconButton
+
+**Maps from:** Shadcn Button (icon variant)
+**Import:** `import { IconButton } from '@discourser/design-system'`
+**Type:** Simple (wraps Button with `px="0" py="0"`)
+
+| Source Pattern | Discourser Pattern | Notes |
+|---|---|---|
+| `<Button size="icon"><Icon /></Button>` | `<IconButton><Icon /></IconButton>` | Removes padding from Button |
+
+**Props:** Inherits all Button props (variant, size, colorPalette, etc.)
+
+**See:** [Guidelines/99-IconButton](/docs/documentation-guidelines-99-icon-button--docs)
+
+---
+
+### Input
+
+**Maps from:** Shadcn Input
+**Import:** `import { Input } from '@discourser/design-system'`
+**Type:** Simple (recipe)
+
+**Variants:**
+
+| Shadcn | Discourser | Notes |
+|---|---|---|
+| (single variant) | `variant="outline"` | Default, transparent bg with border |
+| - | `variant="surface"` | Subtle background with border |
+| - | `variant="subtle"` | Light background, minimal border |
+| - | `variant="flushed"` | Borderless with bottom border only |
+
+**Sizes:**
+
+| Discourser | Height |
+|---|---|
+| `size="xs"` | 32px (8) |
+| `size="sm"` | 36px (9) |
+| `size="md"` | 40px (10) (default) |
+| `size="lg"` | 44px (11) |
+| `size="xl"` | 48px (12) |
+
+**See:** [Guidelines/99-Input](/docs/documentation-guidelines-99-input--docs)
+
+---
+
+### InputGroup
+
+**Maps from:** Shadcn Input with addons/icons
+**Import:** `import { InputGroup } from '@discourser/design-system'`
+**Type:** Compound (slot recipe)
+
+**Anatomy:**
+- `<InputGroup.Root>` — Container for input with positioned elements
+- `<InputGroup.Element>` — Positioned element (start or end)
+
+**Shadcn Pattern:**
+```tsx
+<div className="relative">
+  <SearchIcon className="absolute left-3..." />
+  <Input className="pl-10" />
+</div>
+```
+
+**Discourser Pattern:**
+```tsx
+<InputGroup startElement={<SearchIcon />}>
+  <Input />
+</InputGroup>
+```
+
+| Source Pattern | Discourser Props | Notes |
+|---|---|---|
+| Left icon | `startElement={<Icon />}` | Positioned at start (left in LTR) |
+| Right icon | `endElement={<Icon />}` | Positioned at end (right in LTR) |
+
+**See:** [Guidelines/99-InputGroup](/docs/documentation-guidelines-99-input-group--docs)
+
+---
+
+### InputAddon
+
+**Maps from:** Shadcn Input with prefix/suffix text
+**Import:** `import { InputAddon } from '@discourser/design-system'`
+**Type:** Simple (recipe) — Use with InputGroup
+
+**Pattern:**
+```tsx
+<InputGroup>
+  <InputAddon>https://</InputAddon>
+  <Input />
+  <InputAddon>.com</InputAddon>
+</InputGroup>
+```
+
+**See:** [Guidelines/99-InputAddon](/docs/documentation-guidelines-99-input-addon--docs)
+
+---
+
+### Textarea
+
+**Maps from:** Shadcn Textarea
+**Import:** `import { Textarea } from '@discourser/design-system'`
+**Type:** Simple (recipe)
+
+**Variants:** Same as Input (`outline`, `surface`, `subtle`, `flushed`)
+**Sizes:** Same as Input (`xs`, `sm`, `md`, `lg`, `xl`)
+
+**See:** [Guidelines/99-Textarea](/docs/documentation-guidelines-99-textarea--docs)
+
+---
+
+### Select
+
+**Maps from:** Shadcn Select
+**Import:** `import { Select } from '@discourser/design-system'`
+**Type:** Compound (slot recipe)
+
+**Anatomy:**
+- `<Select.Root>` — Container managing select state
+- `<Select.Label>` — Descriptive label
+- `<Select.Control>` — Container for trigger button
+- `<Select.Trigger>` — Button that opens/closes dropdown
+- `<Select.ValueText>` — Displays selected value(s)
+- `<Select.IndicatorGroup>` — Container for trigger indicators
+- `<Select.Indicator>` — Chevron icon showing dropdown state
+- `<Select.Positioner>` — Positions dropdown relative to trigger
+- `<Select.Content>` — Dropdown container with animations
+- `<Select.List>` — Scrollable list of options
+- `<Select.Item>` — Individual selectable option
+- `<Select.ItemText>` — Text content of option
+- `<Select.ItemIndicator>` — Check icon shown on selected items
+- `<Select.ItemGroup>` — Groups related options
+- `<Select.ItemGroupLabel>` — Label for option group
+- `<Select.ClearTrigger>` — Optional clear selection button
+- `<Select.HiddenSelect>` — Hidden native select for form integration
+
+**Shadcn → Discourser Mapping:**
+
+| Shadcn | Discourser | Notes |
+|---|---|---|
+| `<Select>` | `<Select.Root>` | |
+| `<SelectTrigger>` | `<Select.Control><Select.Trigger>` | Trigger must be wrapped in Control |
+| `<SelectValue />` | `<Select.ValueText />` | |
+| `<SelectContent>` | `<Select.Positioner><Select.Content>` | Needs Positioner wrapper |
+| `<SelectItem>` | `<Select.Item>` | |
+| `<SelectGroup>` | `<Select.ItemGroup>` | |
+| `<SelectLabel>` | `<Select.ItemGroupLabel>` | For group labels, not field labels |
+
+**Critical Differences:**
+- Shadcn `<SelectContent>` → Discourser requires `<Select.Positioner><Select.Content>` nesting
+- Shadcn `<SelectLabel>` (group label) ≠ `<Select.Label>` (field label)
+- Discourser requires `<Select.HiddenSelect />` for form submission
+
+**Variants:**
+
+| Discourser | Visual |
+|---|---|
+| `variant="outline"` | Transparent background with border (default) |
+| `variant="surface"` | Subtle background with border |
+
+**Sizes:** `xs`, `sm`, `md` (default), `lg`, `xl`
+
+**See:** [Guidelines/99-Select](/docs/documentation-guidelines-99-select--docs)
+
+---
+
+### Checkbox
+
+**Maps from:** Shadcn Checkbox
+**Import:** `import { Checkbox } from '@discourser/design-system'`
+**Type:** Compound (slot recipe)
+
+**Anatomy:**
+- `<Checkbox.Root>` — Container managing checkbox state
+- `<Checkbox.Control>` — Checkbox box with visual states
+- `<Checkbox.Label>` — Text label
+- `<Checkbox.Indicator>` — Check mark icon
+- `<Checkbox.HiddenInput>` — Hidden native input for forms
+
+**Shadcn → Discourser:**
+
+| Shadcn | Discourser |
+|---|---|
+| `<Checkbox />` | `<Checkbox.Root><Checkbox.Control><Checkbox.Indicator /></Checkbox.Control></Checkbox.Root>` |
+| `<Label htmlFor="...">` | `<Checkbox.Label>` |
+
+**Variants:** `solid`, `surface`, `subtle`, `outline`, `plain`
+**Sizes:** `sm`, `md` (default), `lg`
+
+**See:** [Guidelines/99-Checkbox](/docs/documentation-guidelines-99-checkbox--docs)
+
+---
+
+### RadioGroup
+
+**Maps from:** Shadcn Radio Group
+**Import:** `import { RadioGroup } from '@discourser/design-system'`
+**Type:** Compound (slot recipe)
+
+**Anatomy:**
+- `<RadioGroup.Root>` — Container managing radio group state
+- `<RadioGroup.Label>` — Group label
+- `<RadioGroup.Item>` — Individual radio button
+- `<RadioGroup.ItemControl>` — Radio circle with visual states
+- `<RadioGroup.ItemText>` — Text label for radio
+- `<RadioGroup.Indicator>` — Selected indicator (dot)
+- `<RadioGroup.ItemHiddenInput>` — Hidden native input
+
+**Shadcn → Discourser:**
+
+| Shadcn | Discourser |
+|---|---|
+| `<RadioGroup>` | `<RadioGroup.Root>` |
+| `<RadioGroupItem />` | `<RadioGroup.Item><RadioGroup.ItemControl><RadioGroup.Indicator /></RadioGroup.ItemControl></RadioGroup.Item>` |
+| `<Label htmlFor="...">` | `<RadioGroup.ItemText>` |
+
+**Variants:** `solid`
+**Sizes:** `sm`, `md` (default), `lg`
+**Orientation:** `horizontal`, `vertical` (default)
+
+**See:** [Guidelines/99-RadioGroup](/docs/documentation-guidelines-99-radio-group--docs)
+
+---
+
+### Switch
+
+**Maps from:** Shadcn Switch
+**Import:** `import { Switch } from '@discourser/design-system'`
+**Type:** Compound (slot recipe)
+
+**Anatomy:**
+- `<Switch.Root>` — Container managing switch state
+- `<Switch.Label>` — Text label
+- `<Switch.Control>` — Track with thumb (default includes Thumb)
+- `<Switch.Thumb>` — Sliding toggle thumb
+- `<Switch.HiddenInput>` — Hidden native input
+
+**Shadcn → Discourser:**
+
+| Shadcn | Discourser |
+|---|---|
+| `<Switch />` | `<Switch.Root><Switch.Control><Switch.Thumb /></Switch.Control></Switch.Root>` |
+| `<Label htmlFor="...">` | `<Switch.Label>` |
+
+**Note:** `<Switch.Control>` includes `<Switch.Thumb>` by default, but you can override.
+
+**Variants:** `solid`
+**Sizes:** `xs`, `sm`, `md` (default), `lg`
+
+**See:** [Guidelines/99-Switch](/docs/documentation-guidelines-99-switch--docs)
+
+---
+
+### Slider
+
+**Maps from:** Shadcn Slider
+**Import:** `import { Slider } from '@discourser/design-system'`
+**Type:** Compound (slot recipe)
+
+**Anatomy:**
+- `<Slider.Root>` — Container managing slider state
+- `<Slider.Label>` — Text label
+- `<Slider.ValueText>` — Displays current value
+- `<Slider.Control>` — Interactive slider area
+- `<Slider.Track>` — Slider track (rail)
+- `<Slider.Range>` — Filled portion of track
+- `<Slider.Thumb>` — Draggable handle
+- `<Slider.MarkerGroup>` — Container for markers
+- `<Slider.Marker>` — Individual tick mark
+- `<Slider.MarkerIndicator>` — Marker visual indicator
+- `<Slider.HiddenInput>` — Hidden native input
+
+**Shadcn → Discourser:**
+
+| Shadcn | Discourser |
+|---|---|
+| `<Slider>` | `<Slider.Root>` |
+| `<SliderTrack><SliderRange /></SliderTrack>` | `<Slider.Control><Slider.Track><Slider.Range /></Slider.Track></Slider.Control>` |
+| `<SliderThumb />` | `<Slider.Thumb />` |
+
+**Note:** Discourser Slider uses `<Slider.Control>` wrapper not present in Shadcn.
+
+**Variants:** `outline`
+**Sizes:** `sm`, `md` (default), `lg`
+**Orientation:** `horizontal` (default), `vertical`
+
+**See:** [Guidelines/99-Slider](/docs/documentation-guidelines-99-slider--docs)
+
+---
+
+## 2. Layout & Containers
+
+### Card
+
+**Maps from:** Shadcn Card
+**Import:** `import { Card } from '@discourser/design-system'`
+**Type:** Compound (slot recipe)
+
+**Anatomy:**
+- `<Card.Root>` — Container with border/elevation
+- `<Card.Header>` — Top section for title/description
+- `<Card.Title>` — Card heading
+- `<Card.Description>` — Subheading/description
+- `<Card.Body>` — Main content area
+- `<Card.Footer>` — Bottom section for actions
+
+**Shadcn → Discourser:**
+
+| Shadcn | Discourser | Notes |
+|---|---|---|
+| `<Card>` | `<Card.Root>` | Shadcn is flat, Discourser is compound |
+| `<CardHeader>` | `<Card.Header>` | |
+| `<CardTitle>` | `<Card.Title>` | |
+| `<CardDescription>` | `<Card.Description>` | |
+| `<CardContent>` | `<Card.Body>` | Different name in Discourser |
+| `<CardFooter>` | `<Card.Footer>` | |
+
+**Critical:** Shadcn uses flat components; Discourser uses namespace pattern.
+
+**Variants:**
+
+| Shadcn | Discourser | Visual |
+|---|---|---|
+| (default) | `variant="elevated"` | Surface with shadow |
+| - | `variant="outline"` | Border, no shadow (default) |
+| - | `variant="subtle"` | Subtle background fill |
+
+**See:** [Guidelines/99-Card](/docs/documentation-guidelines-99-card--docs)
+
+---
+
+### Accordion
+
+**Maps from:** Shadcn Accordion
+**Import:** `import { Accordion } from '@discourser/design-system'`
+**Type:** Compound (slot recipe)
+
+**Anatomy:**
+- `<Accordion.Root>` — Container managing accordion state
+- `<Accordion.Item>` — Individual collapsible section
+- `<Accordion.ItemTrigger>` — Clickable header to toggle section
+- `<Accordion.ItemIndicator>` — Chevron icon showing expand/collapse state
+- `<Accordion.ItemContent>` — Collapsible content area
+- `<Accordion.ItemBody>` — Content wrapper with padding
+
+**Shadcn → Discourser:**
+
+| Shadcn | Discourser |
+|---|---|
+| `<Accordion>` | `<Accordion.Root>` |
+| `<AccordionItem>` | `<Accordion.Item>` |
+| `<AccordionTrigger>` | `<Accordion.ItemTrigger>` |
+| `<AccordionContent>` | `<Accordion.ItemContent>` |
+
+**Note:** Discourser adds `<Accordion.ItemBody>` for content padding, and `<Accordion.ItemIndicator>` for the chevron icon (built-in).
+
+**See:** [Guidelines/99-Accordion](/docs/documentation-guidelines-99-accordion--docs)
+
+---
+
+### Drawer
+
+**Maps from:** Shadcn Sheet
+**Import:** `import { Drawer } from '@discourser/design-system'`
+**Type:** Compound (slot recipe) — Uses Dialog primitive
+
+**Anatomy:**
+- `<Drawer.Root>` — Container managing drawer state
+- `<Drawer.Trigger>` — Button to open drawer
+- `<Drawer.Backdrop>` — Semi-transparent overlay
+- `<Drawer.Positioner>` — Positions drawer from edge
+- `<Drawer.Content>` — Drawer panel content
+- `<Drawer.Title>` — Drawer heading
+- `<Drawer.Description>` — Drawer description
+- `<Drawer.Header>` — Top section wrapper
+- `<Drawer.Body>` — Main content wrapper
+- `<Drawer.Footer>` — Bottom section wrapper
+- `<Drawer.CloseTrigger>` — Close button
+
+**Shadcn Sheet → Discourser Drawer:**
+
+| Shadcn | Discourser |
+|---|---|
+| `<Sheet>` | `<Drawer.Root>` |
+| `<SheetTrigger>` | `<Drawer.Trigger>` |
+| `<SheetContent>` | `<Drawer.Positioner><Drawer.Content>` |
+| `<SheetHeader>` | `<Drawer.Header>` |
+| `<SheetTitle>` | `<Drawer.Title>` |
+| `<SheetDescription>` | `<Drawer.Description>` |
+| `<SheetFooter>` | `<Drawer.Footer>` |
+
+**Critical:** Like Dialog, Drawer.Content must be wrapped in Drawer.Positioner.
+
+**See:** [Guidelines/99-Drawer](/docs/documentation-guidelines-99-drawer--docs)
+
+---
+
+### Tabs
+
+**Maps from:** Shadcn Tabs
+**Import:** `import { Tabs } from '@discourser/design-system'`
+**Type:** Compound (slot recipe)
+
+**Anatomy:**
+- `<Tabs.Root>` — Container managing tab state
+- `<Tabs.List>` — Container for tab triggers
+- `<Tabs.Trigger>` — Individual tab button
+- `<Tabs.Content>` — Panel content for each tab
+- `<Tabs.Indicator>` — Active tab visual indicator
+
+**Shadcn → Discourser:**
+
+| Shadcn | Discourser |
+|---|---|
+| `<Tabs>` | `<Tabs.Root>` |
+| `<TabsList>` | `<Tabs.List>` |
+| `<TabsTrigger>` | `<Tabs.Trigger>` |
+| `<TabsContent>` | `<Tabs.Content>` |
+
+**Note:** Discourser adds `<Tabs.Indicator>` for animated underline/highlight.
+
+**Variants:** `line` (default), `subtle`, `enclosed`
+**Sizes:** `xs`, `sm`, `md` (default), `lg`
+**Fitted:** `fitted={true}` to make tabs fill container width
+
+**See:** [Guidelines/99-Tabs](/docs/documentation-guidelines-99-tabs--docs)
+
+---
+
+### Stepper
+
+**Maps from:** Material Design 3 Stepper (no direct Shadcn equivalent)
+**Import:** `import { Stepper } from '@discourser/design-system'`
+**Type:** Compound (slot recipe)
+
+**Anatomy:**
+- `<Stepper.Root>` — Container managing stepper state
+- `<Stepper.List>` — Container for step items
+- `<Stepper.Item>` — Individual step
+- `<Stepper.Trigger>` — Clickable step indicator
+- `<Stepper.Indicator>` — Step number/icon
+- `<Stepper.Separator>` — Line connecting steps
+- `<Stepper.Content>` — Panel content for each step
+- `<Stepper.Progress>` — Overall progress bar
+- `<Stepper.PrevTrigger>` — Previous step button
+- `<Stepper.NextTrigger>` — Next step button
+
+**Props:**
+- `steps: StepItem[]` (required) — Array of `{ value: string; title: string; description?: string }`
+- `colorPalette` — `primary`, `secondary`, `tertiary`, `error`, `neutral`
+- `showContent` — Whether to show step content panels
+- `showActions` — Whether to show Prev/Next buttons
+
+**Variants:**
+- **Size:** `sm`, `md` (default), `lg`
+- **Orientation:** `horizontal` (default), `vertical`
+
+**See:** Stepper.stories.tsx for usage examples
+
+---
+
+## 3. Feedback & Status
+
+### Badge
+
+**Maps from:** Shadcn Badge
+**Import:** `import { Badge } from '@discourser/design-system'`
+**Type:** Simple (recipe)
+
+**Variants:**
+
+| Shadcn | Discourser | Visual |
+|---|---|---|
+| `default` | `variant="subtle"` | Subtle background (default) |
+| `secondary` | `variant="surface"` | Surface background with border |
+| `outline` | `variant="outline"` | Border, no background |
+| `destructive` | `variant="solid" colorPalette="error"` | Solid red background |
+
+**Sizes:**
+
+| Discourser | Usage |
+|---|---|
+| `size="sm"` | Small, compact |
+| `size="md"` | Default |
+| `size="lg"` | Larger, more prominent |
+
+**Props:**
+- `colorPalette` — `primary`, `secondary`, `tertiary`, `neutral`, `error`, `gray`, `red`
+
+**See:** [Guidelines/99-Badge](/docs/documentation-guidelines-99-badge--docs)
+
+---
+
+### Avatar
+
+**Maps from:** Shadcn Avatar
+**Import:** `import { Avatar } from '@discourser/design-system'`
+**Type:** Compound (slot recipe)
+
+**Anatomy:**
+- `<Avatar.Root>` — Container for avatar
+- `<Avatar.Image>` — Avatar image element
+- `<Avatar.Fallback>` — Fallback when image fails to load
+
+**Shadcn → Discourser:**
+
+| Shadcn | Discourser |
+|---|---|
+| `<Avatar>` | `<Avatar.Root>` |
+| `<AvatarImage />` | `<Avatar.Image />` |
+| `<AvatarFallback>` | `<Avatar.Fallback>` |
+
+**Special:** Discourser `<Avatar.Fallback>` accepts `name` prop to auto-generate initials.
+
+**Variants:** `solid`, `surface`, `subtle` (default), `outline`
+**Sizes:** `2xs`, `xs`, `sm`, `md` (default), `lg`, `xl`, `2xl`, `full`
+**Shape:** `square`, `rounded`, `full` (default, circular)
+
+**See:** [Guidelines/99-Avatar](/docs/documentation-guidelines-99-avatar--docs)
+
+---
+
+### Progress
+
+**Maps from:** Shadcn Progress
+**Import:** `import { Progress } from '@discourser/design-system'`
+**Type:** Compound (slot recipe)
+
+**Anatomy:**
+- `<Progress.Root>` — Container managing progress state
+- `<Progress.Label>` — Text label
+- `<Progress.ValueText>` — Displays percentage/value
+- `<Progress.Track>` — Background track
+- `<Progress.Range>` — Filled progress bar
+- `<Progress.Circle>` — Circular progress wrapper
+- `<Progress.CircleTrack>` — Circular background track
+- `<Progress.CircleRange>` — Circular filled arc
+- `<Progress.View>` — Helper for linear progress
+
+**Shadcn → Discourser (Linear):**
+
+| Shadcn | Discourser |
+|---|---|
+| `<Progress value={50} />` | `<Progress.Root value={50}><Progress.Track><Progress.Range /></Progress.Track></Progress.Root>` |
+
+**Circular Progress:**
+```tsx
+<Progress.Root value={50}>
+  <Progress.Circle>
+    <Progress.CircleTrack />
+    <Progress.CircleRange />
+    <Progress.ValueText />
+  </Progress.Circle>
+</Progress.Root>
+```
+
+**Variants:** `solid` (default), `subtle`
+**Sizes:** `xs`, `sm`, `md` (default), `lg`, `xl`
+**Shape:** `square`, `rounded` (default), `full`
+**Striped/Animated:** `striped={true}`, `animated={true}` for animated stripes
+
+**See:** [Guidelines/99-Progress](/docs/documentation-guidelines-99-progress--docs)
+
+---
+
+### Skeleton
+
+**Maps from:** Shadcn Skeleton
+**Import:** `import { Skeleton } from '@discourser/design-system'`
+**Type:** Simple (recipe) with helpers
+
+**Components:**
+- `<Skeleton>` — Basic skeleton element
+- `<SkeletonCircle>` — Circular skeleton (for avatars)
+- `<SkeletonText>` — Multiple skeleton lines (for paragraphs)
+
+**Variants:** `pulse` (default), `shine`, `none`
+
+**Shadcn → Discourser:**
+
+| Shadcn | Discourser | Notes |
+|---|---|---|
+| `<Skeleton className="h-4 w-full" />` | `<Skeleton height="4" width="full" />` | Use Panda props |
+| `<Skeleton className="h-12 w-12 rounded-full" />` | `<SkeletonCircle size="12" />` | Dedicated circle component |
+| (manual multiple) | `<SkeletonText noOfLines={3} />` | Automatic multi-line |
+
+**See:** [Guidelines/99-Skeleton](/docs/documentation-guidelines-99-skeleton--docs)
+
+---
+
+### Spinner
+
+**Maps from:** Shadcn Spinner (custom)
+**Import:** `import { Spinner } from '@discourser/design-system'`
+**Type:** Simple (recipe)
+
+**Sizes:** `inherit`, `xs`, `sm`, `md` (default), `lg`, `xl`, `2xl`
+
+**See:** [Guidelines/99-Spinner](/docs/documentation-guidelines-99-spinner--docs)
+
+---
+
+### Toast
+
+**Maps from:** Shadcn Toast (Sonner)
+**Import:** `import { toaster, Toaster } from '@discourser/design-system'`
+**Type:** Programmatic API (not component-based)
+
+**Shadcn → Discourser:**
+
+| Shadcn | Discourser | Notes |
+|---|---|---|
+| `toast("Message")` | `toaster.create({ title: "Message" })` | Different invocation API |
+| `toast.success("Done")` | `toaster.create({ type: "success", title: "Done" })` | Type is object property |
+| `toast.error("Failed")` | `toaster.create({ type: "error", title: "Failed" })` | |
+| `toast.loading("Wait")` | `toaster.create({ type: "loading", title: "Wait" })` | Shows spinner |
+
+**Setup:**
+```tsx
+// Add to app root
+import { Toaster } from '@discourser/design-system';
+
+<Toaster />
+```
+
+**API:**
+```tsx
+toaster.create({
+  title: "Title",
+  description: "Description",
+  type: "success" | "error" | "warning" | "loading",
+  duration: 5000,
+  closable: true,
+  action: { label: "Undo", onClick: () => {} }
+})
+```
+
+**Critical Differences:**
+- Shadcn uses `toast()` function; Discourser uses `toaster.create()` method
+- Shadcn uses `toast.success()`; Discourser uses `type` property
+- Requires `<Toaster />` component in app root
+
+**See:** [Guidelines/99-Toast](/docs/documentation-guidelines-99-toast--docs)
+
+---
+
+## 4. Overlays
+
+### Dialog
+
+**Maps from:** Shadcn Dialog
+**Import:** `import { Dialog } from '@discourser/design-system'`
+**Type:** Compound (slot recipe)
+
+**Anatomy:**
+- `<Dialog.Root>` — Container managing dialog state
+- `<Dialog.Trigger>` — Button to open dialog
+- `<Dialog.Backdrop>` — Semi-transparent overlay (scrim)
+- `<Dialog.Positioner>` — Centers dialog on screen
+- `<Dialog.Content>` — Dialog panel content
+- `<Dialog.Title>` — Dialog heading
+- `<Dialog.Description>` — Dialog description text
+- `<Dialog.Header>` — Top section wrapper
+- `<Dialog.Body>` — Main content wrapper
+- `<Dialog.Footer>` — Bottom section wrapper (actions)
+- `<Dialog.CloseTrigger>` — Close button
+
+**Shadcn → Discourser:**
+
+| Shadcn | Discourser | Notes |
+|---|---|---|
+| `<Dialog>` | `<Dialog.Root>` | |
+| `<DialogTrigger>` | `<Dialog.Trigger>` | |
+| `<DialogContent>` | `<Dialog.Positioner><Dialog.Content>` | **Requires Positioner wrapper** |
+| `<DialogHeader>` | `<Dialog.Header>` | |
+| `<DialogTitle>` | `<Dialog.Title>` | |
+| `<DialogDescription>` | `<Dialog.Description>` | |
+| `<DialogFooter>` | `<Dialog.Footer>` | |
+
+**Critical:** Shadcn `<DialogContent>` → Discourser `<Dialog.Positioner><Dialog.Content>` (needs positioner wrapper).
+
+**Shadcn `<DialogHeader>` and `<DialogFooter>`:**
+- In Shadcn these are custom layout wrappers
+- Discourser provides `<Dialog.Header>` and `<Dialog.Footer>` as styled slots
+- Alternatively, use `<VStack gap="1.5">` for header or `<HStack gap="3" justify="flex-end">` for footer if you need custom layouts
+
+**See:** [Guidelines/99-Dialog](/docs/documentation-guidelines-99-dialog--docs)
+
+---
+
+### Popover
+
+**Maps from:** Shadcn Popover
+**Import:** `import { Popover } from '@discourser/design-system'`
+**Type:** Compound (slot recipe)
+
+**Anatomy:**
+- `<Popover.Root>` — Container managing popover state
+- `<Popover.Trigger>` — Element that triggers popover
+- `<Popover.Anchor>` — Anchor point for positioning
+- `<Popover.Positioner>` — Positions popover relative to trigger
+- `<Popover.Content>` — Popover panel content
+- `<Popover.Title>` — Popover heading
+- `<Popover.Description>` — Popover description
+- `<Popover.Arrow>` — Arrow pointing to trigger
+- `<Popover.ArrowTip>` — Arrow border/tip styling
+- `<Popover.Header>` — Top section wrapper
+- `<Popover.Body>` — Main content wrapper
+- `<Popover.Footer>` — Bottom section wrapper
+- `<Popover.CloseTrigger>` — Close button
+
+**Shadcn → Discourser:**
+
+| Shadcn | Discourser |
+|---|---|---|
+| `<Popover>` | `<Popover.Root>` |
+| `<PopoverTrigger>` | `<Popover.Trigger>` |
+| `<PopoverContent>` | `<Popover.Positioner><Popover.Content>` |
+
+**See:** [Guidelines/99-Popover](/docs/documentation-guidelines-99-popover--docs)
+
+---
+
+### Tooltip
+
+**Maps from:** Shadcn Tooltip
+**Import:** `import { Tooltip } from '@discourser/design-system'`
+**Type:** Compound (slot recipe) with wrapper helper
+
+**Anatomy:**
+- `<Tooltip.Root>` — Container managing tooltip state
+- `<Tooltip.Trigger>` — Element that triggers tooltip
+- `<Tooltip.Positioner>` — Positions tooltip relative to trigger
+- `<Tooltip.Content>` — Tooltip content
+- `<Tooltip.Arrow>` — Arrow pointing to trigger
+- `<Tooltip.ArrowTip>` — Arrow border/tip styling
+
+**Shadcn → Discourser:**
+
+| Shadcn | Discourser |
+|---|---|
+| `<TooltipProvider>` | Not needed (handled by Root) |
+| `<Tooltip>` | `<Tooltip.Root>` |
+| `<TooltipTrigger>` | `<Tooltip.Trigger>` |
+| `<TooltipContent>` | `<Tooltip.Positioner><Tooltip.Content>` |
+
+**Helper Wrapper (Simplified):**
+```tsx
+<Tooltip content="Helpful text">
+  <Button>Hover me</Button>
+</Tooltip>
+```
+
+**See:** [Guidelines/99-Tooltip](/docs/documentation-guidelines-99-tooltip--docs)
+
+---
+
+## 5. Typography
+
+### Heading
+
+**Maps from:** Figma Text Styles (Material Design 3), Tailwind heading classes
+**Import:** `import { Heading } from '@discourser/design-system'`
+**Type:** Simple (recipe)
+
+**Sizes:**
+
+| Figma/M3 Text Style | Discourser | Element | Usage |
+|---|---|---|---|
+| `displayLarge` | `size="7xl"` | h1 | Hero headings |
+| `displayMedium` | `size="6xl"` | h1 | Large display |
+| `displaySmall` | `size="5xl"` | h2 | Display headings |
+| `headlineLarge` | `size="4xl"` | h2 | Page titles |
+| `headlineMedium` | `size="3xl"` | h3 | Section headings |
+| `headlineSmall` | `size="2xl"` | h4 | Subsection headings |
+| `titleLarge` | `size="xl"` | h2/h3 | Default heading |
+| `titleMedium` | `size="lg"` | h4 | Card titles |
+| `titleSmall` | `size="md"` | h5 | Small headings |
+
+**Default size:** `xl` (titleLarge)
+
+**Props:**
+- `as` — HTML element (`h1`, `h2`, `h3`, `h4`, `h5`, `h6`)
+- `size` — Visual size (independent of semantic element)
+
+**Tailwind → Discourser:**
+
+| Tailwind | Discourser |
+|---|---|
+| `className="text-4xl font-bold"` | `<Heading size="4xl">` |
+| `<h2 className="text-2xl">` | `<Heading as="h2" size="2xl">` |
+
+**See:** [Guidelines/99-Heading](/docs/documentation-guidelines-99-heading--docs)
+
+---
+
+## 6. Utility
+
+### CloseButton
+
+**Maps from:** Custom close button (no direct Shadcn equivalent)
+**Import:** `import { CloseButton } from '@discourser/design-system'`
+**Type:** Simple (wraps IconButton)
+
+**Default Props:**
+- `variant="plain"`
+- `colorPalette="gray"`
+- `aria-label="Close"`
+- Icon: X icon
+
+**Usage:**
+```tsx
+<CloseButton size="sm" />
+<CloseButton onClick={handleClose} />
+```
+
+Inherits all IconButton/Button props (variant, size, colorPalette, etc.)
+
+---
+
+### Group
+
+**Maps from:** Tailwind flex/button groups
+**Import:** `import { Group } from '@discourser/design-system'`
+**Type:** Simple (recipe)
+
+**Variants:**
+- **Orientation:** `horizontal` (default), `vertical`
+- **Attached:** `attached={true}` — Removes gaps, merges borders
+- **Grow:** `grow={true}` — Children fill available space equally
+
+**Usage:**
+```tsx
+<Group orientation="horizontal" attached>
+  <Button>Left</Button>
+  <Button>Middle</Button>
+  <Button>Right</Button>
+</Group>
+```
+
+Used with `<ButtonGroup>` for button groups with shared variant/size.
+
+---
+
+### AbsoluteCenter
+
+**Maps from:** Tailwind absolute centering patterns
+**Import:** `import { AbsoluteCenter } from '@discourser/design-system'`
+**Type:** Simple (recipe)
+
+**Variants:**
+- **Axis:** `horizontal`, `vertical`, `both` (default)
+
+**Tailwind → Discourser:**
+
+| Tailwind | Discourser |
+|---|---|
+| `className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"` | `<AbsoluteCenter axis="both">` |
+| `className="absolute left-1/2 -translate-x-1/2"` | `<AbsoluteCenter axis="horizontal">` |
+
+---
+
+### Icon
+
+**Maps from:** Lucide React icons, custom SVG wrappers
+**Import:** `import { Icon } from '@discourser/design-system'`
+**Type:** Simple (styled svg)
+
+**Usage:**
+```tsx
+<Icon>
+  <svg>...</svg>
+</Icon>
+```
+
+Wrapper for inline SVG icons with consistent sizing and theming.
+
+---
+
+### Loader
+
+**Maps from:** Custom loading indicators
+**Import:** Used internally by Button with `loading` prop
+**Type:** Internal utility (not directly imported)
+
+**Usage:** Use `<Spinner>` for standalone loading indicators, or `<Button loading>` for button loading states.
+
+---
+
+## Common Mistakes
+
+```tsx
+// ❌ WRONG: Using flat Shadcn pattern for compound Discourser component
+<Dialog>
+  <DialogContent>...</DialogContent>
+</Dialog>
+
+// ✅ CORRECT: Using Ark UI compound pattern
+<Dialog.Root>
+  <Dialog.Trigger>Open</Dialog.Trigger>
+  <Dialog.Backdrop />
+  <Dialog.Positioner>
+    <Dialog.Content>...</Dialog.Content>
+  </Dialog.Positioner>
+</Dialog.Root>
+```
+
+```tsx
+// ❌ WRONG: Missing Positioner wrapper for Dialog/Drawer/Popover Content
+<Dialog.Root>
+  <Dialog.Content>...</Dialog.Content>
+</Dialog.Root>
+
+// ✅ CORRECT: Positioner wraps Content
+<Dialog.Root>
+  <Dialog.Positioner>
+    <Dialog.Content>...</Dialog.Content>
+  </Dialog.Positioner>
+</Dialog.Root>
+```
+
+```tsx
+// ❌ WRONG: Using "destructive" as a variant
+<Button variant="destructive">Delete</Button>
+
+// ✅ CORRECT: Using colorPalette for destructive intent
+<Button variant="solid" colorPalette="error">Delete</Button>
+```
+
+```tsx
+// ❌ WRONG: Using Shadcn SelectLabel for group labels
+<Select.Root>
+  <Select.Label>Filter by status</Select.Label>  {/* This is for the field */}
+  <Select.ItemGroup>
+    <Select.Label>Active</Select.Label>  {/* WRONG */}
+  </Select.ItemGroup>
+</Select.Root>
+
+// ✅ CORRECT: Using ItemGroupLabel for option groups
+<Select.Root>
+  <Select.Label>Filter by status</Select.Label>  {/* Field label */}
+  <Select.ItemGroup>
+    <Select.ItemGroupLabel>Active</Select.ItemGroupLabel>  {/* Group label */}
+  </Select.ItemGroup>
+</Select.Root>
+```
+
+```tsx
+// ❌ WRONG: Importing from wrong path
+import { Button } from '@ark-ui/react'
+import { button } from '../preset/recipes/button'
+
+// ✅ CORRECT: Importing from design system
+import { Button } from '@discourser/design-system'
+```
+
+```tsx
+// ❌ WRONG: Using Shadcn CardContent
+<Card.Root>
+  <Card.Content>...</Card.Content>
+</Card.Root>
+
+// ✅ CORRECT: Using Card.Body (different name)
+<Card.Root>
+  <Card.Body>...</Card.Body>
+</Card.Root>
+```
+
+```tsx
+// ❌ WRONG: Missing Select.HiddenSelect (breaks form submission)
+<Select.Root>
+  <Select.Control>
+    <Select.Trigger>
+      <Select.ValueText />
+    </Select.Trigger>
+  </Select.Control>
+  <Select.Positioner>
+    <Select.Content>
+      <Select.List>{/* items */}</Select.List>
+    </Select.Content>
+  </Select.Positioner>
+  {/* Missing HiddenSelect */}
+</Select.Root>
+
+// ✅ CORRECT: Include HiddenSelect for forms
+<Select.Root>
+  {/* ... */}
+  <Select.HiddenSelect />
+</Select.Root>
+```
+
+```tsx
+// ❌ WRONG: Using toast() function like Shadcn
+import { toast } from '@discourser/design-system';
+toast.success("Done");
+
+// ✅ CORRECT: Using toaster.create() method
+import { toaster } from '@discourser/design-system';
+toaster.create({ type: "success", title: "Done" });
+```
+
+---
+
+## Cross-References
+
+For full component API documentation, usage patterns, accessibility guidelines, and examples:
+
+- **Button:** [Guidelines/99-Button](/docs/documentation-guidelines-99-button--docs)
+- **Card:** [Guidelines/99-Card](/docs/documentation-guidelines-99-card--docs)
+- **Dialog:** [Guidelines/99-Dialog](/docs/documentation-guidelines-99-dialog--docs)
+- **Select:** [Guidelines/99-Select](/docs/documentation-guidelines-99-select--docs)
+- **Input:** [Guidelines/99-Input](/docs/documentation-guidelines-99-input--docs)
+- **Checkbox:** [Guidelines/99-Checkbox](/docs/documentation-guidelines-99-checkbox--docs)
+- **Switch:** [Guidelines/99-Switch](/docs/documentation-guidelines-99-switch--docs)
+- **Tabs:** [Guidelines/99-Tabs](/docs/documentation-guidelines-99-tabs--docs)
+- **Avatar:** [Guidelines/99-Avatar](/docs/documentation-guidelines-99-avatar--docs)
+- **Progress:** [Guidelines/99-Progress](/docs/documentation-guidelines-99-progress--docs)
+- **Skeleton:** [Guidelines/99-Skeleton](/docs/documentation-guidelines-99-skeleton--docs)
+- **Spinner:** [Guidelines/99-Spinner](/docs/documentation-guidelines-99-spinner--docs)
+- **Toast:** [Guidelines/99-Toast](/docs/documentation-guidelines-99-toast--docs)
+
+For architectural guidance:
+- [Guidelines: Colors](/docs/documentation-guidelines-99-colors--docs)
+- [Guidelines: Typography](/docs/documentation-guidelines-99-typography--docs)
+- [Guidelines: Spacing](/docs/documentation-guidelines-99-spacing--docs)
+- [Guidelines: Elevation](/docs/documentation-guidelines-99-elevation--docs)
+
+---
+
+## Import Path Reference
+
+**Single source of truth:** All components import from `@discourser/design-system`
+
+```tsx
+// ✅ CORRECT: All components from package
+import {
+  Button,
+  Card,
+  Dialog,
+  Select,
+  Input,
+  Checkbox,
+  Switch,
+  Tabs,
+  Avatar,
+  Badge,
+  Spinner,
+  toaster,
+  Toaster,
+} from '@discourser/design-system';
+```
+
+```tsx
+// ❌ WRONG: Importing from internal paths
+import { Button } from '@discourser/design-system/src/components/Button';
+import { button } from '@discourser/design-system/src/preset/recipes/button';
+import { Button } from '@ark-ui/react';
+```
+
+---
+
+## Recipe vs Slot Recipe Classification
+
+Matches `panda.config.ts` definitions:
+
+**Simple Components (recipes):**
+- button, input, inputAddon, group, spinner, absoluteCenter
+- heading, badge, skeleton, textarea
+
+**Compound Components (slotRecipes):**
+- field, inputGroup
+- card, accordion, drawer, tabs
+- switchComponent, checkbox, radioGroup, select, slider
+- avatar, progress, toast
+- dialog, popover, tooltip
+- stepper
+
+---
+
+## Notes for Kai Design Engineer Agent
+
+When translating from Figma/Shadcn to Discourser:
+
+1. **Always check if component is compound** — Use namespace pattern for compound components
+2. **Positioner wrapper is critical** — Dialog, Drawer, Popover, Tooltip, Select all require Positioner wrapping Content
+3. **colorPalette is a prop, not a variant** — Don't confuse `variant="destructive"` with `colorPalette="error"`
+4. **Shadcn component names may differ** — `CardContent` → `Card.Body`, `Sheet` → `Drawer`
+5. **Import from package only** — `@discourser/design-system`, never from internal paths
+6. **HiddenSelect/HiddenInput required** — For form components that need native input integration
+7. **Toast uses programmatic API** — `toaster.create()` method, not `toast()` function
+8. **Default variants matter** — Button defaults to `solid`, Card defaults to `outline`, Badge defaults to `subtle`

@@ -1,0 +1,500 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation/Guidelines/99-Textarea" />
+
+# Textarea
+
+**Purpose:** Multi-line text input field for longer user input following Material Design 3 patterns.
+
+## When to Use This Component
+
+Use Textarea when you need **multi-line text entry** where users may need to write paragraphs, enter line breaks, or provide longer content.
+
+**Decision Tree:**
+
+| Scenario                                                | Use This                     | Why                                      |
+| ------------------------------------------------------- | ---------------------------- | ---------------------------------------- |
+| Multi-line text (comments, descriptions, messages, bio) | Textarea ✅                  | Allows line breaks, expandable content   |
+| Single-line text (name, email, username)                | Input                        | More compact, better UX for short text   |
+| Select from predefined options                          | Select                       | Prevents typos, faster than typing       |
+| Rich text editing (bold, italic, links)                 | Rich Text Editor             | Textarea is plain text only              |
+| Code input                                              | Textarea with monospace font | Or use specialized code editor component |
+
+**Component Comparison:**
+
+```typescript
+// ✅ Use Textarea for multi-line content
+<Textarea
+  label="Comment"
+  placeholder="Share your thoughts..."
+  rows={4}
+/>
+
+<Textarea
+  label="Bio"
+  placeholder="Tell us about yourself"
+  rows={6}
+/>
+
+// ❌ Don't use Textarea for single-line text - use Input
+<Textarea
+  label="Username"
+  rows={1}
+/>  // Wrong - single-line input should use Input
+
+<Input
+  label="Username"
+/>  // Correct
+
+// ❌ Don't use Textarea when options are predefined - use Select
+<Textarea
+  label="Country"
+  placeholder="Enter your country"
+/>  // Wrong - prone to typos and inconsistent data
+
+<Select.Root collection={countries}>
+  <Select.Label>Country</Select.Label>
+  <Select.Control>
+    <Select.Trigger>
+      <Select.ValueText placeholder="Select your country" />
+    </Select.Trigger>
+  </Select.Control>
+  <Select.Content>
+    {/* country options */}
+  </Select.Content>
+</Select.Root>  // Correct
+
+// ✅ Use Textarea for longer content that needs line breaks
+<form onSubmit={handleSubmit}>
+  <Input label="Title" />
+  <Textarea
+    label="Description"
+    rows={5}
+    placeholder="Provide a detailed description..."
+  />
+  <Button type="submit">Submit</Button>
+</form>
+```
+
+## Import
+
+```typescript
+import { Textarea } from '@discourser/design-system';
+```
+
+## Variants
+
+The Textarea component supports 4 visual variants:
+
+| Variant   | Visual Style                       | Usage                | When to Use                     |
+| --------- | ---------------------------------- | -------------------- | ------------------------------- |
+| `surface` | Subtle background with border      | Default text areas   | Forms, comments, descriptions   |
+| `outline` | Transparent background with border | Prominent text areas | Key inputs that need emphasis   |
+| `subtle`  | Light background, minimal border   | Low-emphasis inputs  | Secondary content, notes        |
+| `flushed` | Bottom border only, no background  | Inline text areas    | Minimal designs, embedded forms |
+
+### Visual Characteristics
+
+- **surface**: Light surface background, thin border, focus ring inside
+- **outline**: No background, thin outline border, focus ring inside
+- **subtle**: Subtle gray background, transparent border until focus
+- **flushed**: No background, bottom border only, minimal appearance
+
+## Sizes
+
+| Size | Text Style | Padding                       | Usage                       |
+| ---- | ---------- | ----------------------------- | --------------------------- |
+| `xs` | sm         | 8px vertical, 8px horizontal  | Compact UI, inline comments |
+| `sm` | sm         | 8px vertical, 10px horizontal | Dense forms, small dialogs  |
+| `md` | md         | 8px vertical, 12px horizontal | Default, most use cases     |
+| `lg` | md         | 8px vertical, 14px horizontal | Emphasized inputs, mobile   |
+| `xl` | lg         | 8px vertical, 16px horizontal | Large content areas, essays |
+
+**Recommendation:** Use `md` for most cases. Use `lg` or `xl` for longer content like descriptions or essays.
+
+## Props
+
+| Prop           | Type                                              | Default     | Description                       |
+| -------------- | ------------------------------------------------- | ----------- | --------------------------------- |
+| `variant`      | `'surface' \| 'outline' \| 'subtle' \| 'flushed'` | `'surface'` | Visual style variant              |
+| `size`         | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'`            | `'md'`      | Textarea size                     |
+| `rows`         | `number`                                          | `3`         | Number of visible text lines      |
+| `value`        | `string`                                          | -           | Controlled value                  |
+| `defaultValue` | `string`                                          | -           | Uncontrolled default value        |
+| `placeholder`  | `string`                                          | -           | Placeholder text (use with label) |
+| `disabled`     | `boolean`                                         | `false`     | Disable interaction               |
+| `readOnly`     | `boolean`                                         | `false`     | Make read-only                    |
+| `required`     | `boolean`                                         | `false`     | Mark as required field            |
+| `onChange`     | `(event: ChangeEvent) => void`                    | -           | Change handler                    |
+| `onBlur`       | `(event: FocusEvent) => void`                     | -           | Blur handler                      |
+| `className`    | `string`                                          | -           | Additional CSS classes            |
+
+**Note:** Textarea extends `TextareaHTMLAttributes<HTMLTextAreaElement>`, so all standard HTML textarea attributes are supported.
+
+## Examples
+
+### Basic Usage
+
+```typescript
+// Default textarea
+<Textarea placeholder="Enter your message..." />
+
+// Outlined variant
+<Textarea variant="outline" placeholder="Description" />
+
+// Subtle variant (low emphasis)
+<Textarea variant="subtle" placeholder="Additional notes" />
+
+// Flushed variant (minimal)
+<Textarea variant="flushed" placeholder="Comment" />
+```
+
+### With Field Label
+
+Textarea should always be used with a label for accessibility:
+
+```typescript
+import { Field } from '@discourser/design-system';
+
+<Field.Root>
+  <Field.Label>Message</Field.Label>
+  <Textarea placeholder="Enter your message..." />
+  <Field.HelperText>Maximum 500 characters</Field.HelperText>
+</Field.Root>
+```
+
+### Controlled Textarea
+
+```typescript
+const [message, setMessage] = useState('');
+
+<Field.Root>
+  <Field.Label>Feedback</Field.Label>
+  <Textarea
+    value={message}
+    onChange={(e) => setMessage(e.target.value)}
+    rows={5}
+  />
+  <Field.HelperText>{message.length} / 500</Field.HelperText>
+</Field.Root>
+```
+
+### Different Sizes
+
+```typescript
+// Extra small (compact)
+<Textarea size="xs" rows={2} placeholder="Quick note" />
+
+// Small
+<Textarea size="sm" rows={3} placeholder="Short comment" />
+
+// Medium (default)
+<Textarea size="md" rows={4} placeholder="Standard message" />
+
+// Large
+<Textarea size="lg" rows={5} placeholder="Detailed description" />
+
+// Extra large
+<Textarea size="xl" rows={6} placeholder="Long-form content" />
+```
+
+### Custom Row Height
+
+```typescript
+// 3 rows (default)
+<Textarea placeholder="Short message" />
+
+// 10 rows for longer content
+<Textarea rows={10} placeholder="Essay or long-form content" />
+
+// Auto-resize with CSS
+<Textarea
+  style={{ minHeight: '100px', resize: 'vertical' }}
+  placeholder="Resizable textarea"
+/>
+```
+
+### With Validation
+
+```typescript
+import { Field } from '@discourser/design-system';
+
+const [bio, setBio] = useState('');
+const [error, setError] = useState('');
+
+const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const value = e.target.value;
+  setBio(value);
+
+  if (value.length > 500) {
+    setError('Bio must be 500 characters or less');
+  } else {
+    setError('');
+  }
+};
+
+<Field.Root invalid={!!error}>
+  <Field.Label>Bio</Field.Label>
+  <Textarea
+    value={bio}
+    onChange={handleChange}
+    rows={5}
+  />
+  {error ? (
+    <Field.ErrorText>{error}</Field.ErrorText>
+  ) : (
+    <Field.HelperText>{bio.length} / 500 characters</Field.HelperText>
+  )}
+</Field.Root>
+```
+
+### Disabled and Read-only States
+
+```typescript
+// Disabled textarea
+<Textarea disabled placeholder="Cannot edit" value="Disabled content" />
+
+// Read-only textarea (can select/copy text)
+<Textarea readOnly value="Read-only content that can be selected" rows={3} />
+```
+
+### Required Field
+
+```typescript
+<Field.Root>
+  <Field.Label>
+    Comments <span style={{ color: 'red' }}>*</span>
+  </Field.Label>
+  <Textarea required placeholder="Required field..." />
+  <Field.HelperText>This field is required</Field.HelperText>
+</Field.Root>
+```
+
+## Common Patterns
+
+### Comment Input
+
+```typescript
+const [comment, setComment] = useState('');
+const [isSubmitting, setIsSubmitting] = useState(false);
+
+<div className={css({ display: 'flex', flexDirection: 'column', gap: 'md' })}>
+  <Field.Root>
+    <Field.Label>Add Comment</Field.Label>
+    <Textarea
+      value={comment}
+      onChange={(e) => setComment(e.target.value)}
+      placeholder="Share your thoughts..."
+      rows={4}
+    />
+  </Field.Root>
+
+  <div className={css({ display: 'flex', gap: 'sm', justifyContent: 'flex-end' })}>
+    <Button variant="text" onClick={() => setComment('')}>Cancel</Button>
+    <Button
+      variant="filled"
+      disabled={!comment.trim() || isSubmitting}
+      onClick={handleSubmit}
+    >
+      Post Comment
+    </Button>
+  </div>
+</div>
+```
+
+### Feedback Form
+
+```typescript
+const [feedback, setFeedback] = useState('');
+const charLimit = 1000;
+const remaining = charLimit - feedback.length;
+
+<Field.Root invalid={remaining < 0}>
+  <Field.Label>Feedback</Field.Label>
+  <Textarea
+    value={feedback}
+    onChange={(e) => setFeedback(e.target.value)}
+    rows={8}
+    size="lg"
+    placeholder="Tell us what you think..."
+  />
+  <Field.HelperText>
+    {remaining >= 0
+      ? `${remaining} characters remaining`
+      : `${Math.abs(remaining)} characters over limit`
+    }
+  </Field.HelperText>
+</Field.Root>
+```
+
+### Description Field
+
+```typescript
+<Field.Root>
+  <Field.Label>Product Description</Field.Label>
+  <Textarea
+    variant="outline"
+    size="lg"
+    rows={6}
+    placeholder="Describe your product in detail..."
+  />
+  <Field.HelperText>
+    Include key features, benefits, and specifications
+  </Field.HelperText>
+</Field.Root>
+```
+
+## DO NOT
+
+```typescript
+// ❌ Don't use native textarea element
+<textarea className="..." placeholder="Message" />  // Use <Textarea> instead
+
+// ❌ Don't use textarea without a label (accessibility issue)
+<Textarea placeholder="Enter feedback" />  // Always use with Field.Label
+
+// ❌ Don't use placeholder as the only label
+<Textarea placeholder="Email Address" />  // Placeholder is not a label
+
+// ❌ Don't make textarea too small for expected content
+<Textarea rows={1} />  // For short input, use Input component instead
+
+// ❌ Don't use inline styles for colors
+<Textarea style={{ backgroundColor: 'blue', color: 'white' }} />  // Use variants
+
+// ✅ Use Textarea with proper Field structure
+<Field.Root>
+  <Field.Label>Feedback</Field.Label>
+  <Textarea placeholder="Share your thoughts..." rows={5} />
+</Field.Root>
+```
+
+## Accessibility
+
+The Textarea component follows WCAG 2.1 Level AA standards:
+
+- **Keyboard Navigation**: Full keyboard support (Tab, arrow keys, text selection)
+- **Focus Indicator**: Clear focus ring on focus-visible
+- **Disabled State**: Uses `disabled` attribute, grayed out appearance
+- **Screen Readers**: Works with Field.Label for proper labeling
+- **Touch Targets**: Minimum 44x44px with size md or larger
+- **Color Contrast**: All variants meet 4.5:1 contrast ratio
+
+### Accessibility Best Practices
+
+```typescript
+// ✅ Always provide a label
+<Field.Root>
+  <Field.Label>Message</Field.Label>
+  <Textarea />
+</Field.Root>
+
+// ✅ Use helper text for guidance
+<Field.Root>
+  <Field.Label>Bio</Field.Label>
+  <Textarea />
+  <Field.HelperText>Tell us about yourself (max 500 characters)</Field.HelperText>
+</Field.Root>
+
+// ✅ Show validation errors clearly
+<Field.Root invalid={hasError}>
+  <Field.Label>Feedback</Field.Label>
+  <Textarea />
+  <Field.ErrorText>Feedback is required</Field.ErrorText>
+</Field.Root>
+
+// ✅ Mark required fields
+<Field.Root>
+  <Field.Label>
+    Comments <span aria-label="required">*</span>
+  </Field.Label>
+  <Textarea required />
+</Field.Root>
+
+// ✅ Provide character count for limits
+<Field.Root>
+  <Field.Label>Tweet</Field.Label>
+  <Textarea />
+  <Field.HelperText aria-live="polite">
+    {280 - text.length} characters remaining
+  </Field.HelperText>
+</Field.Root>
+```
+
+## Variant Selection Guide
+
+| Scenario                  | Recommended Variant      | Reasoning                                       |
+| ------------------------- | ------------------------ | ----------------------------------------------- |
+| Form comments             | `surface`                | Default, good contrast with page background     |
+| Primary description field | `outline`                | Emphasized, clear boundaries                    |
+| Additional notes/metadata | `subtle`                 | Low emphasis, doesn't compete with main content |
+| Inline editing            | `flushed`                | Minimal appearance, feels embedded in content   |
+| Feedback forms            | `surface` or `outline`   | Clear, prominent for important user input       |
+| Profile bio               | `outline` with `lg` size | Prominent, allows longer content                |
+| Quick notes               | `subtle` with `sm` size  | Compact, unobtrusive                            |
+
+## State Behaviors
+
+| State         | Visual Change                    | Behavior                               |
+| ------------- | -------------------------------- | -------------------------------------- |
+| **Hover**     | Border color changes             | Subtle indication of interactivity     |
+| **Focus**     | Focus ring appears               | Clear focus indication (inside border) |
+| **Invalid**   | Red border                       | Error state, shows validation issue    |
+| **Disabled**  | Grayed out, reduced opacity      | Cannot be edited or focused            |
+| **Read-only** | Normal appearance, no focus ring | Can select/copy text, but not edit     |
+
+## Responsive Considerations
+
+```typescript
+// Mobile-first: Larger textarea for touch
+<Textarea size="lg" rows={5} />
+
+// Desktop: Can use smaller sizes
+<Textarea size={{ base: 'lg', md: 'md' }} rows={4} />
+
+// Responsive rows
+<Textarea rows={{ base: 6, md: 4 }} />
+```
+
+## Testing
+
+When testing Textarea components:
+
+```typescript
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+test('textarea accepts user input', async () => {
+  const handleChange = vi.fn();
+  render(
+    <Field.Root>
+      <Field.Label>Message</Field.Label>
+      <Textarea onChange={handleChange} />
+    </Field.Root>
+  );
+
+  const textarea = screen.getByLabelText('Message');
+  await userEvent.type(textarea, 'Hello world');
+
+  expect(textarea).toHaveValue('Hello world');
+  expect(handleChange).toHaveBeenCalled();
+});
+
+test('disabled textarea cannot be edited', async () => {
+  render(<Textarea disabled value="Cannot edit" />);
+
+  const textarea = screen.getByDisplayValue('Cannot edit');
+  await userEvent.type(textarea, 'Try to type');
+
+  expect(textarea).toHaveValue('Cannot edit');
+  expect(textarea).toBeDisabled();
+});
+```
+
+## Related Components
+
+- **Input** - For single-line text input
+- **Field** - For adding labels, helper text, and error messages
+- **Select** - For choosing from predefined options
+- **Button** - For form submission actions
+

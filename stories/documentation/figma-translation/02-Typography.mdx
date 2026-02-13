@@ -1,0 +1,226 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation/Figma Translation/02-Typography" />
+
+# Typography Translation Guide
+
+This page translates typography tokens from Tailwind CSS and Shadcn/UI to Discourser's Material Design 3 type scale.
+
+## Tailwind → M3 textStyle Mapping
+
+| Source (Tailwind) | Discourser | Size | Weight | Line Height | Notes |
+|---|---|---|---|---|---|
+| `text-xs` | `textStyle="labelSmall"` | 11px | 500 | 16px | Smallest readable text, captions |
+| `text-sm` | `textStyle="bodySmall"` | 12px | 400 | 16px | Help text, secondary labels |
+| `text-base` | `textStyle="bodyMedium"` | 14px | 400 | 20px | Default body text |
+| `text-lg` | `textStyle="bodyLarge"` | 16px | 400 | 24px | Emphasized body content |
+| `text-xl` | `textStyle="titleSmall"` | 14px | 500 | 20px | Card titles, list headers (note: weight increase) |
+| `text-2xl` | `textStyle="titleLarge"` or `<Heading size="xl">` | 22px | 400 | 28px | Section titles |
+| `text-3xl` | `textStyle="headlineSmall"` or `<Heading size="2xl">` | 24px | 400 | 32px | Page subtitles |
+| `text-4xl` | `textStyle="headlineLarge"` or `<Heading size="3xl">` | 32px | 400 | 40px | Page titles |
+| `text-5xl` | `textStyle="displaySmall"` or `<Heading size="4xl">` | 36px | 400 | 44px | Hero text |
+| `text-6xl` | `textStyle="displayMedium"` or `<Heading size="5xl">` | 45px | 400 | 52px | Large hero text |
+| `text-7xl`+ | `textStyle="displayLarge"` or `<Heading size="6xl">` | 57px | 400 | 64px | Extra-large display text |
+
+**Important:** Prefer the `<Heading>` component for heading-level text (text-2xl and above) instead of raw textStyle. See Heading Component section below.
+
+## Complete M3 Type Scale
+
+For reference, here's the full M3 type scale available in Discourser:
+
+| textStyle Token | Size | Weight | Line Height | Usage |
+|---|---|---|---|---|
+| `displayLarge` | 57px | 400 | 64px | Extra-large display |
+| `displayMedium` | 45px | 400 | 52px | Large display |
+| `displaySmall` | 36px | 400 | 44px | Small display |
+| `headlineLarge` | 32px | 400 | 40px | Large headlines |
+| `headlineMedium` | 28px | 400 | 36px | Medium headlines |
+| `headlineSmall` | 24px | 400 | 32px | Small headlines |
+| `titleLarge` | 22px | 400 | 28px | Large titles |
+| `titleMedium` | 16px | 500 | 24px | Medium titles |
+| `titleSmall` | 14px | 500 | 20px | Small titles |
+| `bodyLarge` | 16px | 400 | 24px | Large body text |
+| `bodyMedium` | 14px | 400 | 20px | Default body text |
+| `bodySmall` | 12px | 400 | 16px | Small body text |
+| `labelLarge` | 14px | 500 | 20px | Large labels (buttons) |
+| `labelMedium` | 12px | 500 | 16px | Medium labels |
+| `labelSmall` | 11px | 500 | 16px | Small labels, captions |
+
+## Font Family Mapping
+
+| Source (Tailwind) | Discourser | Font | Usage |
+|---|---|---|---|
+| `font-sans` | `fontFamily="body"` | Poppins | Body text, UI labels, most text content |
+| `font-serif` | `fontFamily="display"` | Fraunces | Display text, headings (when specified) |
+| `font-mono` | `fontFamily="mono"` | JetBrains Mono | Code blocks, monospaced content |
+
+**Note:** Most Discourser components default to `fontFamily="body"` (Poppins). The display font (Fraunces) is available but not used by default in M3.
+
+## Font Weight Mapping
+
+| Source (Tailwind) | Discourser | Value | Notes |
+|---|---|---|---|
+| `font-light` | `fontWeight="light"` | 300 | Rarely used in M3 |
+| `font-normal` | `fontWeight="normal"` | 400 | Default for body/display/headline text |
+| `font-medium` | `fontWeight="medium"` | 500 | Default for titles and labels |
+| `font-semibold` | `fontWeight="semibold"` | 600 | Emphasis |
+| `font-bold` | `fontWeight="bold"` | 700 | Strong emphasis |
+
+**M3 Pattern:** Body/headline text uses 400, titles/labels use 500. Avoid mixing unless intentional.
+
+## Heading Component
+
+### Rule: Prefer `<Heading>` Over Raw textStyle
+
+For heading-level text (H1-H6), **always use the Heading component** instead of raw `textStyle` prop.
+
+**Why:**
+- Proper semantic HTML (renders correct h-tag level)
+- Automatic accessibility (heading hierarchy)
+- Consistent sizing across the system
+- Built-in responsive behavior
+
+### Heading Size Scale
+
+| Figma/Design Spec | Discourser Heading | Renders As | textStyle Equivalent |
+|---|---|---|---|
+| Extra large display | `<Heading size="7xl">` | `<h1>` | displayLarge (57px) |
+| Large display | `<Heading size="6xl">` | `<h1>` | displayLarge (57px) |
+| Medium display | `<Heading size="5xl">` | `<h1>` | displayMedium (45px) |
+| Small display | `<Heading size="4xl">` | `<h1>` | displaySmall (36px) |
+| Large headline | `<Heading size="3xl">` | `<h2>` | headlineLarge (32px) |
+| Medium headline | `<Heading size="2xl">` | `<h2>` | headlineMedium (28px) |
+| Small headline | `<Heading size="xl">` | `<h3>` | headlineSmall (24px) |
+| Large title | `<Heading size="lg">` | `<h4>` | titleLarge (22px) |
+| Medium title | `<Heading size="md">` | `<h5>` | titleMedium (16px) |
+| Small title | `<Heading size="sm">` | `<h6>` | titleSmall (14px) |
+
+### Overriding Default Heading Level
+
+```tsx
+// Default h-tag based on size
+<Heading size="3xl">Page Title</Heading>  // Renders <h2>
+
+// Override with as prop
+<Heading as="h1" size="2xl">Page Title</Heading>  // Renders <h1> with h2 styling
+```
+
+## Common Mistakes
+
+### ❌ Using Raw Font Size
+
+```tsx
+// ❌ WRONG: Raw pixel value
+<Text fontSize="16px">
+  Body text
+</Text>
+```
+
+**Why wrong:** Not theme-aware, doesn't scale with design system updates.
+
+```tsx
+// ✅ CORRECT: textStyle token
+<Text textStyle="bodyLarge">
+  Body text
+</Text>
+```
+
+---
+
+### ❌ Using textStyle for Headings
+
+```tsx
+// ❌ WRONG: textStyle on heading element
+<Box as="h2" textStyle="headlineLarge">
+  Section Title
+</Box>
+```
+
+**Why wrong:** Misses heading component logic, accessibility, and responsive behavior.
+
+```tsx
+// ✅ CORRECT: Heading component
+<Heading as="h2" size="3xl">
+  Section Title
+</Heading>
+```
+
+---
+
+### ❌ Mixing Tailwind Font Classes
+
+```tsx
+// ❌ WRONG: Tailwind class syntax
+<Text className="text-lg font-medium">
+  Label text
+</Text>
+```
+
+**Why wrong:** Discourser uses Panda CSS, not Tailwind. Classes won't work.
+
+```tsx
+// ✅ CORRECT: Panda CSS props with textStyle
+<Text textStyle="labelLarge">
+  Label text
+</Text>
+
+// ✅ ALSO CORRECT: Manual props if needed
+<Text fontSize="16px" fontWeight="medium">
+  Custom label
+</Text>
+```
+
+---
+
+### ❌ Inconsistent Weight with M3 Pattern
+
+```tsx
+// ❌ WRONG: Body text with medium weight (breaks M3 pattern)
+<Text textStyle="bodyMedium" fontWeight="medium">
+  This looks wrong
+</Text>
+```
+
+**Why wrong:** M3 bodyMedium expects 400 weight. Overriding creates inconsistency.
+
+```tsx
+// ✅ CORRECT: Use titleSmall for medium-weight body-sized text
+<Text textStyle="titleSmall">
+  This matches M3 expectations
+</Text>
+
+// ✅ ALSO CORRECT: Keep bodyMedium default weight
+<Text textStyle="bodyMedium">
+  Regular body text
+</Text>
+```
+
+---
+
+### ❌ Hardcoded Line Height Without textStyle
+
+```tsx
+// ❌ WRONG: Manual line-height without matching textStyle
+<Text fontSize="14px" lineHeight="24px">
+  Body text
+</Text>
+```
+
+**Why wrong:** Line height should match M3 spec (bodyMedium is 14px/20px, not 24px).
+
+```tsx
+// ✅ CORRECT: Use textStyle (includes correct line-height)
+<Text textStyle="bodyMedium">
+  Body text
+</Text>
+```
+
+---
+
+## Cross-References
+
+For comprehensive typography details:
+- [Guidelines: Typography](/docs/documentation-guidelines-99-typography--docs) — Full M3 type scale documentation
+
+For component-specific text styling:
+- Coming soon: Component Translation pages (05-07)

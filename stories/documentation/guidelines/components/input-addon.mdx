@@ -1,0 +1,690 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation/Guidelines/99-Input Addon" />
+
+# InputAddon
+
+**Purpose:** Decorative element for enhancing input fields with icons, text labels, or buttons following Material Design 3 patterns.
+
+## When to Use This Component
+
+Use InputAddon when you need to **add visual context or actions** to input fields (currency symbols, units, search icons, clear buttons).
+
+**Decision Tree:**
+
+| Scenario                                                | Use This               | Why                                   |
+| ------------------------------------------------------- | ---------------------- | ------------------------------------- |
+| Add prefix/suffix text (currency, units, domains)       | InputAddon ✅          | Visual context for input values       |
+| Add icons to inputs (search, user, email icons)         | InputAddon ✅          | Visual affordance for input type      |
+| Add action buttons to inputs (clear, visibility toggle) | InputAddon with Button | Interactive enhancements              |
+| Standalone input without decoration                     | Input                  | No additional context needed          |
+| Input with floating label inside                        | Input                  | Built-in label feature                |
+| Complex input composition with multiple elements        | InputGroup             | Layout management for multiple addons |
+
+**Component Comparison:**
+
+```typescript
+// ✅ Use InputAddon for currency prefix
+<InputGroup.Root size="md">
+  <InputAddon variant="outline">$</InputAddon>
+  <Input placeholder="0.00" type="number" />
+</InputGroup.Root>
+
+// ✅ Use InputAddon for unit suffix
+<InputGroup.Root size="md">
+  <Input placeholder="Enter weight" type="number" />
+  <InputAddon variant="outline">kg</InputAddon>
+</InputGroup.Root>
+
+// ✅ Use InputAddon for icons
+<InputGroup.Root size="md">
+  <InputAddon variant="subtle">
+    <SearchIcon />
+  </InputAddon>
+  <Input placeholder="Search..." />
+</InputGroup.Root>
+
+// ❌ Don't use InputAddon alone - must be within InputGroup
+<InputAddon>$</InputAddon>  // Wrong - needs InputGroup wrapper
+<Input placeholder="Price" />
+
+// ❌ Don't use InputAddon for labels - use Input label prop
+<InputGroup.Root>
+  <InputAddon>Email</InputAddon>  // Wrong - this is a label
+  <Input />
+</InputGroup.Root>
+
+<Input label="Email" />  // Correct
+
+// ❌ Don't use InputAddon for validation messages
+<InputGroup.Root>
+  <Input />
+  <InputAddon variant="outline">Invalid email</InputAddon>  // Wrong
+</InputGroup.Root>
+
+<Input errorText="Invalid email" />  // Correct
+```
+
+## Import
+
+```typescript
+import { InputAddon, InputGroup, Input } from '@discourser/design-system';
+```
+
+## Component Structure
+
+InputAddon must be used within InputGroup for proper positioning:
+
+```typescript
+<InputGroup.Root>
+  <InputAddon><!-- prefix content --></InputAddon>
+  <Input />
+  <InputAddon><!-- suffix content --></InputAddon>
+</InputGroup.Root>
+```
+
+## Variants
+
+The InputAddon component supports 3 Material Design 3 variants:
+
+| Variant   | Visual Style                       | Usage           | When to Use                      |
+| --------- | ---------------------------------- | --------------- | -------------------------------- |
+| `outline` | Border with transparent background | Standard addons | Default, matches outlined inputs |
+| `surface` | Surface background with border     | Elevated addons | Cards, elevated contexts         |
+| `subtle`  | Subtle background, no border       | Minimal addons  | Search bars, minimal UI          |
+
+### Visual Characteristics
+
+- **outline**: 1px border, transparent background, matches input border color
+- **surface**: Surface background color with subtle border
+- **subtle**: Light gray background, seamless integration with filled inputs
+
+## Sizes
+
+| Size | Height | Padding | Icon Size | Usage                           |
+| ---- | ------ | ------- | --------- | ------------------------------- |
+| `xs` | 32px   | 8px     | 16px      | Extra compact forms, mobile     |
+| `sm` | 36px   | 10px    | 18px      | Compact forms, dense layouts    |
+| `md` | 40px   | 12px    | 20px      | Default, most use cases         |
+| `lg` | 44px   | 14px    | 20px      | Touch targets, prominent inputs |
+| `xl` | 48px   | 16px    | 22px      | Large forms, hero sections      |
+
+**Recommendation:** Use `md` for most cases. Match the size with your Input component size.
+
+## Props
+
+| Prop        | Type                                   | Default     | Description                   |
+| ----------- | -------------------------------------- | ----------- | ----------------------------- |
+| `variant`   | `'outline' \| 'surface' \| 'subtle'`   | `'outline'` | Visual style variant          |
+| `size`      | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'`      | Addon size (match with Input) |
+| `children`  | `ReactNode`                            | Required    | Content (text, icon, button)  |
+| `className` | `string`                               | -           | Additional CSS classes        |
+
+**Note:** InputAddon extends `HTMLAttributes<HTMLDivElement>`, so all standard HTML div attributes are supported.
+
+## Examples
+
+### Basic Text Addons
+
+```typescript
+import { InputAddon, InputGroup, Input } from '@discourser/design-system';
+
+// Currency prefix
+<InputGroup.Root size="md">
+  <InputAddon variant="outline">$</InputAddon>
+  <Input placeholder="0.00" type="number" />
+</InputGroup.Root>
+
+// Domain suffix
+<InputGroup.Root size="md">
+  <Input placeholder="username" />
+  <InputAddon variant="outline">@example.com</InputAddon>
+</InputGroup.Root>
+
+// Unit suffix
+<InputGroup.Root size="md">
+  <Input placeholder="Enter distance" type="number" />
+  <InputAddon variant="outline">miles</InputAddon>
+</InputGroup.Root>
+
+// Both prefix and suffix
+<InputGroup.Root size="md">
+  <InputAddon variant="outline">https://</InputAddon>
+  <Input placeholder="mywebsite" />
+  <InputAddon variant="outline">.com</InputAddon>
+</InputGroup.Root>
+```
+
+### Icon Addons
+
+```typescript
+import { SearchIcon, UserIcon, LockIcon, CalendarIcon } from 'your-icon-library';
+
+// Search icon prefix
+<InputGroup.Root size="md">
+  <InputAddon variant="subtle">
+    <SearchIcon />
+  </InputAddon>
+  <Input placeholder="Search products..." />
+</InputGroup.Root>
+
+// User icon prefix
+<InputGroup.Root size="md">
+  <InputAddon variant="outline">
+    <UserIcon />
+  </InputAddon>
+  <Input placeholder="Username" />
+</InputGroup.Root>
+
+// Lock icon for password
+<InputGroup.Root size="md">
+  <InputAddon variant="outline">
+    <LockIcon />
+  </InputAddon>
+  <Input type="password" placeholder="Password" />
+</InputGroup.Root>
+
+// Calendar icon suffix
+<InputGroup.Root size="md">
+  <Input type="date" />
+  <InputAddon variant="outline">
+    <CalendarIcon />
+  </InputAddon>
+</InputGroup.Root>
+```
+
+### Button Addons
+
+```typescript
+import { IconButton } from '@discourser/design-system';
+import { XIcon, EyeIcon, EyeOffIcon } from 'your-icon-library';
+
+// Clear button
+const [value, setValue] = useState('');
+
+<InputGroup.Root size="md">
+  <Input
+    placeholder="Search..."
+    value={value}
+    onChange={(e) => setValue(e.target.value)}
+  />
+  {value && (
+    <InputAddon variant="subtle">
+      <IconButton
+        variant="ghost"
+        size="sm"
+        aria-label="Clear"
+        onClick={() => setValue('')}
+      >
+        <XIcon />
+      </IconButton>
+    </InputAddon>
+  )}
+</InputGroup.Root>
+
+// Password visibility toggle
+const [showPassword, setShowPassword] = useState(false);
+
+<InputGroup.Root size="md">
+  <InputAddon variant="outline">
+    <LockIcon />
+  </InputAddon>
+  <Input
+    type={showPassword ? 'text' : 'password'}
+    placeholder="Password"
+  />
+  <InputAddon variant="subtle">
+    <IconButton
+      variant="ghost"
+      size="sm"
+      aria-label={showPassword ? 'Hide password' : 'Show password'}
+      onClick={() => setShowPassword(!showPassword)}
+    >
+      {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+    </IconButton>
+  </InputAddon>
+</InputGroup.Root>
+```
+
+### Different Variants
+
+```typescript
+// Outline variant (default)
+<InputGroup.Root size="md">
+  <InputAddon variant="outline">$</InputAddon>
+  <Input placeholder="0.00" />
+</InputGroup.Root>
+
+// Surface variant
+<InputGroup.Root size="md">
+  <InputAddon variant="surface">
+    <SearchIcon />
+  </InputAddon>
+  <Input placeholder="Search..." />
+</InputGroup.Root>
+
+// Subtle variant (seamless)
+<InputGroup.Root size="md">
+  <InputAddon variant="subtle">
+    <UserIcon />
+  </InputAddon>
+  <Input placeholder="Username" />
+</InputGroup.Root>
+```
+
+### Different Sizes
+
+```typescript
+// Extra small
+<InputGroup.Root size="xs">
+  <InputAddon size="xs">$</InputAddon>
+  <Input size="xs" placeholder="0.00" />
+</InputGroup.Root>
+
+// Small
+<InputGroup.Root size="sm">
+  <InputAddon size="sm">$</InputAddon>
+  <Input size="sm" placeholder="0.00" />
+</InputGroup.Root>
+
+// Medium (default)
+<InputGroup.Root size="md">
+  <InputAddon size="md">$</InputAddon>
+  <Input size="md" placeholder="0.00" />
+</InputGroup.Root>
+
+// Large
+<InputGroup.Root size="lg">
+  <InputAddon size="lg">$</InputAddon>
+  <Input size="lg" placeholder="0.00" />
+</InputGroup.Root>
+
+// Extra large
+<InputGroup.Root size="xl">
+  <InputAddon size="xl">$</InputAddon>
+  <Input size="xl" placeholder="0.00" />
+</InputGroup.Root>
+```
+
+### Multiple Addons
+
+```typescript
+// Multiple icons
+<InputGroup.Root size="md">
+  <InputAddon variant="outline">
+    <UserIcon />
+  </InputAddon>
+  <Input placeholder="Search users..." />
+  <InputAddon variant="subtle">
+    <SearchIcon />
+  </InputAddon>
+</InputGroup.Root>
+
+// Mixed content types
+<InputGroup.Root size="md">
+  <InputAddon variant="outline">From:</InputAddon>
+  <Input type="date" />
+  <InputAddon variant="outline">To:</InputAddon>
+  <Input type="date" />
+</InputGroup.Root>
+```
+
+### With Form Labels
+
+```typescript
+// Proper form structure
+<div className={css({ display: 'flex', flexDirection: 'column', gap: 'xs' })}>
+  <label htmlFor="price-input" className={css({ fontWeight: 'medium', textStyle: 'sm' })}>
+    Price
+  </label>
+  <InputGroup.Root size="md">
+    <InputAddon variant="outline">$</InputAddon>
+    <Input id="price-input" placeholder="0.00" type="number" />
+    <InputAddon variant="outline">USD</InputAddon>
+  </InputGroup.Root>
+  <span className={css({ color: 'fg.muted', textStyle: 'xs' })}>
+    Enter the product price in US dollars
+  </span>
+</div>
+```
+
+### Loading State
+
+```typescript
+import { Spinner } from '@discourser/design-system';
+
+const [isSearching, setIsSearching] = useState(false);
+
+<InputGroup.Root size="md">
+  <InputAddon variant="subtle">
+    {isSearching ? (
+      <Spinner size="sm" />
+    ) : (
+      <SearchIcon />
+    )}
+  </InputAddon>
+  <Input placeholder="Search..." />
+</InputGroup.Root>
+```
+
+## Common Patterns
+
+### Currency Input
+
+```typescript
+const [amount, setAmount] = useState('');
+
+<div className={css({ display: 'flex', flexDirection: 'column', gap: 'xs' })}>
+  <label htmlFor="amount" className={css({ fontWeight: 'medium' })}>
+    Amount
+  </label>
+  <InputGroup.Root size="md">
+    <InputAddon variant="outline">$</InputAddon>
+    <Input
+      id="amount"
+      type="number"
+      placeholder="0.00"
+      value={amount}
+      onChange={(e) => setAmount(e.target.value)}
+      min="0"
+      step="0.01"
+    />
+    <InputAddon variant="outline">USD</InputAddon>
+  </InputGroup.Root>
+</div>
+```
+
+### Search Bar
+
+```typescript
+const [searchQuery, setSearchQuery] = useState('');
+
+<InputGroup.Root size="md">
+  <InputAddon variant="subtle">
+    <SearchIcon />
+  </InputAddon>
+  <Input
+    placeholder="Search products, categories, brands..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+  />
+  {searchQuery && (
+    <InputAddon variant="subtle">
+      <IconButton
+        variant="ghost"
+        size="sm"
+        aria-label="Clear search"
+        onClick={() => setSearchQuery('')}
+      >
+        <XIcon />
+      </IconButton>
+    </InputAddon>
+  )}
+</InputGroup.Root>
+```
+
+### Website URL Input
+
+```typescript
+const [url, setUrl] = useState('');
+
+<InputGroup.Root size="md">
+  <InputAddon variant="outline">https://</InputAddon>
+  <Input
+    placeholder="example.com"
+    value={url}
+    onChange={(e) => setUrl(e.target.value)}
+  />
+</InputGroup.Root>
+```
+
+### Email Input with Domain
+
+```typescript
+const [username, setUsername] = useState('');
+
+<InputGroup.Root size="md">
+  <InputAddon variant="outline">
+    <MailIcon />
+  </InputAddon>
+  <Input
+    placeholder="username"
+    value={username}
+    onChange={(e) => setUsername(e.target.value)}
+  />
+  <InputAddon variant="outline">@company.com</InputAddon>
+</InputGroup.Root>
+```
+
+### Phone Number Input
+
+```typescript
+const [phone, setPhone] = useState('');
+
+<InputGroup.Root size="md">
+  <InputAddon variant="outline">
+    <PhoneIcon />
+  </InputAddon>
+  <InputAddon variant="outline">+1</InputAddon>
+  <Input
+    placeholder="(555) 000-0000"
+    type="tel"
+    value={phone}
+    onChange={(e) => setPhone(e.target.value)}
+  />
+</InputGroup.Root>
+```
+
+## DO NOT
+
+```typescript
+// ❌ Don't use InputAddon without InputGroup
+<InputAddon>$</InputAddon>
+<Input placeholder="Price" />  // Wrong - InputAddon must be inside InputGroup
+
+// ✅ Wrap both in InputGroup
+<InputGroup.Root>
+  <InputAddon>$</InputAddon>
+  <Input placeholder="Price" />
+</InputGroup.Root>
+
+// ❌ Don't mismatch sizes
+<InputGroup.Root size="md">
+  <InputAddon size="lg">$</InputAddon>  // Wrong - size mismatch
+  <Input size="md" placeholder="0.00" />
+</InputGroup.Root>
+
+// ✅ Match sizes
+<InputGroup.Root size="md">
+  <InputAddon size="md">$</InputAddon>
+  <Input size="md" placeholder="0.00" />
+</InputGroup.Root>
+
+// ❌ Don't use InputAddon for labels
+<InputGroup.Root>
+  <InputAddon>Email Address</InputAddon>  // Wrong - this is a label
+  <Input />
+</InputGroup.Root>
+
+// ✅ Use proper label element
+<div>
+  <label>Email Address</label>
+  <InputGroup.Root>
+    <InputAddon><MailIcon /></InputAddon>
+    <Input />
+  </InputGroup.Root>
+</div>
+
+// ❌ Don't override colors with inline styles
+<InputAddon style={{ backgroundColor: 'red' }}>$</InputAddon>
+
+// ✅ Use variants
+<InputAddon variant="surface">$</InputAddon>
+
+// ❌ Don't put too much content in addon
+<InputAddon variant="outline">
+  This is way too much text for an input addon
+</InputAddon>  // Wrong - keeps addons concise
+
+// ✅ Keep content short
+<InputAddon variant="outline">USD</InputAddon>
+```
+
+## Accessibility
+
+The InputAddon component follows WCAG 2.1 Level AA standards:
+
+- **Color Contrast**: All variants meet 4.5:1 contrast ratio for text
+- **Icon Accessibility**: Icons are decorative when paired with input context
+- **Interactive Elements**: Buttons within addons have proper labels
+- **Visual Association**: Addons are visually grouped with inputs
+- **Touch Targets**: Minimum 44x44px for interactive addons (size md or larger)
+
+### Accessibility Best Practices
+
+```typescript
+// ✅ Provide aria-label for icon-only buttons in addons
+<InputGroup.Root>
+  <Input placeholder="Search..." />
+  <InputAddon variant="subtle">
+    <IconButton
+      variant="ghost"
+      size="sm"
+      aria-label="Clear search"
+      onClick={handleClear}
+    >
+      <XIcon />
+    </IconButton>
+  </InputAddon>
+</InputGroup.Root>
+
+// ✅ Use descriptive labels for inputs with addons
+<div>
+  <label htmlFor="price">Price in USD</label>
+  <InputGroup.Root>
+    <InputAddon>$</InputAddon>
+    <Input id="price" type="number" />
+  </InputGroup.Root>
+</div>
+
+// ✅ Provide context for screen readers
+<InputGroup.Root>
+  <InputAddon aria-label="Currency: US Dollar">$</InputAddon>
+  <Input
+    placeholder="0.00"
+    aria-label="Enter amount in US dollars"
+  />
+</InputGroup.Root>
+
+// ✅ Ensure interactive addons are keyboard accessible
+<InputGroup.Root>
+  <Input type="password" />
+  <InputAddon>
+    <IconButton
+      variant="ghost"
+      aria-label="Toggle password visibility"
+      onClick={toggleVisibility}
+      tabIndex={0}  // Keyboard accessible
+    >
+      <EyeIcon />
+    </IconButton>
+  </InputAddon>
+</InputGroup.Root>
+```
+
+## Variant Selection Guide
+
+| Scenario                | Recommended Variant | Reasoning                     |
+| ----------------------- | ------------------- | ----------------------------- |
+| Standard forms          | `outline`           | Matches outlined input style  |
+| Search bars             | `subtle`            | Minimal, seamless integration |
+| Currency/unit labels    | `outline`           | Clear visual separation       |
+| Icon indicators         | `subtle`            | Less emphasis, decorative     |
+| Elevated surfaces/cards | `surface`           | Matches surface context       |
+| Interactive buttons     | `subtle`            | Reduces visual weight         |
+
+## State Behaviors
+
+| State                    | Visual Change           | Behavior                     |
+| ------------------------ | ----------------------- | ---------------------------- |
+| **Default**              | Matches variant styling | Static decoration            |
+| **With Input Focus**     | No change               | Addon remains static         |
+| **Interactive (Button)** | Hover/focus states      | Button states apply          |
+| **Disabled Input**       | Reduced opacity         | Matches input disabled state |
+
+## Responsive Considerations
+
+```typescript
+// Mobile-first: Use larger sizes for touch
+<InputGroup.Root size={{ base: 'lg', md: 'md' }}>
+  <InputAddon size={{ base: 'lg', md: 'md' }}>$</InputAddon>
+  <Input size={{ base: 'lg', md: 'md' }} />
+</InputGroup.Root>
+
+// Compact on desktop, comfortable on mobile
+<InputGroup.Root size={{ base: 'md', lg: 'sm' }}>
+  <InputAddon size={{ base: 'md', lg: 'sm' }}>
+    <SearchIcon />
+  </InputAddon>
+  <Input size={{ base: 'md', lg: 'sm' }} placeholder="Search..." />
+</InputGroup.Root>
+```
+
+## Testing
+
+```typescript
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+test('addon displays text content', () => {
+  render(
+    <InputGroup.Root>
+      <InputAddon>$</InputAddon>
+      <Input placeholder="Amount" />
+    </InputGroup.Root>
+  );
+
+  expect(screen.getByText('$')).toBeInTheDocument();
+});
+
+test('addon button triggers action', async () => {
+  const handleClear = vi.fn();
+
+  render(
+    <InputGroup.Root>
+      <Input value="test" />
+      <InputAddon>
+        <IconButton aria-label="Clear" onClick={handleClear}>
+          <XIcon />
+        </IconButton>
+      </InputAddon>
+    </InputGroup.Root>
+  );
+
+  const clearButton = screen.getByLabelText('Clear');
+  await userEvent.click(clearButton);
+
+  expect(handleClear).toHaveBeenCalledOnce();
+});
+
+test('addon icon is visible', () => {
+  render(
+    <InputGroup.Root>
+      <InputAddon>
+        <SearchIcon data-testid="search-icon" />
+      </InputAddon>
+      <Input />
+    </InputGroup.Root>
+  );
+
+  expect(screen.getByTestId('search-icon')).toBeInTheDocument();
+});
+```
+
+## Related Components
+
+- **InputGroup** - Required wrapper for positioning addons
+- **Input** - Text input field that addons enhance
+- **IconButton** - For interactive buttons within addons
+- **Spinner** - For loading states in addons
+

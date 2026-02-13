@@ -1,0 +1,250 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation/Figma Translation/01-Colors" />
+
+# Color Translation Guide
+
+This page translates color tokens from Figma, Tailwind CSS, and Shadcn/UI to Discourser Design System equivalents.
+
+## Background Colors
+
+| Source (Figma/Tailwind/Shadcn) | Discourser | Notes |
+|---|---|---|
+| `bg-background`, `bg-white` | `bg="canvas"` | Page-level background, resolves to gray.1 |
+| `bg-card`, `bg-popover` | `bg="surface.container"` or use component | Surface containers — use M3 surface container, or let component handle it (Card.Root sets its own bg) |
+| `bg-muted` | `bg="surface.container.low"` | Subtle background areas — M3 surface container low |
+| `bg-primary` | `colorPalette="primary"` (on components) or `bg="primary.9"` (raw) | Primary action surfaces — prefer colorPalette on components |
+| `bg-secondary` | `colorPalette="secondary"` or `bg="secondary.9"` | Secondary surfaces |
+| `bg-destructive` | `colorPalette="error"` or `bg="error.9"` | Error/destructive surfaces |
+| `bg-accent` | `bg="primary.a3"` or `bg="secondary.a3"` | Accent/highlight backgrounds (use alpha variants for subtle tints) |
+
+## Text Colors
+
+| Source (Figma/Tailwind/Shadcn) | Discourser | Notes |
+|---|---|---|
+| `text-foreground` | `color="fg.default"` | Primary text, resolves to gray.12 |
+| `text-muted-foreground` | `color="fg.muted"` | Secondary text, resolves to gray.11 |
+| `text-subtle` | `color="fg.subtle"` | Tertiary/disabled text, resolves to gray.10 |
+| `text-primary` | `color="primary.11"` | Branded text |
+| `text-destructive` | `color="error.11"` | Error text |
+| `text-primary-foreground` | `color="onM3Primary"` | Text on primary backgrounds — use M3 onPrimary token |
+| `text-secondary-foreground` | `color="onM3Secondary"` | Text on secondary backgrounds — use M3 onSecondary token |
+
+## Border Colors
+
+| Source (Figma/Tailwind/Shadcn) | Discourser | Notes |
+|---|---|---|
+| `border`, `border-input` | `borderColor="border"` | Default border, resolves to gray.6 |
+| `border-primary` | `borderColor="primary.7"` | Primary-colored borders |
+| `border-muted` | `borderColor="gray.4"` | Subtle borders (lighter than default) |
+
+## M3 Surface System
+
+When Figma uses Material Design 3 vocabulary directly:
+
+| Source (M3) | Discourser | Notes |
+|---|---|---|
+| `surface` | `bg="surface"` | M3 base surface |
+| `surface-dim` | `bg="surface.dim"` | M3 dimmed surface (lower than base) |
+| `surface-bright` | `bg="surface.bright"` | M3 bright surface (higher than base) |
+| `surface-container` | `bg="surface.container"` | M3 default container (Level 1 elevation) |
+| `surface-container-low` | `bg="surface.container.low"` | M3 low container (subtle elevation) |
+| `surface-container-lowest` | `bg="surface.container.lowest"` | M3 lowest container (minimal elevation) |
+| `surface-container-high` | `bg="surface.container.high"` | M3 high container (Level 3 elevation) |
+| `surface-container-highest` | `bg="surface.container.highest"` | M3 highest container (Level 4 elevation) |
+| `on-surface` | `color="onSurface"` | Text on M3 surfaces |
+| `on-surface-variant` | `color="onSurface.variant"` | Secondary text on M3 surfaces |
+| `outline` | `borderColor="outline"` | M3 outline |
+| `outline-variant` | `borderColor="outline.variant"` | M3 subtle outline |
+
+## M3 Primary/Secondary/Tertiary Tokens
+
+When using explicit M3 color roles:
+
+| Source (M3) | Discourser | Notes |
+|---|---|---|
+| `primary` | `bg="m3Primary"` | M3 primary color (explicit) |
+| `primary-container` | `bg="m3Primary.container"` | M3 primary container |
+| `on-primary` | `color="onM3Primary"` | Text on M3 primary |
+| `on-primary-container` | `color="onM3Primary.container"` | Text on M3 primary container |
+| `secondary` | `bg="m3Secondary"` | M3 secondary color (explicit) |
+| `secondary-container` | `bg="m3Secondary.container"` | M3 secondary container |
+| `on-secondary` | `color="onM3Secondary"` | Text on M3 secondary |
+| `on-secondary-container` | `color="onM3Secondary.container"` | Text on M3 secondary container |
+| `tertiary` | `bg="m3Tertiary"` | M3 tertiary color (explicit) |
+| `tertiary-container` | `bg="m3Tertiary.container"` | M3 tertiary container |
+| `on-tertiary` | `color="onM3Tertiary"` | Text on M3 tertiary |
+| `on-tertiary-container` | `color="onM3Tertiary.container"` | Text on M3 tertiary container |
+
+**Note:** M3 tokens are prefixed (`m3Primary`, `m3Secondary`, `m3Tertiary`) to avoid conflicts with Radix color bridge tokens. For component usage, prefer `colorPalette="primary"` over explicit M3 tokens.
+
+## Color Palette System
+
+Discourser uses the **colorPalette prop pattern** for theming components.
+
+### Rule: Components First, Then Radix Scale
+
+- **If a component supports `colorPalette` prop** → ALWAYS use `colorPalette`
+- **For custom styling outside components** → Use Radix scale directly (`primary.9`, `error.11`, etc.)
+
+### Available Palettes
+
+- `primary` — Brand primary color
+- `secondary` — Brand secondary color
+- `tertiary` — Brand tertiary color
+- `error` — Error/destructive actions
+- `neutral` or `gray` — Neutral grayscale
+
+### Radix Color Scale Explained
+
+Discourser uses the **Radix Colors scale** (1-12) for all color palettes:
+
+| Scale | Usage | Example |
+|---|---|---|
+| `1` | App backgrounds | Lightest, near-white |
+| `2` | Subtle backgrounds | Slightly tinted |
+| `3` | UI element backgrounds | Hover states |
+| `4` | Hovered UI backgrounds | Active subtle states |
+| `5` | Active/selected states | Solid subtle |
+| `6` | Borders | Default border color |
+| `7` | Hovered borders | Interactive borders |
+| `8` | Solid backgrounds | Strong solid color |
+| `9` | **Solid colors (default)** | **Primary action color** |
+| `10` | Hovered solid | Hover on buttons |
+| `11` | Text colors | Low-contrast text |
+| `12` | High-contrast text | Black/white text |
+
+**Alpha variants** (`a1`-`a12`) have transparency, useful for overlays and subtle tints.
+
+### When to Use colorPalette vs Direct Scale
+
+```tsx
+// ✅ CORRECT: Component with colorPalette
+<Button colorPalette="primary">Submit</Button>
+// Generated: bg=primary.9, color=onM3Primary, hover:bg=primary.10
+
+// ✅ CORRECT: Custom Box needing primary accent background
+<Box bg="primary.3" borderColor="primary.7">
+  <Text color="primary.11">Custom styled box</Text>
+</Box>
+
+// ❌ WRONG: Manual coloring when component supports colorPalette
+<Button bg="primary.9" color="white">Submit</Button>
+// Loses automatic hover states, contrast, and theme consistency
+```
+
+## Common Mistakes
+
+### ❌ Hardcoded Hex Values
+
+```tsx
+// ❌ WRONG: Hardcoded hex
+<Box style={{ backgroundColor: '#4C662B', color: '#FFFFFF' }}>
+  Brand section
+</Box>
+```
+
+**Why wrong:** Not theme-aware, doesn't support dark mode, not swappable if design language changes.
+
+```tsx
+// ✅ CORRECT: Semantic token
+<Box bg="primary.9" color="onM3Primary">
+  Brand section
+</Box>
+```
+
+---
+
+### ❌ Using Tailwind Class Names
+
+```tsx
+// ❌ WRONG: Tailwind class
+<Box className="bg-primary text-white">
+  Content
+</Box>
+```
+
+**Why wrong:** Discourser uses Panda CSS, not Tailwind. Classes won't work.
+
+```tsx
+// ✅ CORRECT: Panda CSS props
+<Box bg="primary.9" color="white">
+  Content
+</Box>
+```
+
+---
+
+### ❌ Manual Colors on colorPalette Components
+
+```tsx
+// ❌ WRONG: Manual background/color when component supports colorPalette
+<Button bg="primary.9" color="onM3Primary" _hover={{ bg: "primary.10" }}>
+  Submit
+</Button>
+```
+
+**Why wrong:** Duplicates work the component already does, loses compound variant logic.
+
+```tsx
+// ✅ CORRECT: Use colorPalette prop
+<Button colorPalette="primary">
+  Submit
+</Button>
+```
+
+---
+
+### ❌ Using Raw Radix Scale for Text
+
+```tsx
+// ❌ WRONG: Direct Radix scale for body text
+<Text color="gray.12">
+  Body text content
+</Text>
+```
+
+**Why wrong:** Not semantic — if you change gray palette, all text colors need updating.
+
+```tsx
+// ✅ CORRECT: Semantic token
+<Text color="fg.default">
+  Body text content
+</Text>
+```
+
+---
+
+### ❌ Mixing bg-* with M3 Explicit Tokens
+
+```tsx
+// ❌ WRONG: Mixing Shadcn vocabulary with M3 explicit tokens
+<Box bg="m3Primary">
+  <Text style={{ color: 'var(--text-primary-foreground)' }}>Mixed vocabulary</Text>
+</Box>
+```
+
+**Why wrong:** Inconsistent — pick one translation path and stick to it.
+
+```tsx
+// ✅ CORRECT: Consistent Discourser vocabulary
+<Box bg="primary.9">
+  <Text color="onM3Primary">Consistent</Text>
+</Box>
+
+// ✅ ALSO CORRECT: M3 explicit vocabulary
+<Box bg="m3Primary">
+  <Text color="onM3Primary">M3 consistent</Text>
+</Box>
+```
+
+---
+
+## Cross-References
+
+For comprehensive color system details:
+- [Guidelines: Colors](/docs/documentation-guidelines-99-colors--docs) — Full M3 color role documentation
+- [Guidelines: Elevation](/docs/documentation-guidelines-99-elevation--docs) — Surface container elevation system
+
+For component-specific colorPalette usage:
+- Coming soon: Component Translation pages (05-07)
