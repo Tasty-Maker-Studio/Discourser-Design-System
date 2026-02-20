@@ -150,6 +150,10 @@
       "types": "./src/components/Stepper/index.ts",
       "import": "./src/components/Stepper/index.ts"
     },
+    "./ScenarioQueue": {
+      "types": "./src/components/ScenarioQueue/index.ts",
+      "import": "./src/components/ScenarioQueue/index.ts"
+    },
     "./Breadcrumb": {
       "types": "./src/components/Breadcrumb.tsx",
       "import": "./src/components/Breadcrumb.tsx"

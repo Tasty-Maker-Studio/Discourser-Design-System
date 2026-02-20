@@ -60,7 +60,7 @@ const MOCK_COMPLETED: Scenario[] = [
     category: 'Process',
     difficulty: 'beginner',
     duration: '10-15 min',
-    status: 'repeat',
+    status: 'completed',
   },
 ]
 
@@ -141,7 +141,7 @@ const MOCK_COMPLETED_LONG: Scenario[] = [
     category: 'Product',
     difficulty: 'intermediate',
     duration: '15-25 min',
-    status: 'repeat',
+    status: 'completed',
   },
 ]
 
@@ -169,14 +169,10 @@ export const Default: Story = {
     const handleReorder = (newIds: string[]) => {
       setScenarios((prev) => {
         const queueMap = Object.fromEntries(
-          prev
-            .filter((s) => s.status === 'queued' || s.status === 'repeat')
-            .map((s) => [s.id, s]),
+          prev.filter((s) => s.status === 'queued').map((s) => [s.id, s]),
         )
         const reordered = newIds.map((id) => queueMap[id]).filter(Boolean)
-        const rest = prev.filter(
-          (s) => s.status !== 'queued' && s.status !== 'repeat',
-        )
+        const rest = prev.filter((s) => s.status !== 'queued')
         return [...reordered, ...rest]
       })
     }
@@ -184,7 +180,9 @@ export const Default: Story = {
     const handleRequeue = (scenarioId: string) => {
       setScenarios((prev) =>
         prev.map((s) =>
-          s.id === scenarioId ? { ...s, status: 'repeat' as const } : s,
+          s.id === scenarioId
+            ? { ...s, status: 'queued' as const, wasRequeued: true }
+            : s,
         ),
       )
     }
@@ -311,14 +309,10 @@ export const Scrollable: Story = {
     const handleReorder = (newIds: string[]) => {
       setScenarios((prev) => {
         const queueMap = Object.fromEntries(
-          prev
-            .filter((s) => s.status === 'queued' || s.status === 'repeat')
-            .map((s) => [s.id, s]),
+          prev.filter((s) => s.status === 'queued').map((s) => [s.id, s]),
         )
         const reordered = newIds.map((id) => queueMap[id]).filter(Boolean)
-        const rest = prev.filter(
-          (s) => s.status !== 'queued' && s.status !== 'repeat',
-        )
+        const rest = prev.filter((s) => s.status !== 'queued')
         return [...reordered, ...rest]
       })
     }

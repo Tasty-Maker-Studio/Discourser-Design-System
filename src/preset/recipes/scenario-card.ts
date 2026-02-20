@@ -96,10 +96,10 @@ export const scenarioCard = defineSlotRecipe({
       },
     },
 
-    // Duration pill: per-difficulty colors matching inversePrimary / dark-secondary / dark-tertiary.
-    // Default (beginner): inversePrimary token (#B1D18A).
-    // Intermediate: #BFCBAD (dark-secondary container — no token available, raw value).
-    // Advanced: #A0D0CB (dark-tertiary container — no token available, raw value).
+    // Duration pill: per-difficulty inverse palette colors.
+    // Default (beginner): inversePrimary  → semanticDark.primary   (#B1D18A light, #4C662B dark)
+    // Intermediate:       inverseSecondary → semanticDark.secondary (#BFCBAD light, #586249 dark)
+    // Advanced:           inverseTertiary  → semanticDark.tertiary  (#A0D0CB light, #386663 dark)
     durationBadge: {
       display: 'inline-flex',
       alignItems: 'center',
@@ -112,10 +112,10 @@ export const scenarioCard = defineSlotRecipe({
       bg: 'inversePrimary',
       color: 'onSurface',
       '&[data-difficulty="intermediate"]': {
-        bg: '#BFCBAD',
+        bg: 'inverseSecondary',
       },
       '&[data-difficulty="advanced"]': {
-        bg: '#A0D0CB',
+        bg: 'inverseTertiary',
       },
     },
   },

@@ -6,7 +6,7 @@ import type { ReactNode } from 'react'
 
 export type Difficulty = 'beginner' | 'intermediate' | 'advanced'
 
-export type ScenarioStatus = 'queued' | 'completed' | 'repeat'
+export type ScenarioStatus = 'queued' | 'completed'
 
 export interface Scenario {
   id: string
@@ -16,6 +16,8 @@ export interface Scenario {
   /** Display string, e.g. "10-15 min" */
   duration: string
   status: ScenarioStatus
+  /** True when this card was previously completed and re-queued by the user */
+  wasRequeued?: boolean
 }
 
 // ──────────────────────────────────────────────

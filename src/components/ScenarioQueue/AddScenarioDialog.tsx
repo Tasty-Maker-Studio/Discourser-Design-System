@@ -1,7 +1,6 @@
 'use client'
 import type { ReactNode } from 'react'
 import { css } from 'styled-system/css'
-import { Button } from '../Button'
 import * as Dialog from '../Dialog'
 
 interface AddScenarioDialogProps {

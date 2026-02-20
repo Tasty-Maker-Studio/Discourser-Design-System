@@ -1,6 +1,6 @@
 'use client'
 import { DragDropProvider } from '@dnd-kit/react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, type ComponentProps } from 'react'
 import { css } from 'styled-system/css'
 import { Box, Center } from 'styled-system/jsx'
 import { scenarioQueue } from 'styled-system/recipes'
@@ -31,9 +31,7 @@ export function ScenarioQueue({
   onBrowseMore,
   onBuildCustom,
 }: ScenarioQueueProps) {
-  const queuedRaw = scenarios.filter(
-    (s) => s.status === 'queued' || s.status === 'repeat',
-  )
+  const queuedRaw = scenarios.filter((s) => s.status === 'queued')
   const completed = scenarios.filter((s) => s.status === 'completed')
 
   // Local ordering state — mirrors queuedRaw but supports optimistic drag reorder
@@ -42,31 +40,28 @@ export function ScenarioQueue({
   // Sync when the canonical scenarios list changes externally
   useEffect(() => {
     setLocalQueue(queuedRaw)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scenarios])
 
   const [dialogOpen, setDialogOpen] = useState(false)
   const totalCount = localQueue.length + completed.length
 
-  const handleDragEnd = (event: {
-    operation: { source: { id: unknown } | null; target: { id: unknown } | null }
-    canceled: boolean
-  }) => {
+  // useSortable adds index + initialIndex to the draggable at runtime; cast here
+  // since @dnd-kit/react's static Draggable<Data> type doesn't declare them.
+  type SortableSource = { index: number; initialIndex: number } & Record<string, unknown>
+
+  const handleDragEnd: NonNullable<ComponentProps<typeof DragDropProvider>['onDragEnd']> = (event) => {
     if (event.canceled) return
-    const { source, target } = event.operation
-    if (!source || !target || source.id === target.id) return
+    const source = event.operation?.source as SortableSource | null
+    if (!source) return
 
-    const sourceId = String(source.id)
-    const targetId = String(target.id)
+    const oldIndex = source.initialIndex
+    const newIndex = source.index
 
-    setLocalQueue((prev) => {
-      const oldIndex = prev.findIndex((s) => s.id === sourceId)
-      const newIndex = prev.findIndex((s) => s.id === targetId)
-      if (oldIndex === -1 || newIndex === -1) return prev
-      const next = arrayMove(prev, oldIndex, newIndex)
-      onReorder?.(next.map((s) => s.id))
-      return next
-    })
+    if (oldIndex === newIndex) return
+
+    const next = arrayMove(localQueue, oldIndex, newIndex)
+    setLocalQueue(next)
+    onReorder?.(next.map((s) => s.id))
   }
 
   const styles = scenarioQueue()
@@ -113,7 +108,7 @@ export function ScenarioQueue({
                     index={index}
                     position={index + 1}
                     isActive={index === 0}
-                    isRepeat={scenario.status === 'repeat'}
+                    isRepeat={scenario.wasRequeued ?? false}
                   />
                 ))}
               </Box>

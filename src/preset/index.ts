@@ -48,6 +48,7 @@ import { heading } from './recipes/heading';
 // Custom Components
 import { stepper } from './recipes/stepper';
 import { scenarioCard } from './recipes/scenario-card';
+import { scenarioQueue } from './recipes/scenario-queue';
 
 // Park UI theme extensions
 import { layerStyles } from './layer-styles';
@@ -178,6 +179,7 @@ export const discourserPandaPreset = definePreset({
         // Custom Components
         stepper,
         scenarioCard,
+        scenarioQueue,
       },
     },
   },
