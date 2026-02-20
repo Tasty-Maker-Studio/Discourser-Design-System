@@ -1,5 +1,18 @@
 # @discourser/design-system
 
+## 0.15.1
+
+### Patch Changes
+
+- [#105](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/105) [`a73b244`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/a73b2443fb9c052c1509f3732ff9dbd6b908cfd8) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Fix Figma Translation documentation and cross-references
+  - Fixed 16 incorrect cross-reference URLs in translation documentation files
+    - Removed incorrect "design-tokens" path segment from Guidelines links
+    - URLs now correctly match Storybook Meta title format
+  - Added 37 missing Guidelines documentation files to repository
+    - Updated .gitignore to include stories/documentation/guidelines/
+    - Files were previously ignored, causing cross-reference integrity test failures
+  - All cross-reference integrity tests now pass (57 broken links → 0)
+
 ## 0.15.0
 
 ### Minor Changes

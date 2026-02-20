@@ -19,6 +19,9 @@ import { accordion } from './recipes/accordion';
 import { drawer } from './recipes/drawer';
 import { tabs } from './recipes/tabs';
 
+// Park UI recipes - Navigation
+import { breadcrumb } from './recipes/breadcrumb';
+
 // Park UI recipes - Form Elements
 import { switchRecipe } from './recipes/switch';
 import { checkbox } from './recipes/checkbox';
@@ -44,6 +47,8 @@ import { heading } from './recipes/heading';
 
 // Custom Components
 import { stepper } from './recipes/stepper';
+import { scenarioCard } from './recipes/scenario-card';
+import { scenarioQueue } from './recipes/scenario-queue';
 
 // Park UI theme extensions
 import { layerStyles } from './layer-styles';
@@ -155,6 +160,8 @@ export const discourserPandaPreset = definePreset({
         accordion,
         drawer,
         tabs,
+        // Navigation
+        breadcrumb,
         // Form Elements
         switchComponent: switchRecipe,
         checkbox,
@@ -171,6 +178,8 @@ export const discourserPandaPreset = definePreset({
         tooltip,
         // Custom Components
         stepper,
+        scenarioCard,
+        scenarioQueue,
       },
     },
   },
