@@ -44,8 +44,27 @@ export * as Tooltip from './Tooltip';
 // Utility Components (namespace pattern - may have multiple exports)
 export * as CloseButton from './CloseButton';
 export * as Icon from './Icon';
+
+// Icons (individual icon components)
+export { GripDotsVerticalIcon, type GripDotsVerticalIconProps } from './Icons/GripDotsVerticalIcon';
+export { ClockIcon, type ClockIconProps } from './Icons/ClockIcon';
 export * as AbsoluteCenter from './AbsoluteCenter';
 export * as Group from './Group';
 
 // Navigation & Progress Components
+export * as Breadcrumb from './Breadcrumb';
 export { Stepper, type StepperRootProps, type StepItem } from './Stepper';
+
+// Composite / Feature Components
+export {
+  ScenarioQueue,
+  ScenarioCard,
+  AddScenarioDialog,
+  difficultyColorMap,
+  difficultyLabel,
+  type ScenarioQueueProps,
+  type ScenarioCardProps,
+  type Scenario,
+  type Difficulty,
+  type ScenarioStatus,
+} from './ScenarioQueue';
