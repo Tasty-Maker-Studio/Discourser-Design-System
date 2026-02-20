@@ -18,6 +18,9 @@ import { accordion } from './src/preset/recipes/accordion';
 import { drawer } from './src/preset/recipes/drawer';
 import { tabs } from './src/preset/recipes/tabs';
 
+// Park UI recipes - Navigation
+import { breadcrumb } from './src/preset/recipes/breadcrumb';
+
 // Park UI recipes - Form Elements
 import { switchRecipe } from './src/preset/recipes/switch';
 import { checkbox } from './src/preset/recipes/checkbox';
@@ -45,6 +48,8 @@ import { layerStyles } from './src/preset/layer-styles';
 import { textStyles as parkTextStyles } from './src/preset/text-styles';
 import { shadows as parkShadows } from './src/preset/shadows';
 import { stepper } from './src/preset/recipes/stepper';
+import { scenarioCard } from './src/preset/recipes/scenario-card';
+import { scenarioQueue } from './src/preset/recipes/scenario-queue';
 
 const theme = transformToPandaTheme(activeLanguage);
 
@@ -101,6 +106,9 @@ export default defineConfig({
         fontWeights: theme.tokens.fontWeights,
         letterSpacings: theme.tokens.letterSpacings,
         spacing: theme.tokens.spacing,
+        // xxs mirrors spacing.xxs so that `height/width: 'xxs'` resolves correctly
+        // in the tabs indicator recipe (height maps to sizes, not spacing).
+        sizes: { xxs: { value: '2px' } },
         radii: theme.tokens.radii,
         shadows: theme.tokens.shadows,
         durations: theme.tokens.durations,
@@ -186,6 +194,8 @@ export default defineConfig({
         accordion,
         drawer,
         tabs,
+        // Navigation
+        breadcrumb,
         // Form Elements
         switchComponent: switchRecipe,
         checkbox,
@@ -202,6 +212,8 @@ export default defineConfig({
         tooltip,
         // Custom Components
         stepper,
+        scenarioCard,
+        scenarioQueue,
       },
     },
   },

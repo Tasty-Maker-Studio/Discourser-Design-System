@@ -1,8 +1,7 @@
-import { stepsAnatomy } from '@ark-ui/react/anatomy';
 import { defineSlotRecipe } from '@pandacss/dev';
 
 export const steps = defineSlotRecipe({
   className: 'steps',
-  slots: stepsAnatomy.keys(),
+  slots: ['root', 'list', 'item', 'trigger', 'indicator', 'separator', 'content', 'nextTrigger', 'prevTrigger', 'progress'],
   base: {},
 });
