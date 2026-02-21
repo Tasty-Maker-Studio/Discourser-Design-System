@@ -13,6 +13,7 @@ export * from './tabs';
 
 // Navigation
 export * from './breadcrumb';
+export * from './navigation-menu';
 
 // Form elements
 export * from './switch';

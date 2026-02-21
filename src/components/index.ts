@@ -46,8 +46,21 @@ export * as CloseButton from './CloseButton';
 export * as Icon from './Icon';
 
 // Icons (individual icon components)
-export { GripDotsVerticalIcon, type GripDotsVerticalIconProps } from './Icons/GripDotsVerticalIcon';
+export {
+  GripDotsVerticalIcon,
+  type GripDotsVerticalIconProps,
+} from './Icons/GripDotsVerticalIcon';
 export { ClockIcon, type ClockIconProps } from './Icons/ClockIcon';
+export { DashboardIcon, type DashboardIconProps } from './Icons/DashboardIcon';
+export { NotebookIcon, type NotebookIconProps } from './Icons/NotebookIcon';
+export { ScenarioIcon, type ScenarioIconProps } from './Icons/ScenarioIcon';
+export { HelpIcon, type HelpIconProps } from './Icons/HelpIcon';
+export { AccountIcon, type AccountIconProps } from './Icons/AccountIcon';
+export {
+  RightArrowIcon,
+  type RightArrowIconProps,
+} from './Icons/RightArrowIcon';
+export { ChevronUpIcon, type ChevronUpIconProps } from './Icons/ChevronUpIcon';
 export * as AbsoluteCenter from './AbsoluteCenter';
 export * as Group from './Group';
 
@@ -56,6 +69,13 @@ export * as Breadcrumb from './Breadcrumb';
 export { Stepper, type StepperRootProps, type StepItem } from './Stepper';
 
 // Composite / Feature Components
+export {
+  NavigationMenu,
+  type NavigationMenuProps,
+  type NavSection,
+  type NavItem,
+} from './NavigationMenu';
+
 export {
   ScenarioQueue,
   ScenarioCard,

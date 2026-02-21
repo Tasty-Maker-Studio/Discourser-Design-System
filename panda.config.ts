@@ -20,6 +20,7 @@ import { tabs } from './src/preset/recipes/tabs';
 
 // Park UI recipes - Navigation
 import { breadcrumb } from './src/preset/recipes/breadcrumb';
+import { navigationMenu } from './src/preset/recipes/navigation-menu';
 
 // Park UI recipes - Form Elements
 import { switchRecipe } from './src/preset/recipes/switch';
@@ -196,6 +197,7 @@ export default defineConfig({
         tabs,
         // Navigation
         breadcrumb,
+        navigationMenu,
         // Form Elements
         switchComponent: switchRecipe,
         checkbox,

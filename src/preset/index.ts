@@ -21,6 +21,7 @@ import { tabs } from './recipes/tabs';
 
 // Park UI recipes - Navigation
 import { breadcrumb } from './recipes/breadcrumb';
+import { navigationMenu } from './recipes/navigation-menu';
 
 // Park UI recipes - Form Elements
 import { switchRecipe } from './recipes/switch';
@@ -162,6 +163,7 @@ export const discourserPandaPreset = definePreset({
         tabs,
         // Navigation
         breadcrumb,
+        navigationMenu,
         // Form Elements
         switchComponent: switchRecipe,
         checkbox,
