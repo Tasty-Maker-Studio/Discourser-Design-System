@@ -49,8 +49,10 @@ import { layerStyles } from './src/preset/layer-styles';
 import { textStyles as parkTextStyles } from './src/preset/text-styles';
 import { shadows as parkShadows } from './src/preset/shadows';
 import { stepper } from './src/preset/recipes/stepper';
+import { contentCard } from './src/preset/recipes/content-card';
 import { scenarioCard } from './src/preset/recipes/scenario-card';
 import { scenarioQueue } from './src/preset/recipes/scenario-queue';
+import { scenarioSettings } from './src/preset/recipes/scenario-settings';
 
 const theme = transformToPandaTheme(activeLanguage);
 
@@ -170,6 +172,27 @@ export default defineConfig({
         },
       },
 
+      // Keyframes for accordion expand/collapse animations.
+      // Uses --height CSS variable set automatically by zag-js collapsible machine.
+      keyframes: {
+        'slide-down': {
+          from: { opacity: '0', height: '0' },
+          to: { opacity: '1', height: 'var(--height)' },
+        },
+        'slide-up': {
+          from: { opacity: '1', height: 'var(--height)' },
+          to: { opacity: '0', height: '0' },
+        },
+        'fade-in': {
+          from: { opacity: '0' },
+          to: { opacity: '1' },
+        },
+        'fade-out': {
+          from: { opacity: '1' },
+          to: { opacity: '0' },
+        },
+      },
+
       // Recipes: Park UI components (simple recipes)
       recipes: {
         // Core
@@ -214,8 +237,10 @@ export default defineConfig({
         tooltip,
         // Custom Components
         stepper,
+        contentCard,
         scenarioCard,
         scenarioQueue,
+        scenarioSettings,
       },
     },
   },
@@ -238,6 +263,15 @@ export default defineConfig({
     body: {
       fontFamily: 'body',
       textStyle: 'bodyMedium',
+    },
+    // Safety net: prevent Panda's reset [hidden]{display:none!important} from
+    // killing accordion close animations during zag-js's 'closing' transient state.
+    // zag-js keeps hidden=false while closing, but this guards edge cases.
+    '[data-scope="accordion"][data-part="item-content"][hidden]': {
+      display: 'block',
+    },
+    '[data-collapsible][hidden]': {
+      display: 'block',
     },
   },
 });

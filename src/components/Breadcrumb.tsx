@@ -32,3 +32,10 @@ export const Separator = withContext(ark.li, 'separator', {
     children: <ChevronRightIcon />,
   },
 })
+
+/** The current/active page crumb — renders as a span (not a link) with aria-current="page" */
+export const CurrentLink = withContext(ark.span, 'link', {
+  defaultProps: {
+    'aria-current': 'page',
+  },
+})

@@ -66,6 +66,7 @@ export * as Group from './Group';
 
 // Navigation & Progress Components
 export * as Breadcrumb from './Breadcrumb';
+export * as ContentCard from './ContentCard';
 export { Stepper, type StepperRootProps, type StepItem } from './Stepper';
 
 // Composite / Feature Components
@@ -88,3 +89,13 @@ export {
   type Difficulty,
   type ScenarioStatus,
 } from './ScenarioQueue';
+
+export {
+  ScenarioSettings,
+  type ScenarioSettingsProps,
+  type AdjustableSectionId,
+  type RadioSectionId,
+  type SectionId,
+  type DurationValue,
+  type QuestionCountValue,
+} from './ScenarioSettings';
