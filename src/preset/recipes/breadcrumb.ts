@@ -1,4 +1,4 @@
-import { defineSlotRecipe } from '@pandacss/dev'
+import { defineSlotRecipe } from '@pandacss/dev';
 
 export const breadcrumb = defineSlotRecipe({
   className: 'breadcrumb',
@@ -61,6 +61,38 @@ export const breadcrumb = defineSlotRecipe({
           _currentPage: { color: 'fg.default' },
         },
       },
+      discourser: {
+        list: {
+          gap: '2.5',
+          alignItems: 'center',
+        },
+        item: {
+          bg: 'transparent',
+          px: '1.5',
+          py: '1.5',
+          borderRadius: 'l2',
+          h: '9',
+          display: 'inline-flex',
+          alignItems: 'center',
+          _last: {
+            color: 'fg.default',
+            fontWeight: 'medium',
+            fontSize: 'md',
+            fontFeatureSettings: "'liga' 0, 'calt' 0",
+          },
+        },
+        link: {
+          color: 'fg.subtle',
+          fontWeight: 'medium',
+          fontSize: 'lg',
+          _hover: { color: 'fg.default' },
+          _currentPage: { color: 'fg.default', fontWeight: 'semibold' },
+        },
+        separator: {
+          color: 'primary.7',
+          _icon: { width: '27px', height: '27px' },
+        },
+      },
     },
     size: {
       xs: { list: { gap: '1', textStyle: 'xs' } },
@@ -74,4 +106,4 @@ export const breadcrumb = defineSlotRecipe({
     variant: 'plain',
     size: 'md',
   },
-})
+});

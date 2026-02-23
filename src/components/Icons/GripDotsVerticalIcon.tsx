@@ -1,10 +1,10 @@
-import { ark } from '@ark-ui/react/factory'
-import type { ComponentProps } from 'react'
-import { styled } from 'styled-system/jsx'
+import { ark } from '@ark-ui/react/factory';
+import type { ComponentProps } from 'react';
+import { styled } from 'styled-system/jsx';
 
-const StyledSvg = styled(ark.svg)
+const StyledSvg = styled(ark.svg);
 
-export type GripDotsVerticalIconProps = ComponentProps<typeof StyledSvg>
+export type GripDotsVerticalIconProps = ComponentProps<typeof StyledSvg>;
 
 export const GripDotsVerticalIcon = (props: GripDotsVerticalIconProps) => (
   <StyledSvg
@@ -23,4 +23,4 @@ export const GripDotsVerticalIcon = (props: GripDotsVerticalIconProps) => (
       strokeLinejoin="round"
     />
   </StyledSvg>
-)
+);
