@@ -948,6 +948,58 @@ Wrapper for inline SVG icons with consistent sizing and theming.
 
 ---
 
+### Breadcrumb
+
+**Maps from:** Shadcn Breadcrumb, HTML `<nav aria-label="breadcrumb">` pattern
+**Import:** `import { Breadcrumb } from '@discourser/design-system'`
+**Type:** Compound (slot recipe)
+
+**Anatomy:**
+- `<Breadcrumb.Root>` — `<nav aria-label="breadcrumb">` container
+- `<Breadcrumb.List>` — `<ol>` ordered list of items
+- `<Breadcrumb.Item>` — Individual `<li>` crumb entry
+- `<Breadcrumb.Link>` — `<a>` link for navigable crumbs
+- `<Breadcrumb.Separator>` — Chevron separator between items (default `›`)
+- `<Breadcrumb.Ellipsis>` — Collapsed items placeholder (`...`)
+
+**Variants:**
+
+| Prop | Values | Default |
+|---|---|---|
+| `variant` | `plain`, `underline` | `plain` |
+| `size` | `xs`, `sm`, `md`, `lg` | `md` |
+
+**Shadcn → Discourser:**
+
+| Shadcn | Discourser |
+|---|---|
+| `<BreadcrumbList>` | `<Breadcrumb.List>` |
+| `<BreadcrumbItem>` | `<Breadcrumb.Item>` |
+| `<BreadcrumbLink>` | `<Breadcrumb.Link>` |
+| `<BreadcrumbSeparator>` | `<Breadcrumb.Separator>` |
+| `<BreadcrumbEllipsis>` | `<Breadcrumb.Ellipsis>` |
+
+**Usage:**
+```tsx
+<Breadcrumb.Root>
+  <Breadcrumb.List>
+    <Breadcrumb.Item>
+      <Breadcrumb.Link href="/">Home</Breadcrumb.Link>
+    </Breadcrumb.Item>
+    <Breadcrumb.Separator />
+    <Breadcrumb.Item>
+      <Breadcrumb.Link href="/settings">Settings</Breadcrumb.Link>
+    </Breadcrumb.Item>
+    <Breadcrumb.Separator />
+    <Breadcrumb.Item>Profile</Breadcrumb.Item>
+  </Breadcrumb.List>
+</Breadcrumb.Root>
+```
+
+The last `<Breadcrumb.Item>` is automatically styled as the current page (`color: fg.default`). Use `<Breadcrumb.Ellipsis>` when the path is too long to display in full.
+
+---
+
 ## Common Mistakes
 
 ```tsx
@@ -1134,7 +1186,7 @@ Matches `panda.config.ts` definitions:
 - switchComponent, checkbox, radioGroup, select, slider
 - avatar, progress, toast
 - dialog, popover, tooltip
-- stepper
+- stepper, breadcrumb
 
 ---
 

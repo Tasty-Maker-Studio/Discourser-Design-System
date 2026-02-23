@@ -69,6 +69,10 @@ export const m3SemanticTokens = defineSemanticTokens.colors({
   inverseSurface: { value: { base: semantic.inverseSurface, _dark: semanticDark.inverseSurface } },
   inverseOnSurface: { value: { base: semantic.inverseOnSurface, _dark: semanticDark.inverseOnSurface } },
   inversePrimary: { value: { base: semantic.inversePrimary, _dark: semanticDark.inversePrimary } },
+  // Not standard M3 tokens, but follow inversePrimary's pattern:
+  // light mode = dark-palette value, dark mode = light-palette value.
+  inverseSecondary: { value: { base: semanticDark.secondary, _dark: semantic.secondary } },
+  inverseTertiary: { value: { base: semanticDark.tertiary, _dark: semantic.tertiary } },
 
   // Scrim/Shadow
   scrim: { value: { base: semantic.scrim, _dark: semanticDark.scrim } },
