@@ -1,5 +1,11 @@
 # @discourser/design-system
 
+## 0.17.0
+
+### Minor Changes
+
+- [#111](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/111) [`669cbbb`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/669cbbb6083863313618b6365741c9eaf04d3c41) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - add a new ScenarioComponent
+
 ## 0.16.0
 
 ### Minor Changes
