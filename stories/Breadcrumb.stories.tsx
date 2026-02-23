@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Breadcrumb } from '../src';
+import { Breadcrumb, RightArrowIcon } from '../src';
 
 const meta: Meta = {
   title: 'Components/Navigation/Breadcrumb',
@@ -309,6 +309,26 @@ export const LongPath: Story = {
           <Breadcrumb.Link href="/organization/departments/engineering/teams/frontend" aria-current="page">
             Frontend
           </Breadcrumb.Link>
+        </Breadcrumb.Item>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
+  ),
+};
+
+export const DiscourserVariant: Story = {
+  name: 'Discourser Variant (Figma)',
+  render: () => (
+    <Breadcrumb.Root variant="discourser">
+      <Breadcrumb.List>
+        <Breadcrumb.Item>
+          <Breadcrumb.Link href="/scenarios">Scenarios</Breadcrumb.Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Separator />
+        <Breadcrumb.Item>
+          <Breadcrumb.CurrentLink>
+            My Queue
+            <RightArrowIcon width={18} height={18} />
+          </Breadcrumb.CurrentLink>
         </Breadcrumb.Item>
       </Breadcrumb.List>
     </Breadcrumb.Root>
