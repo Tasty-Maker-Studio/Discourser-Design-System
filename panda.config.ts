@@ -45,6 +45,10 @@ import { layerStyles } from './src/preset/layer-styles';
 import { textStyles as parkTextStyles } from './src/preset/text-styles';
 import { shadows as parkShadows } from './src/preset/shadows';
 import { stepper } from './src/preset/recipes/stepper';
+import { scenarioSettings } from './src/preset/recipes/scenario-settings';
+import { contentCard } from './src/preset/recipes/content-card';
+import { breadcrumb } from './src/preset/recipes/breadcrumb';
+import { navigationMenu } from './src/preset/recipes/navigation-menu';
 
 const theme = transformToPandaTheme(activeLanguage);
 
@@ -202,6 +206,10 @@ export default defineConfig({
         tooltip,
         // Custom Components
         stepper,
+        scenarioSettings,
+        contentCard,
+        breadcrumb,
+        navigationMenu,
       },
     },
   },

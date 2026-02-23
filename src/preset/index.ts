@@ -44,6 +44,10 @@ import { heading } from './recipes/heading';
 
 // Custom Components
 import { stepper } from './recipes/stepper';
+import { scenarioSettings } from './recipes/scenario-settings';
+import { contentCard } from './recipes/content-card';
+import { breadcrumb } from './recipes/breadcrumb';
+import { navigationMenu } from './recipes/navigation-menu';
 
 // Park UI theme extensions
 import { layerStyles } from './layer-styles';
@@ -171,6 +175,10 @@ export const discourserPandaPreset = definePreset({
         tooltip,
         // Custom Components
         stepper,
+        scenarioSettings,
+        contentCard,
+        breadcrumb,
+        navigationMenu,
       },
     },
   },
