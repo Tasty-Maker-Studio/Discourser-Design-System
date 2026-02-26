@@ -325,7 +325,7 @@ import { CheckIcon, ClockIcon, XIcon, InfoIcon } from 'your-icon-library';
 // Card featuring a badge
 <Card>
   <div className={css({ display: 'flex', justifyContent: 'space-between', alignItems: 'start' })}>
-    <Heading as="h3" size="md">Premium Plan</Heading>
+    <Header as="h3" size="md">Premium Plan</Header>
     <Badge variant="solid" colorPalette="primary">
       Popular
     </Badge>
@@ -430,18 +430,18 @@ import { CheckIcon, ClockIcon, XIcon, InfoIcon } from 'your-icon-library';
     <Badge variant="solid" colorPalette="success" size="sm">
       New
     </Badge>
-    <Heading as="h3" size="md" className={css({ mt: '2' })}>
+    <Header as="h3" size="md" className={css({ mt: '2' })}>
       Dark Mode
-    </Heading>
+    </Header>
     <p>Beautiful dark theme for reduced eye strain</p>
   </div>
   <div>
     <Badge variant="subtle" colorPalette="warning" size="sm">
       Beta
     </Badge>
-    <Heading as="h3" size="md" className={css({ mt: '2' })}>
+    <Header as="h3" size="md" className={css({ mt: '2' })}>
       AI Assistant
-    </Heading>
+    </Header>
     <p>Intelligent help powered by machine learning</p>
   </div>
 </div>
@@ -569,7 +569,7 @@ The Badge component follows WCAG 2.1 Level AA standards:
 // Combine with context for clarity
 <article aria-label="New feature: Dark mode">
   <Badge colorPalette="primary">New</Badge>
-  <Heading as="h3" size="md">Dark Mode</Heading>
+  <Header as="h3" size="md">Dark Mode</Header>
 </article>
 
 // Use aria-hidden for decorative badges
@@ -727,7 +727,7 @@ test('badge is not interactive by default', () => {
 - **Chip**: For interactive, removable tags (if implemented)
 - **Tag**: Alternative name for similar component patterns
 - **IconButton**: For interactive icon elements
-- **Heading**: Often paired with badges in headers
+- **Header**: Often paired with badges in headers
 - **Card**: Frequently contains status badges
 - **Avatar**: Often displayed with role or status badges
 

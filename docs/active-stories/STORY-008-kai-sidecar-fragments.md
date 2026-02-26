@@ -42,7 +42,7 @@ _bmad/_cfg/agents/kai/kai-sidecar/knowledge/
 ### Fragment 2: `figma-translation-typography.md`
 
 **Source:** `02-Typography.mdx`
-**Extract:** Text size mapping table, font family table, font weight table, Heading component size mapping. Strip prose.
+**Extract:** Text size mapping table, font family table, font weight table, Header component size mapping. Strip prose.
 
 ### Fragment 3: `figma-translation-spacing.md`
 

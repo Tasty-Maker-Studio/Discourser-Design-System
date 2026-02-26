@@ -7,7 +7,7 @@ import {
   InputAddon,
   InputGroup,
   Textarea,
-  Heading,
+  Header,
   Badge,
   Spinner,
   Toaster,
@@ -33,6 +33,9 @@ import {
   ContentCard,
   Breadcrumb,
   NavigationMenu,
+  ScenarioQueue,
+  ScenarioCard,
+  type Scenario,
   DashboardIcon,
   NotebookIcon,
   ScenarioIcon,
@@ -67,9 +70,9 @@ const SectionTitle = ({
   description?: string;
 }) => (
   <VStack alignItems="start" gap="1" w="full" mb="2">
-    <Heading size="4xl" css={{ color: 'onSurface' }}>
+    <Header size="4xl" css={{ color: 'onSurface' }}>
       {title}
-    </Heading>
+    </Header>
     {description && (
       <p className={css({ color: 'fg.muted', fontSize: 'sm' })}>
         {description}
@@ -80,7 +83,7 @@ const SectionTitle = ({
 );
 
 const SubLabel = ({ children }: { children: string }) => (
-  <Heading
+  <Header
     size="sm"
     css={{
       color: 'fg.muted',
@@ -91,7 +94,7 @@ const SubLabel = ({ children }: { children: string }) => (
     }}
   >
     {children}
-  </Heading>
+  </Header>
 );
 
 const MonoLabel = ({ children }: { children: string }) => (
@@ -270,6 +273,49 @@ const NAV_SECTIONS: NavSection[] = [
   },
 ];
 
+const MOCK_SCENARIOS: Scenario[] = [
+  {
+    id: 'ux-research',
+    title: 'UX Research & Design Interview',
+    category: 'Design',
+    difficulty: 'beginner',
+    duration: '10-15 min',
+    status: 'queued',
+  },
+  {
+    id: 'biz-analysis',
+    title: 'Business Analysis ROI Presentation',
+    category: 'Business',
+    difficulty: 'intermediate',
+    duration: '15-25 min',
+    status: 'queued',
+  },
+  {
+    id: 'product-redesign',
+    title: 'Product Redesign Challenge',
+    category: 'Product',
+    difficulty: 'advanced',
+    duration: '25-35 min',
+    status: 'queued',
+  },
+  {
+    id: 'stakeholder-mgmt',
+    title: 'Stakeholder Management',
+    category: 'Leadership',
+    difficulty: 'intermediate',
+    duration: '20-30 min',
+    status: 'completed',
+  },
+  {
+    id: 'agile-sprint',
+    title: 'Agile Sprint Planning',
+    category: 'Process',
+    difficulty: 'beginner',
+    duration: '10-15 min',
+    status: 'completed',
+  },
+];
+
 // ── Single Unified Story ──────────────────────────────────────────────────────
 
 export const FullCatalog: StoryObj = {
@@ -288,7 +334,7 @@ export const FullCatalog: StoryObj = {
       <VStack alignItems="start" gap="6" w="full">
         <SectionTitle
           title="Typography"
-          description="Heading — 11 sizes using the DDS type scale"
+          description="Header — 11 sizes using the DDS type scale"
         />
         <VStack alignItems="start" gap="5" w="full">
           {HEADING_SIZES.map((size) => (
@@ -296,9 +342,9 @@ export const FullCatalog: StoryObj = {
               <Box w="10" flexShrink={0}>
                 <MonoLabel>{size}</MonoLabel>
               </Box>
-              <Heading size={size}>
+              <Header size={size}>
                 The quick brown fox jumps over the lazy dog
-              </Heading>
+              </Header>
             </HStack>
           ))}
         </VStack>
@@ -1056,7 +1102,7 @@ export const FullCatalog: StoryObj = {
           >
             <Box p="6" borderBottomWidth="1px" borderColor="border">
               <HStack justifyContent="space-between" alignItems="center">
-                <Heading size="lg">Dialog Title</Heading>
+                <Header size="lg">Dialog Title</Header>
                 <IconButton
                   size="sm"
                   variant="ghost"
@@ -1524,6 +1570,79 @@ export const FullCatalog: StoryObj = {
               showActions
             />
           </Box>
+        </VStack>
+      </VStack>
+
+      {/* ── ScenarioQueue ─────────────────────────────────────────────── */}
+      <VStack alignItems="start" gap="8" w="full">
+        <SectionTitle
+          title="ScenarioQueue"
+          description="Queue management with draggable cards, tabs, and add dialog"
+        />
+
+        <VStack alignItems="start" gap="3" w="full">
+          <SubLabel>ScenarioQueue — Full Component (280px panel)</SubLabel>
+          <HStack gap="8" flexWrap="wrap" alignItems="start">
+            <VStack alignItems="start" gap="2">
+              <MonoLabel>with queue + completed</MonoLabel>
+              <Box
+                w="280px"
+                h="720px"
+                overflow="hidden"
+                borderWidth="1px"
+                borderColor="border"
+                borderRadius="l3"
+              >
+                <ScenarioQueue
+                  scenarios={MOCK_SCENARIOS}
+                  onReorder={(ids) => console.log('Reordered:', ids)}
+                  onRequeue={(id) => console.log('Re-queue:', id)}
+                />
+              </Box>
+            </VStack>
+            <VStack alignItems="start" gap="2">
+              <MonoLabel>empty state</MonoLabel>
+              <Box
+                w="280px"
+                h="400px"
+                overflow="hidden"
+                borderWidth="1px"
+                borderColor="border"
+                borderRadius="l3"
+              >
+                <ScenarioQueue scenarios={[]} />
+              </Box>
+            </VStack>
+          </HStack>
+        </VStack>
+
+        <VStack alignItems="start" gap="3" w="full">
+          <SubLabel>ScenarioCard — Individual Cards</SubLabel>
+          <HStack gap="6" flexWrap="wrap" alignItems="start">
+            {([
+              { difficulty: 'beginner' as const, title: 'UX Research Interview', duration: '10-15 min', isActive: true, position: 1 },
+              { difficulty: 'intermediate' as const, title: 'Business Analysis ROI', duration: '15-25 min', isActive: false, position: 2 },
+              { difficulty: 'advanced' as const, title: 'Product Redesign Challenge', duration: '25-35 min', isActive: false, position: 3 },
+            ]).map(({ difficulty, title, duration, isActive, position }) => (
+              <VStack key={difficulty} alignItems="start" gap="1">
+                <MonoLabel>{difficulty}{isActive ? ' (active)' : ''}</MonoLabel>
+                <Box w="240px">
+                  <ScenarioCard
+                    scenario={{
+                      id: difficulty,
+                      title,
+                      category: 'Demo',
+                      difficulty,
+                      duration,
+                      status: 'queued',
+                    }}
+                    position={position}
+                    isActive={isActive}
+                  />
+                </Box>
+              </VStack>
+            ))}
+          </HStack>
         </VStack>
       </VStack>
 

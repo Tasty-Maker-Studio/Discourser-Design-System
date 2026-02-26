@@ -48,7 +48,7 @@ Organize components into these groups:
 2. **Layout & Containers:** Card, Accordion, Drawer, Tabs, Stepper
 3. **Feedback & Status:** Badge, Avatar, Progress, Skeleton, Spinner, Toast
 4. **Overlays:** Dialog, Popover, Tooltip
-5. **Typography:** Heading
+5. **Typography:** Header
 6. **Utility:** CloseButton, Group, AbsoluteCenter, Icon, Loader
 
 ### Per-Component Format

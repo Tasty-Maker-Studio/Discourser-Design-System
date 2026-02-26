@@ -266,7 +266,7 @@ const [isLoading, setIsLoading] = useState(true);
 
     <Stack flex="1" gap="2">
       <Skeleton loading={isLoading} width="150px" height="20px">
-        <Heading size="md">{user.name}</Heading>
+        <Header size="md">{user.name}</Header>
       </Skeleton>
 
       <Skeleton loading={isLoading} width="200px" height="16px">

@@ -63,7 +63,7 @@ Your guidelines have **excellent comprehensive component documentation** (21 com
 
 **Typography (1):**
 
-- Heading
+- Header
 
 ### Token Documentation (4 complete)
 

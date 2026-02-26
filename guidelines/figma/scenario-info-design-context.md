@@ -26,7 +26,7 @@ Inside the card:
 ```
 Stage Container (full-page flex column, gap 40px, pt 80px, rounded-2)
 ├── Breadcrumb                            (node 38:4139 — see breadcrumb-design-context.md)
-├── Heading 1                             (704px wide, py 2px)
+├── Header 1                             (704px wide, py 2px)
 │   └── "A Practice Scenario Defined"    (Fraunces SemiBold 28px, #33362E)
 └── Scenario Info Container              (white card, 704×817px, rounded-12, border)
     ├── Scenario Title                   (Fraunces SemiBold 24px, #282B24, 482px wide)
@@ -97,8 +97,8 @@ Stage Container (full-page flex column, gap 40px, pt 80px, rounded-2)
 | Card border radius | 12px | `l3` approx (or custom) |
 | Card border width | 2px | `borderWidth: '2px'` |
 | Card internal gap | 25px | `gap-6` |
-| Heading container width | 704px, py 2px | — |
-| Heading text width | 620.793px | ~88% of container |
+| Header container width | 704px, py 2px | — |
+| Header text width | 620.793px | ~88% of container |
 | Card title width | 482px | ~68% of card |
 | Badge bar padding | px 10px, py 4px | `px-2.5 py-1` |
 | Beginner badge dimensions | 93px wide × 29px tall, px 11px py 8px | pill |
@@ -137,15 +137,15 @@ The separator is a full-width horizontal line. Per Figma's component documentati
 | Figma Element | DDS Component | Notes |
 |---|---|---|
 | Breadcrumb bar | `<Breadcrumb.*>` | See `breadcrumb-design-context.md` |
-| Page heading | `<Heading>` | `as="h1"`, Fraunces font |
+| Page heading | `<Header>` | `as="h1"`, Fraunces font |
 | Scenario Info Container | `<Card>` or plain `<div>` | White card with border |
-| Scenario title | `<Heading>` | `as="h2"`, Fraunces 24px |
+| Scenario title | `<Header>` | `as="h2"`, Fraunces 24px |
 | Difficulty badge ("Beginner") | `<Badge>` | Green variant using `inversePrimary` bg |
 | Metadata badges ("Professional" etc.) | `<Badge>` | Neutral variant using `neutral.2` bg |
 | Topics badges | `<Badge>` | Subtle variant using `surface.container.highest` bg |
 | Purpose text paragraphs | `<p>` / typography tokens | Inter Regular 20px |
 | Separator | `<hr>` or `<Box borderTop>` | `border.color` token |
-| Section headers | `<Heading>` | `as="h3"`, Fraunces 24px |
+| Section headers | `<Header>` | `as="h3"`, Fraunces 24px |
 | Sample question bullets | `<ul>` / `<li>` | `list-disc`, pl-8 |
 
 ---

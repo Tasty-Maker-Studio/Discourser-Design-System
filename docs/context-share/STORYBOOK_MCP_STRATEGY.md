@@ -163,7 +163,7 @@ stories/
 import { VStack } from 'styled-system/jsx'
 
 <VStack gap="4" alignItems="start">
-  <Heading>Title</Heading>
+  <Header>Title</Header>
   <Text>Description text</Text>
   <Button>Action</Button>
 </VStack>
@@ -698,7 +698,7 @@ const recommendation = await mcp.callTool('recommend_pattern', {
   reasoning: 'Form elements should stack vertically with consistent spacing',
   example: `
     <VStack gap="4" alignItems="stretch">
-      <Heading>Form Title</Heading>
+      <Header>Form Title</Header>
       <Input />
       <Input />
       <Checkbox>I agree</Checkbox>

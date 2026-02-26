@@ -10,3 +10,4 @@ export { HelpIcon, type HelpIconProps } from './HelpIcon';
 export { AccountIcon, type AccountIconProps } from './AccountIcon';
 export { RightArrowIcon, type RightArrowIconProps } from './RightArrowIcon';
 export { ChevronUpIcon, type ChevronUpIconProps } from './ChevronUpIcon';
+export { DiscourserLogo, type DiscourserLogoProps } from './DiscourserLogo';

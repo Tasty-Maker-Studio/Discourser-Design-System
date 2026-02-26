@@ -52,7 +52,7 @@ Discourser Queue Right Accordion (column, full-width)
 │   │   └── ChevronDown icon (24×24)
 │   └── Panel (bg: --surfacevariant, p-20, gap-20)
 │       ├── AttributeDefinition card (bg: --neutral/99, border: --surfacevariant, rounded-8, p-20, h-238)
-│       │   ├── Heading: "What this means:" (Inter/Medium/20)
+│       │   ├── Header: "What this means:" (Inter/Medium/20)
 │       │   └── Bullets: Beginner / Intermediate / Advanced (Bold label + Regular body, 16px)
 │       └── Button row: "Adjustments" (bg: --secondary/50, rounded-8, w-146, h-39, Inter/Medium/18, color: --onprimary)
 │

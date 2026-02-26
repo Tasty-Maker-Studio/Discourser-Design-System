@@ -149,14 +149,14 @@ ls /Users/willstreeter/WebstormProjects/vibe-coding/shifu-project/discourser.ai/
 
 Before:
 ```typescript
-import { Button, Card, Heading } from '@discourser/design-system';
+import { Button, Card, Header } from '@discourser/design-system';
 ```
 
 After:
 ```typescript
 import { Button } from '@discourser/design-system/Button';
 import * as Card from '@discourser/design-system/Card';
-import { Heading } from '@discourser/design-system/Heading';
+import { Header } from '@discourser/design-system/Header';
 ```
 
 ### Success Criteria

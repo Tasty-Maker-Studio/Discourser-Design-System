@@ -15,7 +15,7 @@ Package: `@discourser/design-system`
 
 ```tsx
 <Button variant="solid" colorPalette="primary">Click</Button>
-<Heading as="h1" size="2xl">Title</Heading>
+<Header as="h1" size="2xl">Title</Header>
 <Input label="Email" />
 ```
 
@@ -34,7 +34,7 @@ Package: `@discourser/design-system`
 ```tsx
 import {
   Button,
-  Heading,
+  Header,
   Input,
   Textarea,
   Badge,

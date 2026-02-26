@@ -5,7 +5,7 @@ import { ScenarioQueue } from '../src/components/ScenarioQueue'
 import type { Scenario } from '../src/components/ScenarioQueue'
 
 const meta: Meta<typeof ScenarioQueue> = {
-  title: 'Components/ScenarioQueue',
+  title: 'Components/Scenario Queue',
   component: ScenarioQueue,
   tags: ['autodocs'],
   parameters: {

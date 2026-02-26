@@ -85,11 +85,11 @@ Use Accordion when you need to **organize and progressively disclose related con
 // ✅ Better: Use regular sections for always-visible content
 <Stack gap="4">
   <Section>
-    <Heading>Step 1</Heading>
+    <Header>Step 1</Header>
     <Text>Instructions...</Text>
   </Section>
   <Section>
-    <Heading>Step 2</Heading>
+    <Header>Step 2</Header>
     <Text>Instructions...</Text>
   </Section>
 </Stack>
