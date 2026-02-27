@@ -1,5 +1,20 @@
 # @discourser/design-system
 
+## 0.18.0
+
+### Minor Changes
+
+- [#113](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/113) [`d6f05bb`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/d6f05bba70e90f39f295b16fc8ed000eff0a3a4b) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Add figma-codex manifest generator
+
+  Introduces `figma-codex` — a portable Node.js tool that reads `.figma.tsx` Code Connect files and generates `dist/figma-codex.json`, a structured manifest mapping Figma design components to their code implementations (import paths, prop interfaces, sub-components, usage examples).
+  - New `pnpm codex:generate` and `pnpm codex:watch` scripts
+  - New `./figma-codex` package export pointing to `dist/figma-codex.json`
+  - Auto-regeneration on `.figma.tsx` commit via lint-staged
+  - Covers all 8 DDS components with correct `simple`, `compound`, and `composite` classification
+  - Handles multi-line function prop types (e.g. `renderLink` on `NavigationMenu`)
+
+- [#110](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/110) [`7361fc3`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/7361fc386e3b6d300ca45a015d1defcf24564e2e) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - add a new ScenarioComponent
+
 ## 0.17.0
 
 ### Minor Changes
