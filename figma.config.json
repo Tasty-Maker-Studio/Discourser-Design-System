@@ -4,6 +4,10 @@
     "include": ["src/components/**/*.figma.tsx"],
     "importPaths": {
       "src/components/*": "@discourser/design-system"
+    },
+    "paths": {
+      "@/*": ["src/*"],
+      "styled-system/*": ["styled-system/*"]
     }
   }
 }
