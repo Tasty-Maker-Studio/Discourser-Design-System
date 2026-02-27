@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
   "packageName": "@discourser/design-system",
-  "generatedAt": "2026-02-27T23:24:09.914Z",
-  "gitHash": "9372a3ed",
+  "generatedAt": "2026-02-27T23:51:34.249Z",
+  "gitHash": "1b3401bf",
   "figmaFiles": {
     "GaHmFfmvO4loUzuZS4TgEz": {
       "fileKey": "GaHmFfmvO4loUzuZS4TgEz"
@@ -31,7 +31,7 @@
           "element": "div"
         }
       ],
-      "example": "<Accordion.Root collapsible>\n      <Accordion.Item value=\"item-1\">\n        <Accordion.ItemTrigger>\n          <span>Trigger</span>\n          <Accordion.ItemIndicator />\n        </Accordion.ItemTrigger>\n        <Accordion.ItemContent>Content</Accordion.ItemContent>\n      </Accordion.Item>\n    </Accordion.Root>",
+      "example": "<Accordion.Root collapsible>\n        <Accordion.Item value=\"item-1\">\n          <Accordion.ItemTrigger>\n            <span>Trigger</span>\n            <Accordion.ItemIndicator />\n          </Accordion.ItemTrigger>\n          <Accordion.ItemContent>Content</Accordion.ItemContent>\n        </Accordion.Item>\n      </Accordion.Root>",
       "sourcePath": "src/components/Accordion.tsx"
     },
     "Breadcrumb": {
@@ -242,7 +242,7 @@
           "required": false
         }
       ],
-      "example": "<NavigationMenu\n      sections={[\n        {\n          value: 'dashboard',\n          title: 'Dashboard',\n          icon: null,\n          items: [\n            { label: 'Quick Start', href: '/dashboard/quick-start' },\n            { label: 'Progress', href: '/dashboard/progress' },\n          ],\n        },\n      ]}\n      defaultOpenSections={['dashboard']}\n      activeHref=\"/dashboard/quick-start\"\n    />",
+      "example": "<NavigationMenu\n        sections={[\n          {\n            value: 'dashboard',\n            title: 'Dashboard',\n            icon: null,\n            items: [\n              { label: 'Quick Start', href: '/dashboard/quick-start' },\n              { label: 'Progress', href: '/dashboard/progress' },\n            ],\n          },\n        ]}\n        defaultOpenSections={['dashboard']}\n        activeHref=\"/dashboard/quick-start\"\n      />",
       "sourcePath": "src/components/NavigationMenu/NavigationMenu.tsx"
     },
     "ScenarioQueue": {
