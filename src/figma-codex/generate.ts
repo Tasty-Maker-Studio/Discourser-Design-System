@@ -40,7 +40,9 @@ export function generate(options: GenerateOptions): void {
   // Resolve include patterns to base directories then scan recursively
   const figmaFiles: string[] = [];
   for (const pattern of options.include) {
-    // Extract base directory from pattern (everything before the first *)
+    // Extract the literal prefix before the first '*' as the base directory to walk.
+    // Patterns starting with '*' (e.g. '**/*.figma.tsx') fall back to projectRoot.
+    // Patterns like 'src/components/**/*.figma.tsx' correctly resolve to 'src/components/'.
     const starIdx = pattern.indexOf('*');
     const baseDir =
       starIdx > 0
@@ -78,8 +80,7 @@ export function generate(options: GenerateOptions): void {
   }
 
   if (Object.keys(components).length === 0) {
-    console.error('[figma-codex] ERROR: No components successfully parsed.');
-    process.exit(1);
+    throw new Error('[figma-codex] No components successfully parsed.');
   }
 
   writeManifest(
@@ -95,6 +96,11 @@ export function generate(options: GenerateOptions): void {
 // CLI entry point
 const currentFile = fileURLToPath(import.meta.url);
 if (process.argv[1] && resolve(process.argv[1]) === resolve(currentFile)) {
-  const config = loadConfig();
-  generate({ ...config, projectRoot: process.cwd() });
+  try {
+    const config = loadConfig();
+    generate({ ...config, projectRoot: process.cwd() });
+  } catch (err) {
+    console.error(String(err));
+    process.exit(1);
+  }
 }
