@@ -15,14 +15,14 @@ This page translates typography tokens from Tailwind CSS and Shadcn/UI to Discou
 | `text-base` | `textStyle="bodyMedium"` | 14px | 400 | 20px | Default body text |
 | `text-lg` | `textStyle="bodyLarge"` | 16px | 400 | 24px | Emphasized body content |
 | `text-xl` | `textStyle="titleSmall"` | 14px | 500 | 20px | Card titles, list headers (note: weight increase) |
-| `text-2xl` | `textStyle="titleLarge"` or `<Heading size="xl">` | 22px | 400 | 28px | Section titles |
-| `text-3xl` | `textStyle="headlineSmall"` or `<Heading size="2xl">` | 24px | 400 | 32px | Page subtitles |
-| `text-4xl` | `textStyle="headlineLarge"` or `<Heading size="3xl">` | 32px | 400 | 40px | Page titles |
-| `text-5xl` | `textStyle="displaySmall"` or `<Heading size="4xl">` | 36px | 400 | 44px | Hero text |
-| `text-6xl` | `textStyle="displayMedium"` or `<Heading size="5xl">` | 45px | 400 | 52px | Large hero text |
-| `text-7xl`+ | `textStyle="displayLarge"` or `<Heading size="6xl">` | 57px | 400 | 64px | Extra-large display text |
+| `text-2xl` | `textStyle="titleLarge"` or `<Header size="xl">` | 22px | 400 | 28px | Section titles |
+| `text-3xl` | `textStyle="headlineSmall"` or `<Header size="2xl">` | 24px | 400 | 32px | Page subtitles |
+| `text-4xl` | `textStyle="headlineLarge"` or `<Header size="3xl">` | 32px | 400 | 40px | Page titles |
+| `text-5xl` | `textStyle="displaySmall"` or `<Header size="4xl">` | 36px | 400 | 44px | Hero text |
+| `text-6xl` | `textStyle="displayMedium"` or `<Header size="5xl">` | 45px | 400 | 52px | Large hero text |
+| `text-7xl`+ | `textStyle="displayLarge"` or `<Header size="6xl">` | 57px | 400 | 64px | Extra-large display text |
 
-**Important:** Prefer the `<Heading>` component for heading-level text (text-2xl and above) instead of raw textStyle. See Heading Component section below.
+**Important:** Prefer the `<Header>` component for heading-level text (text-2xl and above) instead of raw textStyle. See Header Component section below.
 
 ## Complete M3 Type Scale
 
@@ -68,11 +68,11 @@ For reference, here's the full M3 type scale available in Discourser:
 
 **M3 Pattern:** Body/headline text uses 400, titles/labels use 500. Avoid mixing unless intentional.
 
-## Heading Component
+## Header Component
 
-### Rule: Prefer `<Heading>` Over Raw textStyle
+### Rule: Prefer `<Header>` Over Raw textStyle
 
-For heading-level text (H1-H6), **always use the Heading component** instead of raw `textStyle` prop.
+For heading-level text (H1-H6), **always use the Header component** instead of raw `textStyle` prop.
 
 **Why:**
 - Proper semantic HTML (renders correct h-tag level)
@@ -80,29 +80,29 @@ For heading-level text (H1-H6), **always use the Heading component** instead of 
 - Consistent sizing across the system
 - Built-in responsive behavior
 
-### Heading Size Scale
+### Header Size Scale
 
-| Figma/Design Spec | Discourser Heading | Renders As | textStyle Equivalent |
+| Figma/Design Spec | Discourser Header | Renders As | textStyle Equivalent |
 |---|---|---|---|
-| Extra large display | `<Heading size="7xl">` | `<h1>` | displayLarge (57px) |
-| Large display | `<Heading size="6xl">` | `<h1>` | displayLarge (57px) |
-| Medium display | `<Heading size="5xl">` | `<h1>` | displayMedium (45px) |
-| Small display | `<Heading size="4xl">` | `<h1>` | displaySmall (36px) |
-| Large headline | `<Heading size="3xl">` | `<h2>` | headlineLarge (32px) |
-| Medium headline | `<Heading size="2xl">` | `<h2>` | headlineMedium (28px) |
-| Small headline | `<Heading size="xl">` | `<h3>` | headlineSmall (24px) |
-| Large title | `<Heading size="lg">` | `<h4>` | titleLarge (22px) |
-| Medium title | `<Heading size="md">` | `<h5>` | titleMedium (16px) |
-| Small title | `<Heading size="sm">` | `<h6>` | titleSmall (14px) |
+| Extra large display | `<Header size="7xl">` | `<h1>` | displayLarge (57px) |
+| Large display | `<Header size="6xl">` | `<h1>` | displayLarge (57px) |
+| Medium display | `<Header size="5xl">` | `<h1>` | displayMedium (45px) |
+| Small display | `<Header size="4xl">` | `<h1>` | displaySmall (36px) |
+| Large headline | `<Header size="3xl">` | `<h2>` | headlineLarge (32px) |
+| Medium headline | `<Header size="2xl">` | `<h2>` | headlineMedium (28px) |
+| Small headline | `<Header size="xl">` | `<h3>` | headlineSmall (24px) |
+| Large title | `<Header size="lg">` | `<h4>` | titleLarge (22px) |
+| Medium title | `<Header size="md">` | `<h5>` | titleMedium (16px) |
+| Small title | `<Header size="sm">` | `<h6>` | titleSmall (14px) |
 
-### Overriding Default Heading Level
+### Overriding Default Header Level
 
 ```tsx
 // Default h-tag based on size
-<Heading size="3xl">Page Title</Heading>  // Renders <h2>
+<Header size="3xl">Page Title</Header>  // Renders <h2>
 
 // Override with as prop
-<Heading as="h1" size="2xl">Page Title</Heading>  // Renders <h1> with h2 styling
+<Header as="h1" size="2xl">Page Title</Header>  // Renders <h1> with h2 styling
 ```
 
 ## Common Mistakes
@@ -139,10 +139,10 @@ For heading-level text (H1-H6), **always use the Heading component** instead of 
 **Why wrong:** Misses heading component logic, accessibility, and responsive behavior.
 
 ```tsx
-// ✅ CORRECT: Heading component
-<Heading as="h2" size="3xl">
+// ✅ CORRECT: Header component
+<Header as="h2" size="3xl">
   Section Title
-</Heading>
+</Header>
 ```
 
 ---

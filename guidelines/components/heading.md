@@ -1,14 +1,14 @@
-# Heading
+# Header
 
 **Purpose:** Semantic heading component for establishing content hierarchy and structure following Material Design 3 typography patterns.
 
 ## When to Use This Component
 
-Use Heading when you need to **establish semantic document structure and visual hierarchy** with properly ordered heading levels (h1-h6).
+Use Header when you need to **establish semantic document structure and visual hierarchy** with properly ordered heading levels (h1-h6).
 
 ### Decision Tree
 
-| Scenario                     | Use Heading? | Alternative                   | Reasoning                                             |
+| Scenario                     | Use Header? | Alternative                   | Reasoning                                             |
 | ---------------------------- | ------------ | ----------------------------- | ----------------------------------------------------- |
 | Page titles, section headers | ✅ Yes       | -                             | Headings provide semantic structure for accessibility |
 | Article titles, card headers | ✅ Yes       | -                             | Establishes content hierarchy                         |
@@ -20,32 +20,32 @@ Use Heading when you need to **establish semantic document structure and visual 
 ### Component Comparison
 
 ```typescript
-// ✅ Heading - Page and section structure
+// ✅ Header - Page and section structure
 <article>
-  <Heading as="h1" size="4xl">
+  <Header as="h1" size="4xl">
     Main Article Title
-  </Heading>
+  </Header>
 
-  <Heading as="h2" size="2xl">
+  <Header as="h2" size="2xl">
     Section One
-  </Heading>
+  </Header>
   <p>Content...</p>
 
-  <Heading as="h3" size="xl">
+  <Header as="h3" size="xl">
     Subsection
-  </Heading>
+  </Header>
   <p>More content...</p>
 
-  <Heading as="h2" size="2xl">
+  <Header as="h2" size="2xl">
     Section Two
-  </Heading>
+  </Header>
   <p>Content...</p>
 </article>
 
-// ❌ Don't use Heading for emphasized text - Use Text
-<Heading as="h3" size="md">
+// ❌ Don't use Header for emphasized text - Use Text
+<Header as="h3" size="md">
   Just some bold text
-</Heading>
+</Header>
 
 // ✅ Better: Use Text with fontWeight for emphasis
 <Text fontSize="md" fontWeight="bold">
@@ -53,16 +53,16 @@ Use Heading when you need to **establish semantic document structure and visual 
 </Text>
 
 // ❌ Don't skip heading levels (h1 → h3)
-<Heading as="h1" size="3xl">Title</Heading>
-<Heading as="h3" size="xl">Section</Heading> {/* Should be h2 */}
+<Header as="h1" size="3xl">Title</Header>
+<Header as="h3" size="xl">Section</Header> {/* Should be h2 */}
 
 // ✅ Better: Use proper heading hierarchy
-<Heading as="h1" size="3xl">Title</Heading>
-<Heading as="h2" size="xl">Section</Heading>
+<Header as="h1" size="3xl">Title</Header>
+<Header as="h2" size="xl">Section</Header>
 
-// ❌ Don't use Heading for navigation - Use Text
+// ❌ Don't use Header for navigation - Use Text
 <nav>
-  <Heading as="h3" size="sm">Menu</Heading>
+  <Header as="h3" size="sm">Menu</Header>
   <a href="/home">Home</a>
 </nav>
 
@@ -76,12 +76,12 @@ Use Heading when you need to **establish semantic document structure and visual 
 ## Import
 
 ```typescript
-import { Heading } from '@discourser/design-system';
+import { Header } from '@discourser/design-system';
 ```
 
 ## Sizes
 
-The Heading component supports 11 size variants, each corresponding to Material Design 3 text styles:
+The Header component supports 11 size variants, each corresponding to Material Design 3 text styles:
 
 | Size  | Material Design 3 Style | Font Size | Line Height | Font Weight | Usage                                              |
 | ----- | ----------------------- | --------- | ----------- | ----------- | -------------------------------------------------- |
@@ -107,12 +107,12 @@ The Heading component supports 11 size variants, each corresponding to Material 
 
 | Prop        | Type                                                                                         | Default  | Description                                                   |
 | ----------- | -------------------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------- |
-| `size`      | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl' \| '3xl' \| '4xl' \| '5xl' \| '6xl' \| '7xl'` | `'xl'`   | Heading size using Material Design 3 text styles              |
+| `size`      | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl' \| '3xl' \| '4xl' \| '5xl' \| '6xl' \| '7xl'` | `'xl'`   | Header size using Material Design 3 text styles              |
 | `as`        | `ElementType`                                                                                | `'h2'`   | HTML heading element (h1, h2, h3, h4, h5, h6, or any element) |
-| `children`  | `ReactNode`                                                                                  | Required | Heading text content                                          |
+| `children`  | `ReactNode`                                                                                  | Required | Header text content                                          |
 | `className` | `string`                                                                                     | -        | Additional CSS classes (use sparingly)                        |
 
-**Note:** Heading extends all standard HTML element attributes for the specified element type.
+**Note:** Header extends all standard HTML element attributes for the specified element type.
 
 ## Examples
 
@@ -120,35 +120,35 @@ The Heading component supports 11 size variants, each corresponding to Material 
 
 ```typescript
 // Default heading (h2, xl size)
-<Heading>Welcome to Our Platform</Heading>
+<Header>Welcome to Our Platform</Header>
 
 // Different sizes
-<Heading size="xs">Small Label</Heading>
-<Heading size="sm">Card Title</Heading>
-<Heading size="md">Section Header</Heading>
-<Heading size="lg">Page Title</Heading>
-<Heading size="xl">Main Heading</Heading>
-<Heading size="2xl">Featured Title</Heading>
-<Heading size="3xl">Hero Heading</Heading>
-<Heading size="4xl">Large Display</Heading>
-<Heading size="5xl">Promotional Banner</Heading>
-<Heading size="6xl">Landing Hero</Heading>
+<Header size="xs">Small Label</Header>
+<Header size="sm">Card Title</Header>
+<Header size="md">Section Header</Header>
+<Header size="lg">Page Title</Header>
+<Header size="xl">Main Header</Header>
+<Header size="2xl">Featured Title</Header>
+<Header size="3xl">Hero Header</Header>
+<Header size="4xl">Large Display</Header>
+<Header size="5xl">Promotional Banner</Header>
+<Header size="6xl">Landing Hero</Header>
 ```
 
 ### Semantic HTML Elements
 
 ```typescript
 // Use appropriate heading levels for document structure
-<Heading as="h1" size="3xl">Page Title</Heading>
-<Heading as="h2" size="2xl">Major Section</Heading>
-<Heading as="h3" size="xl">Subsection Title</Heading>
-<Heading as="h4" size="lg">Content Block Header</Heading>
-<Heading as="h5" size="md">Minor Section</Heading>
-<Heading as="h6" size="sm">Smallest Heading</Heading>
+<Header as="h1" size="3xl">Page Title</Header>
+<Header as="h2" size="2xl">Major Section</Header>
+<Header as="h3" size="xl">Subsection Title</Header>
+<Header as="h4" size="lg">Content Block Header</Header>
+<Header as="h5" size="md">Minor Section</Header>
+<Header as="h6" size="sm">Smallest Header</Header>
 
 // Use non-heading element when semantic heading isn't appropriate
-<Heading as="div" size="lg">Stylistic Display Text</Heading>
-<Heading as="span" size="md">Inline Heading</Heading>
+<Header as="div" size="lg">Stylistic Display Text</Header>
+<Header as="span" size="md">Inline Header</Header>
 ```
 
 ### Page Structure
@@ -156,27 +156,27 @@ The Heading component supports 11 size variants, each corresponding to Material 
 ```typescript
 // Article layout
 <article>
-  <Heading as="h1" size="4xl">
+  <Header as="h1" size="4xl">
     The Future of Web Development
-  </Heading>
+  </Header>
 
-  <Heading as="h2" size="2xl">
+  <Header as="h2" size="2xl">
     Introduction
-  </Heading>
+  </Header>
   <p>Article introduction...</p>
 
-  <Heading as="h2" size="2xl">
+  <Header as="h2" size="2xl">
     Main Concepts
-  </Heading>
+  </Header>
 
-  <Heading as="h3" size="xl">
+  <Header as="h3" size="xl">
     Core Principles
-  </Heading>
+  </Header>
   <p>Content about principles...</p>
 
-  <Heading as="h3" size="xl">
+  <Header as="h3" size="xl">
     Best Practices
-  </Heading>
+  </Header>
   <p>Content about practices...</p>
 </article>
 ```
@@ -186,20 +186,20 @@ The Heading component supports 11 size variants, each corresponding to Material 
 ```typescript
 // Dashboard with sections
 <div>
-  <Heading as="h1" size="3xl">Dashboard</Heading>
+  <Header as="h1" size="3xl">Dashboard</Header>
 
   <section>
-    <Heading as="h2" size="xl">Recent Activity</Heading>
+    <Header as="h2" size="xl">Recent Activity</Header>
     {/* Activity content */}
   </section>
 
   <section>
-    <Heading as="h2" size="xl">Analytics Overview</Heading>
+    <Header as="h2" size="xl">Analytics Overview</Header>
     {/* Analytics content */}
   </section>
 
   <section>
-    <Heading as="h2" size="xl">Team Members</Heading>
+    <Header as="h2" size="xl">Team Members</Header>
     {/* Team members list */}
   </section>
 </div>
@@ -210,13 +210,13 @@ The Heading component supports 11 size variants, each corresponding to Material 
 ```typescript
 // Card with heading
 <Card>
-  <Heading as="h3" size="sm">Project Overview</Heading>
+  <Header as="h3" size="sm">Project Overview</Header>
   <p>Project details and information...</p>
 </Card>
 
 // Feature card
 <Card>
-  <Heading as="h3" size="md">Advanced Analytics</Heading>
+  <Header as="h3" size="md">Advanced Analytics</Header>
   <p>Track and analyze your data with powerful tools.</p>
   <Button>Learn More</Button>
 </Card>
@@ -227,12 +227,12 @@ The Heading component supports 11 size variants, each corresponding to Material 
 ```typescript
 // Landing page hero
 <section className={css({ textAlign: 'center', py: '20' })}>
-  <Heading as="h1" size="6xl">
+  <Header as="h1" size="6xl">
     Build Better Products Faster
-  </Heading>
-  <Heading as="h2" size="lg" className={css({ mt: '4', opacity: 0.8 })}>
+  </Header>
+  <Header as="h2" size="lg" className={css({ mt: '4', opacity: 0.8 })}>
     The complete platform for modern teams
-  </Heading>
+  </Header>
   <Button size="lg" className={css({ mt: '8' })}>
     Get Started
   </Button>
@@ -240,12 +240,12 @@ The Heading component supports 11 size variants, each corresponding to Material 
 
 // Marketing banner
 <section className={css({ bg: 'primary', color: 'white', p: '16' })}>
-  <Heading as="h2" size="5xl">
+  <Header as="h2" size="5xl">
     Special Offer - 50% Off
-  </Heading>
-  <Heading as="h3" size="xl" className={css({ mt: '2' })}>
+  </Header>
+  <Header as="h3" size="xl" className={css({ mt: '2' })}>
     Limited time only
-  </Heading>
+  </Header>
 </section>
 ```
 
@@ -255,9 +255,9 @@ The Heading component supports 11 size variants, each corresponding to Material 
 // Dialog with heading
 <Dialog>
   <Dialog.Content>
-    <Heading as="h2" size="lg">
+    <Header as="h2" size="lg">
       Confirm Action
-    </Heading>
+    </Header>
     <p>Are you sure you want to proceed with this action?</p>
     <div className={css({ display: 'flex', gap: 'sm', justifyContent: 'flex-end' })}>
       <Button variant="text">Cancel</Button>
@@ -269,18 +269,18 @@ The Heading component supports 11 size variants, each corresponding to Material 
 // Modal with structured content
 <Dialog>
   <Dialog.Content>
-    <Heading as="h2" size="xl">
+    <Header as="h2" size="xl">
       User Settings
-    </Heading>
+    </Header>
 
-    <Heading as="h3" size="md" className={css({ mt: '6' })}>
+    <Header as="h3" size="md" className={css({ mt: '6' })}>
       Profile Information
-    </Heading>
+    </Header>
     {/* Profile fields */}
 
-    <Heading as="h3" size="md" className={css({ mt: '4' })}>
+    <Header as="h3" size="md" className={css({ mt: '4' })}>
       Privacy Settings
-    </Heading>
+    </Header>
     {/* Privacy fields */}
   </Dialog.Content>
 </Dialog>
@@ -293,25 +293,25 @@ The Heading component supports 11 size variants, each corresponding to Material 
 ```typescript
 // Establish clear content hierarchy
 <div>
-  <Heading as="h1" size="4xl">Main Topic</Heading>
-  <Heading as="h2" size="2xl" className={css({ mt: '8' })}>
+  <Header as="h1" size="4xl">Main Topic</Header>
+  <Header as="h2" size="2xl" className={css({ mt: '8' })}>
     Subtopic One
-  </Heading>
-  <Heading as="h3" size="xl" className={css({ mt: '6' })}>
+  </Header>
+  <Header as="h3" size="xl" className={css({ mt: '6' })}>
     Detail Section
-  </Heading>
-  <Heading as="h4" size="md" className={css({ mt: '4' })}>
+  </Header>
+  <Header as="h4" size="md" className={css({ mt: '4' })}>
     Subsection
-  </Heading>
+  </Header>
 </div>
 ```
 
 ### Section with Description
 
 ```typescript
-// Heading with supporting text
+// Header with supporting text
 <section>
-  <Heading as="h2" size="2xl">Features</Heading>
+  <Header as="h2" size="2xl">Features</Header>
   <p className={css({ fontSize: 'lg', opacity: 0.8, mt: '2' })}>
     Discover what makes our platform unique
   </p>
@@ -325,15 +325,15 @@ The Heading component supports 11 size variants, each corresponding to Material 
 // Headers for grid sections
 <div className={css({ display: 'grid', gridTemplateColumns: '3', gap: '6' })}>
   <div>
-    <Heading as="h3" size="md">Performance</Heading>
+    <Header as="h3" size="md">Performance</Header>
     <p>Lightning-fast load times</p>
   </div>
   <div>
-    <Heading as="h3" size="md">Security</Heading>
+    <Header as="h3" size="md">Security</Header>
     <p>Enterprise-grade protection</p>
   </div>
   <div>
-    <Heading as="h3" size="md">Scalability</Heading>
+    <Header as="h3" size="md">Scalability</Header>
     <p>Grows with your needs</p>
   </div>
 </div>
@@ -342,13 +342,13 @@ The Heading component supports 11 size variants, each corresponding to Material 
 ### List Headers
 
 ```typescript
-// Heading for list sections
+// Header for list sections
 <div>
-  <Heading as="h3" size="lg">Team Members</Heading>
+  <Header as="h3" size="lg">Team Members</Header>
   <ul className={css({ mt: '4' })}>
     {members.map(member => (
       <li key={member.id}>
-        <Heading as="h4" size="sm">{member.name}</Heading>
+        <Header as="h4" size="sm">{member.name}</Header>
         <p>{member.role}</p>
       </li>
     ))}
@@ -360,42 +360,42 @@ The Heading component supports 11 size variants, each corresponding to Material 
 
 ```typescript
 // ❌ Don't skip heading levels (affects screen readers)
-<Heading as="h1" size="3xl">Main Title</Heading>
-<Heading as="h4" size="md">Subsection</Heading>  // Should be h2, not h4
+<Header as="h1" size="3xl">Main Title</Header>
+<Header as="h4" size="md">Subsection</Header>  // Should be h2, not h4
 
 // ❌ Don't use multiple h1 elements on a page
-<Heading as="h1" size="3xl">First Title</Heading>
-<Heading as="h1" size="2xl">Second Title</Heading>  // Should be h2
+<Header as="h1" size="3xl">First Title</Header>
+<Header as="h1" size="2xl">Second Title</Header>  // Should be h2
 
 // ❌ Don't use headings for styling text (use Text component instead)
-<Heading as="h2" size="sm">Just some bold text</Heading>  // Use <Text> instead
+<Header as="h2" size="sm">Just some bold text</Header>  // Use <Text> instead
 
 // ❌ Don't mismatch size and semantic level
-<Heading as="h1" size="xs">Main Page Title</Heading>  // h1 should be visually prominent
+<Header as="h1" size="xs">Main Page Title</Header>  // h1 should be visually prominent
 
 // ❌ Don't use headings inside paragraphs
 <p>
-  <Heading as="h3" size="md">Title</Heading>  // Invalid HTML
+  <Header as="h3" size="md">Title</Header>  // Invalid HTML
   Some content here
 </p>
 
 // ❌ Don't use empty headings
-<Heading as="h2" size="xl"></Heading>  // No accessible name
+<Header as="h2" size="xl"></Header>  // No accessible name
 
 // ✅ Use proper heading hierarchy
-<Heading as="h1" size="3xl">Main Title</Heading>
-<Heading as="h2" size="2xl">Section</Heading>
-<Heading as="h3" size="xl">Subsection</Heading>
+<Header as="h1" size="3xl">Main Title</Header>
+<Header as="h2" size="2xl">Section</Header>
+<Header as="h3" size="xl">Subsection</Header>
 
 // ✅ Single h1 per page
-<Heading as="h1" size="4xl">Page Title</Heading>
-<Heading as="h2" size="2xl">Section One</Heading>
-<Heading as="h2" size="2xl">Section Two</Heading>
+<Header as="h1" size="4xl">Page Title</Header>
+<Header as="h2" size="2xl">Section One</Header>
+<Header as="h2" size="2xl">Section Two</Header>
 
 // ✅ Match visual size to importance
-<Heading as="h1" size="4xl">Most Important</Heading>
-<Heading as="h2" size="2xl">Secondary</Heading>
-<Heading as="h3" size="xl">Tertiary</Heading>
+<Header as="h1" size="4xl">Most Important</Header>
+<Header as="h2" size="2xl">Secondary</Header>
+<Header as="h3" size="xl">Tertiary</Header>
 
 // ✅ Use Text component for non-heading bold text
 <Text fontSize="lg" fontWeight="bold">Emphasized text</Text>
@@ -403,55 +403,55 @@ The Heading component supports 11 size variants, each corresponding to Material 
 
 ## Accessibility
 
-The Heading component follows WCAG 2.1 Level AA standards:
+The Header component follows WCAG 2.1 Level AA standards:
 
 - **Semantic HTML**: Uses proper heading elements (h1-h6) for document structure
-- **Heading Hierarchy**: Screen readers rely on heading levels for navigation
+- **Header Hierarchy**: Screen readers rely on heading levels for navigation
 - **Color Contrast**: Default color meets 4.5:1 contrast ratio requirement
-- **Keyboard Navigation**: Heading landmarks allow users to jump between sections
+- **Keyboard Navigation**: Header landmarks allow users to jump between sections
 - **Screen Readers**: Announce heading level and content
 
 ### Accessibility Best Practices
 
 ```typescript
 // ✅ Maintain logical heading order
-<Heading as="h1" size="3xl">Page Title</Heading>
-<Heading as="h2" size="2xl">Main Section</Heading>
-<Heading as="h3" size="xl">Subsection</Heading>
-<Heading as="h3" size="xl">Another Subsection</Heading>
-<Heading as="h2" size="2xl">Next Main Section</Heading>
+<Header as="h1" size="3xl">Page Title</Header>
+<Header as="h2" size="2xl">Main Section</Header>
+<Header as="h3" size="xl">Subsection</Header>
+<Header as="h3" size="xl">Another Subsection</Header>
+<Header as="h2" size="2xl">Next Main Section</Header>
 
 // ✅ Only one h1 per page
-<Heading as="h1" size="4xl">Dashboard Overview</Heading>
+<Header as="h1" size="4xl">Dashboard Overview</Header>
 
 // ✅ Don't skip levels (h1 → h3 without h2)
-<Heading as="h1" size="3xl">Title</Heading>
-<Heading as="h2" size="xl">Section</Heading>  // Not h3
+<Header as="h1" size="3xl">Title</Header>
+<Header as="h2" size="xl">Section</Header>  // Not h3
 
 // ✅ Use descriptive heading text
-<Heading as="h2" size="xl">Shipping Information</Heading>  // Clear and descriptive
+<Header as="h2" size="xl">Shipping Information</Header>  // Clear and descriptive
 
 // ✅ Separate visual size from semantic level
-<Heading as="h1" size="6xl">Hero Title</Heading>
-<Heading as="h2" size="sm">Card Subtitle</Heading>  // Small visually, but correct level
+<Header as="h1" size="6xl">Hero Title</Header>
+<Header as="h2" size="sm">Card Subtitle</Header>  // Small visually, but correct level
 
 // ✅ Provide meaningful content
-<Heading as="h2" size="lg">
+<Header as="h2" size="lg">
   {userName}'s Profile
-</Heading>
+</Header>
 ```
 
 ### Screen Reader Considerations
 
 ```typescript
-// Screen readers announce: "Heading level 1, Dashboard"
-<Heading as="h1" size="3xl">Dashboard</Heading>
+// Screen readers announce: "Header level 1, Dashboard"
+<Header as="h1" size="3xl">Dashboard</Header>
 
 // Screen readers can list all headings to navigate
-<Heading as="h1" size="4xl">Product Overview</Heading>
-<Heading as="h2" size="2xl">Features</Heading>
-<Heading as="h2" size="2xl">Pricing</Heading>
-<Heading as="h2" size="2xl">FAQ</Heading>
+<Header as="h1" size="4xl">Product Overview</Header>
+<Header as="h2" size="2xl">Features</Header>
+<Header as="h2" size="2xl">Pricing</Header>
+<Header as="h2" size="2xl">FAQ</Header>
 
 // Users can jump to specific sections using heading navigation
 ```
@@ -473,15 +473,15 @@ The Heading component follows WCAG 2.1 Level AA standards:
 
 ```typescript
 // Responsive heading sizes using Panda CSS
-<Heading
+<Header
   as="h1"
   size={{ base: '3xl', md: '5xl', lg: '6xl' }}
 >
   Responsive Hero Title
-</Heading>
+</Header>
 
 // Scale down on mobile
-<Heading
+<Header
   as="h1"
   className={css({
     fontSize: { base: '3xl', md: '4xl' },
@@ -489,33 +489,33 @@ The Heading component follows WCAG 2.1 Level AA standards:
   })}
 >
   Mobile-Optimized Title
-</Heading>
+</Header>
 
 // Adjust spacing between headings responsively
 <div>
-  <Heading as="h2" size="2xl">Section Title</Heading>
-  <Heading
+  <Header as="h2" size="2xl">Section Title</Header>
+  <Header
     as="h3"
     size="xl"
     className={css({ mt: { base: '4', md: '6' } })}
   >
     Subsection
-  </Heading>
+  </Header>
 </div>
 ```
 
 ## Testing
 
-When testing Heading components:
+When testing Header components:
 
 ```typescript
 import { render, screen } from '@testing-library/react';
 
 test('renders heading with correct text', () => {
-  render(<Heading as="h1" size="3xl">Test Heading</Heading>);
+  render(<Header as="h1" size="3xl">Test Header</Header>);
 
   const heading = screen.getByRole('heading', {
-    name: 'Test Heading',
+    name: 'Test Header',
     level: 1
   });
 
@@ -524,7 +524,7 @@ test('renders heading with correct text', () => {
 
 test('renders with specified element type', () => {
   const { container } = render(
-    <Heading as="h3" size="lg">Section Title</Heading>
+    <Header as="h3" size="lg">Section Title</Header>
   );
 
   const heading = container.querySelector('h3');
@@ -533,18 +533,18 @@ test('renders with specified element type', () => {
 });
 
 test('applies correct size variant', () => {
-  render(<Heading size="2xl">Large Heading</Heading>);
+  render(<Header size="2xl">Large Header</Header>);
 
-  const heading = screen.getByRole('heading', { name: 'Large Heading' });
+  const heading = screen.getByRole('heading', { name: 'Large Header' });
   expect(heading).toHaveClass('heading');
 });
 
 test('maintains heading hierarchy', () => {
   render(
     <div>
-      <Heading as="h1" size="4xl">Main Title</Heading>
-      <Heading as="h2" size="2xl">Section</Heading>
-      <Heading as="h3" size="xl">Subsection</Heading>
+      <Header as="h1" size="4xl">Main Title</Header>
+      <Header as="h2" size="2xl">Section</Header>
+      <Header as="h3" size="xl">Subsection</Header>
     </div>
   );
 
@@ -559,7 +559,7 @@ test('maintains heading hierarchy', () => {
 
 test('accepts custom className', () => {
   const { container } = render(
-    <Heading className="custom-class">Custom Heading</Heading>
+    <Header className="custom-class">Custom Header</Header>
   );
 
   const heading = container.firstChild;

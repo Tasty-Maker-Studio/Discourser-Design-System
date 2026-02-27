@@ -12,7 +12,7 @@
 
 ```xml
 <frame id="38:4140" name="Stage Container" x="269" y="0" width="831" height="1119">
-  <frame id="38:4141" name="Heading 1" x="63.5" y="80" width="704" height="39">
+  <frame id="38:4141" name="Header 1" x="63.5" y="80" width="704" height="39">
     <text id="38:4142" name="A Practice Scenario Defined" x="0" y="2" width="620.79" height="35" />
   </frame>
   <frame id="38:4143" name="Scenario Info Container" x="63.5" y="159" width="704" height="817">
@@ -84,7 +84,7 @@
 | Node ID | Name | Type | X | Y | Width | Height |
 |---|---|---|---|---|---|---|
 | `38:4140` | Stage Container | frame | 269 | 0 | 831 | 1119 |
-| `38:4141` | Heading 1 | frame | 63.5 | 80 | 704 | 39 |
+| `38:4141` | Header 1 | frame | 63.5 | 80 | 704 | 39 |
 | `38:4142` | "A Practice Scenario Defined" | text | 0 | 2 | 620.79 | 35 |
 | `38:4143` | Scenario Info Container | frame | 63.5 | 159 | 704 | 817 |
 | `38:4144` | "UX Research & Design Interview" | text | 40 | 40 | 482 | 30 |

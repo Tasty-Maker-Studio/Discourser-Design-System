@@ -17,7 +17,7 @@ export { InputGroup, type InputGroupProps } from './InputGroup';
 export { Textarea, type TextareaProps } from './Textarea';
 
 // Typography Components (simple)
-export { Heading, type HeadingProps } from './Heading';
+export { Header, type HeadingProps } from './Header';
 
 // Feedback & Status Components (simple)
 export { Badge, type BadgeProps } from './Badge';
@@ -63,6 +63,7 @@ export {
   type RightArrowIconProps,
 } from './Icons/RightArrowIcon';
 export { ChevronUpIcon, type ChevronUpIconProps } from './Icons/ChevronUpIcon';
+export { DiscourserLogo, type DiscourserLogoProps } from './Icons/DiscourserLogo';
 
 // Navigation & Progress Components
 export * as Breadcrumb from './Breadcrumb';

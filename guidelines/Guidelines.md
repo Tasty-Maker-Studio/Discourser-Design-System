@@ -74,7 +74,7 @@ BEFORE using ANY component, you MUST read its guidelines file first:
 
 **Typography:**
 
-- Using Heading? → Read **[components/heading.md](components/heading.md)** FIRST
+- Using Header? → Read **[components/heading.md](components/heading.md)** FIRST
 
 **DO NOT write code using a component until you have read its specific guidelines.**
 

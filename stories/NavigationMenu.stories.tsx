@@ -12,7 +12,7 @@ import {
 } from '../src/components/Icons';
 
 const meta: Meta<typeof NavigationMenu> = {
-  title: 'Components/NavigationMenu',
+  title: 'Components/Navigation Menu',
   component: NavigationMenu,
   tags: ['autodocs'],
   parameters: {

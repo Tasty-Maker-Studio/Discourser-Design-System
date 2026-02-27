@@ -3,7 +3,7 @@ import { ScenarioSettings } from '../src/components/ScenarioSettings';
 import { Box } from 'styled-system/jsx';
 
 const meta: Meta<typeof ScenarioSettings> = {
-  title: 'Components/ScenarioSettings',
+  title: 'Components/Scenario Settings',
   component: ScenarioSettings,
   parameters: {
     layout: 'centered',

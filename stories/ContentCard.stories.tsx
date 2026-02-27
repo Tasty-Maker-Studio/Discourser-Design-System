@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Badge, ContentCard } from '../src'
 
 const meta: Meta<typeof ContentCard.Root> = {
-  title: 'Components/ContentCard',
+  title: 'Components/Content Card',
   component: ContentCard.Root,
   parameters: {
     layout: 'centered',

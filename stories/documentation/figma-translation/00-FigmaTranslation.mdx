@@ -78,7 +78,7 @@ Component recipes (Button, Card, Dialog, etc.) reference **only Layer 1 tokens**
 
 ### Token Translation
 - [01 — Colors](/docs/documentation-figma-translation-01-colors--docs) — Background, text, border, M3 surface system, colorPalette
-- [02 — Typography](/docs/documentation-figma-translation-02-typography--docs) — Text sizes, font families, weights, Heading component
+- [02 — Typography](/docs/documentation-figma-translation-02-typography--docs) — Text sizes, font families, weights, Header component
 - [03 — Spacing](/docs/documentation-figma-translation-03-spacing--docs) — Padding, margin, gap, Figma auto-layout
 - [04 — Shadows & Radii](/docs/documentation-figma-translation-04-shadows-radii--docs) — Elevation, border radius
 
@@ -107,13 +107,13 @@ Component recipes (Button, Card, Dialog, etc.) reference **only Layer 1 tokens**
 <Button colorPalette="primary">Submit</Button>
 ```
 
-### Use Heading Component for Headings
+### Use Header Component for Headings
 ```tsx
 // ❌ WRONG: Raw textStyle
 <Box as="h2" textStyle="titleLarge">Section Title</Box>
 
-// ✅ CORRECT: Heading component
-<Heading as="h2" size="xl">Section Title</Heading>
+// ✅ CORRECT: Header component
+<Header as="h2" size="xl">Section Title</Header>
 ```
 
 ## Need More Details?

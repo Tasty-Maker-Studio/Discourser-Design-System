@@ -5,5 +5,5 @@ import type { StyledComponent } from 'styled-system/types'
 
 type Props = HeadingVariantProps & { as?: ElementType };
 
-export type HeadingProps = ComponentProps<typeof Heading>;
-export const Heading = styled('h2', heading) as StyledComponent<'h2', Props>;
+export type HeadingProps = ComponentProps<typeof Header>;
+export const Header = styled('h2', heading) as StyledComponent<'h2', Props>;

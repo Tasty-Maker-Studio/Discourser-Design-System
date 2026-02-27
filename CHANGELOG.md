@@ -160,7 +160,7 @@
   ```
 
   **Changes:**
-  - Simple components (Button, Badge, Spinner, IconButton, Input, Textarea, Heading, InputAddon, InputGroup) are now directly usable
+  - Simple components (Button, Badge, Spinner, IconButton, Input, Textarea, Header, InputAddon, InputGroup) are now directly usable
   - Button.Group is accessible via the Button namespace for sub-components
   - Compound components (Card, Dialog, Switch, Accordion, etc.) retain their namespace pattern as expected
 
@@ -357,7 +357,7 @@
   ```
 
   **Changes:**
-  - Simple components (Button, Badge, Spinner, IconButton, Input, Textarea, Heading, InputAddon, InputGroup) are now directly usable
+  - Simple components (Button, Badge, Spinner, IconButton, Input, Textarea, Header, InputAddon, InputGroup) are now directly usable
   - Button.Group is accessible via the Button namespace for sub-components
   - Compound components (Card, Dialog, Switch, Accordion, etc.) retain their namespace pattern as expected
 
@@ -554,7 +554,7 @@
   ```
 
   **Changes:**
-  - Simple components (Button, Badge, Spinner, IconButton, Input, Textarea, Heading, InputAddon, InputGroup) are now directly usable
+  - Simple components (Button, Badge, Spinner, IconButton, Input, Textarea, Header, InputAddon, InputGroup) are now directly usable
   - Button.Group is accessible via the Button namespace for sub-components
   - Compound components (Card, Dialog, Switch, Accordion, etc.) retain their namespace pattern as expected
 
@@ -751,7 +751,7 @@
   ```
 
   **Changes:**
-  - Simple components (Button, Badge, Spinner, IconButton, Input, Textarea, Heading, InputAddon, InputGroup) are now directly usable
+  - Simple components (Button, Badge, Spinner, IconButton, Input, Textarea, Header, InputAddon, InputGroup) are now directly usable
   - Button.Group is accessible via the Button namespace for sub-components
   - Compound components (Card, Dialog, Switch, Accordion, etc.) retain their namespace pattern as expected
 

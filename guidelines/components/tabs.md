@@ -407,7 +407,7 @@ const tabs = [
 
   <Tabs.Content value="account">
     <Box p="6">
-      <Heading size="lg">Account Settings</Heading>
+      <Header size="lg">Account Settings</Header>
       <Input label="Username" defaultValue="johndoe" />
       <Input label="Email" defaultValue="john@example.com" />
       <Button>Save Changes</Button>
@@ -416,7 +416,7 @@ const tabs = [
 
   <Tabs.Content value="security">
     <Box p="6">
-      <Heading size="lg">Security Settings</Heading>
+      <Header size="lg">Security Settings</Header>
       <Input type="password" label="Current Password" />
       <Input type="password" label="New Password" />
       <Button>Update Password</Button>

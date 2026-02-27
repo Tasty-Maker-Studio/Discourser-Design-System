@@ -38,7 +38,7 @@ import {
   InputAddon,
   InputGroup,
   Textarea,
-  Heading,
+  Header,
   Badge,
   Spinner,
   Toaster,
@@ -54,7 +54,7 @@ import {
 - InputAddon
 - InputGroup
 - Textarea
-- Heading
+- Header
 - Badge
 - Spinner
 - Toast (Toaster component and toaster API)
