@@ -29,8 +29,8 @@ Figma's Code Connect "inspect" feature (linking designs to code in Dev Mode) req
         "url": "https://www.figma.com/design/..."
       },
       "imports": {
-        "primary": "@discourser/design-system/Accordion",
-        "namedExports": ["Accordion"]
+        "primary": "import * as Accordion from '@discourser/design-system/Accordion'",
+        "namedExports": ["Accordion.Root", "Accordion.Item"]
       },
       "props": [],
       "subComponents": [
@@ -46,11 +46,11 @@ Figma's Code Connect "inspect" feature (linking designs to code in Dev Mode) req
 
 ## Component Types
 
-| Type | Description | Example |
-|------|-------------|---------|
-| `simple` | Single named export, no compound structure | `Header`, `DiscourserLogo` |
-| `compound` | Namespace import with sub-components (`.Root`, `.Item`, etc.) | `Accordion`, `Breadcrumb` |
-| `composite` | Named export that imports other DDS components internally | `NavigationMenu`, `ScenarioQueue` |
+| Type        | Description                                                   | Example                           |
+| ----------- | ------------------------------------------------------------- | --------------------------------- |
+| `simple`    | Single named export, no compound structure                    | `Header`, `DiscourserLogo`        |
+| `compound`  | Namespace import with sub-components (`.Root`, `.Item`, etc.) | `Accordion`, `Breadcrumb`         |
+| `composite` | Named export that imports other DDS components internally     | `NavigationMenu`, `ScenarioQueue` |
 
 ## Usage
 
@@ -68,18 +68,18 @@ The manifest is also auto-generated at the end of `pnpm build`.
 
 ### Auto-regeneration on commit
 
-When you commit a `.figma.tsx` file, lint-staged automatically runs `codex:generate` to keep the manifest in sync.
+When you commit a `.figma.tsx` file, lint-staged automatically runs the generator (`tsx src/figma-codex/generate.ts`) to keep the manifest in sync.
 
 ### Consuming the manifest
 
 ```typescript
 // In AI agent code or tooling scripts
-import codex from '@discourser/design-system/figma-codex'
+import codex from '@discourser/design-system/figma-codex';
 
-const accordion = codex.components['Accordion']
-console.log(accordion.type)           // 'compound'
-console.log(accordion.imports.primary) // '@discourser/design-system/Accordion'
-console.log(accordion.subComponents)  // [{ name: 'Root', element: 'div' }, ...]
+const accordion = codex.components['Accordion'];
+console.log(accordion.type); // 'compound'
+console.log(accordion.imports.primary); // "import * as Accordion from '@discourser/design-system/Accordion'"
+console.log(accordion.subComponents); // [{ name: 'Root', element: 'div' }, ...]
 ```
 
 ## Agent Workflow (Kai + Amelia)
@@ -94,27 +94,30 @@ console.log(accordion.subComponents)  // [{ name: 'Root', element: 'div' }, ...]
 After creating `YourComponent.figma.tsx`, three import patterns are supported:
 
 **Pattern 1 — Named import (simple)**
+
 ```tsx
-import { YourComponent } from './YourComponent'
+import { YourComponent } from './YourComponent';
 figma.connect(YourComponent, 'https://www.figma.com/design/...', {
   example: () => <YourComponent />,
-})
+});
 ```
 
 **Pattern 2 — Namespace from component file (compound)**
+
 ```tsx
-import * as YourComponent from './YourComponent'
+import * as YourComponent from './YourComponent';
 figma.connect(YourComponent.Root, 'https://www.figma.com/design/...', {
   example: () => <YourComponent.Root />,
-})
+});
 ```
 
 **Pattern 3 — Namespace from index (compound)**
+
 ```tsx
-import * as YourComponent from './YourComponent/index'
+import * as YourComponent from './YourComponent/index';
 figma.connect(YourComponent.Root, 'https://www.figma.com/design/...', {
   example: () => <YourComponent.Root />,
-})
+});
 ```
 
 After creating the file, run `pnpm codex:generate` to update the manifest.
@@ -139,45 +142,45 @@ After creating the file, run `pnpm codex:generate` to update the manifest.
 
 ```typescript
 interface FigmaCodex {
-  version: '1.0.0'
-  packageName: string
-  generatedAt: string       // ISO 8601
-  gitHash?: string          // short SHA
-  figmaFiles: Record<string, { fileKey: string; fileName?: string }>
-  components: Record<string, ComponentEntry>
+  version: '1.0.0';
+  packageName: string;
+  generatedAt: string; // ISO 8601
+  gitHash?: string; // short SHA
+  figmaFiles: Record<string, { fileKey: string; fileName?: string }>;
+  components: Record<string, ComponentEntry>;
 }
 
 interface ComponentEntry {
-  name: string
-  type: 'simple' | 'compound' | 'composite'
+  name: string;
+  type: 'simple' | 'compound' | 'composite';
   figma: {
-    fileKey: string
-    nodeId: string          // format: "123:456"
-    nodeName?: string
-    url: string
-  }
+    fileKey: string;
+    nodeId: string; // format: "123:456"
+    nodeName?: string;
+    url: string;
+  };
   imports: {
-    primary: string         // package import path
-    namedExports: string[]
-    subpath?: string
-  }
-  props: PropDefinition[]
-  subComponents?: SubComponentEntry[]
-  example: string           // JSX usage string from figma.connect()
-  sourcePath: string        // relative path to source .tsx file
+    primary: string; // package import path
+    namedExports: string[];
+    subpath?: string;
+  };
+  props: PropDefinition[];
+  subComponents?: SubComponentEntry[];
+  example: string; // JSX usage string from figma.connect()
+  sourcePath: string; // relative path to source .tsx file
 }
 
 interface PropDefinition {
-  name: string
-  type: string
-  required: boolean
-  description?: string      // from JSDoc comment
-  defaultValue?: string
+  name: string;
+  type: string;
+  required: boolean;
+  description?: string; // from JSDoc comment
+  defaultValue?: string;
 }
 
 interface SubComponentEntry {
-  name: string              // e.g. "Root", "Item", "Header"
-  element: string           // underlying ark element, e.g. "div"
-  description?: string
+  name: string; // e.g. "Root", "Item", "Header"
+  element: string; // underlying ark element, e.g. "div"
+  description?: string;
 }
 ```
