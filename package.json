@@ -288,6 +288,9 @@
     ],
     "*.{json,md}": [
       "prettier --write"
+    ],
+    "*.figma.tsx": [
+      "tsx src/figma-codex/generate.ts"
     ]
   }
 }
