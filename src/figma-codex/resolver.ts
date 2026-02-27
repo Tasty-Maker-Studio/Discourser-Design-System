@@ -41,26 +41,118 @@ function resolveImplementationFile(sourceFile: string): string {
 function extractProps(sourceContent: string): PropDefinition[] {
   const props: PropDefinition[] = [];
 
-  // Match interface declarations ending with 'Props'
-  const interfaceMatch = sourceContent.match(
-    /interface\s+\w+Props\s*\{([^}]+)\}/s,
-  );
-  if (!interfaceMatch) return props;
+  // Step 1: Find the Props interface and extract its full body using balanced-brace tracking
+  const ifaceRe = /interface\s+\w+Props\s*\{/g;
+  const startMatch = ifaceRe.exec(sourceContent);
+  if (!startMatch) return props;
 
-  const body = interfaceMatch[1];
-  // Match lines like: /** JSDoc */ propName?: type
-  const propRe = /(?:\/\*\*\s*([\s\S]*?)\s*\*\/\s*)?(\w+)(\?)?:\s*([^;\n]+)/g;
-  let m: RegExpExecArray | null;
-  while ((m = propRe.exec(body)) !== null) {
-    const [, jsdoc, name, optional, typeRaw] = m;
-    if (!name || name === 'children') continue;
+  // Find the opening { of the interface body
+  const openBrace = sourceContent.indexOf(
+    '{',
+    startMatch.index + startMatch[0].length - 1,
+  );
+  let depth = 0;
+  let closeBrace = openBrace;
+  for (let i = openBrace; i < sourceContent.length; i++) {
+    if (sourceContent[i] === '{') depth++;
+    else if (sourceContent[i] === '}') {
+      depth--;
+      if (depth === 0) {
+        closeBrace = i;
+        break;
+      }
+    }
+  }
+
+  const body = sourceContent.slice(openBrace + 1, closeBrace);
+
+  // Step 2: Parse each prop using a position-based scanner
+  let pos = 0;
+
+  while (pos < body.length) {
+    // Skip whitespace
+    while (pos < body.length && /\s/.test(body[pos])) pos++;
+    if (pos >= body.length) break;
+
+    // Try to match JSDoc comment /** ... */
+    let jsdoc: string | undefined;
+    if (body.startsWith('/**', pos)) {
+      const endDoc = body.indexOf('*/', pos);
+      if (endDoc !== -1) {
+        jsdoc = body
+          .slice(pos + 3, endDoc)
+          .trim()
+          .replace(/\n\s*\*\s*/g, ' ');
+        pos = endDoc + 2;
+        while (pos < body.length && /\s/.test(body[pos])) pos++;
+      }
+    }
+
+    // Match prop name followed by optional `?` and `:`
+    const nameMatch = /^(\w+)(\?)?:/.exec(body.slice(pos));
+    if (!nameMatch) {
+      // Not a prop — skip to next semicolon or newline
+      const next = body.indexOf('\n', pos);
+      pos = next === -1 ? body.length : next + 1;
+      continue;
+    }
+
+    const [fullMatch, name, optional] = nameMatch;
+    pos += fullMatch.length;
+
+    if (name === 'children') {
+      // Skip children — find the next semicolon at depth 0
+      let bracketDepth = 0;
+      while (pos < body.length) {
+        const ch = body[pos];
+        if (ch === '(' || ch === '{') bracketDepth++;
+        else if ((ch === ')' || ch === '}') && bracketDepth > 0) bracketDepth--;
+        else if (ch === ';' && bracketDepth === 0) {
+          pos++;
+          break;
+        }
+        pos++;
+      }
+      continue;
+    }
+
+    // Skip whitespace after the colon
+    while (pos < body.length && body[pos] === ' ') pos++;
+
+    // Read the type: track () and {} depth, stop at ; when depth === 0
+    const typeStart = pos;
+    let bracketDepth = 0;
+    while (pos < body.length) {
+      const ch = body[pos];
+      if (ch === '(' || ch === '{') {
+        bracketDepth++;
+      } else if ((ch === ')' || ch === '}') && bracketDepth > 0) {
+        bracketDepth--;
+      } else if (ch === ';' && bracketDepth === 0) {
+        break;
+      } else if (ch === '\n' && bracketDepth === 0) {
+        break;
+      }
+      pos++;
+    }
+
+    const typeRaw = body.slice(typeStart, pos).trim();
+    // Normalize multi-line types: collapse internal whitespace sequences
+    const typeNormalized = typeRaw.replace(/\s+/g, ' ');
+
+    // Skip the terminating ; or newline
+    if (pos < body.length && (body[pos] === ';' || body[pos] === '\n')) pos++;
+
+    if (!name || !typeNormalized) continue;
+
     props.push({
       name,
-      type: typeRaw.trim().replace(/;$/, ''),
+      type: typeNormalized,
       required: !optional,
-      description: jsdoc?.trim().replace(/\n\s*\*\s*/g, ' '),
+      description: jsdoc?.trim(),
     });
   }
+
   return props;
 }
 

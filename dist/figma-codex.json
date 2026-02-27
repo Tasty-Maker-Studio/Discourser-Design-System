@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
   "packageName": "@discourser/design-system",
-  "generatedAt": "2026-02-27T19:10:32.040Z",
-  "gitHash": "ce474283",
+  "generatedAt": "2026-02-27T19:50:38.068Z",
+  "gitHash": "cfd22f89",
   "figmaFiles": {
     "GaHmFfmvO4loUzuZS4TgEz": {
       "fileKey": "GaHmFfmvO4loUzuZS4TgEz"
@@ -233,23 +233,13 @@
         },
         {
           "name": "renderLink",
-          "type": "(props: {",
+          "type": "(props: { href: string; children: React.ReactNode; isActive: boolean; className: string; }) => React.ReactNode",
           "required": false
         },
         {
-          "name": "href",
+          "name": "ariaLabel",
           "type": "string",
-          "required": true
-        },
-        {
-          "name": "isActive",
-          "type": "boolean",
-          "required": true
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": true
+          "required": false
         }
       ],
       "example": "<NavigationMenu\n      sections={[\n        {\n          value: 'dashboard',\n          title: 'Dashboard',\n          icon: null,\n          items: [\n            { label: 'Quick Start', href: '/dashboard/quick-start' },\n            { label: 'Progress', href: '/dashboard/progress' },\n          ],\n        },\n      ]}\n      defaultOpenSections={['dashboard']}\n      activeHref=\"/dashboard/quick-start\"\n    />",
@@ -297,9 +287,21 @@
         },
         {
           "name": "renderAddScenarioContent",
-          "type": "(props: { onClose: () => void",
+          "type": "(props: { onClose: () => void }) => ReactNode",
           "required": false,
           "description": "* Render prop / slot for the Add Scenario modal body. The design system provides the Dialog shell; the consumer (discourser.ai) provides the collection content. * Receives `onClose` to allow the consumer to close the modal after selection."
+        },
+        {
+          "name": "onBrowseMore",
+          "type": "() => void",
+          "required": false,
+          "description": "Called when user clicks \"Browse More Scenarios\" link inside the modal"
+        },
+        {
+          "name": "onBuildCustom",
+          "type": "() => void",
+          "required": false,
+          "description": "Called when user clicks \"Build Custom Scenario\" link inside the modal"
         }
       ],
       "example": "<ScenarioQueue scenarios={scenarios} />",

@@ -154,4 +154,43 @@ describe('resolveComponent', () => {
       expect(entry.props).toEqual([]);
     });
   });
+
+  describe('NavigationMenu multi-line prop types', () => {
+    const parsed: ParsedFigmaFile = {
+      filePath: join(
+        DDS_ROOT,
+        'src/components/NavigationMenu/NavigationMenu.figma.tsx',
+      ),
+      importStyle: 'named',
+      componentName: 'NavigationMenu',
+      importSource: './NavigationMenu',
+      figmaUrl:
+        'https://www.figma.com/design/GaHmFfmvO4loUzuZS4TgEz/Discourser.AI--V1?node-id=38-8485',
+      figmaFileKey: 'GaHmFfmvO4loUzuZS4TgEz',
+      figmaNodeId: '38:8485',
+      example: '<NavigationMenu sections={[]} />',
+      propsMapping: {},
+    };
+
+    it('extracts exactly 6 props (not leaking inner fields)', () => {
+      const entry = resolveComponent(parsed, baseConfig);
+      expect(entry.props).toHaveLength(6);
+    });
+
+    it('renderLink type contains full function signature', () => {
+      const entry = resolveComponent(parsed, baseConfig);
+      const renderLink = entry.props.find((p) => p.name === 'renderLink');
+      expect(renderLink).toBeDefined();
+      expect(renderLink?.type).toContain('=> React.ReactNode');
+      expect(renderLink?.type).toContain('href');
+    });
+
+    it('does not leak inner object fields as top-level props', () => {
+      const entry = resolveComponent(parsed, baseConfig);
+      const names = entry.props.map((p) => p.name);
+      expect(names).not.toContain('href');
+      expect(names).not.toContain('isActive');
+      expect(names).not.toContain('className');
+    });
+  });
 });
