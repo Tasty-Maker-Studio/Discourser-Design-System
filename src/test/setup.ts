@@ -8,15 +8,18 @@ expect.extend(toHaveNoViolations);
 
 // Mock ResizeObserver — JSDOM does not implement it, but @zag-js/tabs requires
 // it to sync the active tab indicator rectangle position.
-Object.defineProperty(window, 'ResizeObserver', {
-  writable: true,
-  configurable: true,
-  value: class ResizeObserver {
-    observe() {}
-    unobserve() {}
-    disconnect() {}
-  },
-});
+// Guard for Node.js environment (e.g. figma-codex tests with @vitest-environment node)
+if (typeof window !== 'undefined') {
+  Object.defineProperty(window, 'ResizeObserver', {
+    writable: true,
+    configurable: true,
+    value: class ResizeObserver {
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    },
+  });
+}
 
 // Cleanup after each test
 afterEach(() => {

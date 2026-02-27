@@ -15,7 +15,7 @@
 
     <!-- Title + count block -->
     <frame id="388:3148" name="Frame 13" x="24" y="20" width="201" height="74">
-      <frame id="38:4050" name="Heading 2" x="0" y="0" width="201" height="24">
+      <frame id="38:4050" name="Header 2" x="0" y="0" width="201" height="24">
         <text id="38:4051" name="Scenario Queue" x="0" y="0" width="143" height="22" />
       </frame>
       <frame id="38:4052" name="Paragraph" x="0" y="28" width="201" height="21">
@@ -45,7 +45,7 @@
       </frame>
 
       <!-- Title -->
-      <frame id="38:4067" name="Heading 3" x="20" y="88" width="179" height="52">
+      <frame id="38:4067" name="Header 3" x="20" y="88" width="179" height="52">
         <text id="38:4068" name="UX Research &amp; Design Interview"
               x="2.67" y="7" width="173.66" height="38" />
       </frame>
@@ -78,7 +78,7 @@
         </frame>
       </frame>
 
-      <frame id="38:4090" name="Heading 3" x="20" y="83" width="179" height="52">
+      <frame id="38:4090" name="Header 3" x="20" y="83" width="179" height="52">
         <text id="38:4091" name="Business Analysis ROI Design Presentation"
               x="2.67" y="7" width="173.66" height="38" />
       </frame>
@@ -110,7 +110,7 @@
         </frame>
       </frame>
 
-      <frame id="38:4113" name="Heading 3" x="20" y="83" width="179" height="52">
+      <frame id="38:4113" name="Header 3" x="20" y="83" width="179" height="52">
         <text id="38:4114" name="Product Redesign Challenge"
               x="2.67" y="7" width="173.66" height="38" />
       </frame>
@@ -187,7 +187,7 @@
 | Position badge size | **45×45px** (outlined, neutral) |
 | Badge x-offset | 130px from content left |
 
-### Card — Title (Heading 3)
+### Card — Title (Header 3)
 | Property | Value |
 |---|---|
 | x-offset | 20px |

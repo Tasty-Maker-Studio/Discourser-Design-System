@@ -1,6 +1,6 @@
 {
   "name": "@discourser/design-system",
-  "version": "0.15.1",
+  "version": "0.17.0",
   "description": "Aesthetic-agnostic design system with Panda CSS and Ark UI",
   "type": "module",
   "publishConfig": {
@@ -150,13 +150,29 @@
       "types": "./src/components/Stepper/index.ts",
       "import": "./src/components/Stepper/index.ts"
     },
+    "./NavigationMenu": {
+      "types": "./src/components/NavigationMenu/index.ts",
+      "import": "./src/components/NavigationMenu/index.ts"
+    },
     "./ScenarioQueue": {
       "types": "./src/components/ScenarioQueue/index.ts",
       "import": "./src/components/ScenarioQueue/index.ts"
     },
+    "./ScenarioSettings": {
+      "types": "./src/components/ScenarioSettings/index.ts",
+      "import": "./src/components/ScenarioSettings/index.ts"
+    },
     "./Breadcrumb": {
       "types": "./src/components/Breadcrumb.tsx",
       "import": "./src/components/Breadcrumb.tsx"
+    },
+    "./ContentCard": {
+      "types": "./src/components/ContentCard/index.ts",
+      "import": "./src/components/ContentCard/index.ts"
+    },
+    "./figma-codex": {
+      "import": "./dist/figma-codex.json",
+      "require": "./dist/figma-codex.json"
     }
   },
   "files": [
@@ -165,7 +181,7 @@
   ],
   "scripts": {
     "dev": "pnpm docs:generate && storybook dev -p 6006",
-    "build": "pnpm build:panda && pnpm typecheck && pnpm build:lib && pnpm build:types",
+    "build": "pnpm build:panda && pnpm typecheck && pnpm build:lib && pnpm build:types && pnpm codex:generate",
     "build:panda": "panda codegen",
     "build:css": "panda cssgen --outfile dist/styles.css",
     "build:lib": "tsup",
@@ -190,6 +206,10 @@
     "verify:lint": "pnpm lint",
     "verify:test": "pnpm test run",
     "verify:build": "pnpm build",
+    "codex:generate": "tsx src/figma-codex/generate.ts",
+    "codex:watch": "tsx --watch src/figma-codex/generate.ts",
+    "figma:connect": "figma connect publish",
+    "figma:connect:dry": "figma connect publish --dry-run",
     "changeset": "changeset",
     "version": "changeset version",
     "ci:version": "pnpm exec changeset version",
@@ -209,6 +229,7 @@
     "@changesets/changelog-github": "^0.5.2",
     "@changesets/cli": "^2.29.8",
     "@eslint/js": "^9.39.2",
+    "@figma/code-connect": "^1.4.1",
     "@material/material-color-utilities": "^0.3.0",
     "@pandacss/dev": "^1.8.1",
     "@storybook/addon-a11y": "^10.2.8",
@@ -267,6 +288,9 @@
     ],
     "*.{json,md}": [
       "prettier --write"
+    ],
+    "*.figma.tsx": [
+      "tsx src/figma-codex/generate.ts"
     ]
   }
 }

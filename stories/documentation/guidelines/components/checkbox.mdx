@@ -422,7 +422,7 @@ const [settings, setSettings] = useState({
 });
 
 <div className={css({ display: 'flex', flexDirection: 'column', gap: 'lg' })}>
-  <Heading size="md">Settings</Heading>
+  <Header size="md">Settings</Header>
 
   <Checkbox.Root
     checked={settings.emailNotifications}
@@ -471,7 +471,7 @@ const [settings, setSettings] = useState({
 const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
 <div>
-  <Heading size="sm">Filter Results</Heading>
+  <Header size="sm">Filter Results</Header>
 
   <Checkbox.Group
     value={selectedFilters}

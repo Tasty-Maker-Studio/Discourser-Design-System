@@ -1,0 +1,167 @@
+# Scenario Info — Figma Metadata
+
+**Source:** https://www.figma.com/design/GaHmFfmvO4loUzuZS4TgEz/Discourser.AI--V1?node-id=38-4140&m=dev
+**Node ID:** `38:4140`
+**Figma Name:** `Stage Container`
+**Node Type:** `frame`
+**Retrieved:** 2026-02-21
+
+---
+
+## Raw Metadata (XML)
+
+```xml
+<frame id="38:4140" name="Stage Container" x="269" y="0" width="831" height="1119">
+  <frame id="38:4141" name="Header 1" x="63.5" y="80" width="704" height="39">
+    <text id="38:4142" name="A Practice Scenario Defined" x="0" y="2" width="620.79" height="35" />
+  </frame>
+  <frame id="38:4143" name="Scenario Info Container" x="63.5" y="159" width="704" height="817">
+    <text id="38:4144" name="UX Research &amp; Design Interview" x="40" y="40" width="482" height="30" />
+    <frame id="38:4145" name="Badge Bar" x="40" y="95" width="594" height="58">
+      <frame id="38:4146" name="Badge" x="10" y="4" width="93" height="47">
+        <frame id="38:4147" name="Text" x="0" y="9" width="93" height="29">
+          <text id="38:4148" name="Beginner" x="12.5" y="6" width="68" height="17" />
+        </frame>
+      </frame>
+      <frame id="38:4149" name="Badge" x="113" y="4" width="113" height="50">
+        <instance id="38:4150" name="Badge" x="0" y="10" width="113" height="30" />
+      </frame>
+      <frame id="38:4151" name="Badge" x="236" y="4" width="133" height="50">
+        <frame id="38:4152" name="Text" x="6" y="10" width="121" height="30">
+          <text id="38:4153" name="~15 minutes" x="16" y="6.5" width="89" height="17" />
+        </frame>
+      </frame>
+      <frame id="38:4154" name="Badge" x="379" y="4" width="106" height="50">
+        <frame id="38:4155" name="Text" x="6" y="10" width="94" height="30">
+          <text id="38:4156" name="~15 minutes" x="16" y="6.5" width="62" height="17" />
+        </frame>
+      </frame>
+    </frame>
+    <frame id="38:4157" name="Purpose" x="40" y="178" width="624" height="144">
+      <text id="38:4158" name="Practice explaining your UX research process..." x="10" y="10" width="549" height="48" />
+      <text id="38:4159" name="Ideal for building communication skills..." x="10" y="94" width="605.16" height="45.67" />
+    </frame>
+    <instance id="38:4160" name="Separator" x="40" y="347" width="596" height="30" />
+    <frame id="38:4161" name="Title" x="40" y="402" width="624" height="43">
+      <text id="38:4162" name="Sample Questions:" x="10" y="10" width="214" height="30" />
+    </frame>
+    <frame id="38:4163" name="statements" x="40" y="470" width="581.75" height="136">
+      <text id="38:4164" name="Walk me through your research methodology." x="0" y="0" width="460" height="24" />
+      <text id="38:4165" name="How did you validate that [this]..." x="0" y="44" width="581.75" height="48" />
+      <text id="38:4166" name="Describe a challenging project you worked." x="0" y="112" width="581.75" height="24" />
+    </frame>
+    <frame id="38:4167" name="Title" x="40" y="631" width="624" height="43">
+      <text id="38:4168" name="Topics Covered:" x="10" y="10" width="183" height="30" />
+    </frame>
+    <frame id="38:4169" name="Badge Bars" x="40" y="699" width="596" height="51">
+      <frame id="38:4170" name="Badge Bar" x="0" y="0" width="596" height="51">
+        <frame id="38:4171" name="Badge" x="10" y="4" width="155" height="47">
+          <frame id="38:4172" name="Text" x="6" y="8" width="143" height="31">
+            <text id="38:4173" name="User Research" x="16" y="6" width="111" height="19" />
+          </frame>
+        </frame>
+        <frame id="38:4174" name="Badge" x="175" y="4" width="240" height="47">
+          <frame id="38:4175" name="Text" x="6" y="8" width="228" height="31">
+            <text id="38:4176" name="Design Problem Definition" x="16" y="6" width="196" height="19" />
+          </frame>
+        </frame>
+        <frame id="38:4177" name="Badge" x="425" y="4" width="167" height="47">
+          <frame id="38:4178" name="Text" x="6" y="8" width="155" height="31">
+            <text id="38:4179" name="Portfolio Review" x="16" y="6" width="123" height="19" />
+          </frame>
+        </frame>
+      </frame>
+      <frame id="38:4180" name="Badge Bar" x="0" y="51" width="596" height="51" />
+    </frame>
+  </frame>
+</frame>
+```
+
+---
+
+## Node Hierarchy
+
+| Node ID | Name | Type | X | Y | Width | Height |
+|---|---|---|---|---|---|---|
+| `38:4140` | Stage Container | frame | 269 | 0 | 831 | 1119 |
+| `38:4141` | Header 1 | frame | 63.5 | 80 | 704 | 39 |
+| `38:4142` | "A Practice Scenario Defined" | text | 0 | 2 | 620.79 | 35 |
+| `38:4143` | Scenario Info Container | frame | 63.5 | 159 | 704 | 817 |
+| `38:4144` | "UX Research & Design Interview" | text | 40 | 40 | 482 | 30 |
+| `38:4145` | Badge Bar (metadata) | frame | 40 | 95 | 594 | 58 |
+| `38:4146` | Badge (Beginner) | frame | 10 | 4 | 93 | 47 |
+| `38:4147` | Text (Beginner inner) | frame | 0 | 9 | 93 | 29 |
+| `38:4148` | "Beginner" | text | 12.5 | 6 | 68 | 17 |
+| `38:4149` | Badge (Professional) | frame | 113 | 4 | 113 | 50 |
+| `38:4150` | Badge (instance) | instance | 0 | 10 | 113 | 30 |
+| `38:4151` | Badge (Visual Design) | frame | 236 | 4 | 133 | 50 |
+| `38:4152` | Text (Visual Design inner) | frame | 6 | 10 | 121 | 30 |
+| `38:4153` | "Visual Design" | text | 16 | 6.5 | 89 | 17 |
+| `38:4154` | Badge (Interview) | frame | 379 | 4 | 106 | 50 |
+| `38:4155` | Text (Interview inner) | frame | 6 | 10 | 94 | 30 |
+| `38:4156` | "Interview" | text | 16 | 6.5 | 62 | 17 |
+| `38:4157` | Purpose | frame | 40 | 178 | 624 | 144 |
+| `38:4158` | Purpose text (line 1) | text | 10 | 10 | 549 | 48 |
+| `38:4159` | Purpose text (line 2) | text | 10 | 94 | 605.16 | 45.67 |
+| `38:4160` | Separator | instance | 40 | 347 | 596 | 30 |
+| `38:4161` | Title ("Sample Questions:") | frame | 40 | 402 | 624 | 43 |
+| `38:4162` | "Sample Questions:" | text | 10 | 10 | 214 | 30 |
+| `38:4163` | statements | frame | 40 | 470 | 581.75 | 136 |
+| `38:4164` | Question 1 | text | 0 | 0 | 460 | 24 |
+| `38:4165` | Question 2 | text | 0 | 44 | 581.75 | 48 |
+| `38:4166` | Question 3 | text | 0 | 112 | 581.75 | 24 |
+| `38:4167` | Title ("Topics Covered:") | frame | 40 | 631 | 624 | 43 |
+| `38:4168` | "Topics Covered:" | text | 10 | 10 | 183 | 30 |
+| `38:4169` | Badge Bars (topics) | frame | 40 | 699 | 596 | 51 |
+| `38:4170` | Badge Bar (row 1) | frame | 0 | 0 | 596 | 51 |
+| `38:4171` | Badge (User Research) | frame | 10 | 4 | 155 | 47 |
+| `38:4172` | Text (User Research inner) | frame | 6 | 8 | 143 | 31 |
+| `38:4173` | "User Research" | text | 16 | 6 | 111 | 19 |
+| `38:4174` | Badge (Design Problem Def.) | frame | 175 | 4 | 240 | 47 |
+| `38:4175` | Text (DPD inner) | frame | 6 | 8 | 228 | 31 |
+| `38:4176` | "Design Problem Definition" | text | 16 | 6 | 196 | 19 |
+| `38:4177` | Badge (Portfolio Review) | frame | 425 | 4 | 167 | 47 |
+| `38:4178` | Text (PR inner) | frame | 6 | 8 | 155 | 31 |
+| `38:4179` | "Portfolio Review" | text | 16 | 6 | 123 | 19 |
+| `38:4180` | Badge Bar (row 2, empty) | frame | 0 | 51 | 596 | 51 |
+
+---
+
+## Key Absolute Positions (within Scenario Info Container, `38:4143`)
+
+All positions below are relative to the card's top-left corner (`x=0, y=0`):
+
+| Element | Top (y) | Left (x) | Width | Height |
+|---|---|---|---|---|
+| Scenario title | 40 | 40 | 482 | 30 |
+| Badge Bar | 95 | 40 | 594 | 58 |
+| Purpose section | 178 | 40 | 624 | 144 |
+| Separator | 347 | 40 | 596 | 30 |
+| "Sample Questions:" title | 402 | 40 | 624 | 43 |
+| Question list | 470 | 40 | 581.75 | 136 |
+| "Topics Covered:" title | 631 | 40 | 624 | 43 |
+| Topics badges | 699 | 40 | 596 | 51 |
+
+---
+
+## Stage Container Outer Dimensions
+
+| Property | Value |
+|---|---|
+| Full frame width | 831px |
+| Full frame height | 1119px |
+| Card inset left | 63.5px |
+| Card width | 704px |
+| Card top | 159px (80px heading + 39px heading height + 40px gap) |
+| Card height | 817px |
+| Page top padding (to heading) | 80px |
+
+---
+
+## Notes
+
+- The **outer Stage Container** (`38:4140`) is 831px wide — this includes the 63.5px left offset for the card. The card itself is 704px.
+- The **second Badge Bar row** (`38:4180`) is empty (no children) — it is a placeholder for overflow topic badges.
+- The **Separator** (`38:4160`) is a component instance referencing `38:1206`.
+- The **"Professional" badge** (`38:4150`) is itself a component instance (`Badge` component at `38:668`) rather than a raw frame like the other badges — it uses the DDS/shadcn Badge component.
+- For full visual styles, token mappings, and DDS component mappings see: [`scenario-info-design-context.md`](./scenario-info-design-context.md)

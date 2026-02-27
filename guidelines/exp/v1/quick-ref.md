@@ -5,7 +5,7 @@
 | Component  | Type         | Usage                                                         |
 | ---------- | ------------ | ------------------------------------------------------------- |
 | Button     | Simple       | `<Button variant="solid" colorPalette="primary">`             |
-| Heading    | Simple       | `<Heading as="h1" size="2xl">`                                |
+| Header    | Simple       | `<Header as="h1" size="2xl">`                                |
 | Input      | Simple       | `<Input label="..." />`                                       |
 | Textarea   | Simple       | `<Textarea label="..." />`                                    |
 | Badge      | Simple       | `<Badge>`                                                     |
@@ -53,7 +53,7 @@
 
 ---
 
-## Heading Sizes
+## Header Sizes
 
 | Size        | Usage                |
 | ----------- | -------------------- |
@@ -64,8 +64,8 @@
 | `md`-`sm`   | Minor headings       |
 
 ```tsx
-<Heading as="h1" size="2xl">Page Title</Heading>
-<Heading as="h2" size="xl">Section</Heading>
+<Header as="h1" size="2xl">Page Title</Header>
+<Header as="h2" size="xl">Section</Header>
 ```
 
 ---
@@ -186,9 +186,9 @@ Card variants: `elevated`, `outline`, `filled`
 <Card.Root variant="elevated">
   <Card.Header>
     <Card.Title>
-      <Heading as="h2" size="xl">
+      <Header as="h2" size="xl">
         Sign In
-      </Heading>
+      </Header>
     </Card.Title>
   </Card.Header>
   <Card.Body
@@ -222,9 +222,9 @@ Card variants: `elevated`, `outline`, `filled`
 
 ```tsx
 <div className={css({ p: 'xl', bg: 'surface', minHeight: '100vh' })}>
-  <Heading as="h1" size="2xl" className={css({ mb: 'lg', color: 'onSurface' })}>
+  <Header as="h1" size="2xl" className={css({ mb: 'lg', color: 'onSurface' })}>
     Dashboard
-  </Heading>
+  </Header>
   {/* Content */}
 </div>
 ```

@@ -153,10 +153,10 @@ Cross-reference: Link to `Documentation/Guidelines/99-Colors` for full M3 color 
 | `text-base` | `textStyle="bodyMedium"` | 14px | Default body text |
 | `text-lg` | `textStyle="bodyLarge"` | 16px | Emphasized body |
 | `text-xl` | `textStyle="titleSmall"` | 14px/500wt | Card titles, list headers |
-| `text-2xl` | `textStyle="titleLarge"` or `<Heading size="xl">` | 22px | Section titles |
-| `text-3xl` | `textStyle="headlineSmall"` or `<Heading size="2xl">` | 24px | Page subtitles |
-| `text-4xl` | `textStyle="headlineLarge"` or `<Heading size="3xl">` | 32px | Page titles |
-| `text-5xl`+ | `textStyle="displaySmall"` or `<Heading size="4xl">` | 36px+ | Hero text |
+| `text-2xl` | `textStyle="titleLarge"` or `<Header size="xl">` | 22px | Section titles |
+| `text-3xl` | `textStyle="headlineSmall"` or `<Header size="2xl">` | 24px | Page subtitles |
+| `text-4xl` | `textStyle="headlineLarge"` or `<Header size="3xl">` | 32px | Page titles |
+| `text-5xl`+ | `textStyle="displaySmall"` or `<Header size="4xl">` | 36px+ | Hero text |
 
 **Font family mapping:**
 
@@ -175,12 +175,12 @@ Cross-reference: Link to `Documentation/Guidelines/99-Colors` for full M3 color 
 | `font-semibold` | `fontWeight="semibold"` | 600 |
 | `font-bold` | `fontWeight="bold"` | 700 |
 
-**Heading component section:**
-- Rule: For headings, ALWAYS prefer `<Heading size="...">` component over raw textStyle
+**Header component section:**
+- Rule: For headings, ALWAYS prefer `<Header size="...">` component over raw textStyle
 - Available sizes: xs, sm, md, lg, xl, 2xl, 3xl, 4xl, 5xl, 6xl, 7xl
-- Heading renders as h-tag levels — map Figma heading levels to component
+- Header renders as h-tag levels — map Figma heading levels to component
 
-**Common Mistakes** with ❌/✅ examples showing raw font-size vs textStyle vs Heading component.
+**Common Mistakes** with ❌/✅ examples showing raw font-size vs textStyle vs Header component.
 
 Cross-reference: Link to `Documentation/Guidelines/99-Typography` for full M3 type scale.
 
@@ -315,7 +315,7 @@ import { Meta } from '@storybook/addon-docs/blocks';
 - [ ] `stories/documentation/figma-translation/` directory created
 - [ ] `00-FigmaTranslation.mdx` — overview with architecture summary and links to all sub-pages
 - [ ] `01-Colors.mdx` — complete color mapping (backgrounds, text, border, M3 surface, colorPalette system)
-- [ ] `02-Typography.mdx` — complete typography mapping (text sizes, fonts, weights, Heading component)
+- [ ] `02-Typography.mdx` — complete typography mapping (text sizes, fonts, weights, Header component)
 - [ ] `03-Spacing.mdx` — complete spacing mapping (numeric scale, named tokens, Figma auto-layout)
 - [ ] `04-Shadows-Radii.mdx` — complete shadow + border-radius mapping
 - [ ] Every token referenced verified against actual config files

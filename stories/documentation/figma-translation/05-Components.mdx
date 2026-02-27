@@ -818,10 +818,10 @@ toaster.create({
 
 ## 5. Typography
 
-### Heading
+### Header
 
 **Maps from:** Figma Text Styles (Material Design 3), Tailwind heading classes
-**Import:** `import { Heading } from '@discourser/design-system'`
+**Import:** `import { Header } from '@discourser/design-system'`
 **Type:** Simple (recipe)
 
 **Sizes:**
@@ -848,10 +848,10 @@ toaster.create({
 
 | Tailwind | Discourser |
 |---|---|
-| `className="text-4xl font-bold"` | `<Heading size="4xl">` |
-| `<h2 className="text-2xl">` | `<Heading as="h2" size="2xl">` |
+| `className="text-4xl font-bold"` | `<Header size="4xl">` |
+| `<h2 className="text-2xl">` | `<Header as="h2" size="2xl">` |
 
-**See:** [Guidelines/99-Heading](/docs/documentation-guidelines-99-heading--docs)
+**See:** [Guidelines/99-Header](/docs/documentation-guidelines-99-heading--docs)
 
 ---
 
@@ -997,6 +997,53 @@ Wrapper for inline SVG icons with consistent sizing and theming.
 ```
 
 The last `<Breadcrumb.Item>` is automatically styled as the current page (`color: fg.default`). Use `<Breadcrumb.Ellipsis>` when the path is too long to display in full.
+
+---
+
+### ContentCard
+
+**Maps from:** Custom Discourser center-stage content card (Figma node 38:4140)
+**Import:** `import { ContentCard } from '@discourser/design-system'`
+**Type:** Compound (slot recipe)
+
+A generic, reusable content card for the center stage area. Provides styled slots for title, badge bars, body text, sections, separators, and bullet lists.
+
+**Slots:**
+- `<ContentCard.Root>` — White card container with border and padding
+- `<ContentCard.Header>` — Header wrapper (title + badge bar)
+- `<ContentCard.Title>` — `<h2>` heading with Fraunces font
+- `<ContentCard.BadgeBar>` — Flex row container for Badge components
+- `<ContentCard.Body>` — Body text area with paragraph spacing
+- `<ContentCard.Section>` — Titled section wrapper (`<section>`)
+- `<ContentCard.SectionTitle>` — `<h3>` section heading with Fraunces font
+- `<ContentCard.Separator>` — `<hr>` horizontal divider
+- `<ContentCard.List>` — `<ul>` bulleted list
+- `<ContentCard.ListItem>` — `<li>` list item
+
+**Variants:** `outline` (default), `elevated`, `flat`
+**Sizes:** `sm`, `md` (default), `lg`
+
+```tsx
+<ContentCard.Root>
+  <ContentCard.Header>
+    <ContentCard.Title>UX Research & Design Interview</ContentCard.Title>
+    <ContentCard.BadgeBar>
+      <Badge colorPalette="primary" variant="subtle">Beginner</Badge>
+      <Badge colorPalette="neutral" variant="subtle">Interview</Badge>
+    </ContentCard.BadgeBar>
+  </ContentCard.Header>
+  <ContentCard.Body>
+    <p>Practice explaining your UX research process.</p>
+  </ContentCard.Body>
+  <ContentCard.Separator />
+  <ContentCard.Section>
+    <ContentCard.SectionTitle>Sample Questions:</ContentCard.SectionTitle>
+    <ContentCard.List>
+      <ContentCard.ListItem>Walk me through your research methodology.</ContentCard.ListItem>
+    </ContentCard.List>
+  </ContentCard.Section>
+</ContentCard.Root>
+```
 
 ---
 
@@ -1186,7 +1233,7 @@ Matches `panda.config.ts` definitions:
 - switchComponent, checkbox, radioGroup, select, slider
 - avatar, progress, toast
 - dialog, popover, tooltip
-- stepper, breadcrumb
+- stepper, breadcrumb, contentCard
 
 ---
 

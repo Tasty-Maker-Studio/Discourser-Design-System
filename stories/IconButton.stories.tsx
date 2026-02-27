@@ -3,7 +3,7 @@ import { IconButton } from '../src/components/IconButton';
 import { HStack, VStack } from '../styled-system/jsx';
 
 const meta: Meta<typeof IconButton> = {
-  title: 'Components / IconButton',
+  title: 'Components/Icon Button',
   component: IconButton,
   tags: ['autodocs'],
 };

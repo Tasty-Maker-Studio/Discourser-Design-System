@@ -21,6 +21,7 @@ interface DocConfig {
   targetDir: string;
   titlePrefix: string;
   description: string;
+  exclude?: string[];
 }
 
 const configs: DocConfig[] = [
@@ -29,6 +30,8 @@ const configs: DocConfig[] = [
     targetDir: 'stories/documentation/guidelines',
     titlePrefix: 'Documentation/Guidelines',
     description: 'Design system guidelines for components and tokens',
+    // Files with malformed MDX (mixed 3/4-backtick fences causing acorn parse errors)
+    exclude: ['discourser-acceleration-plan.md'],
   },
   {
     sourceDir: 'docs/figma-make-docs',
@@ -154,7 +157,10 @@ function processDirectory(config: DocConfig): void {
           fs.mkdirSync(subTargetDir, { recursive: true });
         }
         processDir(sourcePath, relativePath);
-      } else if (entry.name.endsWith('.md')) {
+      } else if (
+        entry.name.endsWith('.md') &&
+        !config.exclude?.includes(entry.name)
+      ) {
         processFile(
           sourcePath,
           targetPath,
@@ -162,6 +168,11 @@ function processDirectory(config: DocConfig): void {
           config.description,
           sourceDir,
         );
+      } else if (
+        entry.name.endsWith('.md') &&
+        config.exclude?.includes(entry.name)
+      ) {
+        console.log(`⊘ Skipped: ${sourcePath} (excluded)`);
       }
     }
   }

@@ -1,0 +1,78 @@
+{
+  "version": "1.0.0",
+  "packageName": "@test/design-system",
+  "generatedAt": "2026-02-27T19:21:46.956Z",
+  "gitHash": "3fd0a961",
+  "figmaFiles": {
+    "ABC123": {
+      "fileKey": "ABC123"
+    }
+  },
+  "components": {
+    "CompoundComponent": {
+      "name": "CompoundComponent",
+      "type": "compound",
+      "figma": {
+        "fileKey": "ABC123",
+        "nodeId": "5:10",
+        "url": "https://www.figma.com/design/ABC123/TestFile?node-id=5-10"
+      },
+      "imports": {
+        "primary": "import * as CompoundComponent from '@test/design-system/CompoundComponent'",
+        "namedExports": [
+          "CompoundComponent.Root",
+          "CompoundComponent.Header",
+          "CompoundComponent.Body"
+        ]
+      },
+      "props": [],
+      "subComponents": [
+        {
+          "name": "Root",
+          "element": "div"
+        },
+        {
+          "name": "Header",
+          "element": "div"
+        },
+        {
+          "name": "Body",
+          "element": "div"
+        }
+      ],
+      "example": "<CompoundComponent.Root>\n        <CompoundComponent.Header>Title</CompoundComponent.Header>\n      </CompoundComponent.Root>",
+      "sourcePath": "src/figma-codex/fixtures/CompoundComponent/index.ts"
+    },
+    "SimpleComponent": {
+      "name": "SimpleComponent",
+      "type": "simple",
+      "figma": {
+        "fileKey": "ABC123",
+        "nodeId": "1:2",
+        "url": "https://www.figma.com/design/ABC123/TestFile?node-id=1-2"
+      },
+      "imports": {
+        "primary": "import { SimpleComponent } from '@test/design-system/SimpleComponent'",
+        "namedExports": [
+          "SimpleComponent"
+        ]
+      },
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "description": "The display label"
+        },
+        {
+          "name": "size",
+          "type": "'sm' | 'md' | 'lg'",
+          "required": false,
+          "description": "Optional size variant"
+        }
+      ],
+      "example": "<SimpleComponent label=\"Hello\" />",
+      "sourcePath": "src/figma-codex/fixtures/SimpleComponent.tsx"
+    }
+  }
+}

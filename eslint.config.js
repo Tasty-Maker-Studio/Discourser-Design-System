@@ -52,5 +52,13 @@ export default [js.configs.recommended, {
     },
   },
 }, {
+  // Node.js globals for figma-codex CLI tool and its tests
+  files: ['src/figma-codex/**/*.{ts,tsx}'],
+  languageOptions: {
+    globals: {
+      process: 'readonly',
+    },
+  },
+}, {
   ignores: ['dist/', 'node_modules/', 'styled-system/', 'storybook-static/'],
 }, ...storybook.configs["flat/recommended"]];

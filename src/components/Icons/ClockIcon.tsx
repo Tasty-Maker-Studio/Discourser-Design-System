@@ -1,10 +1,10 @@
-import { ark } from '@ark-ui/react/factory'
-import type { ComponentProps } from 'react'
-import { styled } from 'styled-system/jsx'
+import { ark } from '@ark-ui/react/factory';
+import type { ComponentProps } from 'react';
+import { styled } from 'styled-system/jsx';
 
-const StyledSvg = styled(ark.svg)
+const StyledSvg = styled(ark.svg);
 
-export type ClockIconProps = ComponentProps<typeof StyledSvg>
+export type ClockIconProps = ComponentProps<typeof StyledSvg>;
 
 export const ClockIcon = (props: ClockIconProps) => (
   <StyledSvg
@@ -37,4 +37,4 @@ export const ClockIcon = (props: ClockIconProps) => (
       strokeLinejoin="round"
     />
   </StyledSvg>
-)
+);
