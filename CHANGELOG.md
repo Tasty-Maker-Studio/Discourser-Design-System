@@ -1,5 +1,24 @@
 # @discourser/design-system
 
+## 0.19.0
+
+### Minor Changes
+
+- [#115](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/115) [`7d3dad6`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/7d3dad6e09233fc89ea011f09d99a484d9abe89e) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Add figma-codex manifest generator
+
+  Introduces `figma-codex` — a portable Node.js tool that reads `.figma.tsx` Code Connect files and generates `dist/figma-codex.json`, a structured manifest mapping Figma design components to their code implementations (import paths, prop interfaces, sub-components, usage examples).
+  - New `pnpm codex:generate` and `pnpm codex:watch` scripts
+  - New `./figma-codex` package export pointing to `dist/figma-codex.json`
+  - Auto-regeneration on `.figma.tsx` commit via lint-staged
+  - Covers all 8 DDS components with correct `simple`, `compound`, and `composite` classification
+  - Handles multi-line function prop types (e.g. `renderLink` on `NavigationMenu`)
+
+- [#116](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/116) [`e55a984`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/e55a984ee3951938b3660d12ceb57f6b192799b2) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Add 17 icon components with Figma Code Connect mappings
+
+  New icon components: AudienceIcon, AudioSpeakerIcon, BookmarkPlusIcon, ClipBoardIcon, ExitStudioIcon, MicrophoneIcon, NotebookPenIcon, PausePlayIcon, PlayIcon, RecordIcon, RepeatQuestionIcon, ScrollTextIcon, SparklesIcon, SpeechIcon, StopPlayIcon, TimerIcon, UserProfileIcon.
+
+  Each icon includes a `.figma.tsx` Code Connect file for Figma-to-code mapping. Updated the Icons barrel export, Storybook stories, and Figma config.
+
 ## 0.18.0
 
 ### Minor Changes
