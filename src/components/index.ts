@@ -63,7 +63,51 @@ export {
   type RightArrowIconProps,
 } from './Icons/RightArrowIcon';
 export { ChevronUpIcon, type ChevronUpIconProps } from './Icons/ChevronUpIcon';
-export { DiscourserLogo, type DiscourserLogoProps } from './Icons/DiscourserLogo';
+export {
+  DiscourserLogo,
+  type DiscourserLogoProps,
+} from './Icons/DiscourserLogo';
+export { TimerIcon, type TimerIconProps } from './Icons/TimerIcon';
+export { ClipBoardIcon, type ClipBoardIconProps } from './Icons/ClipBoardIcon';
+export {
+  MicrophoneIcon,
+  type MicrophoneIconProps,
+} from './Icons/MicrophoneIcon';
+export { AudienceIcon, type AudienceIconProps } from './Icons/AudienceIcon';
+export { RecordIcon, type RecordIconProps } from './Icons/RecordIcon';
+export {
+  NotebookPenIcon,
+  type NotebookPenIconProps,
+} from './Icons/NotebookPenIcon';
+export { SparklesIcon, type SparklesIconProps } from './Icons/SparklesIcon';
+export {
+  ScrollTextIcon,
+  type ScrollTextIconProps,
+} from './Icons/ScrollTextIcon';
+export {
+  RepeatQuestionIcon,
+  type RepeatQuestionIconProps,
+} from './Icons/RepeatQuestionIcon';
+export {
+  ExitStudioIcon,
+  type ExitStudioIconProps,
+} from './Icons/ExitStudioIcon';
+export { PausePlayIcon, type PausePlayIconProps } from './Icons/PausePlayIcon';
+export { StopPlayIcon, type StopPlayIconProps } from './Icons/StopPlayIcon';
+export {
+  BookmarkPlusIcon,
+  type BookmarkPlusIconProps,
+} from './Icons/BookmarkPlusIcon';
+export {
+  AudioSpeakerIcon,
+  type AudioSpeakerIconProps,
+} from './Icons/AudioSpeakerIcon';
+export {
+  UserProfileIcon,
+  type UserProfileIconProps,
+} from './Icons/UserProfileIcon';
+export { PlayIcon, type PlayIconProps } from './Icons/PlayIcon';
+export { SpeechIcon, type SpeechIconProps } from './Icons/SpeechIcon';
 
 // Navigation & Progress Components
 export * as Breadcrumb from './Breadcrumb';
