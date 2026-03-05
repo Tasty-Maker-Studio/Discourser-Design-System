@@ -1,0 +1,34 @@
+import { ark } from '@ark-ui/react/factory';
+import type { ComponentProps } from 'react';
+import { styled } from 'styled-system/jsx';
+
+const StyledSvg = styled(ark.svg);
+
+export type ExitStudioIconProps = ComponentProps<typeof StyledSvg>;
+
+export const ExitStudioIcon = (props: ExitStudioIconProps) => (
+  <StyledSvg
+    viewBox="0 0 64 64"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    {...props}
+  >
+    <circle
+      cx="31.7438"
+      cy="31.7438"
+      r="30.7438"
+      stroke="currentColor"
+      strokeWidth="2"
+      fill="none"
+    />
+    <path
+      d="M31.7438 37.3687L37.3688 31.7437M37.3688 31.7437L31.7438 26.1187M37.3688 31.7437H16.7438M16.7438 22.8337V22.744C16.7438 20.6438 16.7438 19.5929 17.1525 18.7908C17.512 18.0852 18.0853 17.5119 18.7909 17.1524C19.5931 16.7437 20.6439 16.7437 22.7441 16.7437H40.7441C42.8443 16.7437 43.893 16.7437 44.6952 17.1524C45.4007 17.5119 45.976 18.0852 46.3354 18.7908C46.7438 19.5922 46.7438 20.6418 46.7438 22.7379V40.7504C46.7438 42.8465 46.7438 43.8946 46.3354 44.696C45.976 45.4015 45.4007 45.9758 44.6952 46.3353C43.8938 46.7437 42.8457 46.7437 40.7496 46.7437H22.738C20.6419 46.7437 19.5923 46.7437 18.7909 46.3353C18.0853 45.9758 17.512 45.401 17.1525 44.6954C16.7438 43.8933 16.7438 42.8438 16.7438 40.7437V40.6499"
+      stroke="currentColor"
+      strokeWidth="3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </StyledSvg>
+);

@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
   "packageName": "@discourser/design-system",
-  "generatedAt": "2026-02-27T23:51:34.249Z",
-  "gitHash": "1b3401bf",
+  "generatedAt": "2026-03-05T20:01:59.436Z",
+  "gitHash": "6c917aa8",
   "figmaFiles": {
     "GaHmFfmvO4loUzuZS4TgEz": {
       "fileKey": "GaHmFfmvO4loUzuZS4TgEz"
@@ -177,6 +177,78 @@
       "example": "<Header size={size}>Heading Text</Header>",
       "sourcePath": "src/components/Header.tsx"
     },
+    "AudienceIcon": {
+      "name": "AudienceIcon",
+      "type": "simple",
+      "figma": {
+        "fileKey": "GaHmFfmvO4loUzuZS4TgEz",
+        "nodeId": "38:9825",
+        "url": "https://www.figma.com/design/GaHmFfmvO4loUzuZS4TgEz/Discourser.AI--V1?node-id=38-9825"
+      },
+      "imports": {
+        "primary": "import { AudienceIcon } from '@discourser/design-system/AudienceIcon'",
+        "namedExports": [
+          "AudienceIcon"
+        ]
+      },
+      "props": [],
+      "example": "<AudienceIcon />",
+      "sourcePath": "src/components/Icons/AudienceIcon.tsx"
+    },
+    "AudioSpeakerIcon": {
+      "name": "AudioSpeakerIcon",
+      "type": "simple",
+      "figma": {
+        "fileKey": "GaHmFfmvO4loUzuZS4TgEz",
+        "nodeId": "38:9811",
+        "url": "https://www.figma.com/design/GaHmFfmvO4loUzuZS4TgEz/Discourser.AI--V1?node-id=38-9811"
+      },
+      "imports": {
+        "primary": "import { AudioSpeakerIcon } from '@discourser/design-system/AudioSpeakerIcon'",
+        "namedExports": [
+          "AudioSpeakerIcon"
+        ]
+      },
+      "props": [],
+      "example": "<AudioSpeakerIcon />",
+      "sourcePath": "src/components/Icons/AudioSpeakerIcon.tsx"
+    },
+    "BookmarkPlusIcon": {
+      "name": "BookmarkPlusIcon",
+      "type": "simple",
+      "figma": {
+        "fileKey": "GaHmFfmvO4loUzuZS4TgEz",
+        "nodeId": "622:3770",
+        "url": "https://www.figma.com/design/GaHmFfmvO4loUzuZS4TgEz/Discourser.AI--V1?node-id=622-3770"
+      },
+      "imports": {
+        "primary": "import { BookmarkPlusIcon } from '@discourser/design-system/BookmarkPlusIcon'",
+        "namedExports": [
+          "BookmarkPlusIcon"
+        ]
+      },
+      "props": [],
+      "example": "<BookmarkPlusIcon />",
+      "sourcePath": "src/components/Icons/BookmarkPlusIcon.tsx"
+    },
+    "ClipBoardIcon": {
+      "name": "ClipBoardIcon",
+      "type": "simple",
+      "figma": {
+        "fileKey": "GaHmFfmvO4loUzuZS4TgEz",
+        "nodeId": "38:9804",
+        "url": "https://www.figma.com/design/GaHmFfmvO4loUzuZS4TgEz/Discourser.AI--V1?node-id=38-9804"
+      },
+      "imports": {
+        "primary": "import { ClipBoardIcon } from '@discourser/design-system/ClipBoardIcon'",
+        "namedExports": [
+          "ClipBoardIcon"
+        ]
+      },
+      "props": [],
+      "example": "<ClipBoardIcon />",
+      "sourcePath": "src/components/Icons/ClipBoardIcon.tsx"
+    },
     "DiscourserLogo": {
       "name": "DiscourserLogo",
       "type": "simple",
@@ -194,6 +266,240 @@
       "props": [],
       "example": "<DiscourserLogo />",
       "sourcePath": "src/components/Icons/DiscourserLogo.tsx"
+    },
+    "ExitStudioIcon": {
+      "name": "ExitStudioIcon",
+      "type": "simple",
+      "figma": {
+        "fileKey": "GaHmFfmvO4loUzuZS4TgEz",
+        "nodeId": "38:9853",
+        "url": "https://www.figma.com/design/GaHmFfmvO4loUzuZS4TgEz/Discourser.AI--V1?node-id=38-9853"
+      },
+      "imports": {
+        "primary": "import { ExitStudioIcon } from '@discourser/design-system/ExitStudioIcon'",
+        "namedExports": [
+          "ExitStudioIcon"
+        ]
+      },
+      "props": [],
+      "example": "<ExitStudioIcon />",
+      "sourcePath": "src/components/Icons/ExitStudioIcon.tsx"
+    },
+    "MicrophoneIcon": {
+      "name": "MicrophoneIcon",
+      "type": "simple",
+      "figma": {
+        "fileKey": "GaHmFfmvO4loUzuZS4TgEz",
+        "nodeId": "38:9820",
+        "url": "https://www.figma.com/design/GaHmFfmvO4loUzuZS4TgEz/Discourser.AI--V1?node-id=38-9820"
+      },
+      "imports": {
+        "primary": "import { MicrophoneIcon } from '@discourser/design-system/MicrophoneIcon'",
+        "namedExports": [
+          "MicrophoneIcon"
+        ]
+      },
+      "props": [],
+      "example": "<MicrophoneIcon />",
+      "sourcePath": "src/components/Icons/MicrophoneIcon.tsx"
+    },
+    "NotebookPenIcon": {
+      "name": "NotebookPenIcon",
+      "type": "simple",
+      "figma": {
+        "fileKey": "GaHmFfmvO4loUzuZS4TgEz",
+        "nodeId": "622:3771",
+        "url": "https://www.figma.com/design/GaHmFfmvO4loUzuZS4TgEz/Discourser.AI--V1?node-id=622-3771"
+      },
+      "imports": {
+        "primary": "import { NotebookPenIcon } from '@discourser/design-system/NotebookPenIcon'",
+        "namedExports": [
+          "NotebookPenIcon"
+        ]
+      },
+      "props": [],
+      "example": "<NotebookPenIcon />",
+      "sourcePath": "src/components/Icons/NotebookPenIcon.tsx"
+    },
+    "PausePlayIcon": {
+      "name": "PausePlayIcon",
+      "type": "simple",
+      "figma": {
+        "fileKey": "GaHmFfmvO4loUzuZS4TgEz",
+        "nodeId": "38:9849",
+        "url": "https://www.figma.com/design/GaHmFfmvO4loUzuZS4TgEz/Discourser.AI--V1?node-id=38-9849"
+      },
+      "imports": {
+        "primary": "import { PausePlayIcon } from '@discourser/design-system/PausePlayIcon'",
+        "namedExports": [
+          "PausePlayIcon"
+        ]
+      },
+      "props": [],
+      "example": "<PausePlayIcon />",
+      "sourcePath": "src/components/Icons/PausePlayIcon.tsx"
+    },
+    "PlayIcon": {
+      "name": "PlayIcon",
+      "type": "simple",
+      "figma": {
+        "fileKey": "GaHmFfmvO4loUzuZS4TgEz",
+        "nodeId": "622:3766",
+        "url": "https://www.figma.com/design/GaHmFfmvO4loUzuZS4TgEz/Discourser.AI--V1?node-id=622-3766"
+      },
+      "imports": {
+        "primary": "import { PlayIcon } from '@discourser/design-system/PlayIcon'",
+        "namedExports": [
+          "PlayIcon"
+        ]
+      },
+      "props": [],
+      "example": "<PlayIcon />",
+      "sourcePath": "src/components/Icons/PlayIcon.tsx"
+    },
+    "RecordIcon": {
+      "name": "RecordIcon",
+      "type": "simple",
+      "figma": {
+        "fileKey": "GaHmFfmvO4loUzuZS4TgEz",
+        "nodeId": "38:9843",
+        "url": "https://www.figma.com/design/GaHmFfmvO4loUzuZS4TgEz/Discourser.AI--V1?node-id=38-9843"
+      },
+      "imports": {
+        "primary": "import { RecordIcon } from '@discourser/design-system/RecordIcon'",
+        "namedExports": [
+          "RecordIcon"
+        ]
+      },
+      "props": [],
+      "example": "<RecordIcon />",
+      "sourcePath": "src/components/Icons/RecordIcon.tsx"
+    },
+    "RepeatQuestionIcon": {
+      "name": "RepeatQuestionIcon",
+      "type": "simple",
+      "figma": {
+        "fileKey": "GaHmFfmvO4loUzuZS4TgEz",
+        "nodeId": "622:3767",
+        "url": "https://www.figma.com/design/GaHmFfmvO4loUzuZS4TgEz/Discourser.AI--V1?node-id=622-3767"
+      },
+      "imports": {
+        "primary": "import { RepeatQuestionIcon } from '@discourser/design-system/RepeatQuestionIcon'",
+        "namedExports": [
+          "RepeatQuestionIcon"
+        ]
+      },
+      "props": [],
+      "example": "<RepeatQuestionIcon />",
+      "sourcePath": "src/components/Icons/RepeatQuestionIcon.tsx"
+    },
+    "ScrollTextIcon": {
+      "name": "ScrollTextIcon",
+      "type": "simple",
+      "figma": {
+        "fileKey": "GaHmFfmvO4loUzuZS4TgEz",
+        "nodeId": "622:3773",
+        "url": "https://www.figma.com/design/GaHmFfmvO4loUzuZS4TgEz/Discourser.AI--V1?node-id=622-3773"
+      },
+      "imports": {
+        "primary": "import { ScrollTextIcon } from '@discourser/design-system/ScrollTextIcon'",
+        "namedExports": [
+          "ScrollTextIcon"
+        ]
+      },
+      "props": [],
+      "example": "<ScrollTextIcon />",
+      "sourcePath": "src/components/Icons/ScrollTextIcon.tsx"
+    },
+    "SparklesIcon": {
+      "name": "SparklesIcon",
+      "type": "simple",
+      "figma": {
+        "fileKey": "GaHmFfmvO4loUzuZS4TgEz",
+        "nodeId": "622:3772",
+        "url": "https://www.figma.com/design/GaHmFfmvO4loUzuZS4TgEz/Discourser.AI--V1?node-id=622-3772"
+      },
+      "imports": {
+        "primary": "import { SparklesIcon } from '@discourser/design-system/SparklesIcon'",
+        "namedExports": [
+          "SparklesIcon"
+        ]
+      },
+      "props": [],
+      "example": "<SparklesIcon />",
+      "sourcePath": "src/components/Icons/SparklesIcon.tsx"
+    },
+    "SpeechIcon": {
+      "name": "SpeechIcon",
+      "type": "simple",
+      "figma": {
+        "fileKey": "GaHmFfmvO4loUzuZS4TgEz",
+        "nodeId": "622:3768",
+        "url": "https://www.figma.com/design/GaHmFfmvO4loUzuZS4TgEz/Discourser.AI--V1?node-id=622-3768"
+      },
+      "imports": {
+        "primary": "import { SpeechIcon } from '@discourser/design-system/SpeechIcon'",
+        "namedExports": [
+          "SpeechIcon"
+        ]
+      },
+      "props": [],
+      "example": "<SpeechIcon />",
+      "sourcePath": "src/components/Icons/SpeechIcon.tsx"
+    },
+    "StopPlayIcon": {
+      "name": "StopPlayIcon",
+      "type": "simple",
+      "figma": {
+        "fileKey": "GaHmFfmvO4loUzuZS4TgEz",
+        "nodeId": "38:9857",
+        "url": "https://www.figma.com/design/GaHmFfmvO4loUzuZS4TgEz/Discourser.AI--V1?node-id=38-9857"
+      },
+      "imports": {
+        "primary": "import { StopPlayIcon } from '@discourser/design-system/StopPlayIcon'",
+        "namedExports": [
+          "StopPlayIcon"
+        ]
+      },
+      "props": [],
+      "example": "<StopPlayIcon />",
+      "sourcePath": "src/components/Icons/StopPlayIcon.tsx"
+    },
+    "TimerIcon": {
+      "name": "TimerIcon",
+      "type": "simple",
+      "figma": {
+        "fileKey": "GaHmFfmvO4loUzuZS4TgEz",
+        "nodeId": "38:9817",
+        "url": "https://www.figma.com/design/GaHmFfmvO4loUzuZS4TgEz/Discourser.AI--V1?node-id=38-9817"
+      },
+      "imports": {
+        "primary": "import { TimerIcon } from '@discourser/design-system/TimerIcon'",
+        "namedExports": [
+          "TimerIcon"
+        ]
+      },
+      "props": [],
+      "example": "<TimerIcon />",
+      "sourcePath": "src/components/Icons/TimerIcon.tsx"
+    },
+    "UserProfileIcon": {
+      "name": "UserProfileIcon",
+      "type": "simple",
+      "figma": {
+        "fileKey": "GaHmFfmvO4loUzuZS4TgEz",
+        "nodeId": "622:3774",
+        "url": "https://www.figma.com/design/GaHmFfmvO4loUzuZS4TgEz/Discourser.AI--V1?node-id=622-3774"
+      },
+      "imports": {
+        "primary": "import { UserProfileIcon } from '@discourser/design-system/UserProfileIcon'",
+        "namedExports": [
+          "UserProfileIcon"
+        ]
+      },
+      "props": [],
+      "example": "<UserProfileIcon />",
+      "sourcePath": "src/components/Icons/UserProfileIcon.tsx"
     },
     "NavigationMenu": {
       "name": "NavigationMenu",

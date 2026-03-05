@@ -1,0 +1,61 @@
+import { ark } from '@ark-ui/react/factory';
+import type { ComponentProps } from 'react';
+import { styled } from 'styled-system/jsx';
+
+const StyledSvg = styled(ark.svg);
+
+export type ClipBoardIconProps = ComponentProps<typeof StyledSvg>;
+
+export const ClipBoardIcon = (props: ClipBoardIconProps) => (
+  <StyledSvg
+    viewBox="0 0 40 39"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    {...props}
+  >
+    <path
+      d="M24.9999 3.25H14.9999C14.0794 3.25 13.3333 3.97754 13.3333 4.875V8.125C13.3333 9.02246 14.0794 9.75 14.9999 9.75H24.9999C25.9204 9.75 26.6666 9.02246 26.6666 8.125V4.875C26.6666 3.97754 25.9204 3.25 24.9999 3.25Z"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M26.6667 6.5H30.0001C30.8841 6.5 31.732 6.84241 32.3571 7.4519C32.9822 8.0614 33.3334 8.88805 33.3334 9.75V32.5C33.3334 33.362 32.9822 34.1886 32.3571 34.7981C31.732 35.4076 30.8841 35.75 30.0001 35.75H10.0001C9.11603 35.75 8.26818 35.4076 7.64306 34.7981C7.01794 34.1886 6.66675 33.362 6.66675 32.5V9.75C6.66675 8.88805 7.01794 8.0614 7.64306 7.4519C8.26818 6.84241 9.11603 6.5 10.0001 6.5H13.3334"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M20 17.875H26.6667"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M20 26H26.6667"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M13.3333 17.875H13.3499"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M13.3333 26H13.3499"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </StyledSvg>
+);

@@ -8,6 +8,23 @@ import { HelpIcon } from '../src/components/Icons/HelpIcon';
 import { AccountIcon } from '../src/components/Icons/AccountIcon';
 import { RightArrowIcon } from '../src/components/Icons/RightArrowIcon';
 import { ChevronUpIcon } from '../src/components/Icons/ChevronUpIcon';
+import { TimerIcon } from '../src/components/Icons/TimerIcon';
+import { ClipBoardIcon } from '../src/components/Icons/ClipBoardIcon';
+import { MicrophoneIcon } from '../src/components/Icons/MicrophoneIcon';
+import { AudienceIcon } from '../src/components/Icons/AudienceIcon';
+import { RecordIcon } from '../src/components/Icons/RecordIcon';
+import { NotebookPenIcon } from '../src/components/Icons/NotebookPenIcon';
+import { SparklesIcon } from '../src/components/Icons/SparklesIcon';
+import { ScrollTextIcon } from '../src/components/Icons/ScrollTextIcon';
+import { RepeatQuestionIcon } from '../src/components/Icons/RepeatQuestionIcon';
+import { ExitStudioIcon } from '../src/components/Icons/ExitStudioIcon';
+import { PausePlayIcon } from '../src/components/Icons/PausePlayIcon';
+import { StopPlayIcon } from '../src/components/Icons/StopPlayIcon';
+import { BookmarkPlusIcon } from '../src/components/Icons/BookmarkPlusIcon';
+import { AudioSpeakerIcon } from '../src/components/Icons/AudioSpeakerIcon';
+import { UserProfileIcon } from '../src/components/Icons/UserProfileIcon';
+import { PlayIcon } from '../src/components/Icons/PlayIcon';
+import { SpeechIcon } from '../src/components/Icons/SpeechIcon';
 import { HStack, VStack } from '../styled-system/jsx';
 import { css } from '../styled-system/css';
 
@@ -135,6 +152,74 @@ export const Gallery: Story = {
         <VStack gap="2" alignItems="center">
           <ChevronUpIcon w="6" h="6" color="fg.default" />
           <span className={label}>ChevronUpIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <TimerIcon w="6" h="6" color="fg.default" />
+          <span className={label}>TimerIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <ClipBoardIcon w="6" h="6" color="fg.default" />
+          <span className={label}>ClipBoardIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <MicrophoneIcon w="6" h="6" color="fg.default" />
+          <span className={label}>MicrophoneIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <AudienceIcon w="6" h="6" color="fg.default" />
+          <span className={label}>AudienceIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <RecordIcon w="6" h="6" color="fg.default" />
+          <span className={label}>RecordIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <NotebookPenIcon w="6" h="6" color="fg.default" />
+          <span className={label}>NotebookPenIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <SparklesIcon w="6" h="6" color="fg.default" />
+          <span className={label}>SparklesIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <ScrollTextIcon w="6" h="6" color="fg.default" />
+          <span className={label}>ScrollTextIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <RepeatQuestionIcon w="6" h="6" color="fg.default" />
+          <span className={label}>RepeatQuestionIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <ExitStudioIcon w="6" h="6" color="fg.default" />
+          <span className={label}>ExitStudioIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <PausePlayIcon w="6" h="6" color="fg.default" />
+          <span className={label}>PausePlayIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <StopPlayIcon w="6" h="6" color="fg.default" />
+          <span className={label}>StopPlayIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <BookmarkPlusIcon w="6" h="6" color="fg.default" />
+          <span className={label}>BookmarkPlusIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <AudioSpeakerIcon w="6" h="6" color="fg.default" />
+          <span className={label}>AudioSpeakerIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <UserProfileIcon w="6" h="6" color="fg.default" />
+          <span className={label}>UserProfileIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <PlayIcon w="6" h="6" color="fg.default" />
+          <span className={label}>PlayIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <SpeechIcon w="6" h="6" color="fg.default" />
+          <span className={label}>SpeechIcon</span>
         </VStack>
       </HStack>
     </VStack>

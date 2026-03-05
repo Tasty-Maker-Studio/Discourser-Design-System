@@ -1,0 +1,26 @@
+import { ark } from '@ark-ui/react/factory';
+import type { ComponentProps } from 'react';
+import { styled } from 'styled-system/jsx';
+
+const StyledSvg = styled(ark.svg);
+
+export type SpeechIconProps = ComponentProps<typeof StyledSvg>;
+
+export const SpeechIcon = (props: SpeechIconProps) => (
+  <StyledSvg
+    viewBox="0 0 60 60"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    {...props}
+  >
+    <path
+      d="M22 50.0002V39.7502L26.75 40.2502C28.1328 40.1734 29.4415 39.6 30.4354 38.6355C31.4293 37.671 32.0417 36.3801 32.16 35.0002V20.7502C32.1766 17.1485 30.7617 13.6878 28.2267 11.1294C25.6917 8.57091 22.2441 7.12426 18.6425 7.10769C15.0409 7.09111 11.5801 8.50596 9.02168 11.041C6.46322 13.576 5.01658 17.0235 5 20.6252C5 27.6252 6.64 28.2602 7.5 32.0002C8.08121 34.2589 8.10609 36.6248 7.5725 38.8952L5 50.0002M49.5001 44.5001C53.0147 40.9851 54.9897 36.2185 54.9911 31.2479C54.9925 26.2773 53.0202 21.5095 49.5076 17.9926M42.4999 37.4998C43.3179 36.682 43.9656 35.7102 44.4056 34.6405C44.8455 33.5708 45.0691 32.4246 45.0633 31.268C45.0575 30.1114 44.8224 28.9674 44.3717 27.9022C43.921 26.837 43.2636 25.8718 42.4374 25.0623"
+      stroke="currentColor"
+      strokeWidth="2.4"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </StyledSvg>
+);

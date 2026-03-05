@@ -104,3 +104,4 @@ gemini/
 !.env.example
 !.env.production.template
 !.claude/settings.local.json.example
+/docs/context-share/
