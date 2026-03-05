@@ -1,0 +1,40 @@
+import { ark } from '@ark-ui/react/factory';
+import type { ComponentProps } from 'react';
+import { styled } from 'styled-system/jsx';
+
+const StyledSvg = styled(ark.svg);
+
+export type MicrophoneIconProps = ComponentProps<typeof StyledSvg>;
+
+export const MicrophoneIcon = (props: MicrophoneIconProps) => (
+  <StyledSvg
+    viewBox="0 0 40 45"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    {...props}
+  >
+    <path
+      d="M20 35.6665V40.6665"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M31.6666 20.6665V23.9998C31.6666 27.094 30.4374 30.0615 28.2495 32.2494C26.0616 34.4373 23.0941 35.6665 19.9999 35.6665C16.9057 35.6665 13.9383 34.4373 11.7503 32.2494C9.56242 30.0615 8.33325 27.094 8.33325 23.9998V20.6665"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M25 12.3335C25 9.57207 22.7614 7.3335 20 7.3335C17.2386 7.3335 15 9.57207 15 12.3335V24.0002C15 26.7616 17.2386 29.0002 20 29.0002C22.7614 29.0002 25 26.7616 25 24.0002V12.3335Z"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </StyledSvg>
+);

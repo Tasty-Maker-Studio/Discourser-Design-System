@@ -3,7 +3,12 @@
     "parser": "react",
     "include": ["src/components/**/*.figma.tsx"],
     "importPaths": {
-      "src/components/*": "@discourser/design-system"
+      "src/components/*.tsx": "@discourser/design-system",
+      "src/components/Icons/*.tsx": "@discourser/design-system",
+      "src/components/ScenarioQueue/*.tsx": "@discourser/design-system",
+      "src/components/ScenarioSettings/*.tsx": "@discourser/design-system",
+      "src/components/NavigationMenu/*.tsx": "@discourser/design-system",
+      "src/components/ContentCard/*.tsx": "@discourser/design-system"
     },
     "paths": {
       "@/*": ["src/*"],
