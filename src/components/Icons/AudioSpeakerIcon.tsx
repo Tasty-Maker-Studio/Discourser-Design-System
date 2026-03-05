@@ -1,0 +1,26 @@
+import { ark } from '@ark-ui/react/factory';
+import type { ComponentProps } from 'react';
+import { styled } from 'styled-system/jsx';
+
+const StyledSvg = styled(ark.svg);
+
+export type AudioSpeakerIconProps = ComponentProps<typeof StyledSvg>;
+
+export const AudioSpeakerIcon = (props: AudioSpeakerIconProps) => (
+  <StyledSvg
+    viewBox="0 0 40 28"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    {...props}
+  >
+    <path
+      d="M26.3044 7.7512C28.0155 9.38842 28.9767 11.6087 28.9767 13.9237C28.9767 16.2387 28.0155 18.4589 26.3044 20.0962M32.7484 1.5874C36.1706 4.86183 38.0931 9.30232 38.0931 13.9324C38.0931 18.5624 36.1706 23.0029 32.7484 26.2773M18.0167 1.70975L8.88929 8.69417H1.5874V19.1708H8.88929L18.0167 26.1552V1.70975Z"
+      stroke="currentColor"
+      strokeWidth="3.17474"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </StyledSvg>
+);
