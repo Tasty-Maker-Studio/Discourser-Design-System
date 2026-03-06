@@ -31,11 +31,16 @@ for file in "${CRITICAL_FILES[@]}"; do
     echo ""
     echo "If you're working on components/stories, you should NOT be modifying this file."
     echo ""
-    read -p "Are you sure you want to continue? (yes/no): " -r
-    echo
-    if [[ ! $REPLY =~ ^[Yy][Ee][Ss]$ ]]; then
-      echo "Commit aborted."
-      exit 1
+    # Only prompt if stdin is an interactive terminal
+    if [ -t 0 ]; then
+      read -p "Are you sure you want to continue? (yes/no): " -r
+      echo
+      if [[ ! $REPLY =~ ^[Yy][Ee][Ss]$ ]]; then
+        echo "Commit aborted."
+        exit 1
+      fi
+    else
+      echo "Non-interactive environment detected — skipping prompt, proceeding with commit."
     fi
   fi
 done
