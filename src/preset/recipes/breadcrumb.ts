@@ -102,6 +102,28 @@ export const breadcrumb = defineSlotRecipe({
     },
   },
 
+  compoundVariants: [
+    {
+      variant: 'discourser',
+      css: {
+        link: {
+          '&[data-disabled]': {
+            color: 'fg.subtle',
+            opacity: 0.45,
+            pointerEvents: 'none',
+            cursor: 'default',
+            _hover: { color: 'fg.subtle' },
+          },
+        },
+        item: {
+          '&[data-disabled]': {
+            opacity: 0.45,
+          },
+        },
+      },
+    },
+  ],
+
   defaultVariants: {
     variant: 'plain',
     size: 'md',

@@ -45,8 +45,13 @@ else
   echo ""
 fi
 
-# Step 2: Regenerate Panda CSS types
-run_step "Regenerating Panda types" "pnpm build:panda" || true
+# Step 2: Regenerate Panda CSS types (only if preset changed)
+if git diff --name-only HEAD 2>/dev/null | grep -q "src/preset/"; then
+  run_step "Regenerating Panda types" "pnpm build:panda" || true
+else
+  echo -e "${GREEN}✓ No preset changes — skipping Panda regen${NC}"
+  echo ""
+fi
 
 # Step 3: Type checking
 run_step "Type checking" "pnpm typecheck" || true
@@ -57,8 +62,10 @@ run_step "Linting" "pnpm lint" || true
 # Step 5: Tests
 run_step "Running tests" "pnpm test run" || true
 
-# Step 6: Build
-run_step "Building" "pnpm build" || true
+# NOTE: Build is intentionally NOT run here.
+# Full build (pnpm build) runs in GitHub Actions CI on every PR.
+# Typecheck catches all build-breaking issues locally.
+# Running build locally on every push adds ~2 minutes with no quality benefit.
 
 # Summary
 echo "=============================================="

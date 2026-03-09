@@ -5,11 +5,106 @@ if [ -n "$CI" ]; then
   exit 0
 fi
 
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+# ============================================================
+# GUARD 1: Block direct pushes to protected branches
+# All work must go through feature branches → PR → dev → main
+# ============================================================
+
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+PROTECTED_BRANCHES=("main" "dev")
+
+for branch in "${PROTECTED_BRANCHES[@]}"; do
+  if [ "$CURRENT_BRANCH" = "$branch" ]; then
+    echo ""
+    echo -e "${RED}╔══════════════════════════════════════════════════════╗${NC}"
+    echo -e "${RED}║         DIRECT PUSH TO '$branch' IS NOT ALLOWED         ║${NC}"
+    echo -e "${RED}╚══════════════════════════════════════════════════════╝${NC}"
+    echo ""
+    echo -e "${YELLOW}The correct workflow is:${NC}"
+    echo ""
+    echo "  1. Create a feature branch from dev:"
+    echo "     git checkout dev && git pull origin dev"
+    echo "     git checkout -b feature/your-feature-name"
+    echo ""
+    echo "  2. Make your changes and commit them"
+    echo ""
+    echo "  3. Add a changeset if src/ files changed:"
+    echo "     pnpm changeset"
+    echo ""
+    echo "  4. Push your feature branch:"
+    echo "     git push -u origin feature/your-feature-name"
+    echo ""
+    echo "  5. Open a PR to dev on GitHub"
+    echo ""
+    echo -e "${RED}Push aborted.${NC}"
+    echo ""
+    exit 1
+  fi
+done
+
+# ============================================================
+# GUARD 2: Enforce changeset presence when src/ files changed
+# ============================================================
+
+# Get list of files changed vs dev (or HEAD if dev not available)
+if git rev-parse --verify origin/dev >/dev/null 2>&1; then
+  CHANGED_FILES=$(git diff --name-only origin/dev...HEAD 2>/dev/null)
+else
+  CHANGED_FILES=$(git diff --name-only HEAD~1...HEAD 2>/dev/null)
+fi
+
+SRC_CHANGED=$(echo "$CHANGED_FILES" | grep -E "^src/" | grep -v "^src/.*\.test\." | grep -v "^src/.*\.spec\." || true)
+CHANGESET_EXISTS=$(ls .changeset/*.md 2>/dev/null | grep -v README | head -1 || true)
+
+if [ -n "$SRC_CHANGED" ] && [ -z "$CHANGESET_EXISTS" ]; then
+  echo ""
+  echo -e "${RED}╔══════════════════════════════════════════════════════╗${NC}"
+  echo -e "${RED}║           MISSING CHANGESET                          ║${NC}"
+  echo -e "${RED}╚══════════════════════════════════════════════════════╝${NC}"
+  echo ""
+  echo -e "${YELLOW}Source files were changed but no changeset was found.${NC}"
+  echo ""
+  echo "Changed src/ files:"
+  echo "$SRC_CHANGED" | sed 's/^/  /'
+  echo ""
+  echo "Run the following to create a changeset, then re-push:"
+  echo ""
+  echo "  pnpm changeset"
+  echo ""
+  echo "Then select the bump type:"
+  echo "  patch — bug fixes, style tweaks (0.x.Y)"
+  echo "  minor — new components or props (0.X.0)"
+  echo "  major — breaking changes (X.0.0)"
+  echo ""
+  echo "If this change genuinely has no package impact (e.g. test-only"
+  echo "or docs-only changes), create an empty changeset instead:"
+  echo ""
+  echo "  pnpm changeset --empty"
+  echo ""
+  echo -e "${RED}Push aborted.${NC}"
+  echo ""
+  exit 1
+fi
+
 echo ""
-echo "🚀 Running pre-push verification..."
+echo -e "${GREEN}✓ Branch guard passed — not pushing to a protected branch${NC}"
+if [ -n "$CHANGESET_EXISTS" ]; then
+  echo -e "${GREEN}✓ Changeset found${NC}"
+elif [ -z "$SRC_CHANGED" ]; then
+  echo -e "${GREEN}✓ No src/ changes — changeset not required${NC}"
+fi
 echo ""
 
-# Run the comprehensive verify script
+# ============================================================
+# GUARD 3: Run verification suite
+# ============================================================
+
 pnpm verify
 
 exit $?

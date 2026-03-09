@@ -31,6 +31,7 @@ Layer 3: Component Recipes (derived)
 ## Key Patterns
 
 ### Components use recipes, not inline css()
+
 ```tsx
 // ✅ Correct
 import { button } from 'styled-system/recipes'
@@ -42,27 +43,59 @@ import { css } from 'styled-system/css'
 ```
 
 ### forwardRef pattern for all components
+
 ```tsx
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant = 'filled', size = 'md', ...props }, ref) => (
     <Ark.Button ref={ref} className={button({ variant, size })} {...props} />
-  )
-)
+  ),
+);
 ```
 
 ### Semantic tokens for theming
+
 Use semantic names (`primary`, `onPrimary`, `surface`) not raw values.
 Dark mode works automatically via `data-theme="dark"` attribute.
+
+## ⚠️ MANDATORY Git Workflow — Non-Negotiable
+
+**NEVER push directly to `dev` or `main`.** The pre-push hook will block you.
+
+The only permitted workflow is:
+
+```bash
+# 1. Always start from dev
+git checkout dev && git pull origin dev
+
+# 2. Create a correctly-named feature branch
+git checkout -b feature/your-feature-name   # or fix/, docs/, chore/
+
+# 3. Make changes, commit
+git add . && git commit -m "feat: description"
+
+# 4. REQUIRED if any src/ files changed — create a changeset
+pnpm changeset
+# Select: patch (bug fix/tweak) | minor (new feature/prop) | major (breaking)
+# If no package impact (docs/tests only): pnpm changeset --empty
+
+# 5. Push the feature branch (NOT dev, NOT main)
+git push -u origin feature/your-feature-name
+
+# 6. Open a PR to dev on GitHub — never directly to main
+```
+
+**Changeset rules:**
+
+- Any change to `src/` files requires a changeset
+- Test-only or docs-only changes use `pnpm changeset --empty`
+- The pre-push hook enforces this — you cannot push without one
 
 ## Before Starting Work
 
 1. **Read the relevant skill** in `.claude/skills/` for the task type
 2. **Check docs/design-system-setup-prompt.md** for full architecture details
 3. **Reference docs/material-theme.json** for M3 color values
-4. **Follow the branching strategy** - see [BRANCHING_STRATEGY.md](./BRANCHING_STRATEGY.md)
-   - Create feature branches from `dev` (not `main`)
-   - Open PRs to `dev` (not `main`)
-   - Run `pnpm check-branch` to verify your branch setup
+4. **Verify your branch** — run `git branch` and confirm you are NOT on `dev` or `main`
 
 ## Current State
 
@@ -79,16 +112,19 @@ Dark mode works automatically via `data-theme="dark"` attribute.
 Location: `/Users/willstreeter/WebstormProjects/vibe-coding/shifu-project/figma-token-sync/FIGMA_DESIGN_SYSTEM_SYNC_SPEC.md`
 
 ### Token Flow:
+
 ```
 Figma Variables → DTCG JSON → DesignLanguageContract → PandaCSS
 ```
 
 ### Key Files:
+
 - `src/contracts/design-language.contract.ts` — TypeScript interface for all tokens
 - `src/languages/material3.language.ts` — M3 implementation (generated from DTCG)
 - `src/preset/colors/m3-primary.ts` — Maps M3 tonal → Radix scale for Park UI
 
 ### Expected DTCG Input:
+
 ```
 tokens/
 ├── primitives/colors.json    ← Tonal palettes (78 colors)
@@ -100,6 +136,7 @@ tokens/
 ## Code Style
 
 Handled by tooling—don't manually enforce:
+
 - Biome/ESLint for formatting
 - TypeScript strict mode
 - Run `pnpm typecheck` before committing
