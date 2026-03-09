@@ -1,7 +1,8 @@
 'use client';
 import { ark } from '@ark-ui/react/factory';
-import type { ComponentProps } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
 import { createStyleContext } from 'styled-system/jsx';
+import { css } from 'styled-system/css';
 import { breadcrumb } from 'styled-system/recipes';
 
 const ChevronRightIcon = () => (
@@ -50,3 +51,78 @@ export const CurrentLink = withContext(ark.span, 'link', {
     'aria-current': 'page',
   },
 });
+
+// --- Two-row layout support ---
+
+export interface TwoRowRootProps {
+  children: ReactNode;
+  /** aria-label for the nav wrapper (default: 'breadcrumb') */
+  'aria-label'?: string;
+  className?: string;
+}
+
+/** Wrapper nav that stacks the ParentRow above the dynamic breadcrumb */
+export const TwoRowRoot = ({
+  children,
+  'aria-label': ariaLabel = 'breadcrumb',
+  className,
+}: TwoRowRootProps) => (
+  <nav aria-label={ariaLabel} className={className}>
+    {children}
+  </nav>
+);
+
+export interface ParentRowProps {
+  children: ReactNode;
+  /**
+   * Control visibility of the static parent row.
+   * Defaults to true. Pass false to hide entirely (renders null — no DOM node).
+   */
+  show?: boolean;
+}
+
+/** Static parent breadcrumb row rendered above the dynamic row. Hidden when show={false}. */
+export const ParentRow = ({ children, show = true }: ParentRowProps) => {
+  if (!show) return null;
+  return (
+    <div
+      aria-hidden="true"
+      className={css({
+        display: 'flex',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        gap: '1',
+        mb: '1',
+      })}
+    >
+      {children}
+    </div>
+  );
+};
+
+/** A single item in the static parent row */
+export const ParentItem = ({ children }: { children: ReactNode }) => (
+  <span
+    className={css({
+      color: 'fg.subtle',
+      textStyle: 'sm',
+      fontWeight: 'normal',
+    })}
+  >
+    {children}
+  </span>
+);
+
+/** Slash separator for the static parent row */
+export const ParentSeparator = () => (
+  <span
+    aria-hidden="true"
+    className={css({
+      color: 'fg.subtle',
+      textStyle: 'sm',
+      mx: '0.5',
+    })}
+  >
+    /
+  </span>
+);
