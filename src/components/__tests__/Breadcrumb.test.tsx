@@ -95,6 +95,88 @@ describe('Breadcrumb', () => {
   });
 });
 
+describe('Breadcrumb.Link disabled state', () => {
+  it('renders as span when disabled', () => {
+    const { container } = render(
+      <Breadcrumb.Root variant="discourser">
+        <Breadcrumb.List>
+          <Breadcrumb.Item>
+            <Breadcrumb.Link disabled>Lobby</Breadcrumb.Link>
+          </Breadcrumb.Item>
+        </Breadcrumb.List>
+      </Breadcrumb.Root>,
+    );
+    const span = container.querySelector('span[data-disabled]');
+    expect(span).toBeDefined();
+  });
+
+  it('does not render an anchor when disabled', () => {
+    const { container } = render(
+      <Breadcrumb.Root variant="discourser">
+        <Breadcrumb.List>
+          <Breadcrumb.Item>
+            <Breadcrumb.Link disabled>Lobby</Breadcrumb.Link>
+          </Breadcrumb.Item>
+        </Breadcrumb.List>
+      </Breadcrumb.Root>,
+    );
+    expect(container.querySelector('a')).toBeNull();
+  });
+
+  it('renders as anchor when not disabled', () => {
+    const { container } = render(
+      <Breadcrumb.Root variant="discourser">
+        <Breadcrumb.List>
+          <Breadcrumb.Item>
+            <Breadcrumb.Link href="/scenarios">Scenarios</Breadcrumb.Link>
+          </Breadcrumb.Item>
+        </Breadcrumb.List>
+      </Breadcrumb.Root>,
+    );
+    expect(container.querySelector('a')).toBeDefined();
+  });
+
+  it('disabled link has data-disabled attribute', () => {
+    const { container } = render(
+      <Breadcrumb.Root variant="discourser">
+        <Breadcrumb.List>
+          <Breadcrumb.Item>
+            <Breadcrumb.Link disabled>Lobby</Breadcrumb.Link>
+          </Breadcrumb.Item>
+        </Breadcrumb.List>
+      </Breadcrumb.Root>,
+    );
+    expect(container.querySelector('[data-disabled]')).toBeDefined();
+  });
+});
+
+describe('ParentItem flexibility', () => {
+  it('renders as span by default (no href)', () => {
+    const { container } = render(
+      <Breadcrumb.TwoRowRoot>
+        <Breadcrumb.ParentRow show={true}>
+          <Breadcrumb.ParentItem>Scenarios</Breadcrumb.ParentItem>
+        </Breadcrumb.ParentRow>
+      </Breadcrumb.TwoRowRoot>,
+    );
+    expect(container.querySelector('span')).toBeDefined();
+    expect(container.querySelector('a')).toBeNull();
+  });
+
+  it('renders as anchor when href is provided', () => {
+    const { container } = render(
+      <Breadcrumb.TwoRowRoot>
+        <Breadcrumb.ParentRow show={true}>
+          <Breadcrumb.ParentItem href="/scenarios">
+            Scenarios
+          </Breadcrumb.ParentItem>
+        </Breadcrumb.ParentRow>
+      </Breadcrumb.TwoRowRoot>,
+    );
+    expect(container.querySelector('a[href="/scenarios"]')).toBeDefined();
+  });
+});
+
 describe('TwoRowRoot + ParentRow', () => {
   it('renders ParentRow children when show=true', () => {
     render(
