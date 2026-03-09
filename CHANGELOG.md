@@ -1,5 +1,21 @@
 # @discourser/design-system
 
+## 0.20.0
+
+### Minor Changes
+
+- [#121](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/121) [`58b39c2`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/58b39c22625f26855562e8e200f5a91f6d1a5a37) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Add 17 icon components with Figma Code Connect mappings
+
+  New icon components: AudienceIcon, AudioSpeakerIcon, BookmarkPlusIcon, ClipBoardIcon, ExitStudioIcon, MicrophoneIcon, NotebookPenIcon, PausePlayIcon, PlayIcon, RecordIcon, RepeatQuestionIcon, ScrollTextIcon, SparklesIcon, SpeechIcon, StopPlayIcon, TimerIcon, UserProfileIcon.
+
+  Each icon includes a `.figma.tsx` Code Connect file for Figma-to-code mapping. Updated the Icons barrel export, Storybook stories, and Figma config.
+
+### Patch Changes
+
+- [`a2db4d1`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/a2db4d13e4190a96038f1ecb9989e709e71b30ad) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Export 17 new icon components from the main package barrel
+
+  The new icon components (TimerIcon, ClipBoardIcon, MicrophoneIcon, AudienceIcon, RecordIcon, NotebookPenIcon, SparklesIcon, ScrollTextIcon, RepeatQuestionIcon, ExitStudioIcon, PausePlayIcon, StopPlayIcon, BookmarkPlusIcon, AudioSpeakerIcon, UserProfileIcon, PlayIcon, SpeechIcon) were added in v0.18.0 but were missing from `src/components/index.ts`, making them inaccessible via `import { ... } from '@discourser/design-system'`.
+
 ## 0.19.0
 
 ### Minor Changes
