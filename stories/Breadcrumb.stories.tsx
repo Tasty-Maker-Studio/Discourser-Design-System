@@ -417,3 +417,96 @@ export const TwoRowParentHidden: Story = {
     </Breadcrumb.TwoRowRoot>
   ),
 };
+
+export const TwoRowProgressiveDisclosure: Story = {
+  name: 'Two-Row Discourser (Progressive Disclosure — Step 1)',
+  render: () => (
+    <Breadcrumb.TwoRowRoot>
+      <Breadcrumb.ParentRow show={true}>
+        <Breadcrumb.ParentItem>Scenarios</Breadcrumb.ParentItem>
+        <Breadcrumb.ParentSeparator />
+        <Breadcrumb.ParentItem>Conversation Studio</Breadcrumb.ParentItem>
+        <Breadcrumb.ParentSeparator />
+      </Breadcrumb.ParentRow>
+      <Breadcrumb.Root variant="discourser">
+        <Breadcrumb.List>
+          <Breadcrumb.Item>
+            <Breadcrumb.CurrentLink>Level Setting</Breadcrumb.CurrentLink>
+          </Breadcrumb.Item>
+          <Breadcrumb.Separator />
+          <Breadcrumb.Item>
+            <Breadcrumb.Link disabled>Lobby</Breadcrumb.Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Separator />
+          <Breadcrumb.Item>
+            <Breadcrumb.Link disabled>In Conversation</Breadcrumb.Link>
+          </Breadcrumb.Item>
+        </Breadcrumb.List>
+      </Breadcrumb.Root>
+    </Breadcrumb.TwoRowRoot>
+  ),
+};
+
+export const TwoRowProgressiveDisclosureStep2: Story = {
+  name: 'Two-Row Discourser (Progressive Disclosure — Step 2)',
+  render: () => (
+    <Breadcrumb.TwoRowRoot>
+      <Breadcrumb.ParentRow show={true}>
+        <Breadcrumb.ParentItem>Scenarios</Breadcrumb.ParentItem>
+        <Breadcrumb.ParentSeparator />
+        <Breadcrumb.ParentItem>Conversation Studio</Breadcrumb.ParentItem>
+        <Breadcrumb.ParentSeparator />
+      </Breadcrumb.ParentRow>
+      <Breadcrumb.Root variant="discourser">
+        <Breadcrumb.List>
+          <Breadcrumb.Item>
+            <Breadcrumb.Link href="/scenarios/conversation-studio">
+              Level Setting
+            </Breadcrumb.Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Separator />
+          <Breadcrumb.Item>
+            <Breadcrumb.CurrentLink>Lobby</Breadcrumb.CurrentLink>
+          </Breadcrumb.Item>
+          <Breadcrumb.Separator />
+          <Breadcrumb.Item>
+            <Breadcrumb.Link disabled>In Conversation</Breadcrumb.Link>
+          </Breadcrumb.Item>
+        </Breadcrumb.List>
+      </Breadcrumb.Root>
+    </Breadcrumb.TwoRowRoot>
+  ),
+};
+
+export const TwoRowProgressiveDisclosureStep3: Story = {
+  name: 'Two-Row Discourser (Progressive Disclosure — Step 3)',
+  render: () => (
+    <Breadcrumb.TwoRowRoot>
+      <Breadcrumb.ParentRow show={true}>
+        <Breadcrumb.ParentItem>Scenarios</Breadcrumb.ParentItem>
+        <Breadcrumb.ParentSeparator />
+        <Breadcrumb.ParentItem>Conversation Studio</Breadcrumb.ParentItem>
+        <Breadcrumb.ParentSeparator />
+      </Breadcrumb.ParentRow>
+      <Breadcrumb.Root variant="discourser">
+        <Breadcrumb.List>
+          <Breadcrumb.Item>
+            <Breadcrumb.Link href="/scenarios/conversation-studio">
+              Level Setting
+            </Breadcrumb.Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Separator />
+          <Breadcrumb.Item>
+            <Breadcrumb.Link href="/scenarios/conversation-studio/lobby">
+              Lobby
+            </Breadcrumb.Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Separator />
+          <Breadcrumb.Item>
+            <Breadcrumb.CurrentLink>In Conversation</Breadcrumb.CurrentLink>
+          </Breadcrumb.Item>
+        </Breadcrumb.List>
+      </Breadcrumb.Root>
+    </Breadcrumb.TwoRowRoot>
+  ),
+};

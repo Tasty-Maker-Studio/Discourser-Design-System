@@ -29,7 +29,19 @@ export const Root = withProvider(ark.nav, 'root', {
 });
 export const List = withContext(ark.ol, 'list');
 export const Item = withContext(ark.li, 'item');
-export const Link = withContext(ark.a, 'link');
+export interface LinkProps extends ComponentProps<typeof ark.a> {
+  disabled?: boolean;
+}
+
+const LinkBase = withContext(ark.a, 'link');
+const LinkDisabled = withContext(ark.span, 'link');
+
+export const Link = ({ disabled, href, ...props }: LinkProps) => {
+  if (disabled) {
+    return <LinkDisabled data-disabled {...props} />;
+  }
+  return <LinkBase href={href} {...props} />;
+};
 export const Ellipsis = withContext(ark.li, 'ellipsis', {
   defaultProps: {
     role: 'presentation',
@@ -100,18 +112,32 @@ export const ParentRow = ({ children, show = true }: ParentRowProps) => {
   );
 };
 
-/** A single item in the static parent row */
-export const ParentItem = ({ children }: { children: ReactNode }) => (
-  <span
-    className={css({
-      color: 'fg.subtle',
-      textStyle: 'sm',
-      fontWeight: 'normal',
-    })}
-  >
-    {children}
-  </span>
-);
+/** A single item in the static parent row. Renders as an anchor when href is provided. */
+export const ParentItem = ({
+  children,
+  href,
+}: {
+  children: ReactNode;
+  href?: string;
+}) => {
+  const styles = css({
+    color: 'fg.subtle',
+    textStyle: 'sm',
+    fontWeight: 'normal',
+    textDecoration: 'none',
+    _hover: href
+      ? { color: 'fg.default', textDecoration: 'underline' }
+      : undefined,
+  });
+  if (href) {
+    return (
+      <a href={href} className={styles}>
+        {children}
+      </a>
+    );
+  }
+  return <span className={styles}>{children}</span>;
+};
 
 /** Slash separator for the static parent row */
 export const ParentSeparator = () => (
