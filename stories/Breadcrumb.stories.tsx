@@ -14,7 +14,16 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const HomeIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
     <polyline points="9 22 9 12 15 12 15 22"></polyline>
   </svg>
@@ -37,7 +46,10 @@ export const Default: Story = {
         </Breadcrumb.Item>
         <Breadcrumb.Separator />
         <Breadcrumb.Item>
-          <Breadcrumb.Link href="/docs/components/breadcrumb" aria-current="page">
+          <Breadcrumb.Link
+            href="/docs/components/breadcrumb"
+            aria-current="page"
+          >
             Breadcrumb
           </Breadcrumb.Link>
         </Breadcrumb.Item>
@@ -59,11 +71,16 @@ export const WithCustomSeparator: Story = {
         </Breadcrumb.Item>
         <Breadcrumb.Separator>/</Breadcrumb.Separator>
         <Breadcrumb.Item>
-          <Breadcrumb.Link href="/products/electronics">Electronics</Breadcrumb.Link>
+          <Breadcrumb.Link href="/products/electronics">
+            Electronics
+          </Breadcrumb.Link>
         </Breadcrumb.Item>
         <Breadcrumb.Separator>/</Breadcrumb.Separator>
         <Breadcrumb.Item>
-          <Breadcrumb.Link href="/products/electronics/laptop" aria-current="page">
+          <Breadcrumb.Link
+            href="/products/electronics/laptop"
+            aria-current="page"
+          >
             Laptop
           </Breadcrumb.Link>
         </Breadcrumb.Item>
@@ -237,7 +254,10 @@ export const WithIcons: Story = {
     <Breadcrumb.Root>
       <Breadcrumb.List>
         <Breadcrumb.Item>
-          <Breadcrumb.Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <Breadcrumb.Link
+            href="/"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+          >
             <HomeIcon />
             Home
           </Breadcrumb.Link>
@@ -294,19 +314,28 @@ export const LongPath: Story = {
         </Breadcrumb.Item>
         <Breadcrumb.Separator />
         <Breadcrumb.Item>
-          <Breadcrumb.Link href="/organization/departments">Departments</Breadcrumb.Link>
+          <Breadcrumb.Link href="/organization/departments">
+            Departments
+          </Breadcrumb.Link>
         </Breadcrumb.Item>
         <Breadcrumb.Separator />
         <Breadcrumb.Item>
-          <Breadcrumb.Link href="/organization/departments/engineering">Engineering</Breadcrumb.Link>
+          <Breadcrumb.Link href="/organization/departments/engineering">
+            Engineering
+          </Breadcrumb.Link>
         </Breadcrumb.Item>
         <Breadcrumb.Separator />
         <Breadcrumb.Item>
-          <Breadcrumb.Link href="/organization/departments/engineering/teams">Teams</Breadcrumb.Link>
+          <Breadcrumb.Link href="/organization/departments/engineering/teams">
+            Teams
+          </Breadcrumb.Link>
         </Breadcrumb.Item>
         <Breadcrumb.Separator />
         <Breadcrumb.Item>
-          <Breadcrumb.Link href="/organization/departments/engineering/teams/frontend" aria-current="page">
+          <Breadcrumb.Link
+            href="/organization/departments/engineering/teams/frontend"
+            aria-current="page"
+          >
             Frontend
           </Breadcrumb.Link>
         </Breadcrumb.Item>
@@ -332,5 +361,59 @@ export const DiscourserVariant: Story = {
         </Breadcrumb.Item>
       </Breadcrumb.List>
     </Breadcrumb.Root>
+  ),
+};
+
+export const TwoRowDiscourser: Story = {
+  name: 'Two-Row Discourser (Parent Row Visible)',
+  render: () => (
+    <Breadcrumb.TwoRowRoot>
+      <Breadcrumb.ParentRow show={true}>
+        <Breadcrumb.ParentItem>Scenarios</Breadcrumb.ParentItem>
+        <Breadcrumb.ParentSeparator />
+        <Breadcrumb.ParentItem>Conversation Studio</Breadcrumb.ParentItem>
+        <Breadcrumb.ParentSeparator />
+      </Breadcrumb.ParentRow>
+      <Breadcrumb.Root variant="discourser">
+        <Breadcrumb.List>
+          <Breadcrumb.Item>
+            <Breadcrumb.Link href="/scenarios/conversation-studio/settings">
+              Level Setting
+            </Breadcrumb.Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Separator />
+          <Breadcrumb.Item>
+            <Breadcrumb.Link href="#">Lobby</Breadcrumb.Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Separator />
+          <Breadcrumb.Item>
+            <Breadcrumb.CurrentLink>In Conversation</Breadcrumb.CurrentLink>
+          </Breadcrumb.Item>
+        </Breadcrumb.List>
+      </Breadcrumb.Root>
+    </Breadcrumb.TwoRowRoot>
+  ),
+};
+
+export const TwoRowParentHidden: Story = {
+  name: 'Two-Row Discourser (Parent Row Hidden)',
+  render: () => (
+    <Breadcrumb.TwoRowRoot>
+      <Breadcrumb.ParentRow show={false}>
+        <Breadcrumb.ParentItem>Scenarios</Breadcrumb.ParentItem>
+        <Breadcrumb.ParentSeparator />
+      </Breadcrumb.ParentRow>
+      <Breadcrumb.Root variant="discourser">
+        <Breadcrumb.List>
+          <Breadcrumb.Item>
+            <Breadcrumb.Link href="#">Level Setting</Breadcrumb.Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Separator />
+          <Breadcrumb.Item>
+            <Breadcrumb.CurrentLink>Lobby</Breadcrumb.CurrentLink>
+          </Breadcrumb.Item>
+        </Breadcrumb.List>
+      </Breadcrumb.Root>
+    </Breadcrumb.TwoRowRoot>
   ),
 };
