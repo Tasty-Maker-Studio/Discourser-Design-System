@@ -1,5 +1,11 @@
 # @discourser/design-system
 
+## 0.20.1
+
+### Patch Changes
+
+- [#133](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/133) [`8cb06b8`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/8cb06b884ef7d427ec9974926084c9b936014f58) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Add disabled state to Breadcrumb.Link for progressive disclosure navigation. ParentItem accepts optional href for future link override flexibility.
+
 ## 0.20.0
 
 ### Minor Changes
