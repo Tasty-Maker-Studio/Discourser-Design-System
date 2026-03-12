@@ -1,10 +1,7 @@
 import { defineConfig } from '@pandacss/dev';
 import { activeLanguage, transformToPandaTheme } from './src/languages';
 import { colors as m3Colors } from './src/preset/colors';
-import {
-  semanticColorTokens,
-  m3SemanticTokens,
-} from './src/preset/semantic-tokens';
+import { semanticColorTokens } from './src/preset/semantic-tokens';
 // Park UI recipes - Core
 import { button as parkButton } from './src/preset/recipes/button';
 import { input as parkInput } from './src/preset/recipes/input';
@@ -167,9 +164,6 @@ export default defineConfig({
           border: {
             value: { base: '{colors.gray.6}', _dark: '{colors.gray.6}' },
           },
-
-          // DEPRECATED: m3-prefixed aliases (still needed by discourser.ai)
-          ...m3SemanticTokens,
 
           // Base colors
           white: { value: '#FFFFFF' },
