@@ -1,5 +1,11 @@
 # @discourser/design-system
 
+## 0.22.0
+
+### Minor Changes
+
+- [#137](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/137) [`26a1df7`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/26a1df7ff0710c80eedc6aaeef45d0da51894012) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Semantic color token cleanup: removed m3 prefix from all token names. Token paths now use clean nested Panda CSS structure (e.g. `primary.container` instead of `m3Primary.container`). Deprecated m3-prefixed aliases retained temporarily for backwards compatibility. Added 44 contract tests to enforce token completeness.
+
 ## 0.20.1
 
 ### Patch Changes
