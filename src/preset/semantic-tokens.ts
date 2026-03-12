@@ -1,79 +1,190 @@
 import { defineSemanticTokens } from '@pandacss/dev';
 import { material3Language } from '../languages/material3.language';
 
-const semantic = material3Language.semantic;
-const semanticDark = material3Language.semanticDark!;
+/**
+ * MAINTENANCE CONTRACT:
+ * Every key in material3Language.semantic MUST have a corresponding entry here.
+ * src/__tests__/token-contract.test.ts enforces this automatically.
+ * When adding a new semantic role to material3.language.ts:
+ *   1. Add the token here in semanticColorTokens
+ *   2. Run pnpm test to confirm the contract test passes
+ *   3. Update Colors.mdx to add the swatch
+ *   4. Bump the minor version
+ */
+
+const s = material3Language.semantic;
+const d = material3Language.semanticDark!;
 
 /**
- * M3 Semantic Tokens - layered on top of Park UI
- *
- * These provide M3-style naming (surface, onSurface, etc.)
- * while Park UI components use their own naming (fg, canvas, etc.)
+ * Clean semantic color tokens — no m3 prefix.
+ * These are the authoritative names going forward.
  */
-export const m3SemanticTokens = defineSemanticTokens.colors({
-  // M3 Surface System
-  surface: {
-    DEFAULT: { value: { base: semantic.surface, _dark: semanticDark.surface } },
-    dim: { value: { base: semantic.surfaceContainerLow, _dark: semanticDark.surfaceContainerLow } },
-    bright: { value: { base: semantic.surfaceContainerHigh, _dark: semanticDark.surfaceContainerHigh } },
+export const semanticColorTokens = defineSemanticTokens.colors({
+  // Primary
+  primary: {
+    DEFAULT: { value: { base: s.primary, _dark: d.primary } },
     container: {
-      DEFAULT: { value: { base: semantic.surfaceContainer, _dark: semanticDark.surfaceContainer } },
-      low: { value: { base: semantic.surfaceContainerLow, _dark: semanticDark.surfaceContainerLow } },
-      lowest: { value: { base: semantic.surfaceContainerLowest, _dark: semanticDark.surfaceContainerLowest } },
-      high: { value: { base: semantic.surfaceContainerHigh, _dark: semanticDark.surfaceContainerHigh } },
-      highest: { value: { base: semantic.surfaceContainerHighest, _dark: semanticDark.surfaceContainerHighest } },
+      value: { base: s.primaryContainer, _dark: d.primaryContainer },
+    },
+  },
+  onPrimary: {
+    DEFAULT: { value: { base: s.onPrimary, _dark: d.onPrimary } },
+    container: {
+      value: { base: s.onPrimaryContainer, _dark: d.onPrimaryContainer },
+    },
+  },
+
+  // Secondary
+  secondary: {
+    DEFAULT: { value: { base: s.secondary, _dark: d.secondary } },
+    container: {
+      value: { base: s.secondaryContainer, _dark: d.secondaryContainer },
+    },
+  },
+  onSecondary: {
+    DEFAULT: { value: { base: s.onSecondary, _dark: d.onSecondary } },
+    container: {
+      value: { base: s.onSecondaryContainer, _dark: d.onSecondaryContainer },
+    },
+  },
+
+  // Tertiary
+  tertiary: {
+    DEFAULT: { value: { base: s.tertiary, _dark: d.tertiary } },
+    container: {
+      value: { base: s.tertiaryContainer, _dark: d.tertiaryContainer },
+    },
+  },
+  onTertiary: {
+    DEFAULT: { value: { base: s.onTertiary, _dark: d.onTertiary } },
+    container: {
+      value: { base: s.onTertiaryContainer, _dark: d.onTertiaryContainer },
+    },
+  },
+
+  // Error
+  error: {
+    DEFAULT: { value: { base: s.error, _dark: d.error } },
+    container: { value: { base: s.errorContainer, _dark: d.errorContainer } },
+  },
+  onError: {
+    DEFAULT: { value: { base: s.onError, _dark: d.onError } },
+    container: {
+      value: { base: s.onErrorContainer, _dark: d.onErrorContainer },
+    },
+  },
+
+  // Surface system
+  surface: {
+    DEFAULT: { value: { base: s.surface, _dark: d.surface } },
+    dim: {
+      value: { base: s.surfaceContainerLow, _dark: d.surfaceContainerLow },
+    },
+    bright: {
+      value: { base: s.surfaceContainerHigh, _dark: d.surfaceContainerHigh },
+    },
+    container: {
+      DEFAULT: {
+        value: { base: s.surfaceContainer, _dark: d.surfaceContainer },
+      },
+      low: {
+        value: { base: s.surfaceContainerLow, _dark: d.surfaceContainerLow },
+      },
+      lowest: {
+        value: {
+          base: s.surfaceContainerLowest,
+          _dark: d.surfaceContainerLowest,
+        },
+      },
+      high: {
+        value: { base: s.surfaceContainerHigh, _dark: d.surfaceContainerHigh },
+      },
+      highest: {
+        value: {
+          base: s.surfaceContainerHighest,
+          _dark: d.surfaceContainerHighest,
+        },
+      },
     },
   },
   onSurface: {
-    DEFAULT: { value: { base: semantic.onSurface, _dark: semanticDark.onSurface } },
-    variant: { value: { base: semantic.onSurfaceVariant, _dark: semanticDark.onSurfaceVariant } },
+    DEFAULT: { value: { base: s.onSurface, _dark: d.onSurface } },
+    variant: { value: { base: s.onSurfaceVariant, _dark: d.onSurfaceVariant } },
+  },
+  surfaceVariant: {
+    value: { base: s.surfaceVariant, _dark: d.surfaceVariant },
   },
 
-  // M3 Primary tokens (for explicit M3 usage)
-  m3Primary: {
-    DEFAULT: { value: { base: semantic.primary, _dark: semanticDark.primary } },
-    container: { value: { base: semantic.primaryContainer, _dark: semanticDark.primaryContainer } },
-  },
-  onM3Primary: {
-    DEFAULT: { value: { base: semantic.onPrimary, _dark: semanticDark.onPrimary } },
-    container: { value: { base: semantic.onPrimaryContainer, _dark: semanticDark.onPrimaryContainer } },
-  },
+  // Background
+  background: { value: { base: s.background, _dark: d.background } },
+  onBackground: { value: { base: s.onBackground, _dark: d.onBackground } },
 
-  // M3 Secondary (prefixed to avoid conflict with Park UI Radix-scale bridge)
-  m3Secondary: {
-    DEFAULT: { value: { base: semantic.secondary, _dark: semanticDark.secondary } },
-    container: { value: { base: semantic.secondaryContainer, _dark: semanticDark.secondaryContainer } },
-  },
-  onM3Secondary: {
-    DEFAULT: { value: { base: semantic.onSecondary, _dark: semanticDark.onSecondary } },
-    container: { value: { base: semantic.onSecondaryContainer, _dark: semanticDark.onSecondaryContainer } },
-  },
-
-  // M3 Tertiary (prefixed to avoid conflict with Park UI Radix-scale bridge)
-  m3Tertiary: {
-    DEFAULT: { value: { base: semantic.tertiary, _dark: semanticDark.tertiary } },
-    container: { value: { base: semantic.tertiaryContainer, _dark: semanticDark.tertiaryContainer } },
-  },
-  onM3Tertiary: {
-    DEFAULT: { value: { base: semantic.onTertiary, _dark: semanticDark.onTertiary } },
-    container: { value: { base: semantic.onTertiaryContainer, _dark: semanticDark.onTertiaryContainer } },
-  },
-
-  // M3 Outline
+  // Outline
   outline: {
-    DEFAULT: { value: { base: semantic.outline, _dark: semanticDark.outline } },
-    variant: { value: { base: semantic.outlineVariant, _dark: semanticDark.outlineVariant } },
+    DEFAULT: { value: { base: s.outline, _dark: d.outline } },
+    variant: { value: { base: s.outlineVariant, _dark: d.outlineVariant } },
   },
 
-  // M3 Inverse
-  inverseSurface: { value: { base: semantic.inverseSurface, _dark: semanticDark.inverseSurface } },
-  inverseOnSurface: { value: { base: semantic.inverseOnSurface, _dark: semanticDark.inverseOnSurface } },
-  inversePrimary: { value: { base: semantic.inversePrimary, _dark: semanticDark.inversePrimary } },
+  // Inverse
+  inverseSurface: {
+    value: { base: s.inverseSurface, _dark: d.inverseSurface },
+  },
+  inverseOnSurface: {
+    value: { base: s.inverseOnSurface, _dark: d.inverseOnSurface },
+  },
+  inversePrimary: {
+    value: { base: s.inversePrimary, _dark: d.inversePrimary },
+  },
   // Not standard M3 tokens, but follow inversePrimary's pattern:
   // light mode = dark-palette value, dark mode = light-palette value.
-  inverseSecondary: { value: { base: semanticDark.secondary, _dark: semantic.secondary } },
-  inverseTertiary: { value: { base: semanticDark.tertiary, _dark: semantic.tertiary } },
+  inverseSecondary: { value: { base: d.secondary, _dark: s.secondary } },
+  inverseTertiary: { value: { base: d.tertiary, _dark: s.tertiary } },
 
-  // Scrim/Shadow
-  scrim: { value: { base: semantic.scrim, _dark: semanticDark.scrim } },
+  // Utility
+  scrim: { value: { base: s.scrim, _dark: d.scrim } },
+  shadow: { value: { base: s.shadow, _dark: d.shadow } },
+});
+
+/**
+ * DEPRECATED: m3-prefixed aliases — will be removed after discourser.ai token update session.
+ * Semantic tokens cannot reference other semantic tokens in Panda CSS, so these
+ * duplicate the hex values directly from the language contract.
+ */
+export const m3SemanticTokens = defineSemanticTokens.colors({
+  m3Primary: {
+    DEFAULT: { value: { base: s.primary, _dark: d.primary } },
+    container: {
+      value: { base: s.primaryContainer, _dark: d.primaryContainer },
+    },
+  },
+  onM3Primary: {
+    DEFAULT: { value: { base: s.onPrimary, _dark: d.onPrimary } },
+    container: {
+      value: { base: s.onPrimaryContainer, _dark: d.onPrimaryContainer },
+    },
+  },
+  m3Secondary: {
+    DEFAULT: { value: { base: s.secondary, _dark: d.secondary } },
+    container: {
+      value: { base: s.secondaryContainer, _dark: d.secondaryContainer },
+    },
+  },
+  onM3Secondary: {
+    DEFAULT: { value: { base: s.onSecondary, _dark: d.onSecondary } },
+    container: {
+      value: { base: s.onSecondaryContainer, _dark: d.onSecondaryContainer },
+    },
+  },
+  m3Tertiary: {
+    DEFAULT: { value: { base: s.tertiary, _dark: d.tertiary } },
+    container: {
+      value: { base: s.tertiaryContainer, _dark: d.tertiaryContainer },
+    },
+  },
+  onM3Tertiary: {
+    DEFAULT: { value: { base: s.onTertiary, _dark: d.onTertiary } },
+    container: {
+      value: { base: s.onTertiaryContainer, _dark: d.onTertiaryContainer },
+    },
+  },
 });
