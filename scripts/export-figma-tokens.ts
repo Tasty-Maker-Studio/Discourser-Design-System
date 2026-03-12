@@ -1,10 +1,10 @@
 /**
- * Export Design System Tokens for Figma MCP Integration
+ * Export Design System Tokens for Figma
  *
- * This script generates a JSON manifest that maps semantic tokens
- * to their values and expected Figma Variable names.
+ * Generates three DTCG-compatible output files from material3Language.
+ * Zero hardcoded values — all data sourced programmatically.
  *
- * Usage: npx ts-node scripts/export-figma-tokens.ts
+ * Usage: pnpm figma:export
  */
 
 import { material3Language } from '../src/languages/material3.language';
@@ -15,178 +15,291 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Read package.json to get the project name
 const packageJsonPath = path.join(__dirname, '..', 'package.json');
 const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
-const projectName = packageJson.name || 'Design System';
 
-interface FigmaTokenManifest {
-  name: string;
-  version: string;
-  generated: string;
-  tokens: {
-    colors: {
-      semantic: Record<string, TokenValue>;
-      palettes: Record<string, Record<string, TokenValue>>;
-    };
-    spacing: Record<string, TokenValue>;
-    radii: Record<string, TokenValue>;
-    borderWidths: Record<string, TokenValue>;
-    typography: {
-      fonts: Record<string, string>;
-      scale: Record<string, TypographyTokenValue>;
-    };
-    elevation: Record<string, string>;
-  };
+// ---------------------------------------------------------------------------
+// Helper: strip px suffix and convert to number
+// ---------------------------------------------------------------------------
+
+function px(value: string): number {
+  return parseFloat(value.replace('px', ''));
 }
 
-interface TokenValue {
-  value: string;
-  figmaVariable: string;
-  description?: string;
+function ms(value: string): number {
+  return parseFloat(value.replace('ms', ''));
 }
 
-interface TypographyTokenValue {
-  fontSize: string;
-  lineHeight: string;
-  fontWeight: string;
-  letterSpacing: string;
-  fontFamily: string;
-  figmaTextStyle?: string;
-}
+// ---------------------------------------------------------------------------
+// Helper: camelCase semantic key → Figma path (/ separator)
+// ---------------------------------------------------------------------------
 
-function toKebabCase(str: string): string {
-  return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-}
+function semanticKeyToFigmaPath(key: string): string {
+  // Surface container variants
+  if (key === 'surfaceContainer') return 'surface/container';
+  if (key === 'surfaceContainerLow') return 'surface/container/low';
+  if (key === 'surfaceContainerLowest') return 'surface/container/lowest';
+  if (key === 'surfaceContainerHigh') return 'surface/container/high';
+  if (key === 'surfaceContainerHighest') return 'surface/container/highest';
 
-function generateManifest(): FigmaTokenManifest {
-  const lang = material3Language;
+  // surfaceVariant / onSurfaceVariant
+  if (key === 'surfaceVariant') return 'surface/variant';
+  if (key === 'onSurfaceVariant') return 'onSurface/variant';
 
-  // Build semantic colors
-  const semanticColors: Record<string, TokenValue> = {};
-  for (const [key, value] of Object.entries(lang.semantic)) {
-    const kebabKey = toKebabCase(key);
-    semanticColors[key] = {
-      value: value,
-      figmaVariable: `semantic/${kebabKey}`,
-      description: `Semantic color: ${key}`,
-    };
+  // outlineVariant
+  if (key === 'outlineVariant') return 'outline/variant';
+
+  // inverse*
+  if (key === 'inverseSurface') return 'inverse/surface';
+  if (key === 'inverseOnSurface') return 'inverse/onSurface';
+  if (key === 'inversePrimary') return 'inverse/primary';
+
+  // on*Container (e.g. onPrimaryContainer → onPrimary/container)
+  const onContainerMatch = key.match(/^(on[A-Z][a-z]+)Container$/);
+  if (onContainerMatch) {
+    return `${onContainerMatch[1]}/container`;
   }
 
-  // Build color palettes
-  const palettes: Record<string, Record<string, TokenValue>> = {};
+  // *Container (e.g. primaryContainer → primary/container)
+  const containerMatch = key.match(/^([a-z][a-zA-Z]+)Container$/);
+  if (containerMatch) {
+    return `${containerMatch[1]}/container`;
+  }
+
+  // All others pass through as-is
+  return key;
+}
+
+// ---------------------------------------------------------------------------
+// Builder 1: Primitives collection — tonal palettes
+// ---------------------------------------------------------------------------
+
+type DtcgColorEntry = {
+  $type: 'color';
+  $value: Record<string, string>;
+};
+
+type DtcgNumberEntry = {
+  $type: 'number';
+  $value: Record<string, number>;
+};
+
+function buildPrimitives(): Record<string, DtcgColorEntry> {
+  const result: Record<string, DtcgColorEntry> = {};
+  const lang = material3Language;
+
   for (const [paletteName, tones] of Object.entries(lang.colors)) {
-    palettes[paletteName] = {};
-    for (const [tone, value] of Object.entries(tones)) {
-      palettes[paletteName][tone] = {
-        value: String(value),
-        figmaVariable: `palettes/${paletteName}/${tone}`,
-        description: `${paletteName} palette, tone ${tone}`,
+    for (const [tone, hex] of Object.entries(tones)) {
+      const key = `${paletteName}/${tone}`;
+      result[key] = {
+        $type: 'color',
+        $value: { Value: String(hex) },
       };
     }
   }
 
-  // Build spacing
-  const spacing: Record<string, TokenValue> = {};
+  return result;
+}
+
+// ---------------------------------------------------------------------------
+// Builder 2: Semantic collection — light + dark modes
+// ---------------------------------------------------------------------------
+
+function buildSemantic(): Record<string, DtcgColorEntry> {
+  const result: Record<string, DtcgColorEntry> = {};
+  const lang = material3Language;
+
+  // Iterate light keys (semantic and semanticDark must have identical key sets)
+  for (const [key, lightValue] of Object.entries(lang.semantic)) {
+    const darkValue = (lang.semanticDark as unknown as Record<string, string>)[
+      key
+    ];
+    const figmaPath = semanticKeyToFigmaPath(key);
+
+    result[figmaPath] = {
+      $type: 'color',
+      $value: {
+        Light: lightValue,
+        Dark: darkValue,
+      },
+    };
+  }
+
+  return result;
+}
+
+// ---------------------------------------------------------------------------
+// Builder 3: Spacing & Shape collection — numeric tokens
+// ---------------------------------------------------------------------------
+
+function buildSpacingAndShape(): Record<string, DtcgNumberEntry> {
+  const result: Record<string, DtcgNumberEntry> = {};
+  const lang = material3Language;
+
+  // Spacing
   for (const [key, value] of Object.entries(lang.spacing)) {
-    spacing[key] = {
-      value: value,
-      figmaVariable: `spacing/${key}`,
-      description: `Spacing: ${key}`,
+    result[`spacing/${key}`] = {
+      $type: 'number',
+      $value: { Value: px(value) },
     };
   }
 
-  // Build radii
-  const radii: Record<string, TokenValue> = {};
+  // Radii
   for (const [key, value] of Object.entries(lang.shape.radii)) {
-    const kebabKey = toKebabCase(key);
-    radii[key] = {
-      value: value,
-      figmaVariable: `shape/radii/${kebabKey}`,
-      description: `Border radius: ${key}`,
+    result[`radii/${key}`] = {
+      $type: 'number',
+      $value: { Value: px(value) },
     };
   }
 
-  // Build border widths
-  const borderWidths: Record<string, TokenValue> = {};
+  // Border widths
   for (const [key, value] of Object.entries(lang.border.widths)) {
-    borderWidths[key] = {
-      value: value,
-      figmaVariable: `border/widths/${key}`,
-      description: `Border width: ${key}`,
+    result[`border/${key}`] = {
+      $type: 'number',
+      $value: { Value: px(value) },
     };
   }
 
-  // Build typography
-  const typographyScale: Record<string, TypographyTokenValue> = {};
-  for (const [key, style] of Object.entries(lang.typography.scale)) {
-    const kebabKey = toKebabCase(key);
-    const fontKey = (style.fontFamily || 'body') as 'display' | 'body' | 'mono';
-    typographyScale[key] = {
-      fontSize: style.fontSize,
-      lineHeight: style.lineHeight,
-      fontWeight: style.fontWeight,
-      letterSpacing: style.letterSpacing,
-      fontFamily: lang.typography.fonts[fontKey],
-      figmaTextStyle: `typography/${kebabKey}`,
+  // Durations
+  for (const [key, value] of Object.entries(lang.motion.durations)) {
+    result[`duration/${key}`] = {
+      $type: 'number',
+      $value: { Value: ms(value) },
     };
   }
 
-  // Build elevation
-  const elevation: Record<string, string> = {};
+  return result;
+}
+
+// ---------------------------------------------------------------------------
+// Builder 4: Effect styles — elevation
+// ---------------------------------------------------------------------------
+
+type ElevationEntry = {
+  value: string;
+  description: string;
+};
+
+const elevationDescriptions: Record<string, string> = {
+  level0: 'No elevation — flat surfaces',
+  level1: 'Cards at rest, contained buttons (semantic: xs)',
+  level2: 'Cards on hover, raised buttons (semantic: sm)',
+  level3: 'Dialogs, dropdowns, popovers (semantic: md)',
+  level4: 'Navigation drawers, modal sheets (semantic: lg)',
+  level5: 'FABs, tooltips, snackbars (semantic: xl)',
+};
+
+function buildEffectStyles(): { elevation: Record<string, ElevationEntry> } {
+  const elevation: Record<string, ElevationEntry> = {};
+  const lang = material3Language;
+
   for (const [key, value] of Object.entries(lang.elevation.levels)) {
-    elevation[key] = value;
+    elevation[key] = {
+      value,
+      description: elevationDescriptions[key] ?? key,
+    };
   }
 
-  return {
-    name: projectName,
-    version: packageJson.version || lang.version,
+  return { elevation };
+}
+
+// ---------------------------------------------------------------------------
+// Builder 5: Text styles — typography
+// ---------------------------------------------------------------------------
+
+type TextStyleEntry = {
+  fontFamily: string;
+  fontSize: number;
+  fontWeight: number;
+  lineHeight: number;
+  letterSpacing: number;
+  figmaTextStyle: string;
+};
+
+function buildTextStyles(): Record<string, TextStyleEntry> {
+  const result: Record<string, TextStyleEntry> = {};
+  const lang = material3Language;
+
+  for (const [key, style] of Object.entries(lang.typography.scale)) {
+    const fontKey = style.fontFamily as 'display' | 'body' | 'mono';
+    const fontFamilyString = lang.typography.fonts[fontKey];
+    // Extract first font name before comma, strip quotes
+    const fontFamily = fontFamilyString
+      .split(',')[0]
+      .replace(/['"]/g, '')
+      .trim();
+
+    result[key] = {
+      fontFamily,
+      fontSize: px(style.fontSize),
+      fontWeight: Number(style.fontWeight),
+      lineHeight: px(style.lineHeight),
+      letterSpacing: px(style.letterSpacing),
+      figmaTextStyle: key,
+    };
+  }
+
+  return result;
+}
+
+// ---------------------------------------------------------------------------
+// Main: assemble, write files, print summary
+// ---------------------------------------------------------------------------
+
+function ensureDir(filePath: string): void {
+  const dir = path.dirname(filePath);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+}
+
+function writeJson(filePath: string, data: unknown): void {
+  ensureDir(filePath);
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+}
+
+const distDir = path.join(__dirname, '..', 'dist');
+
+// --- figma-variables.json ---
+const primitives = buildPrimitives();
+const semantic = buildSemantic();
+const spacingAndShape = buildSpacingAndShape();
+
+const figmaVariables = {
+  $metadata: {
+    version: packageJson.version ?? '0.0.0',
     generated: new Date().toISOString(),
-    tokens: {
-      colors: {
-        semantic: semanticColors,
-        palettes: palettes,
-      },
-      spacing: spacing,
-      radii: radii,
-      borderWidths: borderWidths,
-      typography: {
-        fonts: lang.typography.fonts,
-        scale: typographyScale,
-      },
-      elevation: elevation,
-    },
-  };
-}
+  },
+  Primitives: primitives,
+  Semantic: semantic,
+  'Spacing & Shape': spacingAndShape,
+};
 
-// Generate and write manifest
-const manifest = generateManifest();
-const outputPath = path.join(__dirname, '..', 'dist', 'figma-tokens.json');
+const figmaVariablesPath = path.join(distDir, 'figma-variables.json');
+writeJson(figmaVariablesPath, figmaVariables);
 
-// Ensure dist directory exists
-const distDir = path.dirname(outputPath);
-if (!fs.existsSync(distDir)) {
-  fs.mkdirSync(distDir, { recursive: true });
-}
+// --- figma-effect-styles.json ---
+const effectStyles = buildEffectStyles();
+const effectStylesPath = path.join(distDir, 'figma-effect-styles.json');
+writeJson(effectStylesPath, effectStyles);
 
-fs.writeFileSync(outputPath, JSON.stringify(manifest, null, 2));
-console.log(`✅ Token manifest generated: ${outputPath}`);
+// --- figma-text-styles.json ---
+const textStyles = buildTextStyles();
+const textStylesPath = path.join(distDir, 'figma-text-styles.json');
+writeJson(textStylesPath, textStyles);
 
-// Also output to stdout for piping
-console.log('\n📋 Token Summary:');
+// --- tokens/tokens.json (copy of figma-variables.json) ---
+const tokensPath = path.join(__dirname, '..', 'tokens', 'tokens.json');
+writeJson(tokensPath, figmaVariables);
+
+// --- Summary ---
 console.log(
-  `   Colors: ${Object.keys(manifest.tokens.colors.semantic).length} semantic tokens`,
+  `✅ dist/figma-variables.json — ${Object.keys(primitives).length} Primitives, ${Object.keys(semantic).length} Semantic, ${Object.keys(spacingAndShape).length} Spacing & Shape tokens`,
 );
 console.log(
-  `   Spacing: ${Object.keys(manifest.tokens.spacing).length} tokens`,
-);
-console.log(`   Radii: ${Object.keys(manifest.tokens.radii).length} tokens`);
-console.log(
-  `   Border Widths: ${Object.keys(manifest.tokens.borderWidths).length} tokens`,
+  `✅ dist/figma-effect-styles.json — ${Object.keys(effectStyles.elevation).length} elevation levels`,
 );
 console.log(
-  `   Typography: ${Object.keys(manifest.tokens.typography.scale).length} styles`,
+  `✅ dist/figma-text-styles.json — ${Object.keys(textStyles).length} text styles`,
 );
-
-export { generateManifest };
-export type { FigmaTokenManifest };
+console.log(`✅ tokens/tokens.json updated`);
