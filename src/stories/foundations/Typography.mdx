@@ -1,6 +1,5 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { TypeSpecimen } from './components/TypeSpecimen';
-import { material3Language } from '../../languages/material3.language';
 
 <Meta title="Foundations/Typography" />
 
@@ -15,7 +14,7 @@ The system uses three font families, each serving a specific purpose:
 <div style={{ marginBottom: '32px', padding: '24px', backgroundColor: '#f5f5f5', borderRadius: '8px' }}>
   <div style={{ marginBottom: '16px' }}>
     <div style={{ fontWeight: '600', marginBottom: '8px' }}>Display</div>
-    <div style={{ fontFamily: material3Language.typography.fonts.display, fontSize: '24px', marginBottom: '4px' }}>
+    <div style={{ fontFamily: '"Fraunces", Georgia, serif', fontSize: '24px', marginBottom: '4px' }}>
       "Fraunces", Georgia, serif
     </div>
     <div style={{ fontSize: '12px', color: '#666' }}>
@@ -25,7 +24,7 @@ The system uses three font families, each serving a specific purpose:
 
   <div style={{ marginBottom: '16px' }}>
     <div style={{ fontWeight: '600', marginBottom: '8px' }}>Body</div>
-    <div style={{ fontFamily: material3Language.typography.fonts.body, fontSize: '16px', marginBottom: '4px' }}>
+    <div style={{ fontFamily: '"Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', fontSize: '16px', marginBottom: '4px' }}>
       "Poppins", -apple-system, BlinkMacSystemFont, sans-serif
     </div>
     <div style={{ fontSize: '12px', color: '#666' }}>
@@ -35,7 +34,7 @@ The system uses three font families, each serving a specific purpose:
 
   <div>
     <div style={{ fontWeight: '600', marginBottom: '8px' }}>Monospace</div>
-    <div style={{ fontFamily: material3Language.typography.fonts.mono, fontSize: '14px', marginBottom: '4px' }}>
+    <div style={{ fontFamily: '"JetBrains Mono", "Fira Code", Consolas, monospace', fontSize: '14px', marginBottom: '4px' }}>
       JetBrains Mono, Fira Code, Consolas, monospace
     </div>
     <div style={{ fontSize: '12px', color: '#666' }}>
@@ -55,32 +54,35 @@ Material Design 3's type scale consists of 13 styles across 5 categories: Displa
 Display styles are the largest text on screen, reserved for short, important text or numerals.
 
 <TypeSpecimen
+  styleName="displayLarge"
   name="Display Large"
-  fontSize={material3Language.typography.scale.displayLarge.fontSize}
-  lineHeight={material3Language.typography.scale.displayLarge.lineHeight}
-  fontWeight={material3Language.typography.scale.displayLarge.fontWeight}
-  letterSpacing={material3Language.typography.scale.displayLarge.letterSpacing}
-  fontFamily={material3Language.typography.scale.displayLarge.fontFamily}
+  fontSize="57px"
+  lineHeight="64px"
+  fontWeight="400"
+  letterSpacing="-0.25px"
+  fontFamily="display"
   sampleText="Display Large"
 />
 
 <TypeSpecimen
+  styleName="displayMedium"
   name="Display Medium"
-  fontSize={material3Language.typography.scale.displayMedium.fontSize}
-  lineHeight={material3Language.typography.scale.displayMedium.lineHeight}
-  fontWeight={material3Language.typography.scale.displayMedium.fontWeight}
-  letterSpacing={material3Language.typography.scale.displayMedium.letterSpacing}
-  fontFamily={material3Language.typography.scale.displayMedium.fontFamily}
+  fontSize="45px"
+  lineHeight="52px"
+  fontWeight="400"
+  letterSpacing="0px"
+  fontFamily="display"
   sampleText="Display Medium"
 />
 
 <TypeSpecimen
+  styleName="displaySmall"
   name="Display Small"
-  fontSize={material3Language.typography.scale.displaySmall.fontSize}
-  lineHeight={material3Language.typography.scale.displaySmall.lineHeight}
-  fontWeight={material3Language.typography.scale.displaySmall.fontWeight}
-  letterSpacing={material3Language.typography.scale.displaySmall.letterSpacing}
-  fontFamily={material3Language.typography.scale.displaySmall.fontFamily}
+  fontSize="36px"
+  lineHeight="44px"
+  fontWeight="400"
+  letterSpacing="0px"
+  fontFamily="display"
   sampleText="Display Small"
 />
 
@@ -89,32 +91,35 @@ Display styles are the largest text on screen, reserved for short, important tex
 Headlines are for high-emphasis text on smaller screens. They're best-suited for short, high-emphasis text.
 
 <TypeSpecimen
+  styleName="headlineLarge"
   name="Headline Large"
-  fontSize={material3Language.typography.scale.headlineLarge.fontSize}
-  lineHeight={material3Language.typography.scale.headlineLarge.lineHeight}
-  fontWeight={material3Language.typography.scale.headlineLarge.fontWeight}
-  letterSpacing={material3Language.typography.scale.headlineLarge.letterSpacing}
-  fontFamily={material3Language.typography.scale.headlineLarge.fontFamily}
+  fontSize="32px"
+  lineHeight="40px"
+  fontWeight="400"
+  letterSpacing="0px"
+  fontFamily="display"
   sampleText="Headline Large"
 />
 
 <TypeSpecimen
+  styleName="headlineMedium"
   name="Headline Medium"
-  fontSize={material3Language.typography.scale.headlineMedium.fontSize}
-  lineHeight={material3Language.typography.scale.headlineMedium.lineHeight}
-  fontWeight={material3Language.typography.scale.headlineMedium.fontWeight}
-  letterSpacing={material3Language.typography.scale.headlineMedium.letterSpacing}
-  fontFamily={material3Language.typography.scale.headlineMedium.fontFamily}
+  fontSize="28px"
+  lineHeight="36px"
+  fontWeight="400"
+  letterSpacing="0px"
+  fontFamily="display"
   sampleText="Headline Medium"
 />
 
 <TypeSpecimen
+  styleName="headlineSmall"
   name="Headline Small"
-  fontSize={material3Language.typography.scale.headlineSmall.fontSize}
-  lineHeight={material3Language.typography.scale.headlineSmall.lineHeight}
-  fontWeight={material3Language.typography.scale.headlineSmall.fontWeight}
-  letterSpacing={material3Language.typography.scale.headlineSmall.letterSpacing}
-  fontFamily={material3Language.typography.scale.headlineSmall.fontFamily}
+  fontSize="24px"
+  lineHeight="32px"
+  fontWeight="400"
+  letterSpacing="0px"
+  fontFamily="display"
   sampleText="Headline Small"
 />
 
@@ -123,32 +128,35 @@ Headlines are for high-emphasis text on smaller screens. They're best-suited for
 Titles are for medium-emphasis text that remains relatively short. Use titles for grouping related content or to emphasize important sections.
 
 <TypeSpecimen
+  styleName="titleLarge"
   name="Title Large"
-  fontSize={material3Language.typography.scale.titleLarge.fontSize}
-  lineHeight={material3Language.typography.scale.titleLarge.lineHeight}
-  fontWeight={material3Language.typography.scale.titleLarge.fontWeight}
-  letterSpacing={material3Language.typography.scale.titleLarge.letterSpacing}
-  fontFamily={material3Language.typography.scale.titleLarge.fontFamily}
+  fontSize="22px"
+  lineHeight="28px"
+  fontWeight="500"
+  letterSpacing="0px"
+  fontFamily="body"
   sampleText="Title Large"
 />
 
 <TypeSpecimen
+  styleName="titleMedium"
   name="Title Medium"
-  fontSize={material3Language.typography.scale.titleMedium.fontSize}
-  lineHeight={material3Language.typography.scale.titleMedium.lineHeight}
-  fontWeight={material3Language.typography.scale.titleMedium.fontWeight}
-  letterSpacing={material3Language.typography.scale.titleMedium.letterSpacing}
-  fontFamily={material3Language.typography.scale.titleMedium.fontFamily}
+  fontSize="16px"
+  lineHeight="24px"
+  fontWeight="500"
+  letterSpacing="0.15px"
+  fontFamily="body"
   sampleText="Title Medium"
 />
 
 <TypeSpecimen
+  styleName="titleSmall"
   name="Title Small"
-  fontSize={material3Language.typography.scale.titleSmall.fontSize}
-  lineHeight={material3Language.typography.scale.titleSmall.lineHeight}
-  fontWeight={material3Language.typography.scale.titleSmall.fontWeight}
-  letterSpacing={material3Language.typography.scale.titleSmall.letterSpacing}
-  fontFamily={material3Language.typography.scale.titleSmall.fontFamily}
+  fontSize="14px"
+  lineHeight="20px"
+  fontWeight="500"
+  letterSpacing="0.1px"
+  fontFamily="body"
   sampleText="Title Small"
 />
 
@@ -157,32 +165,35 @@ Titles are for medium-emphasis text that remains relatively short. Use titles fo
 Body styles are used for longer passages of text in your app.
 
 <TypeSpecimen
+  styleName="bodyLarge"
   name="Body Large"
-  fontSize={material3Language.typography.scale.bodyLarge.fontSize}
-  lineHeight={material3Language.typography.scale.bodyLarge.lineHeight}
-  fontWeight={material3Language.typography.scale.bodyLarge.fontWeight}
-  letterSpacing={material3Language.typography.scale.bodyLarge.letterSpacing}
-  fontFamily={material3Language.typography.scale.bodyLarge.fontFamily}
+  fontSize="16px"
+  lineHeight="24px"
+  fontWeight="400"
+  letterSpacing="0.5px"
+  fontFamily="body"
   sampleText="The quick brown fox jumps over the lazy dog. Body Large is used for longer passages of text that require good readability."
 />
 
 <TypeSpecimen
+  styleName="bodyMedium"
   name="Body Medium"
-  fontSize={material3Language.typography.scale.bodyMedium.fontSize}
-  lineHeight={material3Language.typography.scale.bodyMedium.lineHeight}
-  fontWeight={material3Language.typography.scale.bodyMedium.fontWeight}
-  letterSpacing={material3Language.typography.scale.bodyMedium.letterSpacing}
-  fontFamily={material3Language.typography.scale.bodyMedium.fontFamily}
+  fontSize="14px"
+  lineHeight="20px"
+  fontWeight="400"
+  letterSpacing="0.25px"
+  fontFamily="body"
   sampleText="The quick brown fox jumps over the lazy dog. Body Medium is the default body text size, balanced for readability and screen real estate."
 />
 
 <TypeSpecimen
+  styleName="bodySmall"
   name="Body Small"
-  fontSize={material3Language.typography.scale.bodySmall.fontSize}
-  lineHeight={material3Language.typography.scale.bodySmall.lineHeight}
-  fontWeight={material3Language.typography.scale.bodySmall.fontWeight}
-  letterSpacing={material3Language.typography.scale.bodySmall.letterSpacing}
-  fontFamily={material3Language.typography.scale.bodySmall.fontFamily}
+  fontSize="12px"
+  lineHeight="16px"
+  fontWeight="400"
+  letterSpacing="0.4px"
+  fontFamily="body"
   sampleText="The quick brown fox jumps over the lazy dog. Body Small is used for captions and supporting text that doesn't require much emphasis."
 />
 
@@ -191,32 +202,35 @@ Body styles are used for longer passages of text in your app.
 Label styles are for text in components like buttons, tabs, and labels. They're utilitarian and medium-emphasis.
 
 <TypeSpecimen
+  styleName="labelLarge"
   name="Label Large"
-  fontSize={material3Language.typography.scale.labelLarge.fontSize}
-  lineHeight={material3Language.typography.scale.labelLarge.lineHeight}
-  fontWeight={material3Language.typography.scale.labelLarge.fontWeight}
-  letterSpacing={material3Language.typography.scale.labelLarge.letterSpacing}
-  fontFamily={material3Language.typography.scale.labelLarge.fontFamily}
+  fontSize="14px"
+  lineHeight="20px"
+  fontWeight="500"
+  letterSpacing="0.1px"
+  fontFamily="body"
   sampleText="Label Large"
 />
 
 <TypeSpecimen
+  styleName="labelMedium"
   name="Label Medium"
-  fontSize={material3Language.typography.scale.labelMedium.fontSize}
-  lineHeight={material3Language.typography.scale.labelMedium.lineHeight}
-  fontWeight={material3Language.typography.scale.labelMedium.fontWeight}
-  letterSpacing={material3Language.typography.scale.labelMedium.letterSpacing}
-  fontFamily={material3Language.typography.scale.labelMedium.fontFamily}
+  fontSize="12px"
+  lineHeight="16px"
+  fontWeight="500"
+  letterSpacing="0.5px"
+  fontFamily="body"
   sampleText="Label Medium"
 />
 
 <TypeSpecimen
+  styleName="labelSmall"
   name="Label Small"
-  fontSize={material3Language.typography.scale.labelSmall.fontSize}
-  lineHeight={material3Language.typography.scale.labelSmall.lineHeight}
-  fontWeight={material3Language.typography.scale.labelSmall.fontWeight}
-  letterSpacing={material3Language.typography.scale.labelSmall.letterSpacing}
-  fontFamily={material3Language.typography.scale.labelSmall.fontFamily}
+  fontSize="11px"
+  lineHeight="16px"
+  fontWeight="500"
+  letterSpacing="0.5px"
+  fontFamily="body"
   sampleText="Label Small"
 />
 

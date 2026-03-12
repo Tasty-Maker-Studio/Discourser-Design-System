@@ -1,6 +1,27 @@
 import { type CSSProperties } from 'react';
+import { css } from 'styled-system/css';
+
+// ── Pre-declared css() calls — Panda CSS statically extracts these ─────────
+const textStyleClasses: Record<string, string> = {
+  displayLarge: css({ textStyle: 'displayLarge' }),
+  displayMedium: css({ textStyle: 'displayMedium' }),
+  displaySmall: css({ textStyle: 'displaySmall' }),
+  headlineLarge: css({ textStyle: 'headlineLarge' }),
+  headlineMedium: css({ textStyle: 'headlineMedium' }),
+  headlineSmall: css({ textStyle: 'headlineSmall' }),
+  titleLarge: css({ textStyle: 'titleLarge' }),
+  titleMedium: css({ textStyle: 'titleMedium' }),
+  titleSmall: css({ textStyle: 'titleSmall' }),
+  bodyLarge: css({ textStyle: 'bodyLarge' }),
+  bodyMedium: css({ textStyle: 'bodyMedium' }),
+  bodySmall: css({ textStyle: 'bodySmall' }),
+  labelLarge: css({ textStyle: 'labelLarge' }),
+  labelMedium: css({ textStyle: 'labelMedium' }),
+  labelSmall: css({ textStyle: 'labelSmall' }),
+};
 
 interface TypeSpecimenProps {
+  styleName: string;
   name: string;
   fontSize: string;
   lineHeight: string;
@@ -11,6 +32,7 @@ interface TypeSpecimenProps {
 }
 
 export const TypeSpecimen = ({
+  styleName,
   name,
   fontSize,
   lineHeight,
@@ -37,16 +59,6 @@ export const TypeSpecimen = ({
     fontWeight: '600',
     fontFamily: 'Inter, sans-serif',
     color: '#333',
-  };
-
-  const specimenStyle: CSSProperties = {
-    fontSize,
-    lineHeight,
-    fontWeight,
-    letterSpacing,
-    fontFamily: getFontFamilyString(fontFamily),
-    marginBottom: '16px',
-    color: '#000',
   };
 
   const propertiesStyle: CSSProperties = {
@@ -79,7 +91,12 @@ export const TypeSpecimen = ({
       <div style={headerStyle}>
         <div style={nameStyle}>{name}</div>
       </div>
-      <div style={specimenStyle}>{sampleText}</div>
+      <div
+        className={textStyleClasses[styleName]}
+        style={{ color: '#000', marginBottom: '16px' }}
+      >
+        {sampleText}
+      </div>
       <div style={propertiesStyle}>
         <div style={propertyStyle}>
           <div style={propertyLabelStyle}>Font Size</div>
@@ -105,13 +122,3 @@ export const TypeSpecimen = ({
     </div>
   );
 };
-
-function getFontFamilyString(family: string): string {
-  const fontFamilies = {
-    display: '"Fraunces", Georgia, "Times New Roman", serif',
-    body: '"Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-    mono: '"JetBrains Mono", "Fira Code", Consolas, monospace',
-  };
-
-  return fontFamilies[family as keyof typeof fontFamilies] || family;
-}
