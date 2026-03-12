@@ -210,6 +210,7 @@
     "codex:watch": "tsx --watch src/figma-codex/generate.ts",
     "figma:connect": "figma connect publish",
     "figma:connect:dry": "figma connect publish --dry-run",
+    "figma:export": "tsx scripts/export-figma-tokens.ts",
     "changeset": "changeset",
     "version": "changeset version",
     "ci:version": "pnpm exec changeset version",
