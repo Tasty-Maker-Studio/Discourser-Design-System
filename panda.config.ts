@@ -1,7 +1,10 @@
 import { defineConfig } from '@pandacss/dev';
 import { activeLanguage, transformToPandaTheme } from './src/languages';
 import { colors as m3Colors } from './src/preset/colors';
-import { m3SemanticTokens } from './src/preset/semantic-tokens';
+import {
+  semanticColorTokens,
+  m3SemanticTokens,
+} from './src/preset/semantic-tokens';
 // Park UI recipes - Core
 import { button as parkButton } from './src/preset/recipes/button';
 import { input as parkInput } from './src/preset/recipes/input';
@@ -131,8 +134,20 @@ export default defineConfig({
       // Semantic tokens: M3 colors + Park UI aliases + shadows + radii
       semanticTokens: {
         colors: {
-          // M3-to-Radix color bridges
+          // Non-conflicting M3 semantic tokens land here first
+          // (onPrimary, onSecondary, surface, outline, etc.)
+          ...semanticColorTokens,
+
+          // M3-to-Radix color bridges — overwrite conflicting top-level keys,
+          // then re-merge the M3 semantic DEFAULT+container back in
           ...m3Colors,
+          primary: { ...m3Colors.primary, ...semanticColorTokens.primary },
+          secondary: {
+            ...m3Colors.secondary,
+            ...semanticColorTokens.secondary,
+          },
+          tertiary: { ...m3Colors.tertiary, ...semanticColorTokens.tertiary },
+          error: { ...m3Colors.error, ...semanticColorTokens.error },
 
           // Park UI-style aliases for component compatibility
           fg: {
@@ -153,7 +168,7 @@ export default defineConfig({
             value: { base: '{colors.gray.6}', _dark: '{colors.gray.6}' },
           },
 
-          // M3 semantic tokens (surface, onSurface, etc.)
+          // DEPRECATED: m3-prefixed aliases (still needed by discourser.ai)
           ...m3SemanticTokens,
 
           // Base colors
