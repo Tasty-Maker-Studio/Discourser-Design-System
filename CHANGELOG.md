@@ -1,5 +1,11 @@
 # @discourser/design-system
 
+## 0.22.1
+
+### Patch Changes
+
+- [#142](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/142) [`a3d6697`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/a3d66975a9386596f6909453ff9b0a0012d29f8b) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Remove deprecated `m3SemanticTokens` aliases. These m3-prefixed color tokens (m3Primary, m3Secondary, etc.) have been replaced by the clean semantic tokens (primary, secondary, etc.) since 0.22.0.
+
 ## 0.22.0
 
 ### Minor Changes
