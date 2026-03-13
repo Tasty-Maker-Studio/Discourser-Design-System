@@ -186,7 +186,7 @@
     "build:css": "panda cssgen --outfile dist/styles.css",
     "build:lib": "tsup",
     "build:types": "tsc --project tsconfig.build.json",
-    "build:storybook": "pnpm docs:generate && storybook build",
+    "build:storybook": "pnpm build:css && pnpm docs:generate && storybook build",
     "prepare": "panda codegen && husky",
     "lint": "eslint src --ext .ts,.tsx",
     "test": "vitest",
