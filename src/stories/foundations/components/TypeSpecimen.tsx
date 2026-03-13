@@ -1,24 +1,4 @@
 import { type CSSProperties } from 'react';
-import { css } from 'styled-system/css';
-
-// ── Pre-declared css() calls — Panda CSS statically extracts these ─────────
-const textStyleClasses: Record<string, string> = {
-  displayLarge: css({ textStyle: 'displayLarge' }),
-  displayMedium: css({ textStyle: 'displayMedium' }),
-  displaySmall: css({ textStyle: 'displaySmall' }),
-  headlineLarge: css({ textStyle: 'headlineLarge' }),
-  headlineMedium: css({ textStyle: 'headlineMedium' }),
-  headlineSmall: css({ textStyle: 'headlineSmall' }),
-  titleLarge: css({ textStyle: 'titleLarge' }),
-  titleMedium: css({ textStyle: 'titleMedium' }),
-  titleSmall: css({ textStyle: 'titleSmall' }),
-  bodyLarge: css({ textStyle: 'bodyLarge' }),
-  bodyMedium: css({ textStyle: 'bodyMedium' }),
-  bodySmall: css({ textStyle: 'bodySmall' }),
-  labelLarge: css({ textStyle: 'labelLarge' }),
-  labelMedium: css({ textStyle: 'labelMedium' }),
-  labelSmall: css({ textStyle: 'labelSmall' }),
-};
 
 interface TypeSpecimenProps {
   styleName: string;
@@ -32,7 +12,7 @@ interface TypeSpecimenProps {
 }
 
 export const TypeSpecimen = ({
-  styleName,
+  styleName: _styleName,
   name,
   fontSize,
   lineHeight,
@@ -92,8 +72,20 @@ export const TypeSpecimen = ({
         <div style={nameStyle}>{name}</div>
       </div>
       <div
-        className={textStyleClasses[styleName]}
-        style={{ color: '#000', marginBottom: '16px' }}
+        style={{
+          color: '#000',
+          marginBottom: '16px',
+          fontFamily:
+            fontFamily === 'display'
+              ? 'var(--fonts-display)'
+              : fontFamily === 'mono'
+                ? 'var(--fonts-mono)'
+                : 'var(--fonts-body)',
+          fontSize,
+          lineHeight,
+          fontWeight,
+          letterSpacing,
+        }}
       >
         {sampleText}
       </div>
