@@ -1,5 +1,11 @@
 # @discourser/design-system
 
+## 0.22.3
+
+### Patch Changes
+
+- [#152](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/152) [`cd7dfb4`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/cd7dfb458f3ecf734dc85de4b26d99cb174a240c) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Add docs directory to package files — token name mapping reference (token-name-mapping.md and token-name-mapping.json) now ships with the package for consumer access
+
 ## 0.22.2
 
 ### Patch Changes
