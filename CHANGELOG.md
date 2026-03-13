@@ -1,5 +1,11 @@
 # @discourser/design-system
 
+## 0.22.2
+
+### Patch Changes
+
+- [#146](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/146) [`101caad`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/101caade3d32fe509e24e102e8d02ac2594cfcc4) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Fix textStyle font-family token reference in transform.ts — fontFamily now emits {fonts.display} reference instead of bare string, ensuring correct CSS variable resolution in generated stylesheets
+
 ## 0.22.1
 
 ### Patch Changes
