@@ -1,6 +1,6 @@
 {
   "name": "@discourser/design-system",
-  "version": "0.22.2",
+  "version": "0.22.3",
   "description": "Aesthetic-agnostic design system with Panda CSS and Ark UI",
   "type": "module",
   "publishConfig": {
