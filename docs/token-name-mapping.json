@@ -1,0 +1,850 @@
+{
+  "version": "0.22.0",
+  "generatedFrom": [
+    "dist/figma-variables.json",
+    "dist/figma-effect-styles.json",
+    "dist/figma-text-styles.json",
+    "src/preset/semantic-tokens.ts",
+    "src/preset/colors/create-palette-bridge.ts"
+  ],
+  "semantic": [
+    {
+      "figmaPath": "Semantic/primary",
+      "pandaToken": "primary",
+      "cssProperty": "--colors-primary",
+      "exampleUsage": "color: 'primary'"
+    },
+    {
+      "figmaPath": "Semantic/onPrimary",
+      "pandaToken": "onPrimary",
+      "cssProperty": "--colors-on-primary",
+      "exampleUsage": "color: 'onPrimary'"
+    },
+    {
+      "figmaPath": "Semantic/primary/container",
+      "pandaToken": "primary.container",
+      "cssProperty": "--colors-primary-container",
+      "exampleUsage": "bg: 'primary.container'"
+    },
+    {
+      "figmaPath": "Semantic/onPrimary/container",
+      "pandaToken": "onPrimary.container",
+      "cssProperty": "--colors-on-primary-container",
+      "exampleUsage": "color: 'onPrimary.container'"
+    },
+    {
+      "figmaPath": "Semantic/secondary",
+      "pandaToken": "secondary",
+      "cssProperty": "--colors-secondary",
+      "exampleUsage": "color: 'secondary'"
+    },
+    {
+      "figmaPath": "Semantic/onSecondary",
+      "pandaToken": "onSecondary",
+      "cssProperty": "--colors-on-secondary",
+      "exampleUsage": "color: 'onSecondary'"
+    },
+    {
+      "figmaPath": "Semantic/secondary/container",
+      "pandaToken": "secondary.container",
+      "cssProperty": "--colors-secondary-container",
+      "exampleUsage": "bg: 'secondary.container'"
+    },
+    {
+      "figmaPath": "Semantic/onSecondary/container",
+      "pandaToken": "onSecondary.container",
+      "cssProperty": "--colors-on-secondary-container",
+      "exampleUsage": "color: 'onSecondary.container'"
+    },
+    {
+      "figmaPath": "Semantic/tertiary",
+      "pandaToken": "tertiary",
+      "cssProperty": "--colors-tertiary",
+      "exampleUsage": "color: 'tertiary'"
+    },
+    {
+      "figmaPath": "Semantic/onTertiary",
+      "pandaToken": "onTertiary",
+      "cssProperty": "--colors-on-tertiary",
+      "exampleUsage": "color: 'onTertiary'"
+    },
+    {
+      "figmaPath": "Semantic/tertiary/container",
+      "pandaToken": "tertiary.container",
+      "cssProperty": "--colors-tertiary-container",
+      "exampleUsage": "bg: 'tertiary.container'"
+    },
+    {
+      "figmaPath": "Semantic/onTertiary/container",
+      "pandaToken": "onTertiary.container",
+      "cssProperty": "--colors-on-tertiary-container",
+      "exampleUsage": "color: 'onTertiary.container'"
+    },
+    {
+      "figmaPath": "Semantic/error",
+      "pandaToken": "error",
+      "cssProperty": "--colors-error",
+      "exampleUsage": "color: 'error'"
+    },
+    {
+      "figmaPath": "Semantic/onError",
+      "pandaToken": "onError",
+      "cssProperty": "--colors-on-error",
+      "exampleUsage": "color: 'onError'"
+    },
+    {
+      "figmaPath": "Semantic/error/container",
+      "pandaToken": "error.container",
+      "cssProperty": "--colors-error-container",
+      "exampleUsage": "bg: 'error.container'"
+    },
+    {
+      "figmaPath": "Semantic/onError/container",
+      "pandaToken": "onError.container",
+      "cssProperty": "--colors-on-error-container",
+      "exampleUsage": "color: 'onError.container'"
+    },
+    {
+      "figmaPath": "Semantic/surface",
+      "pandaToken": "surface",
+      "cssProperty": "--colors-surface",
+      "exampleUsage": "bg: 'surface'"
+    },
+    {
+      "figmaPath": "Semantic/onSurface",
+      "pandaToken": "onSurface",
+      "cssProperty": "--colors-on-surface",
+      "exampleUsage": "color: 'onSurface'"
+    },
+    {
+      "figmaPath": "Semantic/surface/variant",
+      "pandaToken": "surfaceVariant",
+      "cssProperty": "--colors-surface-variant",
+      "exampleUsage": "bg: 'surfaceVariant'",
+      "mismatch": true,
+      "mismatchNote": "Figma path 'surface/variant' maps to flat camelCase 'surfaceVariant', NOT 'surface.variant'. Defined at semantic-tokens.ts:114."
+    },
+    {
+      "figmaPath": "Semantic/onSurface/variant",
+      "pandaToken": "onSurface.variant",
+      "cssProperty": "--colors-on-surface-variant",
+      "exampleUsage": "color: 'onSurface.variant'",
+      "mismatch": true,
+      "mismatchNote": "Unlike 'surface/variant' which is flat, 'onSurface/variant' IS nested as 'onSurface.variant'. Inconsistent convention between these two analogous tokens."
+    },
+    {
+      "figmaPath": "Semantic/surface/container/lowest",
+      "pandaToken": "surface.container.lowest",
+      "cssProperty": "--colors-surface-container-lowest",
+      "exampleUsage": "bg: 'surface.container.lowest'"
+    },
+    {
+      "figmaPath": "Semantic/surface/container/low",
+      "pandaToken": "surface.container.low",
+      "cssProperty": "--colors-surface-container-low",
+      "exampleUsage": "bg: 'surface.container.low'"
+    },
+    {
+      "figmaPath": "Semantic/surface/container",
+      "pandaToken": "surface.container",
+      "cssProperty": "--colors-surface-container",
+      "exampleUsage": "bg: 'surface.container'"
+    },
+    {
+      "figmaPath": "Semantic/surface/container/high",
+      "pandaToken": "surface.container.high",
+      "cssProperty": "--colors-surface-container-high",
+      "exampleUsage": "bg: 'surface.container.high'"
+    },
+    {
+      "figmaPath": "Semantic/surface/container/highest",
+      "pandaToken": "surface.container.highest",
+      "cssProperty": "--colors-surface-container-highest",
+      "exampleUsage": "bg: 'surface.container.highest'"
+    },
+    {
+      "figmaPath": "Semantic/outline",
+      "pandaToken": "outline",
+      "cssProperty": "--colors-outline",
+      "exampleUsage": "borderColor: 'outline'"
+    },
+    {
+      "figmaPath": "Semantic/outline/variant",
+      "pandaToken": "outline.variant",
+      "cssProperty": "--colors-outline-variant",
+      "exampleUsage": "borderColor: 'outline.variant'"
+    },
+    {
+      "figmaPath": "Semantic/inverse/surface",
+      "pandaToken": "inverseSurface",
+      "cssProperty": "--colors-inverse-surface",
+      "exampleUsage": "bg: 'inverseSurface'",
+      "mismatch": true,
+      "mismatchNote": "Figma 'inverse/surface' → Panda 'inverseSurface' (flat camelCase, not dot-notation nested token)"
+    },
+    {
+      "figmaPath": "Semantic/inverse/onSurface",
+      "pandaToken": "inverseOnSurface",
+      "cssProperty": "--colors-inverse-on-surface",
+      "exampleUsage": "color: 'inverseOnSurface'",
+      "mismatch": true,
+      "mismatchNote": "Figma 'inverse/onSurface' → Panda 'inverseOnSurface' (flat camelCase, not dot-notation nested token)"
+    },
+    {
+      "figmaPath": "Semantic/inverse/primary",
+      "pandaToken": "inversePrimary",
+      "cssProperty": "--colors-inverse-primary",
+      "exampleUsage": "color: 'inversePrimary'",
+      "mismatch": true,
+      "mismatchNote": "Figma 'inverse/primary' → Panda 'inversePrimary' (flat camelCase, not dot-notation nested token)"
+    },
+    {
+      "figmaPath": "Semantic/background",
+      "pandaToken": "background",
+      "cssProperty": "--colors-background",
+      "exampleUsage": "bg: 'background'"
+    },
+    {
+      "figmaPath": "Semantic/onBackground",
+      "pandaToken": "onBackground",
+      "cssProperty": "--colors-on-background",
+      "exampleUsage": "color: 'onBackground'"
+    },
+    {
+      "figmaPath": "Semantic/scrim",
+      "pandaToken": "scrim",
+      "cssProperty": "--colors-scrim",
+      "exampleUsage": "bg: 'scrim'"
+    },
+    {
+      "figmaPath": "Semantic/shadow",
+      "pandaToken": "shadow",
+      "cssProperty": "--colors-shadow",
+      "exampleUsage": "color: 'shadow'"
+    }
+  ],
+  "semanticPandaOnly": [
+    {
+      "pandaToken": "surface.dim",
+      "cssProperty": "--colors-surface-dim",
+      "notes": "Aliased from surfaceContainerLow. No Figma variable equivalent.",
+      "exampleUsage": "bg: 'surface.dim'"
+    },
+    {
+      "pandaToken": "surface.bright",
+      "cssProperty": "--colors-surface-bright",
+      "notes": "Aliased from surfaceContainerHigh. No Figma variable equivalent.",
+      "exampleUsage": "bg: 'surface.bright'"
+    },
+    {
+      "pandaToken": "inverseSecondary",
+      "cssProperty": "--colors-inverse-secondary",
+      "notes": "Non-standard M3 token following inversePrimary pattern. No Figma variable equivalent.",
+      "exampleUsage": "color: 'inverseSecondary'"
+    },
+    {
+      "pandaToken": "inverseTertiary",
+      "cssProperty": "--colors-inverse-tertiary",
+      "notes": "Non-standard M3 token following inversePrimary pattern. No Figma variable equivalent.",
+      "exampleUsage": "color: 'inverseTertiary'"
+    }
+  ],
+  "bridge": {
+    "description": "Radix-scale bridge tokens generated by src/preset/colors/create-palette-bridge.ts. Applies to all five palettes: primary, secondary, tertiary, error, neutral.",
+    "palettes": ["primary", "secondary", "tertiary", "error", "neutral"],
+    "baseScale": [
+      {
+        "pattern": "{palette}.1 through {palette}.12",
+        "cssPattern": "--colors-{palette}-1 through --colors-{palette}-12",
+        "notes": "1-2: app background; 3-4: subtle backgrounds; 5-6: UI element backgrounds; 7-8: borders; 9: solid action color; 10: hover state; 11: low-contrast text; 12: high-contrast text",
+        "exampleUsage": "bg: 'primary.3'",
+        "tokenKeys": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12"
+        ]
+      }
+    ],
+    "alphaScale": [
+      {
+        "pattern": "{palette}.a1 through {palette}.a12",
+        "cssPattern": "--colors-{palette}-a1 through --colors-{palette}-a12",
+        "notes": "Transparency variants for overlays. Hex opacity suffix: a1=~3%, a6=~50%, a12=~94%",
+        "exampleUsage": "bg: 'primary.a3'",
+        "tokenKeys": [
+          "a1",
+          "a2",
+          "a3",
+          "a4",
+          "a5",
+          "a6",
+          "a7",
+          "a8",
+          "a9",
+          "a10",
+          "a11",
+          "a12"
+        ]
+      }
+    ],
+    "semanticVariants": [
+      {
+        "tokenPattern": "{palette}.solid.bg",
+        "cssPattern": "--colors-{palette}-solid-bg",
+        "purpose": "Primary action background",
+        "exampleUsage": "bg: 'primary.solid.bg'"
+      },
+      {
+        "tokenPattern": "{palette}.solid.bg.hover",
+        "cssPattern": "--colors-{palette}-solid-bg-hover",
+        "purpose": "Hovered solid background",
+        "exampleUsage": "— (hover state)"
+      },
+      {
+        "tokenPattern": "{palette}.solid.fg",
+        "cssPattern": "--colors-{palette}-solid-fg",
+        "purpose": "Foreground on solid bg",
+        "exampleUsage": "color: 'primary.solid.fg'"
+      },
+      {
+        "tokenPattern": "{palette}.subtle.bg",
+        "cssPattern": "--colors-{palette}-subtle-bg",
+        "purpose": "Subtle tinted background",
+        "exampleUsage": "bg: 'primary.subtle.bg'"
+      },
+      {
+        "tokenPattern": "{palette}.subtle.bg.hover",
+        "cssPattern": "--colors-{palette}-subtle-bg-hover",
+        "purpose": "Hovered subtle background",
+        "exampleUsage": "— (hover state)"
+      },
+      {
+        "tokenPattern": "{palette}.subtle.bg.active",
+        "cssPattern": "--colors-{palette}-subtle-bg-active",
+        "purpose": "Active subtle background",
+        "exampleUsage": "— (active state)"
+      },
+      {
+        "tokenPattern": "{palette}.subtle.fg",
+        "cssPattern": "--colors-{palette}-subtle-fg",
+        "purpose": "Foreground on subtle bg",
+        "exampleUsage": "color: 'primary.subtle.fg'"
+      },
+      {
+        "tokenPattern": "{palette}.surface.bg",
+        "cssPattern": "--colors-{palette}-surface-bg",
+        "purpose": "Low-tint surface background",
+        "exampleUsage": "bg: 'primary.surface.bg'"
+      },
+      {
+        "tokenPattern": "{palette}.surface.bg.active",
+        "cssPattern": "--colors-{palette}-surface-bg-active",
+        "purpose": "Active surface background",
+        "exampleUsage": "— (active state)"
+      },
+      {
+        "tokenPattern": "{palette}.surface.border",
+        "cssPattern": "--colors-{palette}-surface-border",
+        "purpose": "Surface border",
+        "exampleUsage": "borderColor: 'primary.surface.border'"
+      },
+      {
+        "tokenPattern": "{palette}.surface.border.hover",
+        "cssPattern": "--colors-{palette}-surface-border-hover",
+        "purpose": "Hovered surface border",
+        "exampleUsage": "— (hover state)"
+      },
+      {
+        "tokenPattern": "{palette}.surface.fg",
+        "cssPattern": "--colors-{palette}-surface-fg",
+        "purpose": "Foreground on surface",
+        "exampleUsage": "color: 'primary.surface.fg'"
+      },
+      {
+        "tokenPattern": "{palette}.outline.bg",
+        "cssPattern": "--colors-{palette}-outline-bg",
+        "purpose": "Transparent outline background",
+        "exampleUsage": "bg: 'primary.outline.bg'"
+      },
+      {
+        "tokenPattern": "{palette}.outline.bg.hover",
+        "cssPattern": "--colors-{palette}-outline-bg-hover",
+        "purpose": "Hovered outline background",
+        "exampleUsage": "— (hover state)"
+      },
+      {
+        "tokenPattern": "{palette}.outline.bg.active",
+        "cssPattern": "--colors-{palette}-outline-bg-active",
+        "purpose": "Active outline background",
+        "exampleUsage": "— (active state)"
+      },
+      {
+        "tokenPattern": "{palette}.outline.border",
+        "cssPattern": "--colors-{palette}-outline-border",
+        "purpose": "Outline border",
+        "exampleUsage": "borderColor: 'primary.outline.border'"
+      },
+      {
+        "tokenPattern": "{palette}.outline.fg",
+        "cssPattern": "--colors-{palette}-outline-fg",
+        "purpose": "Foreground for outline variant",
+        "exampleUsage": "color: 'primary.outline.fg'"
+      },
+      {
+        "tokenPattern": "{palette}.plain.bg",
+        "cssPattern": "--colors-{palette}-plain-bg",
+        "purpose": "No-chrome background (transparent)",
+        "exampleUsage": "bg: 'primary.plain.bg'"
+      },
+      {
+        "tokenPattern": "{palette}.plain.bg.hover",
+        "cssPattern": "--colors-{palette}-plain-bg-hover",
+        "purpose": "Hovered plain background",
+        "exampleUsage": "— (hover state)"
+      },
+      {
+        "tokenPattern": "{palette}.plain.bg.active",
+        "cssPattern": "--colors-{palette}-plain-bg-active",
+        "purpose": "Active plain background",
+        "exampleUsage": "— (active state)"
+      },
+      {
+        "tokenPattern": "{palette}.plain.fg",
+        "cssPattern": "--colors-{palette}-plain-fg",
+        "purpose": "Foreground for plain variant",
+        "exampleUsage": "color: 'primary.plain.fg'"
+      }
+    ],
+    "specialCases": [
+      {
+        "palette": "error",
+        "note": "The error bridge also includes a DEFAULT key at root level (includeDefault: true in create-palette-bridge.ts:148). 'error' resolves to m3[40] (light) / m3[80] (dark) in addition to the Radix 1-12 scale."
+      }
+    ]
+  },
+  "spacingAndShape": [
+    {
+      "figmaPath": "Spacing & Shape/spacing/none",
+      "pandaToken": "none",
+      "pandaCategory": "spacing",
+      "cssProperty": "--spacing-none",
+      "exampleUsage": "p: 'none'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/spacing/xxs",
+      "pandaToken": "xxs",
+      "pandaCategory": "spacing",
+      "cssProperty": "--spacing-xxs",
+      "exampleUsage": "p: 'xxs'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/spacing/xs",
+      "pandaToken": "xs",
+      "pandaCategory": "spacing",
+      "cssProperty": "--spacing-xs",
+      "exampleUsage": "p: 'xs'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/spacing/sm",
+      "pandaToken": "sm",
+      "pandaCategory": "spacing",
+      "cssProperty": "--spacing-sm",
+      "exampleUsage": "p: 'sm'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/spacing/md",
+      "pandaToken": "md",
+      "pandaCategory": "spacing",
+      "cssProperty": "--spacing-md",
+      "exampleUsage": "p: 'md', gap: 'md'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/spacing/lg",
+      "pandaToken": "lg",
+      "pandaCategory": "spacing",
+      "cssProperty": "--spacing-lg",
+      "exampleUsage": "p: 'lg'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/spacing/xl",
+      "pandaToken": "xl",
+      "pandaCategory": "spacing",
+      "cssProperty": "--spacing-xl",
+      "exampleUsage": "p: 'xl'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/spacing/xxl",
+      "pandaToken": "xxl",
+      "pandaCategory": "spacing",
+      "cssProperty": "--spacing-xxl",
+      "exampleUsage": "p: 'xxl'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/spacing/xxxl",
+      "pandaToken": "xxxl",
+      "pandaCategory": "spacing",
+      "cssProperty": "--spacing-xxxl",
+      "exampleUsage": "p: 'xxxl'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/radii/none",
+      "pandaToken": "none",
+      "pandaCategory": "radii",
+      "cssProperty": "--radii-none",
+      "exampleUsage": "borderRadius: 'none'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/radii/extraSmall",
+      "pandaToken": "extraSmall",
+      "pandaCategory": "radii",
+      "cssProperty": "--radii-extra-small",
+      "exampleUsage": "borderRadius: 'extraSmall'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/radii/small",
+      "pandaToken": "small",
+      "pandaCategory": "radii",
+      "cssProperty": "--radii-small",
+      "exampleUsage": "borderRadius: 'small'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/radii/medium",
+      "pandaToken": "medium",
+      "pandaCategory": "radii",
+      "cssProperty": "--radii-medium",
+      "exampleUsage": "borderRadius: 'medium'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/radii/large",
+      "pandaToken": "large",
+      "pandaCategory": "radii",
+      "cssProperty": "--radii-large",
+      "exampleUsage": "borderRadius: 'large'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/radii/extraLarge",
+      "pandaToken": "extraLarge",
+      "pandaCategory": "radii",
+      "cssProperty": "--radii-extra-large",
+      "exampleUsage": "borderRadius: 'extraLarge'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/radii/full",
+      "pandaToken": "full",
+      "pandaCategory": "radii",
+      "cssProperty": "--radii-full",
+      "exampleUsage": "borderRadius: 'full'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/border/thin",
+      "pandaToken": "thin",
+      "pandaCategory": "borderWidths",
+      "cssProperty": "--border-widths-thin",
+      "exampleUsage": "borderWidth: 'thin'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/border/medium",
+      "pandaToken": "medium",
+      "pandaCategory": "borderWidths",
+      "cssProperty": "--border-widths-medium",
+      "exampleUsage": "borderWidth: 'medium'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/border/thick",
+      "pandaToken": "thick",
+      "pandaCategory": "borderWidths",
+      "cssProperty": "--border-widths-thick",
+      "exampleUsage": "borderWidth: 'thick'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/duration/instant",
+      "pandaToken": "instant",
+      "pandaCategory": "durations",
+      "cssProperty": "--durations-instant",
+      "exampleUsage": "transitionDuration: 'instant'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/duration/fast",
+      "pandaToken": "fast",
+      "pandaCategory": "durations",
+      "cssProperty": "--durations-fast",
+      "exampleUsage": "transitionDuration: 'fast'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/duration/normal",
+      "pandaToken": "normal",
+      "pandaCategory": "durations",
+      "cssProperty": "--durations-normal",
+      "exampleUsage": "transitionDuration: 'normal'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/duration/slow",
+      "pandaToken": "slow",
+      "pandaCategory": "durations",
+      "cssProperty": "--durations-slow",
+      "exampleUsage": "transitionDuration: 'slow'"
+    },
+    {
+      "figmaPath": "Spacing & Shape/duration/slower",
+      "pandaToken": "slower",
+      "pandaCategory": "durations",
+      "cssProperty": "--durations-slower",
+      "exampleUsage": "transitionDuration: 'slower'"
+    }
+  ],
+  "effectStyles": [
+    {
+      "figmaEffectStyle": "elevation/level0",
+      "pandaToken": "level0",
+      "pandaCategory": "shadows",
+      "cssProperty": "--shadows-level0",
+      "description": "No elevation — flat surfaces",
+      "exampleUsage": "shadow: 'level0'"
+    },
+    {
+      "figmaEffectStyle": "elevation/level1",
+      "pandaToken": "level1",
+      "pandaCategory": "shadows",
+      "cssProperty": "--shadows-level1",
+      "description": "Cards at rest, contained buttons",
+      "exampleUsage": "shadow: 'level1'"
+    },
+    {
+      "figmaEffectStyle": "elevation/level2",
+      "pandaToken": "level2",
+      "pandaCategory": "shadows",
+      "cssProperty": "--shadows-level2",
+      "description": "Cards on hover, raised buttons",
+      "exampleUsage": "shadow: 'level2'"
+    },
+    {
+      "figmaEffectStyle": "elevation/level3",
+      "pandaToken": "level3",
+      "pandaCategory": "shadows",
+      "cssProperty": "--shadows-level3",
+      "description": "Dialogs, dropdowns, popovers",
+      "exampleUsage": "shadow: 'level3'"
+    },
+    {
+      "figmaEffectStyle": "elevation/level4",
+      "pandaToken": "level4",
+      "pandaCategory": "shadows",
+      "cssProperty": "--shadows-level4",
+      "description": "Navigation drawers, modal sheets",
+      "exampleUsage": "shadow: 'level4'"
+    },
+    {
+      "figmaEffectStyle": "elevation/level5",
+      "pandaToken": "level5",
+      "pandaCategory": "shadows",
+      "cssProperty": "--shadows-level5",
+      "description": "FABs, tooltips, snackbars",
+      "exampleUsage": "shadow: 'level5'"
+    }
+  ],
+  "shadowSemanticAliases": [
+    {
+      "pandaToken": "xs",
+      "cssProperty": "--shadows-xs",
+      "resolvesTo": "level1",
+      "exampleUsage": "shadow: 'xs'"
+    },
+    {
+      "pandaToken": "sm",
+      "cssProperty": "--shadows-sm",
+      "resolvesTo": "level2",
+      "exampleUsage": "shadow: 'sm'"
+    },
+    {
+      "pandaToken": "md",
+      "cssProperty": "--shadows-md",
+      "resolvesTo": "level3",
+      "exampleUsage": "shadow: 'md'"
+    },
+    {
+      "pandaToken": "lg",
+      "cssProperty": "--shadows-lg",
+      "resolvesTo": "level4",
+      "exampleUsage": "shadow: 'lg'"
+    },
+    {
+      "pandaToken": "xl",
+      "cssProperty": "--shadows-xl",
+      "resolvesTo": "level5",
+      "exampleUsage": "shadow: 'xl'"
+    },
+    {
+      "pandaToken": "2xl",
+      "cssProperty": "--shadows-2xl",
+      "resolvesTo": "level5",
+      "exampleUsage": "shadow: '2xl'"
+    },
+    {
+      "pandaToken": "inset",
+      "cssProperty": "--shadows-inset",
+      "resolvesTo": "custom inset using neutral.a4/a6",
+      "exampleUsage": "shadow: 'inset'"
+    }
+  ],
+  "textStyles": [
+    {
+      "figmaTextStyle": "displayLarge",
+      "pandaTextStyle": "displayLarge",
+      "fontFamily": "Fraunces",
+      "fontSize": 57,
+      "fontWeight": 400,
+      "lineHeight": 64,
+      "letterSpacing": -0.25,
+      "exampleUsage": "textStyle: 'displayLarge'"
+    },
+    {
+      "figmaTextStyle": "displayMedium",
+      "pandaTextStyle": "displayMedium",
+      "fontFamily": "Fraunces",
+      "fontSize": 45,
+      "fontWeight": 400,
+      "lineHeight": 52,
+      "letterSpacing": 0,
+      "exampleUsage": "textStyle: 'displayMedium'"
+    },
+    {
+      "figmaTextStyle": "displaySmall",
+      "pandaTextStyle": "displaySmall",
+      "fontFamily": "Fraunces",
+      "fontSize": 36,
+      "fontWeight": 400,
+      "lineHeight": 44,
+      "letterSpacing": 0,
+      "exampleUsage": "textStyle: 'displaySmall'"
+    },
+    {
+      "figmaTextStyle": "headlineLarge",
+      "pandaTextStyle": "headlineLarge",
+      "fontFamily": "Fraunces",
+      "fontSize": 32,
+      "fontWeight": 400,
+      "lineHeight": 40,
+      "letterSpacing": 0,
+      "exampleUsage": "textStyle: 'headlineLarge'"
+    },
+    {
+      "figmaTextStyle": "headlineMedium",
+      "pandaTextStyle": "headlineMedium",
+      "fontFamily": "Fraunces",
+      "fontSize": 28,
+      "fontWeight": 400,
+      "lineHeight": 36,
+      "letterSpacing": 0,
+      "exampleUsage": "textStyle: 'headlineMedium'"
+    },
+    {
+      "figmaTextStyle": "headlineSmall",
+      "pandaTextStyle": "headlineSmall",
+      "fontFamily": "Fraunces",
+      "fontSize": 24,
+      "fontWeight": 400,
+      "lineHeight": 32,
+      "letterSpacing": 0,
+      "exampleUsage": "textStyle: 'headlineSmall'"
+    },
+    {
+      "figmaTextStyle": "titleLarge",
+      "pandaTextStyle": "titleLarge",
+      "fontFamily": "Poppins",
+      "fontSize": 22,
+      "fontWeight": 500,
+      "lineHeight": 28,
+      "letterSpacing": 0,
+      "exampleUsage": "textStyle: 'titleLarge'"
+    },
+    {
+      "figmaTextStyle": "titleMedium",
+      "pandaTextStyle": "titleMedium",
+      "fontFamily": "Poppins",
+      "fontSize": 16,
+      "fontWeight": 500,
+      "lineHeight": 24,
+      "letterSpacing": 0.15,
+      "exampleUsage": "textStyle: 'titleMedium'"
+    },
+    {
+      "figmaTextStyle": "titleSmall",
+      "pandaTextStyle": "titleSmall",
+      "fontFamily": "Poppins",
+      "fontSize": 14,
+      "fontWeight": 500,
+      "lineHeight": 20,
+      "letterSpacing": 0.1,
+      "exampleUsage": "textStyle: 'titleSmall'"
+    },
+    {
+      "figmaTextStyle": "bodyLarge",
+      "pandaTextStyle": "bodyLarge",
+      "fontFamily": "Poppins",
+      "fontSize": 16,
+      "fontWeight": 400,
+      "lineHeight": 24,
+      "letterSpacing": 0.5,
+      "exampleUsage": "textStyle: 'bodyLarge'"
+    },
+    {
+      "figmaTextStyle": "bodyMedium",
+      "pandaTextStyle": "bodyMedium",
+      "fontFamily": "Poppins",
+      "fontSize": 14,
+      "fontWeight": 400,
+      "lineHeight": 20,
+      "letterSpacing": 0.25,
+      "exampleUsage": "textStyle: 'bodyMedium'"
+    },
+    {
+      "figmaTextStyle": "bodySmall",
+      "pandaTextStyle": "bodySmall",
+      "fontFamily": "Poppins",
+      "fontSize": 12,
+      "fontWeight": 400,
+      "lineHeight": 16,
+      "letterSpacing": 0.4,
+      "exampleUsage": "textStyle: 'bodySmall'"
+    },
+    {
+      "figmaTextStyle": "labelLarge",
+      "pandaTextStyle": "labelLarge",
+      "fontFamily": "Poppins",
+      "fontSize": 14,
+      "fontWeight": 500,
+      "lineHeight": 20,
+      "letterSpacing": 0.1,
+      "exampleUsage": "textStyle: 'labelLarge'"
+    },
+    {
+      "figmaTextStyle": "labelMedium",
+      "pandaTextStyle": "labelMedium",
+      "fontFamily": "Poppins",
+      "fontSize": 12,
+      "fontWeight": 500,
+      "lineHeight": 16,
+      "letterSpacing": 0.5,
+      "exampleUsage": "textStyle: 'labelMedium'"
+    },
+    {
+      "figmaTextStyle": "labelSmall",
+      "pandaTextStyle": "labelSmall",
+      "fontFamily": "Poppins",
+      "fontSize": 11,
+      "fontWeight": 500,
+      "lineHeight": 16,
+      "letterSpacing": 0.5,
+      "exampleUsage": "textStyle: 'labelSmall'"
+    }
+  ]
+}
