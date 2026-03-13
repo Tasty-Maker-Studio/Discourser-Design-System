@@ -1,6 +1,7 @@
 import { type CSSProperties } from 'react';
 
 interface TypeSpecimenProps {
+  styleName: string;
   name: string;
   fontSize: string;
   lineHeight: string;
@@ -11,6 +12,7 @@ interface TypeSpecimenProps {
 }
 
 export const TypeSpecimen = ({
+  styleName: _styleName,
   name,
   fontSize,
   lineHeight,
@@ -37,16 +39,6 @@ export const TypeSpecimen = ({
     fontWeight: '600',
     fontFamily: 'Inter, sans-serif',
     color: '#333',
-  };
-
-  const specimenStyle: CSSProperties = {
-    fontSize,
-    lineHeight,
-    fontWeight,
-    letterSpacing,
-    fontFamily: getFontFamilyString(fontFamily),
-    marginBottom: '16px',
-    color: '#000',
   };
 
   const propertiesStyle: CSSProperties = {
@@ -79,7 +71,24 @@ export const TypeSpecimen = ({
       <div style={headerStyle}>
         <div style={nameStyle}>{name}</div>
       </div>
-      <div style={specimenStyle}>{sampleText}</div>
+      <div
+        style={{
+          color: '#000',
+          marginBottom: '16px',
+          fontFamily:
+            fontFamily === 'display'
+              ? 'var(--fonts-display)'
+              : fontFamily === 'mono'
+                ? 'var(--fonts-mono)'
+                : 'var(--fonts-body)',
+          fontSize,
+          lineHeight,
+          fontWeight,
+          letterSpacing,
+        }}
+      >
+        {sampleText}
+      </div>
       <div style={propertiesStyle}>
         <div style={propertyStyle}>
           <div style={propertyLabelStyle}>Font Size</div>
@@ -105,13 +114,3 @@ export const TypeSpecimen = ({
     </div>
   );
 };
-
-function getFontFamilyString(family: string): string {
-  const fontFamilies = {
-    display: '"Fraunces", Georgia, "Times New Roman", serif',
-    body: '"Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-    mono: '"JetBrains Mono", "Fira Code", Consolas, monospace',
-  };
-
-  return fontFamilies[family as keyof typeof fontFamilies] || family;
-}

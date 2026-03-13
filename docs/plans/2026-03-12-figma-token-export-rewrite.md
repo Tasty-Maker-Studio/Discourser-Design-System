@@ -1,3 +1,56 @@
+# Figma Token Export Rewrite Implementation Plan
+
+> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
+
+**Goal:** Rewrite `scripts/export-figma-tokens.ts` to generate three DTCG-compatible output files from `material3Language` with zero hardcoded values.
+
+**Architecture:** Single script with pure helper functions. Each output file is built by a dedicated builder function that reads exclusively from `material3Language`. The semantic key → Figma path mapping is handled by a single `semanticKeyToFigmaPath()` pure function. All three files are written to `dist/`, and `dist/figma-variables.json` is also copied to `tokens/tokens.json`.
+
+**Tech Stack:** TypeScript (ESM), tsx runner, Node.js `fs`/`path`, no new dependencies.
+
+---
+
+### Task 1: Add `figma:export` script to package.json
+
+**Files:**
+
+- Modify: `package.json`
+
+**Step 1: Add the script entry**
+
+In `package.json`, find the `"scripts"` block. Add after the last existing script entry:
+
+```json
+"figma:export": "tsx scripts/export-figma-tokens.ts"
+```
+
+**Step 2: Verify**
+
+```bash
+cd /Users/willstreeter/WebstormProjects/vibe-coding/shifu-project/Discourser-Design-System
+cat package.json | grep figma:export
+```
+
+Expected output: `"figma:export": "tsx scripts/export-figma-tokens.ts"`
+
+**Step 3: Commit**
+
+```bash
+git add package.json
+git commit -m "chore: add figma:export script to package.json"
+```
+
+---
+
+### Task 2: Rewrite scripts/export-figma-tokens.ts
+
+**Files:**
+
+- Modify: `scripts/export-figma-tokens.ts` (complete rewrite)
+
+**Step 1: Replace the entire file with this implementation**
+
+```typescript
 /**
  * Export Design System Tokens for Figma
  *
@@ -111,9 +164,7 @@ function buildSemantic(): Record<string, DtcgColorEntry> {
 
   // Iterate light keys (semantic and semanticDark must have identical key sets)
   for (const [key, lightValue] of Object.entries(lang.semantic)) {
-    const darkValue = (lang.semanticDark as unknown as Record<string, string>)[
-      key
-    ];
+    const darkValue = (lang.semanticDark as Record<string, string>)[key];
     const figmaPath = semanticKeyToFigmaPath(key);
 
     result[figmaPath] = {
@@ -303,3 +354,151 @@ console.log(
   `✅ dist/figma-text-styles.json — ${Object.keys(textStyles).length} text styles`,
 );
 console.log(`✅ tokens/tokens.json updated`);
+```
+
+**Step 2: Run the export script to verify it executes clean**
+
+```bash
+cd /Users/willstreeter/WebstormProjects/vibe-coding/shifu-project/Discourser-Design-System
+pnpm figma:export
+```
+
+Expected output (exact numbers):
+
+```
+✅ dist/figma-variables.json — 78 Primitives, 31 Semantic, 24 Spacing & Shape tokens
+✅ dist/figma-effect-styles.json — 6 elevation levels
+✅ dist/figma-text-styles.json — 15 text styles
+✅ tokens/tokens.json updated
+```
+
+**Step 3: Spot-check the output files**
+
+```bash
+# Verify Primitives structure
+node -e "const f=JSON.parse(require('fs').readFileSync('dist/figma-variables.json','utf8')); console.log(Object.keys(f.Primitives).slice(0,3)); console.log(f.Primitives['primary/0'])"
+```
+
+Expected:
+
+```
+[ 'primary/0', 'primary/10', 'primary/20' ]
+{ '$type': 'color', '$value': { Value: '#000000' } }
+```
+
+```bash
+# Verify Semantic has Light/Dark modes (no dark-* prefix keys)
+node -e "const f=JSON.parse(require('fs').readFileSync('dist/figma-variables.json','utf8')); const s=f.Semantic; console.log(s['primary']); console.log(s['primary/container']); console.log(s['surface/container/lowest'])"
+```
+
+Expected:
+
+```
+{ '$type': 'color', '$value': { Light: '#4C662B', Dark: '#B1D18A' } }
+{ '$type': 'color', '$value': { Light: '#CDEDA3', Dark: '#354E16' } }
+{ '$type': 'color', '$value': { Light: '#FFFFFF', Dark: '#0C0F09' } }
+```
+
+```bash
+# Verify numeric tokens are numbers not strings
+node -e "const f=JSON.parse(require('fs').readFileSync('dist/figma-variables.json','utf8')); const s=f['Spacing & Shape']; console.log(s['spacing/md']); console.log(s['radii/extraSmall']); console.log(s['border/thin']); console.log(s['duration/normal'])"
+```
+
+Expected:
+
+```
+{ '$type': 'number', '$value': { Value: 16 } }
+{ '$type': 'number', '$value': { Value: 4 } }
+{ '$type': 'number', '$value': { Value: 1 } }
+{ '$type': 'number', '$value': { Value: 200 } }
+```
+
+```bash
+# Verify text styles have numeric values and correct font family
+node -e "const f=JSON.parse(require('fs').readFileSync('dist/figma-text-styles.json','utf8')); console.log(f['displayLarge']); console.log(f['bodyMedium'])"
+```
+
+Expected:
+
+```
+{
+  fontFamily: 'Fraunces',
+  fontSize: 57,
+  fontWeight: 400,
+  lineHeight: 64,
+  letterSpacing: -0.25,
+  figmaTextStyle: 'displayLarge'
+}
+{
+  fontFamily: 'Poppins',
+  fontSize: 14,
+  fontWeight: 400,
+  lineHeight: 20,
+  letterSpacing: 0.25,
+  figmaTextStyle: 'bodyMedium'
+}
+```
+
+```bash
+# Verify effect styles
+node -e "const f=JSON.parse(require('fs').readFileSync('dist/figma-effect-styles.json','utf8')); console.log(Object.keys(f.elevation)); console.log(f.elevation.level1)"
+```
+
+Expected:
+
+```
+[ 'level0', 'level1', 'level2', 'level3', 'level4', 'level5' ]
+{
+  value: '0px 1px 2px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15)',
+  description: 'Cards at rest, contained buttons (semantic: xs)'
+}
+```
+
+```bash
+# Verify tokens/tokens.json was updated
+node -e "const f=JSON.parse(require('fs').readFileSync('tokens/tokens.json','utf8')); console.log(Object.keys(f))"
+```
+
+Expected:
+
+```
+[ '$metadata', 'Primitives', 'Semantic', 'Spacing & Shape' ]
+```
+
+**Step 4: Run typecheck**
+
+```bash
+pnpm tsc --noEmit
+```
+
+Expected: No errors.
+
+**Step 5: Run tests to verify no regressions**
+
+```bash
+pnpm test
+```
+
+Expected: All tests pass (306/306).
+
+**Step 6: Commit**
+
+```bash
+git add scripts/export-figma-tokens.ts tokens/tokens.json
+git commit -m "feat: rewrite export-figma-tokens to DTCG format with Light/Dark modes"
+```
+
+---
+
+## Success Criteria
+
+- [ ] `pnpm figma:export` runs clean with no errors
+- [ ] `dist/figma-variables.json` exists with `Primitives`, `Semantic`, `Spacing & Shape` collections
+- [ ] Semantic collection has `Light`/`Dark` modes (no `dark-*` prefix keys anywhere)
+- [ ] All numeric tokens (spacing, radii, border, duration) are numbers not strings
+- [ ] `dist/figma-effect-styles.json` exists with 6 elevation levels
+- [ ] `dist/figma-text-styles.json` exists with 15 text styles, numeric values
+- [ ] `tokens/tokens.json` updated to match figma-variables.json content
+- [ ] Zero hardcoded hex values in the script
+- [ ] `pnpm test` passes: 306/306 (no regressions)
+- [ ] `pnpm tsc --noEmit` clean

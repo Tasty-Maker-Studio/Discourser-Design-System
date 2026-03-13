@@ -84,7 +84,7 @@ function transformTextStyles(language: DesignLanguageContract) {
       name,
       {
         value: {
-          fontFamily: style.fontFamily || 'body',
+          fontFamily: `{fonts.${style.fontFamily || 'body'}}`,
           fontSize: style.fontSize,
           lineHeight: style.lineHeight,
           fontWeight: style.fontWeight,

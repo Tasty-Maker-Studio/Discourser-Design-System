@@ -1,6 +1,5 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 import { SpacingBox } from './components/SpacingBox';
-import { material3Language } from '../../languages/material3.language';
 
 <Meta title="Foundations/Spacing" />
 
@@ -13,15 +12,15 @@ The Discourser Design System uses a consistent spacing scale based on an 8-point
 Our spacing scale ranges from `none` (0px) to `xxxl` (64px), with incremental steps that follow a logical progression.
 
 <div style={{ marginTop: '32px', marginBottom: '48px' }}>
-  <SpacingBox name="none" value={material3Language.spacing.none} />
-  <SpacingBox name="xxs" value={material3Language.spacing.xxs} />
-  <SpacingBox name="xs" value={material3Language.spacing.xs} />
-  <SpacingBox name="sm" value={material3Language.spacing.sm} />
-  <SpacingBox name="md" value={material3Language.spacing.md} />
-  <SpacingBox name="lg" value={material3Language.spacing.lg} />
-  <SpacingBox name="xl" value={material3Language.spacing.xl} />
-  <SpacingBox name="xxl" value={material3Language.spacing.xxl} />
-  <SpacingBox name="xxxl" value={material3Language.spacing.xxxl} />
+  <SpacingBox name="none" value="0px" />
+  <SpacingBox name="xxs"  value="2px" />
+  <SpacingBox name="xs"   value="4px" />
+  <SpacingBox name="sm"   value="8px" />
+  <SpacingBox name="md"   value="16px" />
+  <SpacingBox name="lg"   value="24px" />
+  <SpacingBox name="xl"   value="32px" />
+  <SpacingBox name="xxl"  value="48px" />
+  <SpacingBox name="xxxl" value="64px" />
 </div>
 
 ---
@@ -30,15 +29,15 @@ Our spacing scale ranges from `none` (0px) to `xxxl` (64px), with incremental st
 
 | Token | Value | Pixels | Use Case |
 |-------|-------|--------|----------|
-| `none` | {material3Language.spacing.none} | 0px | Reset spacing, remove gaps |
-| `xxs` | {material3Language.spacing.xxs} | 2px | Minimal gaps, fine-tuning |
-| `xs` | {material3Language.spacing.xs} | 4px | Tight spacing within components |
-| `sm` | {material3Language.spacing.sm} | 8px | Component internal spacing |
-| `md` | {material3Language.spacing.md} | 16px | Default spacing, component gaps |
-| `lg` | {material3Language.spacing.lg} | 24px | Section spacing, card padding |
-| `xl` | {material3Language.spacing.xl} | 32px | Large section breaks |
-| `xxl` | {material3Language.spacing.xxl} | 48px | Major section dividers |
-| `xxxl` | {material3Language.spacing.xxxl} | 64px | Page-level spacing |
+| `none` | 0px | 0px | Reset spacing, remove gaps |
+| `xxs` | 2px | 2px | Minimal gaps, fine-tuning |
+| `xs` | 4px | 4px | Tight spacing within components |
+| `sm` | 8px | 8px | Component internal spacing |
+| `md` | 16px | 16px | Default spacing, component gaps |
+| `lg` | 24px | 24px | Section spacing, card padding |
+| `xl` | 32px | 32px | Large section breaks |
+| `xxl` | 48px | 48px | Major section dividers |
+| `xxxl` | 64px | 64px | Page-level spacing |
 
 ---
 
@@ -162,8 +161,8 @@ const flexStyle = css({
 <div style={{
   display: 'flex',
   flexDirection: 'column',
-  gap: material3Language.spacing.sm,
-  padding: material3Language.spacing.md,
+  gap: '8px',
+  padding: '16px',
   backgroundColor: '#f5f5f5',
   borderRadius: '8px',
   marginBottom: '24px'
@@ -184,8 +183,8 @@ const flexStyle = css({
 <div style={{
   display: 'flex',
   flexDirection: 'column',
-  gap: material3Language.spacing.md,
-  padding: material3Language.spacing.lg,
+  gap: '16px',
+  padding: '24px',
   backgroundColor: '#f5f5f5',
   borderRadius: '8px',
   marginBottom: '24px'
@@ -206,8 +205,8 @@ const flexStyle = css({
 <div style={{
   display: 'flex',
   flexDirection: 'column',
-  gap: material3Language.spacing.lg,
-  padding: material3Language.spacing.xl,
+  gap: '24px',
+  padding: '32px',
   backgroundColor: '#f5f5f5',
   borderRadius: '8px'
 }}>
