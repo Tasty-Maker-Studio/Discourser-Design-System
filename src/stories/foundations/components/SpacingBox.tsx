@@ -1,4 +1,18 @@
 import { type CSSProperties } from 'react';
+import { css } from 'styled-system/css';
+
+// ── Pre-declared css() calls — Panda CSS statically extracts these ─────────
+const spacingWidthClasses: Record<string, string> = {
+  none: css({ width: 'none' }),
+  xxs: css({ width: 'xxs' }),
+  xs: css({ width: 'xs' }),
+  sm: css({ width: 'sm' }),
+  md: css({ width: 'md' }),
+  lg: css({ width: 'lg' }),
+  xl: css({ width: 'xl' }),
+  xxl: css({ width: 'xxl' }),
+  xxxl: css({ width: 'xxxl' }),
+};
 
 interface SpacingBoxProps {
   name: string;
@@ -39,7 +53,6 @@ export const SpacingBox = ({ name, value }: SpacingBoxProps) => {
   };
 
   const boxStyle: CSSProperties = {
-    width: value,
     height: '40px',
     backgroundColor: '#4C662B',
     borderRadius: '4px',
@@ -64,7 +77,7 @@ export const SpacingBox = ({ name, value }: SpacingBoxProps) => {
         <div style={valueStyle}>{value}</div>
       </div>
       <div style={boxContainerStyle}>
-        <div style={boxStyle}>
+        <div style={boxStyle} className={spacingWidthClasses[name]}>
           <div style={dimensionStyle}>{value}</div>
         </div>
       </div>

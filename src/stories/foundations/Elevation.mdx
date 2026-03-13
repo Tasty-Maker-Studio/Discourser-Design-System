@@ -1,6 +1,5 @@
 import { Meta } from '@storybook/addon-docs/blocks';
-import { ElevationGrid } from './components/ElevationCard';
-import { material3Language } from '../../languages/material3.language';
+import { ElevationGrid, elevationClasses } from './components/ElevationCard';
 
 <Meta title="Foundations/Elevation" />
 
@@ -39,7 +38,7 @@ This architecture allows the design language to be swapped by changing which bas
 
 ## Elevation Scale
 
-<ElevationGrid elevations={material3Language.elevation.levels} />
+<ElevationGrid />
 
 ---
 
@@ -143,35 +142,26 @@ Elevation works differently in dark themes:
   borderRadius: '8px',
   marginBottom: '32px'
 }}>
-  <div style={{
-    padding: '24px',
-    backgroundColor: '#fff',
-    borderRadius: '12px',
-    boxShadow: material3Language.elevation.levels.level0,
-    textAlign: 'center'
-  }}>
+  <div
+    className={elevationClasses['level0']}
+    style={{ padding: '24px', backgroundColor: '#fff', borderRadius: '12px', textAlign: 'center' }}
+  >
     <div style={{ fontWeight: '600', marginBottom: '8px' }}>Level 0</div>
     <div style={{ fontSize: '12px', color: '#666' }}>Flat surface</div>
   </div>
 
-  <div style={{
-    padding: '24px',
-    backgroundColor: '#fff',
-    borderRadius: '12px',
-    boxShadow: material3Language.elevation.levels.level1,
-    textAlign: 'center'
-  }}>
+  <div
+    className={elevationClasses['level1']}
+    style={{ padding: '24px', backgroundColor: '#fff', borderRadius: '12px', textAlign: 'center' }}
+  >
     <div style={{ fontWeight: '600', marginBottom: '8px' }}>Level 1</div>
     <div style={{ fontSize: '12px', color: '#666' }}>Subtle depth</div>
   </div>
 
-  <div style={{
-    padding: '24px',
-    backgroundColor: '#fff',
-    borderRadius: '12px',
-    boxShadow: material3Language.elevation.levels.level2,
-    textAlign: 'center'
-  }}>
+  <div
+    className={elevationClasses['level2']}
+    style={{ padding: '24px', backgroundColor: '#fff', borderRadius: '12px', textAlign: 'center' }}
+  >
     <div style={{ fontWeight: '600', marginBottom: '8px' }}>Level 2</div>
     <div style={{ fontSize: '12px', color: '#666' }}>Moderate depth</div>
   </div>
@@ -187,35 +177,26 @@ Elevation works differently in dark themes:
   backgroundColor: '#f5f5f5',
   borderRadius: '8px'
 }}>
-  <div style={{
-    padding: '24px',
-    backgroundColor: '#fff',
-    borderRadius: '12px',
-    boxShadow: material3Language.elevation.levels.level3,
-    textAlign: 'center'
-  }}>
+  <div
+    className={elevationClasses['level3']}
+    style={{ padding: '24px', backgroundColor: '#fff', borderRadius: '12px', textAlign: 'center' }}
+  >
     <div style={{ fontWeight: '600', marginBottom: '8px' }}>Level 3</div>
     <div style={{ fontSize: '12px', color: '#666' }}>Prominent float</div>
   </div>
 
-  <div style={{
-    padding: '24px',
-    backgroundColor: '#fff',
-    borderRadius: '12px',
-    boxShadow: material3Language.elevation.levels.level4,
-    textAlign: 'center'
-  }}>
+  <div
+    className={elevationClasses['level4']}
+    style={{ padding: '24px', backgroundColor: '#fff', borderRadius: '12px', textAlign: 'center' }}
+  >
     <div style={{ fontWeight: '600', marginBottom: '8px' }}>Level 4</div>
     <div style={{ fontSize: '12px', color: '#666' }}>High elevation</div>
   </div>
 
-  <div style={{
-    padding: '24px',
-    backgroundColor: '#fff',
-    borderRadius: '12px',
-    boxShadow: material3Language.elevation.levels.level5,
-    textAlign: 'center'
-  }}>
+  <div
+    className={elevationClasses['level5']}
+    style={{ padding: '24px', backgroundColor: '#fff', borderRadius: '12px', textAlign: 'center' }}
+  >
     <div style={{ fontWeight: '600', marginBottom: '8px' }}>Level 5</div>
     <div style={{ fontSize: '12px', color: '#666' }}>Highest elevation</div>
   </div>

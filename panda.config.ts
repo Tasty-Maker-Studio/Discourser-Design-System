@@ -68,6 +68,23 @@ export default defineConfig({
     css: [
       {
         properties: {
+          textStyle: [
+            'displayLarge',
+            'displayMedium',
+            'displaySmall',
+            'headlineLarge',
+            'headlineMedium',
+            'headlineSmall',
+            'titleLarge',
+            'titleMedium',
+            'titleSmall',
+            'bodyLarge',
+            'bodyMedium',
+            'bodySmall',
+            'labelLarge',
+            'labelMedium',
+            'labelSmall',
+          ],
           colorPalette: [
             'primary',
             'secondary',
