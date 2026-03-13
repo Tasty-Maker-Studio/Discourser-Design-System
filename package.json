@@ -177,7 +177,8 @@
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "docs"
   ],
   "scripts": {
     "dev": "pnpm build:css && pnpm docs:generate && storybook dev -p 6006",
