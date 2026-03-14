@@ -21,6 +21,96 @@ const __dirname = path.dirname(__filename);
 const packageJsonPath = path.join(__dirname, '..', 'package.json');
 const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
 
+// Gap 3: M3 semantic token names — maps lowercase key → canonical camelCase key
+const M3_SEMANTIC_NAMES: Record<string, string> = {
+  primary: 'primary',
+  onprimary: 'onPrimary',
+  primarycontainer: 'primaryContainer',
+  onprimarycontainer: 'onPrimaryContainer',
+  secondary: 'secondary',
+  onsecondary: 'onSecondary',
+  secondarycontainer: 'secondaryContainer',
+  onsecondarycontainer: 'onSecondaryContainer',
+  tertiary: 'tertiary',
+  ontertiary: 'onTertiary',
+  tertiarycontainer: 'tertiaryContainer',
+  ontertiarycontainer: 'onTertiaryContainer',
+  error: 'error',
+  onerror: 'onError',
+  errorcontainer: 'errorContainer',
+  onerrorcontainer: 'onErrorContainer',
+  background: 'background',
+  onbackground: 'onBackground',
+  surface: 'surface',
+  onsurface: 'onSurface',
+  surfacevariant: 'surfaceVariant',
+  onsurfacevariant: 'onSurfaceVariant',
+  surfacecontainer: 'surfaceContainer',
+  surfacecontainerlow: 'surfaceContainerLow',
+  surfacecontainerhigh: 'surfaceContainerHigh',
+  surfacecontainerlowest: 'surfaceContainerLowest',
+  surfacecontainerhighest: 'surfaceContainerHighest',
+  outline: 'outline',
+  outlinevariant: 'outlineVariant',
+  shadow: 'shadow',
+  scrim: 'scrim',
+  inversesurface: 'inverseSurface',
+  inverseonsurface: 'inverseOnSurface',
+  inverseprimary: 'inversePrimary',
+};
+
+// Gap 4: M3 palette name normalization — maps lowercase → correct casing
+const M3_PALETTE_CASING: Record<string, string> = {
+  primary: 'primary',
+  secondary: 'secondary',
+  tertiary: 'tertiary',
+  neutral: 'neutral',
+  neutralvariant: 'neutralVariant',
+  error: 'error',
+};
+
+// Normalize a semantic key to camelCase using the M3_SEMANTIC_NAMES lookup.
+// Emits a console.warn for unknown keys so they are visible during script runs.
+function normalizeSemanticKey(key: string): string {
+  const lower = key.toLowerCase();
+  const camel = M3_SEMANTIC_NAMES[lower];
+  if (camel === undefined) {
+    console.warn(`⚠ Unknown semantic token key: "${key}" — emitting as-is`);
+    return key;
+  }
+  return camel;
+}
+
+// Normalize a DTCG alias $value string so the palette name uses correct casing.
+// Input:  "{neutralvariant.90}"
+// Output: "{neutralVariant.90}"
+function normalizeAliasValue(value: string): string {
+  return value.replace(/^\{(\w+)\.(\w+)\}$/, (_match, palette, tone) => {
+    const lowerPalette = palette.toLowerCase();
+    const normalized = M3_PALETTE_CASING[lowerPalette];
+    if (normalized === undefined) {
+      console.warn(
+        `⚠ Unknown palette in alias reference: "${palette}" — emitting as-is`,
+      );
+      return `{${palette}.${tone}}`;
+    }
+    return `{${normalized}.${tone}}`;
+  });
+}
+
+// Apply alias normalization to a single token's $value if it is a string alias.
+function normalizeTokenValue(
+  token: DTCGToken | TokenCollection,
+): DTCGToken | TokenCollection {
+  if ('$value' in token) {
+    const t = token as DTCGToken;
+    if (typeof t.$value === 'string') {
+      return { ...t, $value: normalizeAliasValue(t.$value) };
+    }
+  }
+  return token;
+}
+
 // Types
 interface FigmaExportConfig {
   primitivesPath: string;
@@ -297,16 +387,21 @@ async function generateCombinedTokens(outputDir: string): Promise<void> {
     }
   }
 
-  // Add light mode tokens at root level (no slash)
-  // These will be distinct from primitives due to lack of slash
+  // Add light mode tokens at root level (no slash).
+  // Gap 3: normalize keys to camelCase; Gap 4: normalize alias palette casing.
   for (const [key, value] of Object.entries(light)) {
-    combined[key] = value as DTCGToken | TokenCollection;
+    const normalizedKey = normalizeSemanticKey(key);
+    combined[normalizedKey] = normalizeTokenValue(
+      value as DTCGToken | TokenCollection,
+    );
   }
 
-  // Add dark mode tokens with dark- prefix
-  // This allows both light and dark mode tokens in the same file
+  // Add dark mode tokens with dark- prefix, same normalizations applied.
   for (const [key, value] of Object.entries(dark)) {
-    combined[`dark-${key}`] = value as DTCGToken | TokenCollection;
+    const normalizedKey = normalizeSemanticKey(key);
+    combined[`dark-${normalizedKey}`] = normalizeTokenValue(
+      value as DTCGToken | TokenCollection,
+    );
   }
 
   const combinedPath = path.join(outputDir, 'tokens.json');
