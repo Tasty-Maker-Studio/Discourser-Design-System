@@ -1,5 +1,14 @@
 # @discourser/design-system
 
+## 0.22.4
+
+### Patch Changes
+
+- [#157](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/157) [`ea9f915`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/ea9f9157e7aac9542fee9b0589bfa60cc329bf2e) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Fix token pipeline round-trip: normalize semantic key casing (onPrimary not onprimary)
+  and alias palette references (neutralVariant not neutralvariant) in organize-figma-exports.ts.
+  Fix FTS plugin handleImport() to unwrap collection wrappers and $value objects for correct
+  Figma variable creation. Add token name mapping docs to published package files.
+
 ## 0.22.3
 
 ### Patch Changes
