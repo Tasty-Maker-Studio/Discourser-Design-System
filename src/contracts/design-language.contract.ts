@@ -116,6 +116,7 @@ export interface TypeStyle {
   fontWeight: string;
   letterSpacing: string;
   fontFamily?: 'display' | 'body' | 'mono';
+  fontVariationSettings?: string;
 }
 
 // Spacing Types
@@ -123,6 +124,7 @@ export interface SpacingScale {
   none: string;
   xxs: string;
   xs: string;
+  '2xs': string;
   sm: string;
   md: string;
   lg: string;

@@ -19,6 +19,9 @@ export { Textarea, type TextareaProps } from './Textarea';
 // Typography Components (simple)
 export { Header, type HeadingProps } from './Header';
 
+// Layout & Utility Components
+export { Divider, type DividerProps } from './divider';
+
 // Feedback & Status Components (simple)
 export { Badge, type BadgeProps } from './Badge';
 export { Spinner, type SpinnerProps } from './Spinner';
