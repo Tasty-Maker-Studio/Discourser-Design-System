@@ -25,6 +25,8 @@ import { AudioSpeakerIcon } from '../src/components/Icons/AudioSpeakerIcon';
 import { UserProfileIcon } from '../src/components/Icons/UserProfileIcon';
 import { PlayIcon } from '../src/components/Icons/PlayIcon';
 import { SpeechIcon } from '../src/components/Icons/SpeechIcon';
+import { AppleLoginIcon } from '../src/components/Icons/AppleLoginIcon';
+import { GoogleLoginIcon } from '../src/components/Icons/GoogleLoginIcon';
 import { HStack, VStack } from '../styled-system/jsx';
 import { css } from '../styled-system/css';
 
@@ -220,6 +222,14 @@ export const Gallery: Story = {
         <VStack gap="2" alignItems="center">
           <SpeechIcon w="6" h="6" color="fg.default" />
           <span className={label}>SpeechIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <AppleLoginIcon w="6" h="6" color="fg.default" />
+          <span className={label}>AppleLoginIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <GoogleLoginIcon w="6" h="6" />
+          <span className={label}>GoogleLoginIcon</span>
         </VStack>
       </HStack>
     </VStack>

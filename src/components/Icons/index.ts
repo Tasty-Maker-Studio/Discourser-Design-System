@@ -38,3 +38,5 @@ export { UserProfileIcon, type UserProfileIconProps } from './UserProfileIcon';
 export { PlayIcon, type PlayIconProps } from './PlayIcon';
 export { SpeechIcon, type SpeechIconProps } from './SpeechIcon';
 export { TrashIcon, type TrashIconProps } from './TrashIcon';
+export { AppleLoginIcon, type AppleLoginIconProps } from './AppleLoginIcon';
+export { GoogleLoginIcon, type GoogleLoginIconProps } from './GoogleLoginIcon';

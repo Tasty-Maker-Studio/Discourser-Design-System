@@ -190,11 +190,27 @@ export default defineConfig({
         // Park UI shadow tokens
         shadows: parkShadows,
 
-        // Park UI radii tokens (l1, l2, l3 for consistent border radius)
+        // ─────────────────────────────────────────────────────────────────
+        // CANONICAL RADII SYSTEM: Park UI (l1 / l2 / l3)
+        //
+        // All component recipes use l1/l2/l3. Use these in new components.
+        // The M3 base tokens (extraSmall, small, medium, large, extraLarge, full)
+        // are also available from the token pipeline but are NOT used in recipes.
+        //
+        // Canonical mapping:
+        //   l1 = 0.125rem (2px)  — subtle rounding, checkboxes, breadcrumbs
+        //   l2 = 0.375rem (6px)  — inputs, badges, tooltips, textarea, tabs
+        //   l3 = 0.5rem   (8px)  — cards, dialogs, popovers, toasts, nav menus
+        //   full = 9999px        — pills, avatars, switches, spinners
+        //
+        // M3 names for reference (base tokens, not used in recipes):
+        //   extraSmall=4px, small=8px, medium=12px, large=16px,
+        //   extraLarge=28px, full=9999px
+        // ─────────────────────────────────────────────────────────────────
         radii: {
-          l1: { value: '0.125rem' }, // 2px (xs)
-          l2: { value: '0.375rem' }, // 6px (sm)
-          l3: { value: '0.5rem' }, // 8px (md)
+          l1: { value: '0.125rem' }, // 2px
+          l2: { value: '0.375rem' }, // 6px
+          l3: { value: '0.5rem' }, // 8px
         },
       },
 
