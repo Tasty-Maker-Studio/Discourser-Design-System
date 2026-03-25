@@ -89,6 +89,9 @@ function transformTextStyles(language: DesignLanguageContract) {
           lineHeight: style.lineHeight,
           fontWeight: style.fontWeight,
           letterSpacing: style.letterSpacing,
+          ...(style.fontVariationSettings
+            ? { fontVariationSettings: style.fontVariationSettings }
+            : {}),
         },
       },
     ]),
