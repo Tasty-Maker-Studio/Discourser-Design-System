@@ -18,7 +18,7 @@ export const LogoutIcon = (props: LogoutIconProps) => (
     <path
       d="M29.0664 24.3673L33.3331 20.1007L29.0664 15.834"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="2.5"
       strokeMiterlimit="10"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -26,7 +26,7 @@ export const LogoutIcon = (props: LogoutIconProps) => (
     <path
       d="M16.2666 20.1006H33.2166"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="2.5"
       strokeMiterlimit="10"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -34,7 +34,7 @@ export const LogoutIcon = (props: LogoutIconProps) => (
     <path
       d="M19.5999 33.3337C12.2333 33.3337 6.2666 28.3337 6.2666 20.0003C6.2666 11.667 12.2333 6.66699 19.5999 6.66699"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="2.5"
       strokeMiterlimit="10"
       strokeLinecap="round"
       strokeLinejoin="round"

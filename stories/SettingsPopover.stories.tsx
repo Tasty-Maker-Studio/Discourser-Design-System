@@ -102,24 +102,34 @@ export const WithInitials: Story = {
 };
 
 /**
- * Simulating sidebar positioning — full-width trigger in a narrow container.
+ * Simulating sidebar positioning — 285px wide, 100vh tall sidebar with the
+ * trigger pinned to the absolute bottom, matching the real left nav layout.
  */
 export const SidebarContext: Story = {
+  parameters: {
+    layout: 'fullscreen',
+  },
   decorators: [
     (Story) => (
       <div
         className={css({
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-end',
-          w: '260px',
-          h: '600px',
-          bg: 'surface.default',
-          borderRadius: 'l3',
-          p: '3',
+          position: 'relative',
+          w: '285px',
+          h: '100vh',
+          bg: 'surface.dim',
+          overflow: 'hidden',
         })}
       >
-        <Story />
+        <div
+          className={css({
+            position: 'absolute',
+            bottom: '0',
+            left: '0',
+            right: '0',
+          })}
+        >
+          <Story />
+        </div>
       </div>
     ),
   ],

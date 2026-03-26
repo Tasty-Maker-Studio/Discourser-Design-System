@@ -19,7 +19,7 @@ export function SettingsPopover({
   ariaLabel = 'User settings',
 }: SettingsPopoverProps) {
   return (
-    <Popover.Root positioning={{ placement }}>
+    <Popover.Root positioning={{ placement, overflowPadding: 0 }}>
       <Popover.Trigger asChild>
         <button
           className={css({
@@ -27,10 +27,16 @@ export function SettingsPopover({
             alignItems: 'center',
             justifyContent: 'space-between',
             w: 'full',
-            p: '2',
+            px: '3',
+            py: '3',
             bg: 'surface.container',
             border: 'none',
-            borderRadius: 'l3',
+            borderTopWidth: '1px',
+            borderTopStyle: 'solid',
+            borderTopColor: 'neutral.3',
+            borderRadius: '0',
+            boxShadow:
+              '0px -1px 2px rgba(0, 0, 0, 0.3), 0px -2px 6px 2px rgba(0, 0, 0, 0.15)',
             cursor: 'pointer',
             transition: 'background 0.2s',
             _hover: {
@@ -79,7 +85,7 @@ export function SettingsPopover({
           aria-label={ariaLabel}
           className={css({
             p: '0',
-            minW: '240px',
+            w: '275px',
             borderRadius: 'l3',
             boxShadow: 'level2',
             overflow: 'hidden',
@@ -91,8 +97,11 @@ export function SettingsPopover({
               px: '4',
               pt: '3',
               pb: '2',
-              fontSize: 'sm',
-              color: 'onSurface',
+              fontSize: 'bodyMedium',
+              color: 'neutral.7',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
               borderBottom: '1px solid',
               borderColor: 'border',
             })}
@@ -133,7 +142,7 @@ export function SettingsPopover({
                     className={css({
                       display: 'flex',
                       alignItems: 'center',
-                      color: 'fg.muted',
+                      color: 'primary.50',
                     })}
                   >
                     {action.icon}
