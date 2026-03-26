@@ -170,6 +170,10 @@
       "types": "./src/components/ContentCard/index.ts",
       "import": "./src/components/ContentCard/index.ts"
     },
+    "./SettingsPopover": {
+      "types": "./src/components/SettingsPopover/index.ts",
+      "import": "./src/components/SettingsPopover/index.ts"
+    },
     "./figma-codex": {
       "import": "./dist/figma-codex.json",
       "require": "./dist/figma-codex.json"
