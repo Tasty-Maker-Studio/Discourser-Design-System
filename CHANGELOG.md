@@ -1,5 +1,11 @@
 # @discourser/design-system
 
+## 0.24.0
+
+### Minor Changes
+
+- [#165](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/165) [`021125d`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/021125d79377c688630f3a65eca42c21ebe67da9) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - feat: add SettingsPopover composite component with ChevronUpDownIcon, LogoutIcon, and LoginIcon
+
 ## 0.23.0
 
 ### Minor Changes
