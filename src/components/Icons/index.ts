@@ -40,3 +40,9 @@ export { SpeechIcon, type SpeechIconProps } from './SpeechIcon';
 export { TrashIcon, type TrashIconProps } from './TrashIcon';
 export { AppleLoginIcon, type AppleLoginIconProps } from './AppleLoginIcon';
 export { GoogleLoginIcon, type GoogleLoginIconProps } from './GoogleLoginIcon';
+export {
+  ChevronUpDownIcon,
+  type ChevronUpDownIconProps,
+} from './ChevronUpDownIcon';
+export { LogoutIcon, type LogoutIconProps } from './LogoutIcon';
+export { LoginIcon, type LoginIconProps } from './LoginIcon';
