@@ -27,6 +27,9 @@ import { PlayIcon } from '../src/components/Icons/PlayIcon';
 import { SpeechIcon } from '../src/components/Icons/SpeechIcon';
 import { AppleLoginIcon } from '../src/components/Icons/AppleLoginIcon';
 import { GoogleLoginIcon } from '../src/components/Icons/GoogleLoginIcon';
+import { ChevronUpDownIcon } from '../src/components/Icons/ChevronUpDownIcon';
+import { LogoutIcon } from '../src/components/Icons/LogoutIcon';
+import { LoginIcon } from '../src/components/Icons/LoginIcon';
 import { HStack, VStack } from '../styled-system/jsx';
 import { css } from '../styled-system/css';
 
@@ -230,6 +233,18 @@ export const Gallery: Story = {
         <VStack gap="2" alignItems="center">
           <GoogleLoginIcon w="6" h="6" />
           <span className={label}>GoogleLoginIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <ChevronUpDownIcon w="6" h="6" color="fg.default" />
+          <span className={label}>ChevronUpDownIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <LogoutIcon w="6" h="6" color="fg.default" />
+          <span className={label}>LogoutIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <LoginIcon w="10" h="10" />
+          <span className={label}>LoginIcon</span>
         </VStack>
       </HStack>
     </VStack>

@@ -111,6 +111,12 @@ export {
 } from './Icons/UserProfileIcon';
 export { PlayIcon, type PlayIconProps } from './Icons/PlayIcon';
 export { SpeechIcon, type SpeechIconProps } from './Icons/SpeechIcon';
+export {
+  ChevronUpDownIcon,
+  type ChevronUpDownIconProps,
+} from './Icons/ChevronUpDownIcon';
+export { LogoutIcon, type LogoutIconProps } from './Icons/LogoutIcon';
+export { LoginIcon, type LoginIconProps } from './Icons/LoginIcon';
 
 // Navigation & Progress Components
 export * as Breadcrumb from './Breadcrumb';
@@ -124,6 +130,11 @@ export {
   type NavSection,
   type NavItem,
 } from './NavigationMenu';
+export {
+  SettingsPopover,
+  type SettingsPopoverProps,
+  type SettingsPopoverAction,
+} from './SettingsPopover';
 
 // Settings Components
 export {
