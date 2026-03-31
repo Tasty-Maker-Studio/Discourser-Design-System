@@ -38,13 +38,93 @@ function resolveImplementationFile(sourceFile: string): string {
   return sourceFile;
 }
 
-function extractProps(sourceContent: string): PropDefinition[] {
+function inferTypeFromDescription(description: string): string {
+  const desc = description.trim();
+
+  // Direct type keyword at start
+  const directType = desc.match(
+    /^(boolean|string|number|string\[\]|number\[\])(\s*[,.]|$)/,
+  );
+  if (directType) return directType[1];
+
+  // Parenthesized type at end: "description (boolean)"
+  const parenEnd = desc.match(/\(([a-zA-Z[\]]+)\)\s*$/);
+  if (parenEnd && /^(boolean|string|number)(\[\])?$/.test(parenEnd[1])) {
+    return parenEnd[1];
+  }
+
+  // Union of string literals: 'a' | 'b' | 'c' — possibly with trailing " (default: ...)"
+  if (/^'[^']+'(\s*\|\s*'[^']+')+/.test(desc)) {
+    const match = desc.match(/^('(?:[^']+)'\s*(?:\|\s*'(?:[^']+)'\s*)*)/);
+    if (match) return match[1].trim();
+  }
+
+  // Callback: "callback (...) => void"
+  if (desc.startsWith('callback')) {
+    const rest = desc.replace(/^callback\s+/, '');
+    return rest || '(...args: unknown[]) => void';
+  }
+
+  return 'string';
+}
+
+function extractPropsFromFigmaJsdoc(figmaFilePath: string): PropDefinition[] {
+  if (!existsSync(figmaFilePath)) return [];
+  const content = readFileSync(figmaFilePath, 'utf-8');
+  const props: PropDefinition[] = [];
+
+  const lines = content.split('\n');
+  let inPropsSection = false;
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+
+    if (!trimmed.startsWith('//')) {
+      if (inPropsSection) break; // left the comment block
+      continue;
+    }
+
+    // Strip the leading `//` (and optional single space)
+    const commentContent = trimmed.replace(/^\/\/\s?/, '');
+
+    if (/^Key props/i.test(commentContent)) {
+      inPropsSection = true;
+      continue;
+    }
+
+    if (!inPropsSection) continue;
+
+    // Match "  propName  — description" (em-dash, en-dash, or hyphen)
+    const propMatch = commentContent.match(/^\s+(\w+)\s+[—–-]+\s+(.+)$/);
+    if (propMatch) {
+      const [, name, description] = propMatch;
+      const type = inferTypeFromDescription(description);
+      props.push({
+        name,
+        type,
+        required: false,
+        description: description.trim(),
+      });
+    }
+  }
+
+  return props;
+}
+
+function extractProps(
+  sourceContent: string,
+  figmaFilePath?: string,
+): PropDefinition[] {
   const props: PropDefinition[] = [];
 
   // Step 1: Find the Props interface and extract its full body using balanced-brace tracking
   const ifaceRe = /interface\s+\w+Props\s*\{/g;
   const startMatch = ifaceRe.exec(sourceContent);
-  if (!startMatch) return props;
+  if (!startMatch) {
+    // Fallback: no interface found — read Key props section from the .figma.tsx JSDoc
+    if (figmaFilePath) return extractPropsFromFigmaJsdoc(figmaFilePath);
+    return props;
+  }
 
   // Find the opening { of the interface body
   const openBrace = sourceContent.indexOf(
@@ -157,15 +237,41 @@ function extractProps(sourceContent: string): PropDefinition[] {
 }
 
 function extractSubComponents(sourceContent: string): SubComponentEntry[] {
-  const subs: SubComponentEntry[] = [];
-  const re =
-    /export\s+const\s+(\w+)\s+=\s+with(?:Provider|Context)\(ark\.(\w+)/g;
+  const subs = new Map<string, SubComponentEntry>();
   let m: RegExpExecArray | null;
-  while ((m = re.exec(sourceContent)) !== null) {
-    const [, name, element] = m;
-    subs.push({ name, element });
+
+  // Pattern 1: withProvider/withContext(ark.tagName, ...) — Park UI ark factory
+  const arkRe =
+    /export\s+const\s+(\w+)\s+=\s+with(?:Provider|Context)\(ark\.(\w+)/g;
+  while ((m = arkRe.exec(sourceContent)) !== null) {
+    subs.set(m[1], { name: m[1], element: m[2] });
   }
-  return subs;
+
+  // Pattern 2: withProvider/withContext(Namespace.Sub, 'slotName') — styleContext pattern
+  // Used by RadioGroup, Switch, and similar Ark UI compound components
+  const styleCtxRe =
+    /export\s+const\s+(\w+)\s+=\s+with(?:Provider|Context)\(\s*\w+\.\w+\s*,\s*['"](\w+)['"]/g;
+  while ((m = styleCtxRe.exec(sourceContent)) !== null) {
+    if (!subs.has(m[1])) subs.set(m[1], { name: m[1], element: m[2] });
+  }
+
+  // Pattern 3: createStyledComponent(Namespace.Sub, 'slotName', ...) — custom styled wrapper
+  // Used by Slider and similar components with manual style context
+  const styledRe =
+    /export\s+const\s+(\w+)\s+=\s+createStyledComponent\(\s*\w+\.\w+\s*,\s*['"](\w+)['"]/g;
+  while ((m = styledRe.exec(sourceContent)) !== null) {
+    if (!subs.has(m[1])) subs.set(m[1], { name: m[1], element: m[2] });
+  }
+
+  // Pattern 4: forwardRef<HTMLXxxElement, ...> — typed forward ref exports
+  const forwardRefRe =
+    /export\s+const\s+(\w+)\s+=\s+forwardRef<HTML(\w+)Element/g;
+  while ((m = forwardRefRe.exec(sourceContent)) !== null) {
+    if (!subs.has(m[1]))
+      subs.set(m[1], { name: m[1], element: m[2].toLowerCase() });
+  }
+
+  return Array.from(subs.values());
 }
 
 function classifyComponent(
@@ -237,7 +343,7 @@ export function resolveComponent(
   }
 
   const componentType = classifyComponent(parsed, sourceContent);
-  const props = extractProps(typesContent);
+  const props = extractProps(typesContent, parsed.filePath);
   const subComponents =
     componentType === 'compound'
       ? extractSubComponents(sourceContent)
