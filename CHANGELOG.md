@@ -1,5 +1,11 @@
 # @discourser/design-system
 
+## 0.25.3
+
+### Patch Changes
+
+- 50585d8: fix: add missing StudioControls, Dialog, Header, and Divider package.json export entries; add exports:validate build step to prevent regression
+
 ## 0.25.2
 
 ### Patch Changes
