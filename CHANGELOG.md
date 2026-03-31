@@ -1,5 +1,16 @@
 # @discourser/design-system
 
+## 0.25.0
+
+### Minor Changes
+
+- [#169](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/169) [`b7af35d`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/b7af35d9592b4ec7386b0abb8eed057d2bf4d868) Thanks [@github-actions](https://github.com/apps/github-actions)! - Add StudioControls component, Figma Code Connect mappings, and icon fixes
+  - New `StudioControls` component with recipe and types
+  - Figma Code Connect files for Badge, Button, Card, Input, RadioGroup, SettingsPopover, Slider, Stepper, StudioControls, Switch
+  - Fix icon components: AudienceIcon, AudioSpeakerIcon, MicrophoneIcon, RecordIcon, TimerIcon
+  - Update badge and switch recipes
+  - Update figma-codex parser, resolver, and schema
+
 ## 0.24.0
 
 ### Minor Changes
