@@ -1,5 +1,11 @@
 # @discourser/design-system
 
+## 0.25.1
+
+### Patch Changes
+
+- [#176](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/176) [`1ad143e`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/1ad143e0358509bd5252a09bc8ade5b0dfe2f69f) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - fix: populate props and anatomy documentation in RadioGroup, Switch, and Slider figma-codex entries
+
 ## 0.25.0
 
 ### Minor Changes
