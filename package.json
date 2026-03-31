@@ -102,9 +102,21 @@
       "types": "./src/components/Tooltip.tsx",
       "import": "./src/components/Tooltip.tsx"
     },
-    "./Heading": {
-      "types": "./src/components/Heading.tsx",
-      "import": "./src/components/Heading.tsx"
+    "./Header": {
+      "types": "./src/components/Header.tsx",
+      "import": "./src/components/Header.tsx"
+    },
+    "./Dialog": {
+      "types": "./src/components/Dialog.tsx",
+      "import": "./src/components/Dialog.tsx"
+    },
+    "./Divider": {
+      "types": "./src/components/divider/index.ts",
+      "import": "./src/components/divider/index.ts"
+    },
+    "./StudioControls": {
+      "types": "./src/components/StudioControls/index.ts",
+      "import": "./src/components/StudioControls/index.ts"
     },
     "./Textarea": {
       "types": "./src/components/Textarea.tsx",
@@ -186,7 +198,7 @@
   ],
   "scripts": {
     "dev": "pnpm build:css && pnpm docs:generate && storybook dev -p 6006",
-    "build": "pnpm build:panda && pnpm typecheck && pnpm build:lib && pnpm build:types && pnpm codex:generate",
+    "build": "pnpm build:panda && pnpm typecheck && pnpm build:lib && pnpm build:types && pnpm exports:validate && pnpm codex:generate",
     "build:panda": "panda codegen",
     "build:css": "panda cssgen --outfile dist/styles.css",
     "build:lib": "tsup",
@@ -220,7 +232,8 @@
     "changeset": "changeset",
     "version": "changeset version",
     "ci:version": "pnpm exec changeset version",
-    "release": "pnpm build && changeset publish --access public"
+    "release": "pnpm build && changeset publish --access public",
+    "exports:validate": "tsx scripts/validate-exports.ts"
   },
   "peerDependencies": {
     "@pandacss/dev": "^1.8.0",
