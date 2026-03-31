@@ -185,3 +185,23 @@ export const StatusBadges: Story = {
     </VStack>
   ),
 };
+
+/**
+ * Scenario complexity rating badges — Beginner (primary), Intermediate (secondary), Advanced (tertiary)
+ */
+export const ComplexityRatings: Story = {
+  name: 'Complexity Ratings',
+  render: () => (
+    <HStack gap="4">
+      <Badge variant="rating" colorPalette="primary" size="md">
+        Beginner
+      </Badge>
+      <Badge variant="rating" colorPalette="secondary" size="md">
+        Intermediate
+      </Badge>
+      <Badge variant="rating" colorPalette="tertiary" size="md">
+        Advanced
+      </Badge>
+    </HStack>
+  ),
+};

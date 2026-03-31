@@ -1,0 +1,256 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation/Figma Translation/08-Token Resolution" />
+
+# Token Resolution Reference
+
+How Figma variables, legacy library names, and raw hex values map to the actual DDS token system.
+
+---
+
+## Token System Architecture
+
+The DDS uses a three-layer token stack. Each layer has a specific job:
+
+```
+Layer 1 — Primitives
+  Raw tonal steps: primary/0 … primary/100, secondary/0 … secondary/100, etc.
+  Source: src/languages/material3.language.ts
+  Use in code: Never directly. These are the raw palette.
+
+Layer 2 — Semantic
+  M3 color roles: primary, onSurface, surface/container, outline, etc.
+  Source: Figma "Semantic" collection → Panda CSS semantic tokens
+  Use in code: Always prefer these. They're theme-aware and adapt to dark mode.
+
+Layer 3 — DDS (Panda CSS)
+  Panda token paths consumed in component recipes and sx props.
+  Examples: bg="surface", color="onSurface", borderColor="outline.variant"
+  Source: styled-system/tokens (generated from panda.config.ts)
+```
+
+**Rule:** Use Layer 2 (Semantic) tokens in code. Only drop to Primitives when you
+need a specific tonal step for a custom one-off (e.g., an icon that must always be
+`primary/80` regardless of semantic role).
+
+---
+
+## Semantic Token Reference
+
+All hex values are sourced from `src/languages/material3.language.ts`.
+Source color: `#63A002` (TastyMakers green), generated via Material Theme Builder.
+
+### Primary
+
+| Semantic name | Panda CSS path | Light hex | Dark hex | Use for |
+|---|---|---|---|---|
+| `primary` | `primary` | `#4C662B` | `#B1D18A` | Primary action backgrounds |
+| `onPrimary` | `onPrimary` | `#FFFFFF` | `#1F3701` | Text/icons on primary bg |
+| `primary/container` | `primary.container` | `#CDEDA3` | `#354E16` | Tinted primary containers |
+| `onPrimary/container` | `onPrimary.container` | `#354E16` | `#CDEDA3` | Text on primary containers |
+
+### Secondary
+
+| Semantic name | Panda CSS path | Light hex | Dark hex | Use for |
+|---|---|---|---|---|
+| `secondary` | `secondary` | `#586249` | `#BFCBAD` | Secondary action backgrounds |
+| `onSecondary` | `onSecondary` | `#FFFFFF` | `#2A331E` | Text/icons on secondary bg |
+| `secondary/container` | `secondary.container` | `#DCE7C8` | `#404A33` | Tinted secondary containers |
+| `onSecondary/container` | `onSecondary.container` | `#404A33` | `#DCE7C8` | Text on secondary containers |
+
+### Tertiary
+
+| Semantic name | Panda CSS path | Light hex | Dark hex | Use for |
+|---|---|---|---|---|
+| `tertiary` | `tertiary` | `#386663` | `#A0D0CB` | Accent/teal action backgrounds |
+| `onTertiary` | `onTertiary` | `#FFFFFF` | `#003735` | Text on tertiary bg |
+| `tertiary/container` | `tertiary.container` | `#BCECE7` | `#1F4E4B` | Tinted tertiary containers |
+| `onTertiary/container` | `onTertiary.container` | `#1F4E4B` | `#BCECE7` | Text on tertiary containers |
+
+### Error
+
+| Semantic name | Panda CSS path | Light hex | Dark hex | Use for |
+|---|---|---|---|---|
+| `error` | `error` | `#BA1A1A` | `#FFB4AB` | Destructive action backgrounds |
+| `onError` | `onError` | `#FFFFFF` | `#690005` | Text/icons on error bg |
+| `error/container` | `error.container` | `#FFDAD6` | `#93000A` | Tinted error containers |
+| `onError/container` | `onError.container` | `#93000A` | `#FFDAD6` | Text on error containers |
+
+### Surface System
+
+| Semantic name | Panda CSS path | Light hex | Dark hex | Use for |
+|---|---|---|---|---|
+| `surface` | `surface` | `#F9FAEF` | `#12140E` | Base page/panel surface |
+| `onSurface` | `onSurface` | `#1A1C16` | `#E2E3D8` | Primary text on any surface |
+| `surface/variant` | `surfaceVariant` | `#E1E4D5` | `#44483D` | Chip/input backgrounds |
+| `onSurface/variant` | `onSurface.variant` | `#44483D` | `#C5C8BA` | Secondary text on surfaces |
+| `surface/container/lowest` | `surface.container.lowest` | `#FFFFFF` | `#0C0F09` | Cards on dark backgrounds |
+| `surface/container/low` | `surface.container.low` | `#F3F4E9` | `#1A1C16` | Subtle input/chip bg |
+| `surface/container` | `surface.container` | `#EEEFE3` | `#1E201A` | Default card/dialog bg |
+| `surface/container/high` | `surface.container.high` | `#E8E9DE` | `#282B24` | Elevated card/nav bg |
+| `surface/container/highest` | `surface.container.highest` | `#E2E3D8` | `#33362E` | Highest elevation bg |
+
+### Outline & Background
+
+| Semantic name | Panda CSS path | Light hex | Dark hex | Use for |
+|---|---|---|---|---|
+| `outline` | `outline` | `#75796C` | `#8F9285` | Strong borders, dividers |
+| `outline/variant` | `outline.variant` | `#C5C8BA` | `#44483D` | Subtle borders, input edges |
+| `background` | `background` | `#F9FAEF` | `#12140E` | Page background (≡ surface) |
+| `onBackground` | `onBackground` | `#1A1C16` | `#E2E3D8` | Body text on page bg |
+
+### Inverse & Utility
+
+| Semantic name | Panda CSS path | Light hex | Dark hex | Use for |
+|---|---|---|---|---|
+| `inverse/surface` | `inverseSurface` | `#2F312A` | `#E2E3D8` | Tooltip/snackbar bg |
+| `inverse/onSurface` | `inverseOnSurface` | `#F1F2E6` | `#2F312A` | Text on inverse surface |
+| `inverse/primary` | `inversePrimary` | `#B1D18A` | `#4C662B` | Primary on inverse bg |
+| `scrim` | `scrim` | `#000000` | `#000000` | Dialog overlay/backdrop |
+
+---
+
+## Primitive Tonal Steps → Semantic Equivalents
+
+When you see a raw tonal step (from a Figma `Primitives` variable or the language file),
+use this table to find the correct Semantic token instead.
+
+### Primary tonal steps
+
+| Primitive step | Hex | Typical semantic role |
+|---|---|---|
+| `primary/10` | `#102000` | Deep background tint |
+| `primary/20` | `#1F3700` | — |
+| `primary/40` | `#3F6900` | → use `primary` (light dark theme) |
+| `primary/50` | `#518500` | Base tonal mid-point |
+| **`primary/60`** | **`#64A104`** | **→ `primary` (light mode = `#4C662B`)** |
+| `primary/70` | `#7DBD2A` | → `inversePrimary` light |
+| **`primary/80`** | **`#97D945`** | **→ `primary` (dark mode = `#B1D18A`)** |
+| `primary/90` | `#B2F65F` | → `primary/container` (dark) |
+| `primary/95` | `#D2FF9B` | → `primary/container` (light = `#CDEDA3`) |
+| `primary/99` | `#F9FFE9` | Near-white tint |
+
+### Secondary tonal steps
+
+| Primitive step | Hex | Typical semantic role |
+|---|---|---|
+| `secondary/40` | `#54643F` | → `secondary` (dark) |
+| **`secondary/50`** | **`#6C7D56`** | **→ `secondary` (light mode = `#586249`)** |
+| `secondary/70` | `#A0B187` | — |
+| `secondary/80` | `#BBCDA1` | → `secondary` (dark = `#BFCBAD`) |
+| `secondary/90` | `#D7E9BB` | → `secondary/container` (light = `#DCE7C8`) |
+
+### Neutral tonal steps
+
+| Primitive step | Hex | Typical semantic role |
+|---|---|---|
+| `neutral/10` | `#1B1C18` | → `onSurface` (light = `#1A1C16`) |
+| `neutral/20` | `#30312C` | → `inverseSurface` (light) |
+| `neutral/40` | `#5E5F59` | → `onSurface.variant` (light) |
+| `neutral/50` | `#777771` | → `outline` (light = `#75796C`) |
+| `neutral/80` | `#C7C7C0` | → `outline.variant` (light = `#C5C8BA`) |
+| `neutral/90` | `#E3E3DB` | → `surfaceVariant` (light = `#E1E4D5`) |
+| `neutral/95` | `#F2F1E9` | → `surface/container/low` |
+| `neutral/99` | `#FDFCF5` | → `surface/container/lowest` / `#FFFFFF` |
+
+---
+
+## Quick Decision Guide
+
+**What token should I use for...?**
+
+### Text
+
+| Purpose | Token | Panda CSS |
+|---|---|---|
+| Body text on any surface | `onSurface` | `color="onSurface"` |
+| Secondary / helper text | `onSurface/variant` | `color="onSurface.variant"` |
+| Text on a primary-colored button | `onPrimary` | `color="onPrimary"` |
+| Text on a secondary button | `onSecondary` | `color="onSecondary"` |
+| Text on page background | `onBackground` | `color="onBackground"` |
+| Error message text | `onError/container` | `color="onError.container"` |
+| Label on chips/tags | `onSurface/variant` | `color="onSurface.variant"` |
+
+### Backgrounds
+
+| Purpose | Token | Panda CSS |
+|---|---|---|
+| Page background | `background` | `bg="background"` |
+| Card / dialog | `surface/container` | `bg="surface.container"` |
+| Subtle input background | `surface/container/low` | `bg="surface.container.low"` |
+| Elevated card | `surface/container/high` | `bg="surface.container.high"` |
+| Primary action button | `primary` | `bg="primary"` or `colorPalette="primary"` |
+| Secondary action button | `secondary` | `bg="secondary"` or `colorPalette="secondary"` |
+| Tooltip / snackbar | `inverse/surface` | `bg="inverseSurface"` |
+
+### Borders
+
+| Purpose | Token | Panda CSS |
+|---|---|---|
+| Input / card border | `outline/variant` | `borderColor="outline.variant"` |
+| Divider / separator | `outline/variant` | `borderColor="outline.variant"` |
+| Strong focus ring / panel border | `outline` | `borderColor="outline"` |
+
+### Actions
+
+| Purpose | Token | Panda CSS |
+|---|---|---|
+| Primary CTA button | `colorPalette="primary"` on `<Button>` | (component handles bg + text) |
+| Destructive action | `colorPalette="error"` on `<Button>` | (component handles bg + text) |
+| Secondary/neutral action | `colorPalette="secondary"` on `<Button>` | — |
+| Icon button fill | `onSurface` or `onSurface/variant` | `color="onSurface"` |
+
+---
+
+## Old External Library Names → DDS Equivalents
+
+The `@discourser/design-system` Figma library (collection `103:xxxx`) used
+vocabulary common to Shadcn UI and older Chakra-style palettes. When you
+encounter these variable names in the Figma file, translate as follows:
+
+| External library variable | DDS Semantic token | Panda CSS | Notes |
+|---|---|---|---|
+| `foreground` | `onSurface` | `color="onSurface"` | Primary text on any surface |
+| `muted-foreground` | `onSurface/variant` | `color="onSurface.variant"` | Secondary / helper text |
+| `muted` | `surface/container/low` | `bg="surface.container.low"` | Subtle chip / input bg |
+| `background` | `background` | `bg="background"` | Page background |
+| `surface` | `surface` | `bg="surface"` | Base surface |
+| `border` | `outline/variant` | `borderColor="outline.variant"` | Default borders, input edges |
+| `primary-foreground` | `onPrimary` | `color="onPrimary"` | Text on primary buttons |
+| `onprimary` | `onPrimary` | `color="onPrimary"` | Same — casing variant |
+| `primary/50` | Primitive `primary/50` → `#518500` | Use `primary` Semantic instead | Do not use raw step |
+| `primary/60` | Primitive `primary/60` → `#64A104` | Use `primary` Semantic instead | Do not use raw step |
+| `secondary/50` | Primitive `secondary/50` → `#6C7D56` | Use `secondary` Semantic instead | Do not use raw step |
+| `secondary/70` | Primitive `secondary/70` → `#A0B187` | No direct Semantic equivalent | Use `secondary.container` fg |
+| `secondary/80` | Primitive `secondary/80` → `#BBCDA1` | Use `secondary` dark variant | — |
+| `neutral/40` | Primitive `neutral/40` → `#5E5F59` | Use `onSurface.variant` | Avoid raw Primitive in code |
+| `neutral/50` | Primitive `neutral/50` → `#777771` | Use `outline` Semantic instead | — |
+| `neutral/90` | Primitive `neutral/90` → `#E3E3DB` | Use `surfaceVariant` instead | — |
+| `surfacecontainer` | `surface/container` | `bg="surface.container"` | Card / dialog level |
+| `surfacecontainerhigh` | `surface/container/high` | `bg="surface.container.high"` | Nav / elevated panel |
+| `custom/bg-input-30` | `surface/container/low` | `bg="surface.container.low"` | Input background at reduced opacity |
+
+### Legacy Tonal Scale (Primary/500 etc.)
+
+Older design files sometimes used a **100–900 tonal scale** (Chakra / Tailwind convention)
+instead of the M3 **0–100 scale**. The approximate conversion:
+
+| Legacy name | M3 equivalent | Hex (light) |
+|---|---|---|
+| `Primary/500` | `primary/50` → use `primary` Semantic | `#4C662B` |
+| `Primary/400` | `primary/40` | `#3F6900` |
+| `Accent/500` | `secondary/50` → use `secondary` Semantic | `#586249` |
+| `Stone/60%/500` | `neutral/50` at 60% opacity | `#777771` + alpha |
+| `Stone/60%/400` | `neutral/40` at 60% opacity | `#5E5F59` + alpha |
+
+> **Note:** These legacy names appear in the Figma audit for node `66:2739`
+> (Conversation Prelaunch). The frame was built against an older library version.
+> When rebinding these nodes, target the **Semantic** collection — not Primitives.
+
+---
+
+## Cross-References
+
+- [01-Colors](/docs/documentation-figma-translation-01-colors--docs) — Tailwind/Shadcn → DDS color mapping
+- [Guidelines: Colors](/docs/documentation-guidelines-99-colors--docs) — Full M3 color role documentation
+- [Guidelines: Elevation](/docs/documentation-guidelines-99-elevation--docs) — Surface container elevation system

@@ -60,5 +60,14 @@ export default [js.configs.recommended, {
     },
   },
 }, {
-  ignores: ['dist/', 'node_modules/', 'styled-system/', 'storybook-static/'],
+  // Node.js globals for scripts/
+  files: ['scripts/**/*.{ts,tsx}'],
+  languageOptions: {
+    globals: {
+      process: 'readonly',
+      fetch: 'readonly',
+    },
+  },
+}, {
+  ignores: ['dist/', 'node_modules/', 'styled-system/', 'storybook-static/', 'docs/'],
 }, ...storybook.configs["flat/recommended"]];
