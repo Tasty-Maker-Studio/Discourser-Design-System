@@ -1,4 +1,4 @@
-import { defineRecipe } from '@pandacss/dev'
+import { defineRecipe } from '@pandacss/dev';
 
 export const badge = defineRecipe({
   className: 'badge',
@@ -32,6 +32,10 @@ export const badge = defineRecipe({
         bg: 'colorPalette.subtle.bg',
         color: 'colorPalette.subtle.fg',
       },
+      rating: {
+        bg: 'color-mix(in srgb, var(--colors-color-palette-solid-bg) 35%, transparent)',
+        color: 'colorPalette.subtle.fg',
+      },
       outline: {
         borderWidth: '1px',
         borderColor: 'colorPalette.outline.border',
@@ -39,11 +43,41 @@ export const badge = defineRecipe({
       },
     },
     size: {
-      sm: { fontSize: 'xs', px: '1.5', h: '4.5', gap: '0.5', _icon: { boxSize: '2.5' } },
-      md: { fontSize: 'xs', px: '2', h: '5', gap: '1', _icon: { boxSize: '3' } },
-      lg: { fontSize: 'xs', px: '2.5', h: '5.5', gap: '1', _icon: { boxSize: '3.5' } },
-      xl: { fontSize: 'sm', px: '2.5', h: '6', gap: '1.5', _icon: { boxSize: '4' } },
-      '2xl': { fontSize: 'md', px: '3', h: '7', gap: '1.5', _icon: { boxSize: '4.5' } },
+      sm: {
+        fontSize: 'xs',
+        px: '1.5',
+        h: '4.5',
+        gap: '0.5',
+        _icon: { boxSize: '2.5' },
+      },
+      md: {
+        fontSize: 'xs',
+        px: '2',
+        h: '5',
+        gap: '1',
+        _icon: { boxSize: '3' },
+      },
+      lg: {
+        fontSize: 'xs',
+        px: '2.5',
+        h: '5.5',
+        gap: '1',
+        _icon: { boxSize: '3.5' },
+      },
+      xl: {
+        fontSize: 'sm',
+        px: '2.5',
+        h: '6',
+        gap: '1.5',
+        _icon: { boxSize: '4' },
+      },
+      '2xl': {
+        fontSize: 'md',
+        px: '3',
+        h: '7',
+        gap: '1.5',
+        _icon: { boxSize: '4.5' },
+      },
     },
   },
-})
+});

@@ -146,6 +146,11 @@ export {
   type DurationValue,
   type QuestionCountValue,
 } from './ScenarioSettings';
+export {
+  StudioControls,
+  type StudioControlsProps,
+  type RecordingMode,
+} from './StudioControls';
 
 // Queue Components
 export {

@@ -276,5 +276,6 @@ export function resolveComponent(
     subComponents,
     example: parsed.example,
     sourcePath,
+    tokens: parsed.tokens,
   };
 }

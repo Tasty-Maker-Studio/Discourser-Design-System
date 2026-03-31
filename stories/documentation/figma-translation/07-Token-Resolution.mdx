@@ -1,0 +1,417 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Documentation/Figma Translation/07-Token Resolution" />
+
+# Token Resolution Reference
+
+Complete reference for every token layer in the DDS — from Figma variable to Panda CSS usage.
+All values sourced from `src/languages/material3.language.ts` and `dist/figma-variables.json`.
+
+---
+
+## Token System Architecture
+
+```
+Layer 1 — Primitives  (raw tonal palette)
+  primary/0 … primary/100, secondary/0 … secondary/100, neutral/0 … neutral/100, etc.
+  Source: Figma "Primitives" collection · src/languages/material3.language.ts
+  Rule: Never use in component code. These are the raw paint, not the meaning.
+
+        ↓ semantic roles are assigned from Primitives
+
+Layer 2 — Semantic  (M3 color roles, mode-aware)
+  primary, onSurface, surface/container, outline/variant, background, …
+  Source: Figma "Semantic" collection (Light / Dark modes)
+  Rule: Always prefer Semantic tokens in component code. They swap automatically in dark mode.
+
+        ↓ Panda CSS consumes Semantic tokens and exposes them as CSS custom properties
+
+Layer 3 — Panda CSS  (design props on components and boxes)
+  bg="primary"  color="onSurface"  borderColor="outline.variant"  p="md"  rounded="sm"
+  Source: styled-system/tokens  (generated from panda.config.ts)
+  Rule: These are what you write. Look up the Semantic token, use its Panda CSS path.
+```
+
+---
+
+## Semantic Color Tokens
+
+Source color: `#63A002` (TastyMakers green) · Generated via Material Theme Builder.
+
+### Primary role
+
+| Figma path | Panda CSS | Light | Dark | Use for |
+|---|---|---|---|---|
+| `Semantic/primary` | `primary` | `#4C662B` | `#B1D18A` | Primary CTA button bg, active states |
+| `Semantic/onPrimary` | `onPrimary` | `#FFFFFF` | `#1F3701` | Text / icons on primary bg |
+| `Semantic/primary/container` | `primary.container` | `#CDEDA3` | `#354E16` | Tinted chip / tag backgrounds |
+| `Semantic/onPrimary/container` | `onPrimary.container` | `#354E16` | `#CDEDA3` | Text on primary containers |
+
+### Secondary role
+
+| Figma path | Panda CSS | Light | Dark | Use for |
+|---|---|---|---|---|
+| `Semantic/secondary` | `secondary` | `#586249` | `#BFCBAD` | Secondary action button bg |
+| `Semantic/onSecondary` | `onSecondary` | `#FFFFFF` | `#2A331E` | Text on secondary bg |
+| `Semantic/secondary/container` | `secondary.container` | `#DCE7C8` | `#404A33` | Tinted secondary containers |
+| `Semantic/onSecondary/container` | `onSecondary.container` | `#404A33` | `#DCE7C8` | Text on secondary containers |
+
+### Tertiary role
+
+| Figma path | Panda CSS | Light | Dark | Use for |
+|---|---|---|---|---|
+| `Semantic/tertiary` | `tertiary` | `#386663` | `#A0D0CB` | Accent teal actions |
+| `Semantic/onTertiary` | `onTertiary` | `#FFFFFF` | `#003735` | Text on tertiary bg |
+| `Semantic/tertiary/container` | `tertiary.container` | `#BCECE7` | `#1F4E4B` | Tinted tertiary containers |
+| `Semantic/onTertiary/container` | `onTertiary.container` | `#1F4E4B` | `#BCECE7` | Text on tertiary containers |
+
+### Error role
+
+| Figma path | Panda CSS | Light | Dark | Use for |
+|---|---|---|---|---|
+| `Semantic/error` | `error` | `#BA1A1A` | `#FFB4AB` | Destructive action bg |
+| `Semantic/onError` | `onError` | `#FFFFFF` | `#690005` | Text on error bg |
+| `Semantic/error/container` | `error.container` | `#FFDAD6` | `#93000A` | Tinted error container |
+| `Semantic/onError/container` | `onError.container` | `#93000A` | `#FFDAD6` | Text on error container |
+
+### Surface system
+
+| Figma path | Panda CSS | Light | Dark | Use for |
+|---|---|---|---|---|
+| `Semantic/background` | `background` | `#F9FAEF` | `#12140E` | Page background |
+| `Semantic/onBackground` | `onBackground` | `#1A1C16` | `#E2E3D8` | Body text on page bg |
+| `Semantic/surface` | `surface` | `#F9FAEF` | `#12140E` | Base panel / section surface |
+| `Semantic/onSurface` | `onSurface` | `#1A1C16` | `#E2E3D8` | Primary text on any surface |
+| `Semantic/surface/variant` | `surfaceVariant` | `#E1E4D5` | `#44483D` | Chip / input backgrounds |
+| `Semantic/onSurface/variant` | `onSurface.variant` | `#44483D` | `#C5C8BA` | Secondary / helper text |
+| `Semantic/surface/container/lowest` | `surface.container.lowest` | `#FFFFFF` | `#0C0F09` | Cards atop dark surfaces |
+| `Semantic/surface/container/low` | `surface.container.low` | `#F3F4E9` | `#1A1C16` | Subtle input / chip bg |
+| `Semantic/surface/container` | `surface.container` | `#EEEFE3` | `#1E201A` | Default card / dialog bg |
+| `Semantic/surface/container/high` | `surface.container.high` | `#E8E9DE` | `#282B24` | Elevated card / nav panel |
+| `Semantic/surface/container/highest` | `surface.container.highest` | `#E2E3D8` | `#33362E` | Highest elevation surface |
+
+### Outline, inverse, and utility
+
+| Figma path | Panda CSS | Light | Dark | Use for |
+|---|---|---|---|---|
+| `Semantic/outline` | `outline` | `#75796C` | `#8F9285` | Strong borders, focus rings |
+| `Semantic/outline/variant` | `outline.variant` | `#C5C8BA` | `#44483D` | Subtle borders, input edges |
+| `Semantic/inverse/surface` | `inverseSurface` | `#2F312A` | `#E2E3D8` | Tooltip / snackbar bg |
+| `Semantic/inverse/onSurface` | `inverseOnSurface` | `#F1F2E6` | `#2F312A` | Text on inverse surface |
+| `Semantic/inverse/primary` | `inversePrimary` | `#B1D18A` | `#4C662B` | Primary accent on dark bg |
+| `Semantic/scrim` | `scrim` | `#000000` | `#000000` | Dialog overlay / backdrop |
+
+---
+
+## Primitive Tonal Steps → Semantic Equivalents
+
+Use these when you encounter a raw Figma `Primitives` variable and need the correct Semantic token to use in code instead.
+
+### Primary
+
+| Primitive | Hex | → Use Semantic token |
+|---|---|---|
+| `primary/10` | `#102000` | Rare — deep text on lightest bg |
+| `primary/40` | `#3F6900` | → `primary` in dark mode |
+| `primary/50` | `#518500` | Mid tonal step |
+| **`primary/60`** | **`#64A104`** | **≈ `primary` (light = `#4C662B`)** |
+| `primary/70` | `#7DBD2A` | — |
+| **`primary/80`** | **`#97D945`** | **≈ `primary` (dark = `#B1D18A`)** |
+| `primary/90` | `#B2F65F` | → `primary.container` (dark) |
+| `primary/95` | `#D2FF9B` | → `primary.container` (light) |
+| `primary/99` | `#F9FFE9` | Near-white tint |
+
+### Secondary
+
+| Primitive | Hex | → Use Semantic token |
+|---|---|---|
+| `secondary/40` | `#54643F` | → `secondary` in dark mode |
+| **`secondary/50`** | **`#6C7D56`** | **≈ `secondary` (light = `#586249`)** |
+| `secondary/80` | `#BBCDA1` | → `secondary` (dark = `#BFCBAD`) |
+| `secondary/90` | `#D7E9BB` | → `secondary.container` (light) |
+
+### Neutral
+
+| Primitive | Hex | → Use Semantic token |
+|---|---|---|
+| `neutral/10` | `#1B1C18` | → `onSurface` (light = `#1A1C16`) |
+| `neutral/20` | `#30312C` | → `inverseSurface` (light) |
+| `neutral/40` | `#5E5F59` | → `onSurface.variant` (light) |
+| `neutral/50` | `#777771` | → `outline` (light = `#75796C`) |
+| `neutral/80` | `#C7C7C0` | → `outline.variant` (light = `#C5C8BA`) |
+| `neutral/90` | `#E3E3DB` | → `surfaceVariant` (light = `#E1E4D5`) |
+| `neutral/95` | `#F2F1E9` | → `surface.container.low` |
+| `neutral/99` | `#FDFCF5` | → `surface.container.lowest` |
+
+---
+
+## Spacing Scale
+
+Source: `Figma "Spacing & Shape"` collection · `dist/figma-variables.json`
+
+| Figma token | Value | Panda CSS | Typical use |
+|---|---|---|---|
+| `spacing/none` | `0px` | `p="0"` / `gap="0"` | Reset, flush layouts |
+| `spacing/xxs` | `2px` | `p="xxs"` | Icon-to-label nudge, hairline gap |
+| `spacing/xs` | `4px` | `p="xs"` | Tight internal component padding |
+| `spacing/sm` | `8px` | `p="sm"` | Icon padding, chip internal gap |
+| `spacing/2xs` | `12px` | `p="2xs"` | Between-element gap (compact density) |
+| `spacing/md` | `16px` | `p="md"` | **Default padding, card content** |
+| `spacing/lg` | `24px` | `p="lg"` | Section padding, dialog padding |
+| `spacing/xl` | `32px` | `p="xl"` | Panel padding, large card padding |
+| `spacing/xxl` | `48px` | `p="xxl"` | Page-level section spacing |
+| `spacing/xxxl` | `64px` | `p="xxxl"` | Hero / top-of-page padding |
+
+```tsx
+// Correct: use named tokens, not raw pixel values
+<Box p="md" gap="sm">...</Box>
+
+// Wrong: hardcoded pixels — doesn't track with spacing scale changes
+<Box style={{ padding: '16px', gap: '8px' }}>...</Box>
+```
+
+---
+
+## Border Radius Scale
+
+Source: `Figma "Spacing & Shape"` collection · `dist/figma-variables.json`
+
+| Figma token | Value | Panda CSS | Use case |
+|---|---|---|---|
+| `radii/none` | `0px` | `rounded="none"` | Flush / square elements |
+| `radii/extraSmall` | `4px` | `rounded="xs"` | Badges, tooltips, small chips |
+| `radii/small` | `8px` | `rounded="sm"` | **Buttons, inputs, cards (default)** |
+| `radii/medium` | `12px` | `rounded="md"` | Dialogs, popovers, larger cards |
+| `radii/large` | `16px` | `rounded="lg"` | Sheet panels, side drawers |
+| `radii/extraLarge` | `28px` | `rounded="xl"` | FABs, large action surfaces |
+| `radii/full` | `9999px` | `rounded="full"` | Pills, avatar circles, toggle tracks |
+
+---
+
+## Border Width Scale
+
+Source: `Figma "Spacing & Shape"` collection · `dist/figma-variables.json`
+
+| Figma token | Value | Panda CSS | Use case |
+|---|---|---|---|
+| `border/thin` | `1px` | `borderWidth="thin"` | **Default borders — inputs, cards, dividers** |
+| `border/medium` | `2px` | `borderWidth="medium"` | Focus rings, selected states |
+| `border/thick` | `4px` | `borderWidth="thick"` | Decorative strokes, error indicators |
+
+---
+
+## Elevation (Shadow) Levels
+
+Source: `dist/figma-effect-styles.json`
+
+| Level | Panda CSS | Shadow value | Use case |
+|---|---|---|---|
+| `level0` | `shadow="level0"` | `none` | Flat surfaces, inline content |
+| `level1` | `shadow="level1"` | `0px 1px 2px rgba(0,0,0,0.3), 0px 1px 3px 1px rgba(0,0,0,0.15)` | Cards at rest, contained buttons |
+| `level2` | `shadow="level2"` | `0px 1px 2px rgba(0,0,0,0.3), 0px 2px 6px 2px rgba(0,0,0,0.15)` | Cards on hover, raised buttons |
+| `level3` | `shadow="level3"` | `0px 4px 8px 3px rgba(0,0,0,0.15), 0px 1px 3px rgba(0,0,0,0.3)` | **Dialogs, dropdowns, popovers** |
+| `level4` | `shadow="level4"` | `0px 6px 10px 4px rgba(0,0,0,0.15), 0px 2px 3px rgba(0,0,0,0.3)` | Navigation drawers, modal sheets |
+| `level5` | `shadow="level5"` | `0px 8px 12px 6px rgba(0,0,0,0.15), 0px 4px 4px rgba(0,0,0,0.3)` | FABs, tooltips, snackbars |
+
+```tsx
+// Correct
+<Box shadow="level3">Dialog content</Box>
+
+// Wrong: copy-pasting shadow string directly
+<Box boxShadow="0px 4px 8px 3px rgba(0,0,0,0.15)...">...</Box>
+```
+
+---
+
+## Typography Scale
+
+Source: `dist/figma-text-styles.json` · `src/languages/material3.language.ts`
+
+Two font families in use:
+- **Fraunces** — Display and headline styles (serif, expressive)
+- **Poppins** — Body, title, and label styles (sans-serif, readable)
+
+| Style | Family | Size | Weight | Line height | Use for |
+|---|---|---|---|---|---|
+| `displayLarge` | Fraunces | 57px | 400 | 64px | Hero headlines, splash screens |
+| `displayMedium` | Fraunces | 45px | 400 | 52px | Section hero text |
+| `displaySmall` | Fraunces | 36px | 400 | 44px | Large feature text |
+| `headlineLarge` | Fraunces | 32px | 400 | 40px | Page titles, modal headers |
+| `headlineMedium` | Fraunces | 28px | 400 | 36px | Card titles, panel headers |
+| `headlineSmall` | Fraunces | 24px | 400 | 32px | Section subheadings |
+| `titleLarge` | Poppins | 22px | 500 | 28px | Dialog titles, list section labels |
+| `titleMedium` | Poppins | 16px | 500 | 24px | **Component titles, form labels** |
+| `titleSmall` | Poppins | 14px | 500 | 20px | Overlines, small labels |
+| `bodyLarge` | Poppins | 18px | 400 | 28px | **Body copy, paragraph text** *(bumped from M3 default 16px)* |
+| `bodyMedium` | Poppins | 14px | 400 | 20px | Secondary body text, helper text |
+| `bodySmall` | Poppins | 12px | 400 | 16px | Caption text, timestamps |
+| `labelLarge` | Poppins | 14px | 500 | 20px | **Button labels, tab labels** |
+| `labelMedium` | Poppins | 12px | 500 | 16px | Badge text, chip labels |
+| `labelSmall` | Poppins | 11px | 500 | 16px | Overline tags, micro labels |
+
+```tsx
+// Panda CSS textStyle prop
+<Text textStyle="bodyLarge">Paragraph text</Text>
+<Heading textStyle="headlineMedium">Card title</Heading>
+<Text textStyle="labelLarge">Button label</Text>
+```
+
+---
+
+## Motion Scale
+
+Source: `src/languages/material3.language.ts` · `dist/figma-variables.json`
+
+### Durations
+
+| Token | Value | Panda CSS | Use for |
+|---|---|---|---|
+| `duration/instant` | `0ms` | `transitionDuration="instant"` | No-animation mode, accessibility override |
+| `duration/fast` | `100ms` | `transitionDuration="fast"` | Micro-interactions: button press, icon swap |
+| `duration/normal` | `200ms` | `transitionDuration="normal"` | **Default: hover states, input focus, badges** |
+| `duration/slow` | `300ms` | `transitionDuration="slow"` | Panel slides, dialogs opening |
+| `duration/slower` | `500ms` | `transitionDuration="slower"` | Page transitions, onboarding animations |
+
+### Easing curves
+
+| Name | Curve | Use for |
+|---|---|---|
+| `standard` | `cubic-bezier(0.2, 0, 0, 1)` | Most transitions — smooth deceleration |
+| `standardDecelerate` | `cubic-bezier(0, 0, 0, 1)` | Elements entering the screen |
+| `standardAccelerate` | `cubic-bezier(0.3, 0, 1, 1)` | Elements leaving the screen |
+| `emphasized` | `cubic-bezier(0.2, 0, 0, 1)` | High-attention transitions (same as standard) |
+| `emphasizedDecelerate` | `cubic-bezier(0.05, 0.7, 0.1, 1)` | Hero elements entering |
+| `emphasizedAccelerate` | `cubic-bezier(0.3, 0, 0.8, 0.15)` | Hero elements leaving |
+
+```tsx
+// Correct: named tokens
+<Box transition="all" transitionDuration="normal" transitionTimingFunction="standard">
+  Animated element
+</Box>
+```
+
+---
+
+## Quick Decision Guide
+
+### Text
+
+| Purpose | Token | Panda CSS |
+|---|---|---|
+| Body / paragraph text | `onSurface` | `color="onSurface"` |
+| Secondary / helper text | `onSurface/variant` | `color="onSurface.variant"` |
+| Text on primary button | `onPrimary` | `color="onPrimary"` |
+| Text on secondary button | `onSecondary` | `color="onSecondary"` |
+| Text on page background | `onBackground` | `color="onBackground"` |
+| Error message text | `onError/container` | `color="onError.container"` |
+| Tooltip / snackbar text | `inverseOnSurface` | `color="inverseOnSurface"` |
+
+### Backgrounds
+
+| Purpose | Token | Panda CSS |
+|---|---|---|
+| Page background | `background` | `bg="background"` |
+| Base panel / section | `surface` | `bg="surface"` |
+| Default card / dialog | `surface/container` | `bg="surface.container"` |
+| Subtle input background | `surface/container/low` | `bg="surface.container.low"` |
+| Elevated card / nav | `surface/container/high` | `bg="surface.container.high"` |
+| Chip / tag bg | `surface/variant` | `bg="surfaceVariant"` |
+| Tooltip / snackbar | `inverse/surface` | `bg="inverseSurface"` |
+| Dialog overlay | `scrim` | `bg="scrim"` at reduced opacity |
+| Primary CTA | `primary` | `colorPalette="primary"` on `<Button>` |
+| Destructive action | `error` | `colorPalette="error"` on `<Button>` |
+
+### Borders
+
+| Purpose | Token | Panda CSS |
+|---|---|---|
+| Default input / card border | `outline/variant` | `borderColor="outline.variant"` |
+| Divider / separator | `outline/variant` | `borderColor="outline.variant"` |
+| Strong / focus border | `outline` | `borderColor="outline"` |
+
+### Spacing
+
+| Context | Token | Panda CSS |
+|---|---|---|
+| Default card padding | `spacing/md` | `p="md"` |
+| Section / dialog padding | `spacing/lg` | `p="lg"` |
+| Tight internal gap | `spacing/sm` | `gap="sm"` |
+| Between-element gap | `spacing/md` | `gap="md"` |
+| Icon-to-text nudge | `spacing/xs` | `gap="xs"` |
+
+### Corner radius
+
+| Context | Token | Panda CSS |
+|---|---|---|
+| Buttons / inputs | `radii/small` | `rounded="sm"` |
+| Cards / dialogs | `radii/medium` | `rounded="md"` |
+| Pill / toggle / avatar | `radii/full` | `rounded="full"` |
+| Badge / chip | `radii/extraSmall` | `rounded="xs"` |
+
+---
+
+## Old External Library Names → DDS
+
+The `@discourser/design-system` Figma library (collection `103:xxxx`, used in older frames) used
+Shadcn/Chakra vocabulary. When you encounter these variable names in a Figma audit, use this table.
+
+### Color variables
+
+| External library name | DDS Semantic token | Panda CSS | Notes |
+|---|---|---|---|
+| `foreground` | `onSurface` | `color="onSurface"` | Primary text |
+| `muted-foreground` | `onSurface/variant` | `color="onSurface.variant"` | Secondary / helper text |
+| `muted` | `surface/container/low` | `bg="surface.container.low"` | Subtle chip / input bg |
+| `background` | `background` | `bg="background"` | Page background |
+| `surface` | `surface` | `bg="surface"` | Base surface |
+| `border` | `outline/variant` | `borderColor="outline.variant"` | Default border |
+| `border-input` | `outline/variant` | `borderColor="outline.variant"` | Input border |
+| `primary-foreground` | `onPrimary` | `color="onPrimary"` | Text on primary button |
+| `onprimary` | `onPrimary` | `color="onPrimary"` | Same — casing variant |
+| `surfacecontainer` | `surface/container` | `bg="surface.container"` | Card / dialog |
+| `surfacecontainerhigh` | `surface/container/high` | `bg="surface.container.high"` | Nav / elevated panel |
+| `custom/bg-input-30` | `surface/container/low` | `bg="surface.container.low"` | Input background |
+
+### Primitive variables still in use
+
+These raw tonal variables (`primary/50`, `neutral/40`, etc.) appear as bindings in older frames.
+Replace with Semantic equivalents when rebinding:
+
+| External variable | Hex | Replace with |
+|---|---|---|
+| `primary/50` | `#518500` | `primary` (`#4C662B` light) |
+| `primary/60` | `#64A104` | `primary` |
+| `secondary/50` | `#6C7D56` | `secondary` (`#586249` light) |
+| `secondary/70` | `#A0B187` | `secondary.container` fg |
+| `secondary/80` | `#BBCDA1` | `secondary` (dark) |
+| `neutral/40` | `#5E5F59` | `onSurface.variant` |
+| `neutral/50` | `#777771` | `outline` |
+| `neutral/90` | `#E3E3DB` | `surfaceVariant` |
+| `neutral/99` | `#FDFCF5` | `surface.container.lowest` |
+
+### Legacy 100–900 scale (Chakra / Tailwind convention)
+
+Older design files sometimes used a `Primary/500` naming convention (100–900 scale) instead of M3's 0–100 scale. Approximate mapping:
+
+| Legacy name | M3 Primitive | Semantic token | Light hex |
+|---|---|---|---|
+| `Primary/500` | `primary/50` | `primary` | `#4C662B` |
+| `Primary/400` | `primary/40` | — | `#3F6900` |
+| `Accent/500` | `secondary/50` | `secondary` | `#586249` |
+| `Stone/60%/500` | `neutral/50` + 60% opacity | `outline` | `#777771` |
+| `Stone/60%/400` | `neutral/40` + 60% opacity | `onSurface.variant` | `#5E5F59` |
+
+> These names appear in Figma audits of frames built against the legacy library.
+> Always rebind to the **Semantic** collection — not Primitives — to get dark mode support.
+
+---
+
+## Cross-References
+
+- [01-Colors](/docs/documentation-figma-translation-01-colors--docs) — Tailwind / Shadcn → DDS color mapping
+- [03-Spacing](/docs/documentation-figma-translation-03-spacing--docs) — Tailwind numeric → Panda CSS spacing
+- [04-Shadows-Radii](/docs/documentation-figma-translation-04-shadows-radii--docs) — Shadow and corner radius patterns
+- [Guidelines: Colors](/docs/documentation-guidelines-design-tokens-colors--docs) — Full M3 color role documentation
+- [Guidelines: Elevation](/docs/documentation-guidelines-design-tokens-elevation--docs) — Surface container elevation system
+- [Guidelines: Spacing](/docs/documentation-guidelines-design-tokens-spacing--docs) — Spacing scale reference
+- [Guidelines: Typography](/docs/documentation-guidelines-design-tokens-typography--docs) — Full type scale

@@ -26,6 +26,12 @@ export interface FigmaCodex {
   components: Record<string, ComponentEntry>;
 }
 
+export interface ComponentTokens {
+  recipe?: string;
+  variantProps?: string[];
+  figmaPropToRecipeProp?: Record<string, string>;
+}
+
 export interface ComponentEntry {
   /** Human-readable component name */
   name: string;
@@ -62,6 +68,9 @@ export interface ComponentEntry {
 
   /** Source file path relative to project root */
   sourcePath: string;
+
+  /** Token mappings parsed from @dds-tokens JSDoc block */
+  tokens?: ComponentTokens;
 }
 
 export interface PropDefinition {

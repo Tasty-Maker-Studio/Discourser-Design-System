@@ -1,3 +1,5 @@
+import type { ComponentTokens } from './schema';
+
 export class ParseError extends Error {
   constructor(
     message: string,
@@ -19,6 +21,7 @@ export interface ParsedFigmaFile {
   figmaNodeId: string;
   example: string;
   propsMapping: Record<string, string>;
+  tokens?: ComponentTokens;
 }
 
 function parseNodeId(url: string): string {
@@ -77,6 +80,54 @@ function extractPropsMapping(content: string): Record<string, string> {
   return result;
 }
 
+/**
+ * Parse a @dds-tokens JSDoc block that appears before figma.connect().
+ * Format:
+ *   @dds-tokens
+ *   recipe: badge
+ *   variantProps: variant, size, colorPalette
+ *   figmaPropToRecipeProp:
+ *     Variant: variant
+ *     Size: size
+ *     Color: colorPalette
+ */
+function parseDdsTokens(content: string): ComponentTokens | undefined {
+  const blockMatch = content.match(/\/\*\*[\s\S]*?@dds-tokens([\s\S]*?)\*\//);
+  if (!blockMatch) return undefined;
+
+  const block = blockMatch[1]
+    .replace(/^\s*\*\s?/gm, '') // strip leading * from each line
+    .trim();
+
+  const tokens: ComponentTokens = {};
+
+  const recipeMatch = block.match(/^recipe:\s*(.+)$/m);
+  if (recipeMatch) tokens.recipe = recipeMatch[1].trim();
+
+  const variantPropsMatch = block.match(/^variantProps:\s*(.+)$/m);
+  if (variantPropsMatch) {
+    tokens.variantProps = variantPropsMatch[1]
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }
+
+  const mapHeaderIdx = block.indexOf('figmaPropToRecipeProp:');
+  if (mapHeaderIdx !== -1) {
+    const mapBlock = block.slice(
+      mapHeaderIdx + 'figmaPropToRecipeProp:'.length,
+    );
+    const mapping: Record<string, string> = {};
+    for (const line of mapBlock.split('\n')) {
+      const m = line.match(/^\s+(\w+):\s*(\w+)/);
+      if (m) mapping[m[1]] = m[2];
+    }
+    if (Object.keys(mapping).length > 0) tokens.figmaPropToRecipeProp = mapping;
+  }
+
+  return Object.keys(tokens).length > 0 ? tokens : undefined;
+}
+
 export function parseFigmaFile(
   content: string,
   filePath: string,
@@ -108,6 +159,8 @@ export function parseFigmaFile(
   const figmaUrl = connectMatch[3];
   const connectSubComponent = connectMatch[2];
 
+  const tokens = parseDdsTokens(content);
+
   if (nsMatch) {
     return {
       filePath,
@@ -120,6 +173,7 @@ export function parseFigmaFile(
       figmaNodeId: parseNodeId(figmaUrl),
       example: extractExample(content),
       propsMapping: extractPropsMapping(content),
+      tokens,
     };
   }
 
@@ -134,5 +188,6 @@ export function parseFigmaFile(
     figmaNodeId: parseNodeId(figmaUrl),
     example: extractExample(content),
     propsMapping: extractPropsMapping(content),
+    tokens,
   };
 }

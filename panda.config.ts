@@ -53,6 +53,7 @@ import { contentCard } from './src/preset/recipes/content-card';
 import { scenarioCard } from './src/preset/recipes/scenario-card';
 import { scenarioQueue } from './src/preset/recipes/scenario-queue';
 import { scenarioSettings } from './src/preset/recipes/scenario-settings';
+import { studioControls } from './src/preset/recipes/studio-controls';
 
 const theme = transformToPandaTheme(activeLanguage);
 
@@ -283,6 +284,7 @@ export default defineConfig({
         scenarioCard,
         scenarioQueue,
         scenarioSettings,
+        studioControls,
       },
     },
   },

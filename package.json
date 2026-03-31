@@ -213,6 +213,7 @@
     "verify:build": "pnpm build",
     "codex:generate": "tsx src/figma-codex/generate.ts",
     "codex:watch": "tsx --watch src/figma-codex/generate.ts",
+    "scaffold:figma-connect": "tsx scripts/scaffold-figma-connect.ts",
     "figma:connect": "figma connect publish",
     "figma:connect:dry": "figma connect publish --dry-run",
     "figma:export": "tsx scripts/export-figma-tokens.ts",

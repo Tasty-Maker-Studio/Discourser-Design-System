@@ -1,0 +1,23 @@
+{
+  "auditTarget": "958:1900",
+  "componentSetName": "RadioGroup.Item",
+  "totalComponents": 72,
+  "totalUnboundNodes": 0,
+  "flagged": [],
+  "variantAxes": {
+    "Color": ["Primary", "Secondary", "Tertiary"],
+    "Stop": ["40", "50", "60", "70"],
+    "Variant": ["Solid"],
+    "Size": ["Sm", "Md", "Lg"],
+    "Checked": ["False", "True"]
+  },
+  "gridLayout": "24 cols × 3 rows (one row per Color, columns = Stop × Size × Checked)",
+  "notes": "All fills, strokes, and text bindings are bound to DDS variables. Zero hardcoded values.",
+  "variableBindings": {
+    "itemControl.fill.checked": "Primitives {color}/{stop} (bound per Color+Stop variant)",
+    "itemControl.stroke.unchecked": "Semantic outline/variant",
+    "indicator.fill": "Primitives neutral/100 (white)",
+    "itemText.fill": "Semantic onSurface"
+  },
+  "replacedNode": "944:1858"
+}

@@ -1,0 +1,31 @@
+{
+  "auditTarget": "950:1681",
+  "componentSetName": "Card",
+  "totalComponents": 3,
+  "totalUnboundNodes": 1,
+  "flagged": [
+    {
+      "name": "Variant=Subtle",
+      "type": "COMPONENT",
+      "unboundFills": [{ "index": 0, "hex": "#e0e1df", "note": "neutral/40 @ 19% alpha over white — alpha slot, EXPECTED" }]
+    }
+  ],
+  "notes": "1 unbound node: Subtle variant root fill is alpha-composited hardcoded hex. Expected — matches recipe token neutral.subtle.bg which has no single bindable variable. Elevated drop shadow is also hardcoded (rgba(0,0,0,0.15)) — effects cannot be bound to variables in Figma.",
+  "expectedHardcoded": {
+    "subtle.root.fill": "#e0e1df (neutral/40 @ 19% over white)",
+    "elevated.dropShadow": "rgba(0,0,0,0.15) 0 8px 24px — Figma effects cannot bind variables"
+  },
+  "variableBindings": {
+    "elevated.root.fill": "Semantic surface",
+    "outline.root.fill": "Semantic surface",
+    "outline.root.stroke": "Semantic outline/variant",
+    "header.title.fill": "Semantic onSurface",
+    "header.description.fill": "Semantic onSurface/variant",
+    "body.text.fill": "Semantic onSurface",
+    "footer.actionButton.fill": "Semantic primary",
+    "footer.actionButton.label.fill": "Semantic onPrimary",
+    "footer.cancelButton.stroke": "Semantic outline/variant",
+    "footer.cancelButton.label.fill": "Semantic onSurface",
+    "root.cornerRadius": "Spacing & Shape radii/large"
+  }
+}
