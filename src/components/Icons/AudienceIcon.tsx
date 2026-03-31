@@ -8,8 +8,10 @@ export type AudienceIconProps = ComponentProps<typeof StyledSvg>;
 
 export const AudienceIcon = (props: AudienceIconProps) => (
   <StyledSvg
-    viewBox="0 0 40 44"
+    viewBox="3.5 9.5 29 25"
     fill="currentColor"
+    stroke="currentColor"
+    strokeWidth="0.5"
     xmlns="http://www.w3.org/2000/svg"
     width="1em"
     height="1em"

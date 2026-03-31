@@ -76,17 +76,18 @@ export const switchRecipe = defineSlotRecipe({
       solid: {
         control: {
           borderRadius: 'full',
-          bg: 'neutral.subtle.bg',
+          // Off state: palette-tinted subtle bg — matches Figma rgba(primary,~40%) off-state.
+          // Uses colorPalette so it adapts to primary/secondary/tertiary/neutral/error.
+          bg: 'colorPalette.subtle.bg',
           focusVisibleRing: 'outside',
           _checked: {
+            // On state: solid filled palette color (primary.9, neutral.solid.bg, etc.)
             bg: 'colorPalette.solid.bg',
           },
         },
         thumb: {
+          // Thumb is always white — contrasts cleanly on both subtle and solid track bg.
           bg: 'white',
-          _checked: {
-            bg: 'colorPalette.solid.fg',
-          },
           width: 'var(--switch-height)',
           height: 'var(--switch-height)',
           scale: '0.8',

@@ -1,0 +1,264 @@
+{
+  "auditTarget": "38:8232",
+  "auditNodeName": "Discourser Accordion",
+  "figmaFile": "GaHmFfmvO4loUzuZS4TgEz",
+  "auditDate": "2026-03-27",
+  "auditMethod": "derived-from-figma-mcp",
+  "auditNote": "The skill's audit script requires figma.getNodeByIdAsync() which only runs inside a Figma plugin sandbox — not accessible from Chrome DevTools console or any available MCP tool. This audit was derived from two sources: (1) mcp__figma-remote__get_variable_defs for the full variable binding inventory of the subtree, and (2) mcp__figma-remote__get_design_context for resolved hex values and CSS variable references. When get_design_context emits var(--varName, fallback) the fill is bound; when it emits a raw hex the fill may be unbound OR bound to a variable whose name Figma does not export as a CSS custom property (typically PascalCase/legacy names). Per-node binding detail is approximate; a Plugin-API run would give exact node-level boundVariables.",
+
+  "summary": {
+    "totalVariablesInSubtree": 47,
+    "confirmedDdsVariables": 5,
+    "confirmedNonDdsVariables": 13,
+    "confirmedUnboundColors": 4,
+    "confirmedNonDdsSpacingVariables": 9,
+    "confirmedNonDdsRadiiVariables": 2
+  },
+
+  "variableInventory": {
+    "note": "Full output of get_variable_defs for node 38:8232. Variables whose names match DDS Semantic / Primitives / Spacing & Shape conventions are marked ddsStatus=LIKELY_DDS. All others are LEGACY.",
+    "colors": [
+      { "varName": "onprimary",            "resolvedHex": "#ffffff",  "ddsStatus": "LIKELY_DDS",  "ddsCollection": "Semantic",          "ddsMapping": "onPrimary" },
+      { "varName": "primary/50",           "resolvedHex": "#518500",  "ddsStatus": "LIKELY_DDS",  "ddsCollection": "Primitives",        "ddsMapping": "primary/50" },
+      { "varName": "primary/60",           "resolvedHex": "#64a104",  "ddsStatus": "LIKELY_DDS",  "ddsCollection": "Primitives",        "ddsMapping": "primary/60" },
+      { "varName": "secondary/50",         "resolvedHex": "#6c7d56",  "ddsStatus": "LIKELY_DDS",  "ddsCollection": "Primitives",        "ddsMapping": "secondary/50" },
+      { "varName": "neutral/99",           "resolvedHex": "#fdfcf5",  "ddsStatus": "LIKELY_DDS",  "ddsCollection": "Primitives",        "ddsMapping": "neutral/99" },
+
+      { "varName": "Primary/700",          "resolvedHex": "#6B7A1F",  "ddsStatus": "LEGACY",      "suggestedDdsVar": "Semantic/primary or Primitives/primary/70" },
+      { "varName": "Primary/500",          "resolvedHex": "#C5D24D",  "ddsStatus": "LEGACY",      "suggestedDdsVar": "Semantic/primaryContainer or Primitives/primary/50" },
+      { "varName": "Primary/Beginner/40%", "resolvedHex": "#C0D15C",  "ddsStatus": "LEGACY",      "suggestedDdsVar": "Primitives/primary/40 (no opacity variant in DDS)" },
+      { "varName": "Primary/400/60%",      "resolvedHex": "#C0D15C",  "ddsStatus": "LEGACY",      "suggestedDdsVar": "Primitives/primary/40 (no opacity variant in DDS)" },
+      { "varName": "Black/Neutral/30%/600","resolvedHex": "#363636",  "ddsStatus": "LEGACY",      "suggestedDdsVar": "Semantic/onSurface" },
+      { "varName": "Black/Neutral/30%/700","resolvedHex": "#2E2E2E",  "ddsStatus": "LEGACY",      "suggestedDdsVar": "Semantic/onBackground" },
+      { "varName": "Stone/60%/500",        "resolvedHex": "#F5F1EB",  "ddsStatus": "LEGACY",      "suggestedDdsVar": "Semantic/outline/variant or Semantic/surfaceVariant" },
+      { "varName": "Gray/Neutral/30%/500", "resolvedHex": "#E0DCD5",  "ddsStatus": "LEGACY",      "suggestedDdsVar": "Semantic/surfaceVariant" },
+      { "varName": "Accent/500",           "resolvedHex": "#B8A9C9",  "ddsStatus": "LEGACY",      "suggestedDdsVar": "Semantic/tertiary" },
+      { "varName": "Accent/400",           "resolvedHex": "#CFC4DB",  "ddsStatus": "LEGACY",      "suggestedDdsVar": "Semantic/tertiaryContainer" },
+      { "varName": "Accent/600",           "resolvedHex": "#8D7EA3",  "ddsStatus": "LEGACY",      "suggestedDdsVar": "Semantic/onTertiaryContainer" },
+      { "varName": "Accent/300",           "resolvedHex": "#E5DFEC",  "ddsStatus": "LEGACY",      "suggestedDdsVar": "Semantic/tertiary/container (light)" },
+      { "varName": "Accent/700",           "resolvedHex": "#6B5A7D",  "ddsStatus": "LEGACY",      "suggestedDdsVar": "Semantic/onTertiary" }
+    ],
+    "spacing": [
+      { "varName": "p-0",   "resolvedPx": 0,  "ddsStatus": "LEGACY", "suggestedDdsVar": "spacing/none" },
+      { "varName": "p-0,5", "resolvedPx": 2,  "ddsStatus": "LEGACY", "suggestedDdsVar": "spacing/xxs" },
+      { "varName": "p-1",   "resolvedPx": 4,  "ddsStatus": "LEGACY", "suggestedDdsVar": "spacing/xs" },
+      { "varName": "p-1,5", "resolvedPx": 6,  "ddsStatus": "LEGACY", "suggestedDdsVar": "spacing/xs (closest)" },
+      { "varName": "p-2",   "resolvedPx": 8,  "ddsStatus": "LEGACY", "suggestedDdsVar": "spacing/sm" },
+      { "varName": "p-2,5", "resolvedPx": 10, "ddsStatus": "LEGACY", "suggestedDdsVar": "spacing/sm (closest, no 10px DDS token)" },
+      { "varName": "p-3",   "resolvedPx": 12, "ddsStatus": "LEGACY", "suggestedDdsVar": "spacing/sm (closest)" },
+      { "varName": "p-4",   "resolvedPx": 16, "ddsStatus": "LEGACY", "suggestedDdsVar": "spacing/md" },
+      { "varName": "p-4",   "resolvedPx": 16, "ddsStatus": "LEGACY", "suggestedDdsVar": "spacing/md" }
+    ],
+    "radii": [
+      { "varName": "calc(var(--radius) - 2px)", "resolvedPx": 8,    "ddsStatus": "LEGACY", "suggestedDdsVar": "radii/extraSmall (6px) or radii/small — no 8px DDS radii token" },
+      { "varName": "radius/rounded-full",       "resolvedPx": 9999, "ddsStatus": "LIKELY_DDS", "suggestedDdsVar": "radii/full" }
+    ]
+  },
+
+  "unboundColors": {
+    "note": "Hex values seen in get_design_context output that do NOT appear in get_variable_defs. These are fully unbound — no variable binding at all.",
+    "items": [
+      {
+        "hex": "#fffdfa",
+        "opacity": 1,
+        "context": "Fill on panel bg inside Info Panel (node I38:8233;38:8145)",
+        "usedAs": "background",
+        "suggestedDdsVar": "Semantic/surface or Semantic/background"
+      },
+      {
+        "hex": "#e5e7eb",
+        "opacity": 1,
+        "context": "Stroke/border on Info Panel content container (node I38:8233;38:8145)",
+        "usedAs": "stroke",
+        "suggestedDdsVar": "Semantic/outline/variant"
+      },
+      {
+        "hex": "#4a5565",
+        "opacity": 1,
+        "context": "Text fill on secondary body text inside Info Panel (node I38:8233;38:8145;38:8212)",
+        "usedAs": "text-fill",
+        "suggestedDdsVar": "Semantic/onSurfaceVariant"
+      },
+      {
+        "hex": "rgba(26,26,26,0.05)",
+        "opacity": 0.05,
+        "context": "Shadow color on Slider thumb, Discourser Button, Switch (shadow/2xs and shadow/md effects)",
+        "usedAs": "drop-shadow-color",
+        "note": "Shadow effects — not a fill. shadow/2xs and shadow/md variables exist but the shadow color itself (#1a1a1a) is not bound to a variable.",
+        "suggestedDdsVar": "No current DDS shadow color token — use Semantic/shadow or define one"
+      }
+    ]
+  },
+
+  "flagged": [
+    {
+      "id": "38:8233",
+      "name": "Discourse Accordion Item (Info Panel)",
+      "type": "FRAME",
+      "unboundFills": [
+        { "index": 0, "hex": "#fffdfa", "opacity": 1, "location": "panel bg (node I38:8233;38:8145)", "note": "Truly unbound — not in variable_defs" }
+      ],
+      "unboundStrokes": [
+        { "index": 0, "hex": "#e5e7eb", "location": "panel border (node I38:8233;38:8145)", "note": "Truly unbound — not in variable_defs" },
+        { "index": 0, "hex": "#f5f1eb", "location": "accordion item bottom border", "note": "Bound to LEGACY var Stone/60%/500 — rebind to Semantic/outline/variant" }
+      ],
+      "unboundText": {
+        "content": "Focus: Technical Communication",
+        "colorHex": "#4a5565",
+        "note": "Truly unbound — not in variable_defs. Suggested: Semantic/onSurfaceVariant"
+      },
+      "nonDdsBoundFills": [
+        { "varName": "Black/Neutral/30%/600", "hex": "#363636", "location": "trigger label + body text", "suggestedDdsVar": "Semantic/onSurface" },
+        { "varName": "Black/Neutral/30%/700", "hex": "#2E2E2E", "location": "badge text labels", "suggestedDdsVar": "Semantic/onBackground" },
+        { "varName": "Stone/60%/500",          "hex": "#F5F1EB", "location": "settings list container bg + item divider border", "suggestedDdsVar": "Semantic/surfaceVariant" },
+        { "varName": "Primary/Beginner/40%",   "hex": "#C0D15C", "location": "badge backgrounds (4 badges)", "suggestedDdsVar": "Primitives/primary/40 (no opacity in DDS — may need new token)" }
+      ],
+      "unboundCornerRadius": null,
+      "unboundSpacing": {
+        "paddingTop": 16, "paddingBottom": 16, "paddingLeft": 20, "paddingRight": 20,
+        "note": "Bound to LEGACY p-4 (16px) and custom 20px. p-4 → spacing/md; 20px has no DDS token"
+      }
+    },
+    {
+      "id": "38:8234",
+      "name": "Discourse Accordion Item (Audio Output Panel)",
+      "type": "FRAME",
+      "unboundFills": [],
+      "unboundStrokes": [
+        { "index": 0, "hex": "#f5f1eb", "location": "accordion item bottom border", "note": "Bound to LEGACY var Stone/60%/500 — rebind to Semantic/outline/variant" }
+      ],
+      "unboundText": null,
+      "nonDdsBoundFills": [
+        { "varName": "Black/Neutral/30%/600", "hex": "#363636", "location": "trigger label text", "suggestedDdsVar": "Semantic/onSurface" },
+        { "varName": "Gray/Neutral/30%/500",  "hex": "#E0DCD5", "location": "slider track background", "suggestedDdsVar": "Semantic/surfaceVariant" },
+        { "varName": "Primary/700",           "hex": "#6B7A1F", "location": "slider range fill", "suggestedDdsVar": "Semantic/primary" },
+        { "varName": "Accent/500",            "hex": "#B8A9C9", "location": "slider thumb background", "suggestedDdsVar": "Semantic/tertiary" },
+        { "varName": "Accent/400",            "hex": "#CFC4DB", "location": "slider thumb border", "suggestedDdsVar": "Semantic/tertiaryContainer" }
+      ],
+      "unboundCornerRadius": null,
+      "unboundSpacing": {
+        "paddingTop": 20, "paddingBottom": 20,
+        "note": "20px padding has no DDS spacing token. Closest: spacing/lg or define spacing/xl"
+      }
+    },
+    {
+      "id": "38:8235",
+      "name": "Discourse Accordion Item (EQ & Slider container)",
+      "type": "FRAME",
+      "unboundFills": [],
+      "unboundStrokes": [
+        { "index": 0, "hex": "#f5f1eb", "location": "accordion item bottom border", "note": "Bound to LEGACY var Stone/60%/500 — rebind to Semantic/outline/variant" }
+      ],
+      "unboundText": null,
+      "nonDdsBoundFills": [
+        { "varName": "Black/Neutral/30%/600", "hex": "#363636", "location": "trigger label text", "suggestedDdsVar": "Semantic/onSurface" },
+        { "varName": "Gray/Neutral/30%/500",  "hex": "#E0DCD5", "location": "mic gain slider track", "suggestedDdsVar": "Semantic/surfaceVariant" },
+        { "varName": "Primary/700",           "hex": "#6B7A1F", "location": "mic gain slider range fill", "suggestedDdsVar": "Semantic/primary" },
+        { "varName": "Accent/500",            "hex": "#B8A9C9", "location": "mic gain slider thumb background", "suggestedDdsVar": "Semantic/tertiary" },
+        { "varName": "Accent/400",            "hex": "#CFC4DB", "location": "mic gain slider thumb border", "suggestedDdsVar": "Semantic/tertiaryContainer" }
+      ],
+      "unboundCornerRadius": null,
+      "unboundSpacing": null
+    },
+    {
+      "id": "38:8236",
+      "name": "Discourse Accordion Item (A/V Record)",
+      "type": "FRAME",
+      "unboundFills": [],
+      "unboundStrokes": [
+        { "index": 0, "hex": "#f5f1eb", "location": "accordion item bottom border", "note": "Bound to LEGACY var Stone/60%/500 — rebind to Semantic/outline/variant" }
+      ],
+      "unboundText": null,
+      "nonDdsBoundFills": [
+        { "varName": "Black/Neutral/30%/600", "hex": "#363636", "location": "trigger label + radio item labels", "suggestedDdsVar": "Semantic/onSurface" },
+        { "varName": "Primary/500",           "hex": "#C5D24D", "location": "radio button selected fill", "suggestedDdsVar": "Semantic/primary or Semantic/primaryContainer" },
+        { "varName": "Accent/500",            "hex": "#B8A9C9", "location": "radio button selected border", "suggestedDdsVar": "Semantic/tertiary" }
+      ],
+      "unboundCornerRadius": null,
+      "unboundSpacing": null
+    },
+    {
+      "id": "38:8237",
+      "name": "Discourse Accordion Item (Show Timer)",
+      "type": "FRAME",
+      "unboundFills": [],
+      "unboundStrokes": [
+        { "index": 0, "hex": "#f5f1eb", "location": "accordion item bottom border", "note": "Bound to LEGACY var Stone/60%/500 — rebind to Semantic/outline/variant" }
+      ],
+      "unboundText": null,
+      "nonDdsBoundFills": [
+        { "varName": "Black/Neutral/30%/600", "hex": "#363636", "location": "trigger label + description text", "suggestedDdsVar": "Semantic/onSurface" },
+        { "varName": "Primary/Beginner/40%",  "hex": "#C0D15C", "location": "switch track (OFF state bg)", "suggestedDdsVar": "Semantic/primaryContainer (no opacity variant in DDS)" }
+      ],
+      "unboundCornerRadius": null,
+      "unboundSpacing": null
+    },
+    {
+      "id": "38:8238",
+      "name": "Discourse Accordion Item (Hide Interview)",
+      "type": "FRAME",
+      "unboundFills": [],
+      "unboundStrokes": [
+        { "index": 0, "hex": "#f5f1eb", "location": "accordion item bottom border", "note": "Bound to LEGACY var Stone/60%/500 — rebind to Semantic/outline/variant" }
+      ],
+      "unboundText": null,
+      "nonDdsBoundFills": [
+        { "varName": "Black/Neutral/30%/600", "hex": "#363636", "location": "trigger label + description text", "suggestedDdsVar": "Semantic/onSurface" },
+        { "varName": "Primary/500",           "hex": "#C5D24D", "location": "switch track (ON state bg)", "suggestedDdsVar": "Semantic/primary" }
+      ],
+      "unboundCornerRadius": null,
+      "unboundSpacing": null
+    }
+  ],
+
+  "sharedFindings": {
+    "triggerChevronIcon": {
+      "nodePattern": "I38:82XX;38:81XX;2706:13883",
+      "vectorStrokeHex": "#363636",
+      "varName": "Black/Neutral/30%/600",
+      "ddsStatus": "LEGACY",
+      "suggestedDdsVar": "Semantic/onSurface",
+      "appearsIn": "all 6 accordion triggers"
+    },
+    "actionButtons": {
+      "infoPanel": {
+        "bgVarName": "secondary/50",
+        "bgHex": "#6c7d56",
+        "textVarName": "onprimary",
+        "textHex": "#ffffff",
+        "ddsStatus": "LIKELY_DDS",
+        "note": "CSS var syntax confirmed in design context — possibly already DDS-bound"
+      },
+      "audioMicrophoneSliders": {
+        "bgVarName": "primary/50",
+        "bgHex": "#518500",
+        "textVarName": "onprimary",
+        "textHex": "#ffffff",
+        "ddsStatus": "LIKELY_DDS",
+        "note": "CSS var syntax confirmed in design context — possibly already DDS-bound"
+      }
+    }
+  },
+
+  "tokenGapFindings": {
+    "note": "Colors/values used in this frame that have no direct DDS token equivalent. These require either a new DDS token definition or a design decision to substitute the nearest existing token.",
+    "items": [
+      {
+        "value": "rgba(192, 209, 92, 0.4)",
+        "usedFor": "Badge bg, Switch OFF track",
+        "currentVar": "Primary/Beginner/40% / Primary/400/60%",
+        "gap": "DDS has no semi-transparent primary tint token. Options: (1) Add Semantic/primaryContainer, (2) add a new Primitives tint token, (3) use primaryContainer and accept different opacity"
+      },
+      {
+        "value": "20px padding",
+        "usedFor": "Panel horizontal padding across all items",
+        "gap": "DDS Spacing & Shape has spacing/md=16px and spacing/lg — no 20px token. Either add spacing/lg=20px or accept spacing/md."
+      },
+      {
+        "value": "6px border-radius (on accordion item panel card)",
+        "usedFor": "Info panel card radius",
+        "gap": "DDS has radii/extraSmall=6px — this token EXISTS and should be used."
+      }
+    ]
+  }
+}

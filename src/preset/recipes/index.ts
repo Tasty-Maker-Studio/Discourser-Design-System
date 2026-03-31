@@ -49,3 +49,4 @@ export * from './content-card';
 export * from './scenario-card';
 export * from './scenario-queue';
 export * from './scenario-settings';
+export * from './studio-controls';

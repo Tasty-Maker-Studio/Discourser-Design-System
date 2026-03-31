@@ -1,0 +1,51 @@
+{
+  "auditTarget": "66:2739",
+  "auditDate": "2026-03-29",
+  "nodeName": "Scenario/Studio Conversation/ Prelaunch",
+  "summary": {
+    "totalUnboundNodes": 271,
+    "totalVariableBindings": 816,
+    "externalLibraryBindings": 757,
+    "localDDSBindings": 59,
+    "externalLibraryCollection": "@discourser/design-system (VariableCollectionId:103:1758)"
+  },
+  "finding": "Frame uses 73 unique variables from the external @discourser/design-system library collection. These are NOT the local DDS Semantic/Primitives/Spacing & Shape collections. The specific dirty tokens named (Primary/500, Accent/500, Stone/60%/500, Stone/60%/400) were NOT found in this frame by those names.",
+  "externalColorBindingsByVariable": [
+    { "varName": "muted-foreground", "count": 18, "candidateDDSToken": "?" },
+    { "varName": "primary/50", "count": 11, "candidateDDSToken": "primary (Semantic)" },
+    { "varName": "primary-foreground", "count": 8, "candidateDDSToken": "onPrimary (Semantic)" },
+    { "varName": "foreground", "count": 8, "candidateDDSToken": "onSurface (Semantic)" },
+    { "varName": "custom/bg-input-30", "count": 8, "candidateDDSToken": "?" },
+    { "varName": "border", "count": 8, "candidateDDSToken": "outline/variant (Semantic)" },
+    { "varName": "secondary/50", "count": 3, "candidateDDSToken": "secondary (Semantic)" },
+    { "varName": "surface", "count": 2, "candidateDDSToken": "surface (Semantic)" },
+    { "varName": "muted", "count": 2, "candidateDDSToken": "?" },
+    { "varName": "neutral/40", "count": 2, "candidateDDSToken": "neutral/40 (Primitives)" },
+    { "varName": "neutral/50", "count": 2, "candidateDDSToken": "neutral/50 (Primitives)" },
+    { "varName": "secondary/70", "count": 2, "candidateDDSToken": "secondary/70 (Primitives)" },
+    { "varName": "primary/60", "count": 2, "candidateDDSToken": "primary/60 (Primitives)" },
+    { "varName": "surfacecontainerhigh", "count": 1, "candidateDDSToken": "surface/container/high (Semantic - if exists)" },
+    { "varName": "neutral/90", "count": 1, "candidateDDSToken": "neutral/90 (Primitives)" },
+    { "varName": "surfacecontainer", "count": 1, "candidateDDSToken": "?" },
+    { "varName": "secondary/80", "count": 1, "candidateDDSToken": "secondary/80 (Primitives)" },
+    { "varName": "neutral/20", "count": 1, "candidateDDSToken": "neutral/20 (Primitives)" },
+    { "varName": "neutral/99", "count": 1, "candidateDDSToken": "neutral/99 (Primitives)" },
+    { "varName": "onprimary", "count": 1, "candidateDDSToken": "onPrimary (Semantic)" },
+    { "varName": "secondary/40", "count": 1, "candidateDDSToken": "secondary/40 (Primitives)" }
+  ],
+  "localPrimitivesBindings": [
+    { "nodeId": "I697:5275;38:7980", "varName": "primary/80", "property": "fills" },
+    { "nodeId": "I697:5275;38:7982;685:5159", "varName": "primary/95", "property": "strokes" },
+    { "nodeId": "I697:5275;38:7985", "varName": "primary/80", "property": "fills" },
+    { "nodeId": "I697:5275;38:7987;685:5159", "varName": "primary/95", "property": "strokes" },
+    { "nodeId": "I697:5275;685:5136", "varName": "primary/99", "property": "fills" },
+    { "nodeId": "38:3464", "varName": "primary/10", "property": "fills" },
+    { "nodeId": "38:3465", "varName": "primary/80", "property": "fills" }
+  ],
+  "status": "AWAITING_CLARIFICATION",
+  "notes": [
+    "Most bindings are deep inside component instances (I-prefix node IDs) - these cannot be directly rebound via instance overrides, they come from master components.",
+    "Top-level rebindable nodes: 66:2739 (root fill), 573:7508 (Left Side Nav), 38:3464 (Clock frame), 38:3465 (15:00 text), 38:3433 (image background).",
+    "The named dirty tokens Primary/500 / Accent/500 / Stone/60%/500 / Stone/60%/400 may refer to an older version of this file or a different library not currently linked."
+  ]
+}

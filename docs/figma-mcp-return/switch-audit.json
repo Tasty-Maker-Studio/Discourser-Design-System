@@ -1,0 +1,38 @@
+{
+  "auditTarget": "959:2032",
+  "componentSetName": "Switch",
+  "totalComponents": 96,
+  "totalUnboundNodes": 48,
+  "variantAxes": {
+    "Color": ["Primary", "Secondary", "Tertiary"],
+    "Stop": ["40", "50", "60", "70"],
+    "Variant": ["Solid"],
+    "Size": ["Xs", "Sm", "Md", "Lg"],
+    "Toggled": ["False", "True"]
+  },
+  "gridLayout": "32 cols × 3 rows (one row per Color, columns = Stop × Size × Toggled)",
+  "summary": {
+    "control [fill] — off-state alpha slot": 48
+  },
+  "notes": "48 unbound nodes are ALL expected: the off-state (Toggled=False) track fills are alpha-composited from the variable's resolved value at runtime (1 + (raw - 1) * 0.19). This is the ONLY fill category in the system that lacks boundVariables. 3 colors × 4 stops × 4 sizes = 48 off-state instances.",
+  "expectedHardcodedFills": {
+    "primary/40 off":   "#dbe2cf (computed from #3f6900 at 19% over white)",
+    "primary/50 off":   "#dee8cf (computed from #518500 at 19%)",
+    "primary/60 off":   "#e2edcf (computed from #64a104 at 19%)",
+    "primary/70 off":   "#e6f2d7 (computed from #7dbd2a at 19%)",
+    "secondary/40 off": "#dfe2db (computed from #54643f at 19%)",
+    "secondary/50 off": "#e3e6df (computed from #6c7d56 at 19%)",
+    "secondary/60 off": "#e8ebe3 (computed from #85976e at 19%)",
+    "secondary/70 off": "#edf0e8 (computed from #a0b187 at 19%)",
+    "tertiary/40 off":  "#cfe3e2 (computed from #046a66 at 19%)",
+    "tertiary/50 off":  "#d8e7e7 (computed from #30837f at 19%)",
+    "tertiary/60 off":  "#ddeceb (computed from #4d9d98 at 19%)",
+    "tertiary/70 off":  "#e2f2f1 (computed from #69b8b3 at 19%)"
+  },
+  "variableBindings": {
+    "control.fill.on": "Primitives {color}/{stop} (bound per Color+Stop variant)",
+    "thumb.fill": "Primitives neutral/100 (white)",
+    "label.fill": "Semantic onSurface"
+  },
+  "replacedNode": "946:1808"
+}
