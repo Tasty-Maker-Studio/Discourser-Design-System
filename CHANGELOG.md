@@ -1,5 +1,13 @@
 # @discourser/design-system
 
+## 0.25.2
+
+### Patch Changes
+
+- [#179](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/179) [`f87af56`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/f87af5663b92f890a16e6c432e09cb2f2d67e77d) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Fix figma-codex resolver: populate props and subComponents for RadioGroup, Switch, and Slider
+  - extractSubComponents: add patterns for withContext(Namespace.Sub, 'slot') and createStyledComponent(Namespace.Sub, 'slot') alongside existing ark factory pattern; also handle forwardRef<HTMLXxxElement> exports
+  - extractProps: when no interface block is found, fall back to parsing the Key props section from the .figma.tsx JSDoc comment block
+
 ## 0.25.1
 
 ### Patch Changes
