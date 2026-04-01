@@ -220,21 +220,19 @@ function buildTextStyles(): Record<string, TextStyleEntry> {
   const result: Record<string, TextStyleEntry> = {};
   const lang = material3Language;
 
-  for (const [key, style] of Object.entries(lang.typography.scale)) {
-    const fontKey = style.fontFamily as 'display' | 'body' | 'mono';
-    const fontFamilyString = lang.typography.fonts[fontKey];
-    // Extract first font name before comma, strip quotes
-    const fontFamily = fontFamilyString
-      .split(',')[0]
-      .replace(/['"]/g, '')
-      .trim();
+  for (const [key, step] of Object.entries(lang.typography.scale)) {
+    const fontKey = step.geometry.fontFamily as 'display' | 'body' | 'mono';
+    const fontConfig = lang.typography.fonts[fontKey];
+    const fontFamily = fontConfig.figmaName;
+    const defaultVariant = step.weights[step.defaultWeight];
+    const fontWeight = Number(defaultVariant?.fontWeight ?? '400');
 
     result[key] = {
       fontFamily,
-      fontSize: px(style.fontSize),
-      fontWeight: Number(style.fontWeight),
-      lineHeight: px(style.lineHeight),
-      letterSpacing: px(style.letterSpacing),
+      fontSize: px(step.geometry.fontSize),
+      fontWeight,
+      lineHeight: px(step.geometry.lineHeight),
+      letterSpacing: px(step.geometry.letterSpacing),
       figmaTextStyle: key,
     };
   }

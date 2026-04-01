@@ -200,119 +200,284 @@ export const material3Language: DesignLanguageContract = {
 
   typography: {
     fonts: {
-      display: '"Fraunces", Georgia, serif',
-      body: '"Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-      mono: '"JetBrains Mono", "Fira Code", Consolas, monospace',
+      display: {
+        family: '"Fraunces", Georgia, serif',
+        figmaName: 'Fraunces',
+        weightMap: {
+          '100': 'Thin',
+          '300': 'Light',
+          '400': 'Regular',
+          '500': 'Medium',
+          '600': 'SemiBold',
+          '700': 'Bold',
+        },
+      },
+      body: {
+        family:
+          '"Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+        figmaName: 'Poppins',
+        weightMap: {
+          '100': 'Thin',
+          '300': 'Light',
+          '400': 'Regular',
+          '500': 'Medium',
+          '600': 'SemiBold',
+          '700': 'Bold',
+        },
+      },
+      mono: {
+        family: '"JetBrains Mono", "Fira Code", Consolas, monospace',
+        figmaName: 'JetBrains Mono',
+        weightMap: {
+          '400': 'Regular',
+          '700': 'Bold',
+        },
+      },
     },
     scale: {
+      // ── Display ─────────────────────────────────────────────────────────────
+
       displayLarge: {
-        fontSize: '57px',
-        lineHeight: '64px',
-        fontWeight: '400',
-        letterSpacing: '-0.25px',
-        fontFamily: 'display',
-        fontVariationSettings: "'SOFT' 0, 'WONK' 1",
+        geometry: {
+          fontSize: '57px',
+          lineHeight: '64px',
+          letterSpacing: '-0.25px',
+          fontFamily: 'display',
+          fontVariationSettings: "'SOFT' 0, 'WONK' 1",
+        },
+        defaultWeight: 'regular',
+        weights: {
+          regular: { name: 'regular', fontWeight: '400' },
+          semiBold: { name: 'semiBold', fontWeight: '600' },
+        },
       },
+
       displayMedium: {
-        fontSize: '45px',
-        lineHeight: '52px',
-        fontWeight: '400',
-        letterSpacing: '0px',
-        fontFamily: 'display',
+        geometry: {
+          fontSize: '45px',
+          lineHeight: '52px',
+          letterSpacing: '0px',
+          fontFamily: 'display',
+        },
+        defaultWeight: 'regular',
+        weights: {
+          regular: { name: 'regular', fontWeight: '400' },
+          semiBold: { name: 'semiBold', fontWeight: '600' },
+        },
       },
+
       displaySmall: {
-        fontSize: '36px',
-        lineHeight: '44px',
-        fontWeight: '400',
-        letterSpacing: '0px',
-        fontFamily: 'display',
+        geometry: {
+          fontSize: '36px',
+          lineHeight: '44px',
+          letterSpacing: '0px',
+          fontFamily: 'display',
+        },
+        defaultWeight: 'regular',
+        weights: {
+          regular: { name: 'regular', fontWeight: '400' },
+          semiBold: { name: 'semiBold', fontWeight: '600' },
+        },
       },
+
+      // ── Headline ────────────────────────────────────────────────────────────
+
       headlineLarge: {
-        fontSize: '32px',
-        lineHeight: '40px',
-        fontWeight: '400',
-        letterSpacing: '0px',
-        fontFamily: 'display',
+        geometry: {
+          fontSize: '32px',
+          lineHeight: '40px',
+          letterSpacing: '0px',
+          fontFamily: 'display',
+        },
+        defaultWeight: 'regular',
+        weights: {
+          light: { name: 'light', fontWeight: '300' },
+          regular: { name: 'regular', fontWeight: '400' },
+          semiBold: { name: 'semiBold', fontWeight: '600' },
+        },
       },
+
       headlineMedium: {
-        fontSize: '28px',
-        lineHeight: '36px',
-        fontWeight: '400',
-        letterSpacing: '0px',
-        fontFamily: 'display',
-        fontVariationSettings: "'SOFT' 0, 'WONK' 1",
+        geometry: {
+          fontSize: '28px',
+          lineHeight: '36px',
+          letterSpacing: '0px',
+          fontFamily: 'display',
+          fontVariationSettings: "'SOFT' 0, 'WONK' 1",
+        },
+        defaultWeight: 'regular',
+        weights: {
+          light: { name: 'light', fontWeight: '300' },
+          regular: { name: 'regular', fontWeight: '400' },
+          semiBold: { name: 'semiBold', fontWeight: '600' },
+        },
       },
+
       headlineSmall: {
-        fontSize: '24px',
-        lineHeight: '32px',
-        fontWeight: '400',
-        letterSpacing: '0px',
-        fontFamily: 'display',
+        geometry: {
+          fontSize: '24px',
+          lineHeight: '32px',
+          letterSpacing: '0px',
+          fontFamily: 'display',
+        },
+        defaultWeight: 'regular',
+        weights: {
+          light: { name: 'light', fontWeight: '300' },
+          regular: { name: 'regular', fontWeight: '400' },
+          semiBold: { name: 'semiBold', fontWeight: '600' },
+        },
       },
+
+      // ── Title ────────────────────────────────────────────────────────────────
+
       titleLarge: {
-        fontSize: '22px',
-        lineHeight: '28px',
-        fontWeight: '500',
-        letterSpacing: '0px',
-        fontFamily: 'body',
+        geometry: {
+          fontSize: '22px',
+          lineHeight: '28px',
+          letterSpacing: '0px',
+          fontFamily: 'body',
+        },
+        defaultWeight: 'medium',
+        weights: {
+          regular: { name: 'regular', fontWeight: '400' },
+          medium: { name: 'medium', fontWeight: '500' },
+          semiBold: { name: 'semiBold', fontWeight: '600' },
+          bold: { name: 'bold', fontWeight: '700' },
+        },
       },
+
       titleMedium: {
-        fontSize: '16px',
-        lineHeight: '24px',
-        fontWeight: '500',
-        letterSpacing: '0.15px',
-        fontFamily: 'body',
+        geometry: {
+          fontSize: '16px',
+          lineHeight: '24px',
+          letterSpacing: '0.15px',
+          fontFamily: 'body',
+        },
+        defaultWeight: 'medium',
+        weights: {
+          regular: { name: 'regular', fontWeight: '400' },
+          medium: { name: 'medium', fontWeight: '500' },
+          semiBold: { name: 'semiBold', fontWeight: '600' },
+          bold: { name: 'bold', fontWeight: '700' },
+        },
       },
+
       titleSmall: {
-        fontSize: '14px',
-        lineHeight: '20px',
-        fontWeight: '500',
-        letterSpacing: '0.1px',
-        fontFamily: 'body',
+        geometry: {
+          fontSize: '14px',
+          lineHeight: '20px',
+          letterSpacing: '0.1px',
+          fontFamily: 'body',
+        },
+        defaultWeight: 'medium',
+        weights: {
+          regular: { name: 'regular', fontWeight: '400' },
+          medium: { name: 'medium', fontWeight: '500' },
+          semiBold: { name: 'semiBold', fontWeight: '600' },
+          bold: { name: 'bold', fontWeight: '700' },
+        },
       },
+
+      // ── Body ─────────────────────────────────────────────────────────────────
       // Custom override: bodyLarge bumped to 18px/28px (was M3 default 16px/24px)
       // Decision date: 2026-03-24
+
       bodyLarge: {
-        fontSize: '18px',
-        lineHeight: '28px',
-        fontWeight: '400',
-        letterSpacing: '0.5px',
-        fontFamily: 'body',
+        geometry: {
+          fontSize: '18px',
+          lineHeight: '28px',
+          letterSpacing: '0.5px',
+          fontFamily: 'body',
+        },
+        defaultWeight: 'regular',
+        weights: {
+          light: { name: 'light', fontWeight: '300' },
+          regular: { name: 'regular', fontWeight: '400' },
+          medium: { name: 'medium', fontWeight: '500' },
+          semiBold: { name: 'semiBold', fontWeight: '600' },
+        },
       },
+
       bodyMedium: {
-        fontSize: '14px',
-        lineHeight: '20px',
-        fontWeight: '400',
-        letterSpacing: '0.25px',
-        fontFamily: 'body',
+        geometry: {
+          fontSize: '14px',
+          lineHeight: '20px',
+          letterSpacing: '0.25px',
+          fontFamily: 'body',
+        },
+        defaultWeight: 'regular',
+        weights: {
+          light: { name: 'light', fontWeight: '300' },
+          regular: { name: 'regular', fontWeight: '400' },
+          medium: { name: 'medium', fontWeight: '500' },
+          semiBold: { name: 'semiBold', fontWeight: '600' },
+        },
       },
+
       bodySmall: {
-        fontSize: '12px',
-        lineHeight: '16px',
-        fontWeight: '400',
-        letterSpacing: '0.4px',
-        fontFamily: 'body',
+        geometry: {
+          fontSize: '12px',
+          lineHeight: '16px',
+          letterSpacing: '0.4px',
+          fontFamily: 'body',
+        },
+        defaultWeight: 'regular',
+        weights: {
+          light: { name: 'light', fontWeight: '300' },
+          regular: { name: 'regular', fontWeight: '400' },
+          medium: { name: 'medium', fontWeight: '500' },
+          semiBold: { name: 'semiBold', fontWeight: '600' },
+        },
       },
+
+      // ── Label ────────────────────────────────────────────────────────────────
+
       labelLarge: {
-        fontSize: '14px',
-        lineHeight: '20px',
-        fontWeight: '500',
-        letterSpacing: '0.1px',
-        fontFamily: 'body',
+        geometry: {
+          fontSize: '14px',
+          lineHeight: '20px',
+          letterSpacing: '0.1px',
+          fontFamily: 'body',
+        },
+        defaultWeight: 'medium',
+        weights: {
+          light: { name: 'light', fontWeight: '300' },
+          medium: { name: 'medium', fontWeight: '500' },
+          semiBold: { name: 'semiBold', fontWeight: '600' },
+          bold: { name: 'bold', fontWeight: '700' },
+        },
       },
+
       labelMedium: {
-        fontSize: '12px',
-        lineHeight: '16px',
-        fontWeight: '500',
-        letterSpacing: '0.5px',
-        fontFamily: 'body',
+        geometry: {
+          fontSize: '12px',
+          lineHeight: '16px',
+          letterSpacing: '0.5px',
+          fontFamily: 'body',
+        },
+        defaultWeight: 'medium',
+        weights: {
+          light: { name: 'light', fontWeight: '300' },
+          medium: { name: 'medium', fontWeight: '500' },
+          semiBold: { name: 'semiBold', fontWeight: '600' },
+          bold: { name: 'bold', fontWeight: '700' },
+        },
       },
+
       labelSmall: {
-        fontSize: '11px',
-        lineHeight: '16px',
-        fontWeight: '500',
-        letterSpacing: '0.5px',
-        fontFamily: 'body',
+        geometry: {
+          fontSize: '11px',
+          lineHeight: '16px',
+          letterSpacing: '0.5px',
+          fontFamily: 'body',
+        },
+        defaultWeight: 'medium',
+        weights: {
+          light: { name: 'light', fontWeight: '300' },
+          medium: { name: 'medium', fontWeight: '500' },
+          semiBold: { name: 'semiBold', fontWeight: '600' },
+          bold: { name: 'bold', fontWeight: '700' },
+        },
       },
     },
   },
