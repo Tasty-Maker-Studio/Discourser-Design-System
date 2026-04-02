@@ -7,6 +7,7 @@ import { ScenarioIcon } from '../src/components/Icons/ScenarioIcon';
 import { HelpIcon } from '../src/components/Icons/HelpIcon';
 import { AccountIcon } from '../src/components/Icons/AccountIcon';
 import { RightArrowIcon } from '../src/components/Icons/RightArrowIcon';
+import { LeftArrowIcon } from '../src/components/Icons/LeftArrowIcon';
 import { ChevronUpIcon } from '../src/components/Icons/ChevronUpIcon';
 import { TimerIcon } from '../src/components/Icons/TimerIcon';
 import { ClipBoardIcon } from '../src/components/Icons/ClipBoardIcon';
@@ -149,6 +150,10 @@ export const Gallery: Story = {
         <VStack gap="2" alignItems="center">
           <AccountIcon w="6" h="6" color="fg.default" />
           <span className={label}>AccountIcon</span>
+        </VStack>
+        <VStack gap="2" alignItems="center">
+          <LeftArrowIcon w="6" h="6" color="fg.default" />
+          <span className={label}>LeftArrowIcon</span>
         </VStack>
         <VStack gap="2" alignItems="center">
           <RightArrowIcon w="6" h="6" color="fg.default" />

@@ -9,6 +9,7 @@ export { ScenarioIcon, type ScenarioIconProps } from './ScenarioIcon';
 export { HelpIcon, type HelpIconProps } from './HelpIcon';
 export { AccountIcon, type AccountIconProps } from './AccountIcon';
 export { RightArrowIcon, type RightArrowIconProps } from './RightArrowIcon';
+export { LeftArrowIcon, type LeftArrowIconProps } from './LeftArrowIcon';
 export { ChevronUpIcon, type ChevronUpIconProps } from './ChevronUpIcon';
 export { DiscourserLogo, type DiscourserLogoProps } from './DiscourserLogo';
 export { TimerIcon, type TimerIconProps } from './TimerIcon';

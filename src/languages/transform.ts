@@ -1,6 +1,7 @@
 import type {
   DesignLanguageContract,
   TonalPalette,
+  TypeScaleStep,
 } from '../contracts/design-language.contract';
 /**
  * Transforms a DesignLanguageContract into Panda CSS theme configuration
@@ -19,33 +20,21 @@ function transformTokens(language: DesignLanguageContract) {
       language.colors as unknown as Record<string, TonalPalette>,
     ),
     fonts: {
-      display: { value: language.typography.fonts.display },
-      body: { value: language.typography.fonts.body },
-      mono: { value: language.typography.fonts.mono },
+      display: { value: language.typography.fonts.display.family },
+      body: { value: language.typography.fonts.body.family },
+      mono: { value: language.typography.fonts.mono.family },
     },
     fontSizes: extractFontSizes(
-      language.typography.scale as unknown as Record<
-        string,
-        { fontSize: string }
-      >,
+      language.typography.scale as unknown as Record<string, TypeScaleStep>,
     ),
     lineHeights: extractLineHeights(
-      language.typography.scale as unknown as Record<
-        string,
-        { lineHeight: string }
-      >,
+      language.typography.scale as unknown as Record<string, TypeScaleStep>,
     ),
     fontWeights: extractFontWeights(
-      language.typography.scale as unknown as Record<
-        string,
-        { fontWeight: string }
-      >,
+      language.typography.scale as unknown as Record<string, TypeScaleStep>,
     ),
     letterSpacings: extractLetterSpacings(
-      language.typography.scale as unknown as Record<
-        string,
-        { letterSpacing: string }
-      >,
+      language.typography.scale as unknown as Record<string, TypeScaleStep>,
     ),
     spacing: objectToTokens(
       language.spacing as unknown as Record<string, string>,
@@ -77,24 +66,32 @@ function transformSemanticTokens(_language: DesignLanguageContract) {
 }
 
 function transformTextStyles(language: DesignLanguageContract) {
-  const scale = language.typography.scale;
+  const scale = language.typography.scale as unknown as Record<
+    string,
+    TypeScaleStep
+  >;
 
   return Object.fromEntries(
-    Object.entries(scale).map(([name, style]) => [
-      name,
-      {
-        value: {
-          fontFamily: `{fonts.${style.fontFamily || 'body'}}`,
-          fontSize: style.fontSize,
-          lineHeight: style.lineHeight,
-          fontWeight: style.fontWeight,
-          letterSpacing: style.letterSpacing,
-          ...(style.fontVariationSettings
-            ? { fontVariationSettings: style.fontVariationSettings }
-            : {}),
+    Object.entries(scale).map(([name, step]) => {
+      const s = step as TypeScaleStep;
+      const defaultVariant = s.weights[s.defaultWeight];
+      const fontWeight = defaultVariant?.fontWeight ?? '400';
+      return [
+        name,
+        {
+          value: {
+            fontFamily: `{fonts.${s.geometry.fontFamily}}`,
+            fontSize: s.geometry.fontSize,
+            lineHeight: s.geometry.lineHeight,
+            fontWeight,
+            letterSpacing: s.geometry.letterSpacing,
+            ...(s.geometry.fontVariationSettings
+              ? { fontVariationSettings: s.geometry.fontVariationSettings }
+              : {}),
+          },
         },
-      },
-    ]),
+      ];
+    }),
   );
 }
 
@@ -115,41 +112,41 @@ function objectToTokens<T extends Record<string, string>>(obj: T) {
   );
 }
 
-function extractFontSizes(scale: Record<string, { fontSize: string }>) {
+function extractFontSizes(scale: Record<string, TypeScaleStep>) {
   return Object.fromEntries(
-    Object.entries(scale).map(([name, style]) => [
+    Object.entries(scale).map(([name, step]) => [
       name,
-      { value: style.fontSize },
+      { value: step.geometry.fontSize },
     ]),
   );
 }
 
-function extractLineHeights(scale: Record<string, { lineHeight: string }>) {
+function extractLineHeights(scale: Record<string, TypeScaleStep>) {
   return Object.fromEntries(
-    Object.entries(scale).map(([name, style]) => [
+    Object.entries(scale).map(([name, step]) => [
       name,
-      { value: style.lineHeight },
+      { value: step.geometry.lineHeight },
     ]),
   );
 }
 
-function extractFontWeights(scale: Record<string, { fontWeight: string }>) {
+function extractFontWeights(scale: Record<string, TypeScaleStep>) {
   const weights = new Map<string, string>();
-  Object.values(scale).forEach((style) => {
-    weights.set(style.fontWeight, style.fontWeight);
+  Object.values(scale).forEach((step) => {
+    Object.values(step.weights).forEach((variant) => {
+      if (variant) weights.set(variant.fontWeight, variant.fontWeight);
+    });
   });
   return Object.fromEntries(
     Array.from(weights.entries()).map(([key, value]) => [key, { value }]),
   );
 }
 
-function extractLetterSpacings(
-  scale: Record<string, { letterSpacing: string }>,
-) {
+function extractLetterSpacings(scale: Record<string, TypeScaleStep>) {
   return Object.fromEntries(
-    Object.entries(scale).map(([name, style]) => [
+    Object.entries(scale).map(([name, step]) => [
       name,
-      { value: style.letterSpacing },
+      { value: step.geometry.letterSpacing },
     ]),
   );
 }

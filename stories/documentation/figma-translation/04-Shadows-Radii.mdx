@@ -6,32 +6,38 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 This page translates shadow and border-radius values from Tailwind CSS and Figma to Discourser's elevation and radii system.
 
+---
+
 ## Shadow Mapping (Elevation)
 
-Discourser shadows chain to **Material Design 3 elevation levels** (level0-5).
+Discourser exposes shadows through a **three-layer architecture**:
 
-| Source (Tailwind) | Discourser | M3 Level | Visual Effect | Usage |
+1. **Base tokens** (`level0`–`level5`) — Raw M3 values, defined in `transform.ts`. **Never use directly in components.**
+2. **Semantic tokens** (`xs`, `sm`, `md`, `lg`, `xl`, `2xl`) — Defined in `src/preset/shadows.ts`. **Use these in components.**
+3. **Component usage** — Components use the semantic tokens.
+
+| Source (Tailwind) | Discourser | M3 Base Level | Visual Effect | Usage |
 |---|---|---|---|---|
-| `shadow-none` | `shadow="none"` | Level 0 | Flat, no shadow | Inline elements, flush surfaces |
-| `shadow-sm` | `shadow="xs"` | Level 1 | Subtle lift | Subtle cards, chips |
-| `shadow` | `shadow="sm"` | Level 2 | Light elevation | Default cards, panels |
-| `shadow-md` | `shadow="md"` | Level 3 | Moderate lift | Raised elements, sticky headers |
-| `shadow-lg` | `shadow="lg"` | Level 4 | Strong elevation | Dialogs, menus, popovers |
-| `shadow-xl` | `shadow="xl"` | Level 5 | Maximum elevation | Drawers, modals |
-| `shadow-2xl` | `shadow="2xl"` | Level 5 | Maximum elevation | Large modals, full-screen overlays |
+| `shadow-none` | `shadow="none"` | level0 | Flat, no shadow | Inline elements, flush surfaces |
+| `shadow-sm` | `shadow="xs"` | level1 | Subtle lift | Subtle cards, chips |
+| `shadow` | `shadow="sm"` | level2 | Light elevation | Default cards, panels |
+| `shadow-md` | `shadow="md"` | level3 | Moderate lift | Raised elements, dialogs, popovers |
+| `shadow-lg` | `shadow="lg"` | level4 | Strong elevation | Navigation drawers, modal sheets |
+| `shadow-xl` | `shadow="xl"` | level5 | Maximum elevation | FABs, tooltips, snackbars |
+| `shadow-2xl` | `shadow="2xl"` | level5 | Maximum elevation | Large overlays |
 
-### Important: M3 Elevation Strategy
+**Important:** Do not use the base level tokens (`level0`–`level5`) directly in component code. Always use the semantic aliases (`xs`, `sm`, `md`, `lg`, `xl`, `2xl`).
 
-Material Design 3 **primarily uses surface tint** (surface container colors) for elevation, not shadows alone.
+### M3 Elevation Strategy
 
-- **Level 0:** `surface` or `surface.container.lowest` (no shadow)
-- **Level 1:** `surface.container` or `surface.container.low` + optional `shadow="xs"`
-- **Level 2:** `surface.container` + `shadow="sm"`
-- **Level 3:** `surface.container.high` + `shadow="md"`
-- **Level 4:** `surface.container.highest` + `shadow="lg"`
-- **Level 5:** `surface.container.highest` + `shadow="xl"`
+Material Design 3 uses **surface container tint + shadow** for elevation. Shadow alone misses the tint layer:
 
-**Best practice:** Use surface container tokens for elevation first, shadows second.
+- **Level 0:** `bg="surface"` or `bg="surface.container.lowest"` (no shadow)
+- **Level 1:** `bg="surface.container"` + `shadow="xs"`
+- **Level 2:** `bg="surface.container"` + `shadow="sm"`
+- **Level 3:** `bg="surface.container.high"` + `shadow="md"`
+- **Level 4:** `bg="surface.container.highest"` + `shadow="lg"`
+- **Level 5:** `bg="surface.container.highest"` + `shadow="xl"`
 
 ```tsx
 // ✅ CORRECT: M3-style elevation with surface container + shadow
@@ -51,41 +57,36 @@ Material Design 3 **primarily uses surface tint** (surface container colors) for
 |---|---|---|
 | `shadow-inner` | `shadow="inset"` | Inset shadow for recessed effects (inputs, wells) |
 
+---
+
 ## Border Radius Mapping
 
-Discourser provides both **Park UI semantic radii** (l1, l2, l3) and **Panda CSS preset radii** (xs, sm, md, lg, xl, 2xl, full).
+Discourser uses **Park UI semantic radii** (`l1`, `l2`, `l3`, `full`) as the canonical tokens for all components. These are defined in `panda.config.ts`.
 
-### Park UI Semantic Radii (l1, l2, l3)
+### Canonical Radii (Use These in Components)
 
-These are **design-system-specific** tokens for consistent component rounding:
-
-| Named Token | Pixels | Usage |
+| Token | Value | Usage |
 |---|---|---|
-| `l1` | 2px | Subtle rounding (minimal) |
-| `l2` | 6px | Default rounding (buttons, inputs, cards) |
-| `l3` | 8px | Large rounding (dialogs, large cards) |
+| `l1` | 2px | Subtle rounding — checkboxes, breadcrumbs |
+| `l2` | 6px | Standard rounding — inputs, badges, tooltips, textarea, tabs, buttons |
+| `l3` | 8px | Large rounding — cards, dialogs, popovers, toasts, nav menus |
+| `full` | 9999px | Pills, avatars, switches, spinners — fully circular |
 
-**Use l1/l2/l3 for components** to maintain design system consistency.
+**Always use `l1`/`l2`/`l3`/`full` for component code.** The M3 base tokens (`extraSmall`, `small`, `medium`, `large`, `extraLarge`) come from the token pipeline but are **not used in recipes**.
 
 ### Tailwind → Discourser Radii
 
-| Source (Tailwind) | Discourser | Pixels | Notes |
-|---|---|---|---|
-| `rounded-none` | `rounded="none"` | 0px | No rounding |
-| `rounded-sm` | `rounded="l1"` or `rounded="xs"` | 2px | Subtle rounding |
-| `rounded` | `rounded="l2"` or `rounded="sm"` | 4-6px | Default rounding |
-| `rounded-md` | `rounded="l2"` or `rounded="md"` | 6px | Medium rounding (most common) |
-| `rounded-lg` | `rounded="l3"` or `rounded="lg"` | 8px | Large rounding (cards, dialogs) |
-| `rounded-xl` | `rounded="xl"` | 12px | Extra large (large cards, containers) |
-| `rounded-2xl` | `rounded="2xl"` | 16px | Very large (pills, large containers) |
-| `rounded-3xl` | `rounded="3xl"` | 24px | Maximum curve |
-| `rounded-full` | `rounded="full"` | 9999px | Fully circular (avatars, circular buttons) |
+| Source (Tailwind) | Discourser | Notes |
+|---|---|---|
+| `rounded-none` | `rounded="none"` | No rounding |
+| `rounded-sm` | `rounded="l1"` | 2px — subtle rounding |
+| `rounded` / `rounded-md` | `rounded="l2"` | 6px — standard rounding (most components) |
+| `rounded-lg` | `rounded="l3"` | 8px — cards, dialogs |
+| `rounded-full` | `rounded="full"` | Circular — avatars, pills, icon buttons |
 
-**Note:** `l1`, `l2`, `l3` are semantic tokens defined in `panda.config.ts` and are **preferred** for component usage. The numeric scale (xs, sm, md, lg, xl, 2xl, full) comes from `@pandacss/preset-panda` and can be used for custom styling.
+**Note:** The `@pandacss/preset-panda` also provides `xs`, `sm`, `md`, `lg`, `xl`, `2xl` radii tokens. These can be used for one-off custom styling, but **do not use them in component recipes** — use `l1`/`l2`/`l3` for consistency.
 
 ### Rounded Corners (Directional)
-
-You can apply border-radius to specific corners:
 
 | Property | Example | Effect |
 |---|---|---|
@@ -98,12 +99,14 @@ You can apply border-radius to specific corners:
 | `borderLeftRadius` | `borderLeftRadius="l2"` | Top-left + Bottom-left |
 | `borderRightRadius` | `borderRightRadius="l2"` | Top-right + Bottom-right |
 
+---
+
 ## Common Patterns
 
 ### Card with Default Elevation
 
 ```tsx
-// Figma: Card with subtle elevation
+// Figma: Card with subtle elevation (M3 level 1-2)
 <Card.Root bg="surface.container" shadow="sm" rounded="l3">
   <Card.Header>Title</Card.Header>
   <Card.Body>Content</Card.Body>
@@ -113,8 +116,8 @@ You can apply border-radius to specific corners:
 ### Dialog with Strong Elevation
 
 ```tsx
-// Figma: Modal dialog with strong shadow
-<Dialog.Content bg="surface.container.high" shadow="lg" rounded="l3">
+// Figma: Modal dialog (M3 level 3)
+<Dialog.Content bg="surface.container.high" shadow="md" rounded="l3">
   Dialog content
 </Dialog.Content>
 ```
@@ -137,6 +140,8 @@ You can apply border-radius to specific corners:
 </Avatar.Root>
 ```
 
+---
+
 ## Common Mistakes
 
 ### ❌ Using Pixel Values
@@ -148,13 +153,31 @@ You can apply border-radius to specific corners:
 </Box>
 ```
 
-**Why wrong:** Not theme-aware, doesn't match M3 elevation levels.
-
 ```tsx
 // ✅ CORRECT: Token values
 <Box shadow="md" rounded="l3">
   Content
 </Box>
+```
+
+---
+
+### ❌ Using Base-Level Shadow Tokens in Components
+
+```tsx
+// ❌ WRONG: Using level tokens directly (level0–level5 are internal base tokens)
+<Card.Root shadow={'level2'}>
+  Card content
+</Card.Root>
+```
+
+**Why wrong:** `level0`–`level5` are base tokens. Components should use the semantic aliases.
+
+```tsx
+// ✅ CORRECT: Semantic shadow token
+<Card.Root shadow="sm">
+  Card content
+</Card.Root>
 ```
 
 ---
@@ -168,57 +191,32 @@ You can apply border-radius to specific corners:
 </Card.Root>
 ```
 
-**Why wrong:** M3 uses surface tint + shadow for elevation. Shadow alone misses the tint.
+**Why wrong:** M3 uses surface tint + shadow for elevation.
 
 ```tsx
 // ✅ CORRECT: Surface container + shadow
-<Card.Root bg="surface.container" shadow="md">
+<Card.Root bg="surface.container.high" shadow="md">
   Card content
 </Card.Root>
 ```
 
 ---
 
-### ❌ Using Tailwind Classes
+### ❌ Using Preset Radii Scale for Components
 
 ```tsx
-// ❌ WRONG: Tailwind classes
-<Box className="shadow-lg rounded-lg">
-  Content
-</Box>
-```
-
-**Why wrong:** Discourser uses Panda CSS, not Tailwind.
-
-```tsx
-// ✅ CORRECT: Panda CSS props
-<Box shadow="lg" rounded="l3">
-  Content
-</Box>
-```
-
----
-
-### ❌ Inconsistent Radii Tokens
-
-```tsx
-// ❌ WRONG: Mixing l2 and md inconsistently
-<Card.Root rounded="l2">
-  <Button rounded="md">Action</Button>
-</Card.Root>
-```
-
-**Why wrong:** `l2` (6px) and `md` (6px from preset) are the same value, but mixing naming conventions creates confusion.
-
-```tsx
-// ✅ CORRECT: Consistent l-scale usage
-<Card.Root rounded="l2">
-  <Button rounded="l2">Action</Button>
-</Card.Root>
-
-// ✅ ALSO CORRECT: Consistent preset scale
+// ❌ WRONG: Using preset numeric scale in component code
 <Card.Root rounded="md">
-  <Button rounded="md">Action</Button>
+  <Button rounded="sm">Action</Button>
+</Card.Root>
+```
+
+**Why wrong:** `md`, `sm` from `@pandacss/preset-panda` are not the canonical DDS radii. Use `l1`/`l2`/`l3`.
+
+```tsx
+// ✅ CORRECT: Semantic l-scale for components
+<Card.Root rounded="l3">
+  <Button rounded="l2">Action</Button>
 </Card.Root>
 ```
 
@@ -227,7 +225,7 @@ You can apply border-radius to specific corners:
 ### ❌ Excessive Rounding for UI Elements
 
 ```tsx
-// ❌ WRONG: Full rounding on rectangular button
+// ❌ WRONG: Full rounding on wide rectangular button
 <Button rounded="full" px="8">
   Wide button
 </Button>
@@ -249,39 +247,15 @@ You can apply border-radius to specific corners:
 
 ---
 
-### ❌ Using Numeric Radii Scale for Components
-
-```tsx
-// ❌ LESS IDEAL: Using preset numeric scale (xs, sm, md)
-<Card.Root rounded="md">
-  <Button rounded="sm">Action</Button>
-</Card.Root>
-```
-
-**Why wrong:** Works, but misses semantic consistency of l1/l2/l3 system.
-
-```tsx
-// ✅ CORRECT: Semantic l-scale for components
-<Card.Root rounded="l3">
-  <Button rounded="l2">Action</Button>
-</Card.Root>
-```
-
----
-
 ## Cross-References
 
 For comprehensive elevation and shadow details:
 - [Guidelines: Elevation](/docs/documentation-guidelines-99-elevation--docs) — Full M3 elevation system documentation
+- [07 — Token Resolution](/docs/documentation-figma-translation-07-token-resolution--docs) — Shadow values with exact CSS
 
-For component-specific elevation usage:
-- Coming soon: Component Translation pages (05-07)
+## Token Source Reference
 
-## Note on Token Verification
-
-All shadow and radii tokens listed here have been verified against:
-- `src/preset/shadows.ts` — Shadow semantic tokens (xs, sm, md, lg, xl, 2xl, inset)
-- `panda.config.ts` — Radii semantic tokens (l1, l2, l3)
-- `@pandacss/preset-panda` — Base radii tokens (xs, sm, md, lg, xl, 2xl, full)
-
-If you encounter a token not listed here, verify it exists in the config before using.
+All shadow and radii tokens verified against:
+- `src/preset/shadows.ts` — Shadow semantic tokens (`xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `inset`)
+- `panda.config.ts` — Canonical radii semantic tokens (`l1=2px`, `l2=6px`, `l3=8px`, `full=9999px`)
+- `@pandacss/preset-panda` — Additional radii tokens available but not preferred for component recipes

@@ -81,7 +81,7 @@ import * as Button from '@discourser/design-system';
 
 <Button.Root variant="filled" size="md">
   Click me
-</Button.Root>
+</Button.Root>;
 ```
 
 **Variants:** `filled` | `outlined` | `text` | `elevated` | `tonal`
@@ -105,7 +105,7 @@ import * as Card from '@discourser/design-system';
   <Card.Footer>
     <Button.Root>Action</Button.Root>
   </Card.Footer>
-</Card.Root>
+</Card.Root>;
 ```
 
 **Variants:** `elevated` | `filled` | `outlined`
@@ -119,7 +119,7 @@ import * as IconButton from '@discourser/design-system';
 
 <IconButton.Root variant="filled" size="md" aria-label="Settings">
   <SettingsIcon />
-</IconButton.Root>
+</IconButton.Root>;
 ```
 
 **Variants:** `standard` | `filled` | `tonal` | `outlined`
@@ -137,7 +137,7 @@ import * as Field from '@discourser/design-system';
   <Field.Label>Email</Field.Label>
   <Input.Root variant="outline" size="md" placeholder="you@example.com" />
   <Field.HelperText>We'll never share your email</Field.HelperText>
-</Field.Root>
+</Field.Root>;
 ```
 
 **Variants:** `outline` | `filled` | `flushed`
@@ -178,7 +178,7 @@ const items = [
     </Select.Content>
   </Select.Positioner>
   <Select.HiddenSelect />
-</Select.Root>
+</Select.Root>;
 ```
 
 **Sizes:** `sm` | `md` | `lg`
@@ -196,7 +196,7 @@ import * as Checkbox from '@discourser/design-system';
   </Checkbox.Control>
   <Checkbox.Label>Accept terms and conditions</Checkbox.Label>
   <Checkbox.HiddenInput />
-</Checkbox.Root>
+</Checkbox.Root>;
 ```
 
 **Sizes:** `sm` | `md` | `lg`
@@ -219,7 +219,7 @@ import * as RadioGroup from '@discourser/design-system';
     <RadioGroup.ItemText>Option 2</RadioGroup.ItemText>
     <RadioGroup.HiddenInput />
   </RadioGroup.Item>
-</RadioGroup.Root>
+</RadioGroup.Root>;
 ```
 
 **Sizes:** `sm` | `md` | `lg`
@@ -241,7 +241,7 @@ import * as Slider from '@discourser/design-system';
     <Slider.Thumb index={0} />
   </Slider.Control>
   <Slider.HiddenInput />
-</Slider.Root>
+</Slider.Root>;
 ```
 
 **Sizes:** `sm` | `md` | `lg`
@@ -260,7 +260,7 @@ import * as Switch from '@discourser/design-system';
   </Switch.Control>
   <Switch.Label>Enable notifications</Switch.Label>
   <Switch.HiddenInput />
-</Switch.Root>
+</Switch.Root>;
 ```
 
 **Sizes:** `sm` | `md` | `lg`
@@ -272,7 +272,7 @@ Multi-line text input field.
 ```tsx
 import * as Textarea from '@discourser/design-system';
 
-<Textarea.Root variant="outline" placeholder="Enter your message..." />
+<Textarea.Root variant="outline" placeholder="Enter your message..." />;
 ```
 
 **Variants:** `outline` | `filled` | `subtle` | `flushed`
@@ -295,7 +295,7 @@ import * as Tabs from '@discourser/design-system';
   </Tabs.List>
   <Tabs.Content value="overview">Overview content</Tabs.Content>
   <Tabs.Content value="details">Details content</Tabs.Content>
-</Tabs.Root>
+</Tabs.Root>;
 ```
 
 **Variants:** `line` | `enclosed` | `outline`
@@ -314,11 +314,9 @@ import * as Accordion from '@discourser/design-system';
       Section 1
       <Accordion.ItemIndicator />
     </Accordion.ItemTrigger>
-    <Accordion.ItemContent>
-      Content for section 1
-    </Accordion.ItemContent>
+    <Accordion.ItemContent>Content for section 1</Accordion.ItemContent>
   </Accordion.Item>
-</Accordion.Root>
+</Accordion.Root>;
 ```
 
 **Sizes:** `sm` | `md` | `lg`
@@ -342,7 +340,7 @@ import * as Dialog from '@discourser/design-system';
       <Dialog.CloseTrigger />
     </Dialog.Content>
   </Dialog.Positioner>
-</Dialog.Root>
+</Dialog.Root>;
 ```
 
 **Sizes:** `sm` | `md` | `lg` | `xl` | `full`
@@ -367,7 +365,7 @@ import * as Drawer from '@discourser/design-system';
       <Drawer.Footer>Footer content</Drawer.Footer>
     </Drawer.Content>
   </Drawer.Positioner>
-</Drawer.Root>
+</Drawer.Root>;
 ```
 
 **Placement:** `left` | `right` | `top` | `bottom`
@@ -391,7 +389,7 @@ import * as Popover from '@discourser/design-system';
       <Popover.CloseTrigger />
     </Popover.Content>
   </Popover.Positioner>
-</Popover.Root>
+</Popover.Root>;
 ```
 
 #### Tooltip
@@ -411,7 +409,7 @@ import * as Tooltip from '@discourser/design-system';
       </Tooltip.Arrow>
     </Tooltip.Content>
   </Tooltip.Positioner>
-</Tooltip.Root>
+</Tooltip.Root>;
 ```
 
 ### Feedback & Status
@@ -424,7 +422,7 @@ Temporary notification messages.
 import { Toaster, toaster } from '@discourser/design-system';
 
 // Add <Toaster /> to your app root
-<Toaster />
+<Toaster />;
 
 // Trigger toasts from anywhere
 toaster.success({
@@ -479,7 +477,7 @@ import * as Avatar from '@discourser/design-system';
 <Avatar.Root>
   <Avatar.Fallback name="John Doe" />
   <Avatar.Image src="https://i.pravatar.cc/150?img=3" alt="John Doe" />
-</Avatar.Root>
+</Avatar.Root>;
 ```
 
 **Sizes:** `xs` | `sm` | `md` | `lg` | `xl` | `2xl`
@@ -491,7 +489,7 @@ Small status or label indicator.
 ```tsx
 import * as Badge from '@discourser/design-system';
 
-<Badge.Root>New</Badge.Root>
+<Badge.Root>New</Badge.Root>;
 ```
 
 **Sizes:** `sm` | `md` | `lg`
@@ -506,7 +504,7 @@ import * as Skeleton from '@discourser/design-system';
 <Skeleton.Root>
   <Skeleton.Circle />
   <Skeleton.Text noOfLines={3} />
-</Skeleton.Root>
+</Skeleton.Root>;
 ```
 
 ## 🎨 Three-Layer Architecture
@@ -574,76 +572,75 @@ pnpm test --ui     # Open Vitest UI
 ```
 
 **Test Stats:**
+
 - 83 tests passing
 - Components: Button (30), Card (24), IconButton (29)
 - 100% of components have tests
 
 ## 📝 Scripts
 
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Start Storybook on port 6006 
-| `pnpm build` | Build library (Panda + tsup) |
-| `pnpm build:panda` | Generate styled-system |
-| `pnpm build:lib` | Build library only |
-| `pnpm build:storybook` | Build static Storybook |
-| `pnpm test` | Run tests |
-| `pnpm test:ui` | Open Vitest UI |
-| `pnpm typecheck` | TypeScript validation |
-| `pnpm lint` | ESLint |
+| Command                | Description                  |
+| ---------------------- | ---------------------------- |
+| `pnpm dev`             | Start Storybook on port 6006 |
+| `pnpm build`           | Build library (Panda + tsup) |
+| `pnpm build:panda`     | Generate styled-system       |
+| `pnpm build:lib`       | Build library only           |
+| `pnpm build:storybook` | Build static Storybook       |
+| `pnpm test`            | Run tests                    |
+| `pnpm test:ui`         | Open Vitest UI               |
+| `pnpm typecheck`       | TypeScript validation        |
+| `pnpm lint`            | ESLint                       |
 
 ## 🔄 Token Workflow
 
-This design system uses [figma-token-sync](https://github.com/yourusername/figma-token-sync) for bidirectional token synchronization with Figma.
+### DDS → Figma (push tokens into Figma)
 
-### After Exporting from Figma
+Run this after any change to material3.language.ts:
 
-1. **Export from Figma**
-   - Run figma-token-sync plugin → Export
-   - Save files to Downloads (or remember location)
+```bash
+pnpm figma:export
+```
 
-2. **Organize tokens**
-   ```bash
-   pnpm organize-tokens
-   ```
-   - Provide paths when prompted
-   - Review summary
+This generates three files in tokens/export-to-figma/ AND regenerates
+docs/token-name-mapping.json:
 
-3. **Rebuild design system**
-   ```bash
-   pnpm build:panda
-   ```
+- figma-variables.json — import via plugin → Import Variables
+- figma-text-styles.json — import via plugin → Import Text Styles
+- figma-effect-styles.json — import via plugin → Import Effect Styles
 
-4. **Test in Storybook**
-   ```bash
-   pnpm dev
-   ```
+Open the figma-token-sync Figma plugin and import each file in order.
 
-5. **Commit changes**
-   ```bash
-   git add tokens/
-   git commit -m "chore: update tokens from Figma"
-   ```
+### Figma → DDS (pull changes from Figma)
 
-### Importing to Figma
+```bash
+# 1. Export from Figma plugin → Export Variables → save files
+# 2. Organise into DDS structure
+pnpm organize-tokens
+# 3. Rebuild Panda tokens
+pnpm build:panda
+```
 
-1. **Generate DTCG tokens**
-   ```bash
-   pnpm transform:contract-to-dtcg
-   ```
+### Token name mapping
 
-2. **Open figma-token-sync plugin**
-   - Click "Import"
-   - Browse to `tokens/tokens.json`
-   - Plugin creates/updates Figma variables
+`docs/token-name-mapping.json` maps every Figma variable/style to its
+Panda CSS token and CSS custom property. It is auto-regenerated by
+`pnpm figma:export`. The companion `docs/token-name-mapping.md` is the
+human-readable version — keep it in sync manually after running the script.
 
-### Token Files
+This mapping is used by AI design agents (Kai) to resolve Figma MCP
+output back to DDS token names.
 
-- `tokens/primitives-generated.json` - Primitive color tokens from Figma (not in git)
-- `tokens/semantic-light-generated.json` - Light mode semantic tokens (not in git)
-- `tokens/semantic-dark-generated.json` - Dark mode semantic tokens (not in git)
-- `tokens/tokens.json` - Combined token file for import to Figma (not in git)
-- `src/languages/material3.language.ts` - Source of truth (in git)
+### Key files
+
+| File                                            | Purpose                      | In git? |
+| ----------------------------------------------- | ---------------------------- | ------- |
+| src/languages/material3.language.ts             | Source of truth              | ✅      |
+| tokens/export-to-figma/figma-variables.json     | Figma Variables import       | ❌      |
+| tokens/export-to-figma/figma-text-styles.json   | Figma Text Styles import     | ❌      |
+| tokens/export-to-figma/figma-effect-styles.json | Figma Effect Styles import   | ❌      |
+| docs/token-name-mapping.json                    | AI-readable token map        | ✅      |
+| docs/token-name-mapping.md                      | Human-readable token map     | ✅      |
+| tokens/imported-from-figma/                     | Figma exports (reverse sync) | ❌      |
 
 ## 🤝 Contributing
 
@@ -656,6 +653,7 @@ This design system uses [figma-token-sync](https://github.com/yourusername/figma
 #### For Team Members (Write Access)
 
 1. **Create a feature branch from `dev`:**
+
    ```bash
    git checkout dev
    git pull
@@ -663,6 +661,7 @@ This design system uses [figma-token-sync](https://github.com/yourusername/figma
    ```
 
 2. **Make your changes and test:**
+
    ```bash
    pnpm test --run      # Run tests
    pnpm typecheck       # Type check
@@ -671,6 +670,7 @@ This design system uses [figma-token-sync](https://github.com/yourusername/figma
    ```
 
 3. **Create a changeset** (required for any code changes):
+
    ```bash
    pnpm changeset
    # Select change type:
@@ -681,6 +681,7 @@ This design system uses [figma-token-sync](https://github.com/yourusername/figma
    ```
 
 4. **Commit and push:**
+
    ```bash
    git add .
    git commit -m "feat: add amazing feature"
@@ -702,6 +703,7 @@ This design system uses [figma-token-sync](https://github.com/yourusername/figma
 
 1. **Fork the repository** on GitHub
 2. **Clone your fork:**
+
    ```bash
    git clone https://github.com/YOUR_USERNAME/Discourser-Design-System.git
    ```
@@ -721,6 +723,7 @@ We use a Git Flow-inspired branching strategy:
 - **`docs/*`** - Documentation (branch from `dev`, PR to `dev`)
 
 **Key Rules:**
+
 - ✅ Create feature branches from `dev`
 - ✅ Open PRs to `dev` (not `main`)
 - ✅ Only `dev` can merge to `main` (for releases)

@@ -6,126 +6,114 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 ## What This Is
 
-This documentation suite is a **translation layer** between external design system vocabulary (Figma, Tailwind CSS, Shadcn/UI) and the Discourser Design System vocabulary (Panda CSS, Park UI, Ark UI).
+This documentation suite is the **translation layer** between Figma's design vocabulary and the Discourser Design System's implementation vocabulary (Panda CSS, Park UI, Ark UI).
 
-Think of it as a Rosetta Stone for design tokens — look up the term from your source (Figma variable, Tailwind class, or Shadcn component prop) and get the exact Discourser equivalent.
+It serves two audiences simultaneously:
 
-## Who This Is For
+- **Kai (Design Engineer Agent)** — reads these docs via Storybook MCP to make accurate token and component decisions when converting `get_design_context` output into Design Implementation Specs
+- **Human developers** — onboarding from Tailwind/Shadcn, or joining a project that consumes DDS
 
-1. **Kai Design Engineer Agent** — Reads these docs via Storybook MCP to make accurate token and component decisions when translating designs
-2. **Human Developers** — Onboarding from Tailwind/Shadcn projects to Discourser
-3. **Design System as a Service Clients** — Receiving implementation specifications in Discourser vocabulary
+## Two Token Systems, Both Valid
+
+Before reading anything else, understand this: DDS exposes **two coexisting token vocabularies**. Both are real Panda CSS tokens defined in `panda.config.ts`. Do not mix them within a single component.
+
+| System | Origin | When to use | Example |
+|---|---|---|---|
+| **M3 Semantic** | `src/preset/semantic-tokens.ts` | All new component code | `bg="surface.container"`, `color="onSurface"` |
+| **Park UI Aliases** | `panda.config.ts` semantic tokens | Component recipe compatibility | `bg="canvas"`, `color="fg.default"`, `borderColor="border"` |
+
+The page root (`globalCss` in `panda.config.ts`) uses Park UI aliases. Component recipes mix both. **For Kai generating implementation code: default to M3 Semantic. Use Park UI aliases only when you see them in an existing recipe you are extending.**
 
 ## How to Use This Documentation
 
-1. **Identify your source term** (e.g., Figma: "Surface Container", Tailwind: `bg-primary`, Shadcn: `text-muted-foreground`)
-2. **Navigate to the relevant page** (Colors, Typography, Spacing, Shadows, Components, or Patterns)
-3. **Look up the term in the mapping table** — each entry is self-contained with source term, Discourser equivalent, and usage notes
-4. **Copy the Discourser syntax** directly into your code
+1. **Identify your source** — Figma variable name, Tailwind class, or Shadcn component prop
+2. **Navigate to the relevant page** — Colors, Typography, Spacing, Shadows, or Components
+3. **Look up the mapping** — each table is self-contained with source → Discourser equivalent
+4. **Copy the Panda CSS syntax** directly into your code
 
-## Translation Flow
-
-```
-Figma/Shadcn Design Specs
-         ↓
-Tailwind Utility Classes
-         ↓
-Discourser Semantic Tokens (Panda CSS props)
-         ↓
-Generated CSS Output
-```
-
-**Example:**
-- Figma: "Apply Primary color to background"
-- Tailwind: `className="bg-primary"`
-- Discourser: `colorPalette="primary"` (on Button) or `bg="primary.9"` (on Box)
-- Output: CSS with correct M3 primary color value
+For the full token pipeline — how tokens originate in Material Theme Builder and travel through to Kai's spec generation — see **[09 — Token Pipeline](/docs/documentation-figma-translation-09-token-pipeline--docs)**.
 
 ## Three-Layer Token Architecture
 
-Discourser uses a **aesthetic-agnostic architecture** that separates infrastructure from design language:
+DDS separates infrastructure from aesthetic so the design language can be swapped without touching component code.
 
-### Layer 1: Infrastructure (Unchanging)
+### Layer 1: Infrastructure (Never Changes)
 
-Park UI and Panda CSS provide the **naming conventions** and **scale structure**:
-- Size tokens: `xs`, `sm`, `md`, `lg`, `xl`, `2xl`
-- Semantic tokens: `fg.default`, `fg.muted`, `canvas`, `border`
-- Radii tokens: `l1`, `l2`, `l3`
-- Shadow tokens: `xs`, `sm`, `md`, `lg`, `xl`, `2xl`
+Park UI and Panda CSS define **naming conventions and scale structure**. These names are stable regardless of which design language is active:
 
-**These names never change.** Components reference these names only.
+- Radii: `l1` (2px) · `l2` (6px) · `l3` (8px) · `full`
+- Shadows: `xs` · `sm` · `md` · `lg` · `xl` · `2xl`
+- Spacing scale: `xxs` · `xs` · `sm` · `md` · `lg` · `xl` · `xxl` · `xxxl`
+- Park UI aliases: `fg.default` · `fg.muted` · `fg.subtle` · `canvas` · `border`
 
 ### Layer 2: Design Language (Swappable)
 
-Material Design 3 (M3) provides the **values** mapped to Layer 1 names:
-- M3 tonal palettes → Radix color scales (1-12)
-- M3 type scale → textStyle tokens (`bodyMedium`, `titleLarge`, etc.)
-- M3 elevation levels → shadow levels (level0-5)
-- M3 surface container system → semantic color tokens
+Material Design 3 provides the **values** mapped to Layer 1 names via `src/languages/material3.language.ts`. Change `src/languages/index.ts` to swap the entire aesthetic.
 
-**You can swap M3 for a different design language** by changing `src/languages/index.ts` — the component recipes automatically adapt.
+- M3 tonal palettes → Radix color scales (1–12)
+- M3 type scale → `textStyle` tokens (`bodyMedium`, `titleLarge`, etc.)
+- M3 elevation levels → shadow levels (level0–5) → semantic aliases (xs–xl)
+- M3 surface container system → `surface.container.*` tokens
 
 ### Layer 3: Components (Derived)
 
-Component recipes (Button, Card, Dialog, etc.) reference **only Layer 1 tokens**:
-- `bg="canvas"` (not `bg="#fafafa"`)
-- `shadow="md"` (not `shadow="0 4px 6px rgba(0,0,0,0.1)"`)
-- `colorPalette="primary"` (not `bg="primary.9" color="onM3Primary"`)
+Component recipes reference **only Layer 1 tokens via the `colorPalette` system**. They never hardcode hex values or design-language-specific names:
 
-**Components are decoupled from aesthetic.** If you swap from M3 to another design language, components continue working without changes.
+```tsx
+// ✅ Component code — decoupled from design language
+<Button colorPalette="primary" variant="solid">Submit</Button>
+
+// Recipe uses:  bg: 'colorPalette.solid.bg'   color: 'colorPalette.solid.fg'
+// Resolves to:  bg: primary   color: onPrimary   (at runtime from colorPalette prop)
+```
+
+## Quick Reference Rules for Kai
+
+```tsx
+// ✅ Semantic tokens use dot-notation
+bg="surface.container"       // NOT bg="surfaceContainer"
+color="onSurface.variant"    // NOT color="onSurfaceVariant"
+borderColor="outline.variant"
+
+// ⚠️ These three are flat camelCase (exceptions, not dot-notation)
+bg="surfaceVariant"          // NOT bg="surface.variant"
+bg="inverseSurface"          // NOT bg="inverse.surface"
+color="inverseOnSurface"     // NOT color="inverse.onSurface"
+
+// ✅ Radii always l1/l2/l3/full — never sm/md/lg from preset
+rounded="l2"   // buttons, inputs, badges
+rounded="l3"   // cards, dialogs, popovers
+rounded="full" // avatars, switches, pills
+
+// ✅ Shadows always semantic aliases — never level0-5
+shadow="sm"    // level2 — cards
+shadow="md"    // level3 — dialogs
+shadow="lg"    // level4 — drawers
+
+// ✅ colorPalette on components — never manual bg+color
+<Button colorPalette="primary" variant="solid">   // ✅
+<Button bg="primary" color="onPrimary">           // ❌
+
+// ✅ DDS variant names
+variant="solid"     // filled (not "filled")
+variant="outline"   // outlined (not "outlined")
+variant="subtle"    // tinted (not "tonal")
+variant="plain"     // ghost (not "ghost" or "text")
+```
 
 ## Table of Contents
 
 ### Token Translation
 - [01 — Colors](/docs/documentation-figma-translation-01-colors--docs) — Background, text, border, M3 surface system, colorPalette
-- [02 — Typography](/docs/documentation-figma-translation-02-typography--docs) — Text sizes, font families, weights, Header component
+- [02 — Typography](/docs/documentation-figma-translation-02-typography--docs) — Text styles, font families, weights, Header component
 - [03 — Spacing](/docs/documentation-figma-translation-03-spacing--docs) — Padding, margin, gap, Figma auto-layout
-- [04 — Shadows & Radii](/docs/documentation-figma-translation-04-shadows-radii--docs) — Elevation, border radius
+- [04 — Shadows & Radii](/docs/documentation-figma-translation-04-shadows-radii--docs) — Elevation, border radius canonical tokens
+- [07 — Token Resolution](/docs/documentation-figma-translation-07-token-resolution--docs) — Full Figma variable → Panda CSS path + hex value lookup
 
-### Component Translation (Coming Soon)
-- 05 — Form Components — Button, Input, Select, Checkbox, Radio, Switch
-- 06 — Layout Components — Card, Dialog, Drawer, Tabs, Accordion
-- 07 — Pattern Components — VStack, HStack, Grid, Container
+### Component Translation
+- [05 — Components](/docs/documentation-figma-translation-05-components--docs) — Every DDS component: anatomy, props, variants, Shadcn mappings
+- [06 — Layout Patterns](/docs/documentation-figma-translation-06-layout-patterns--docs) — VStack, HStack, Grid, responsive patterns
 
-## Quick Tips
-
-### Always Use Semantic Tokens
-```tsx
-// ❌ WRONG: Hardcoded value
-<Box bg="#ffffff" />
-
-// ✅ CORRECT: Semantic token
-<Box bg="canvas" />
-```
-
-### Prefer colorPalette on Components
-```tsx
-// ❌ WRONG: Manual color styling
-<Button bg="primary.9" color="onM3Primary">Submit</Button>
-
-// ✅ CORRECT: colorPalette prop
-<Button colorPalette="primary">Submit</Button>
-```
-
-### Use Header Component for Headings
-```tsx
-// ❌ WRONG: Raw textStyle
-<Box as="h2" textStyle="titleLarge">Section Title</Box>
-
-// ✅ CORRECT: Header component
-<Header as="h2" size="xl">Section Title</Header>
-```
-
-## Need More Details?
-
-Each translation page includes:
-- **Complete mapping tables** with source term → Discourser equivalent
-- **Usage notes** for each token
-- **Common Mistakes** sections with ❌/✅ examples
-- **Cross-references** to detailed Guidelines documentation
-
-For architectural deep-dives, see:
-- [Guidelines: Colors](/docs/documentation-guidelines-99-colors--docs)
-- [Guidelines: Typography](/docs/documentation-guidelines-99-typography--docs)
-- [Guidelines: Spacing](/docs/documentation-guidelines-99-spacing--docs)
-- [Guidelines: Elevation](/docs/documentation-guidelines-99-elevation--docs)
+### System Documentation
+- [09 — Token Pipeline](/docs/documentation-figma-translation-09-token-pipeline--docs) — Full lifecycle: Material Theme Builder → Figma → DDS → figma-codex → Kai spec
+- [08 — Extension Guide](/docs/documentation-figma-translation-08-extension-guide--docs) — How to maintain and extend this suite

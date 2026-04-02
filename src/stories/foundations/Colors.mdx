@@ -185,6 +185,14 @@ M3 provides 5 surface container levels for creating subtle depth without elevati
     name="inversePrimary"
     description="Primary color on inverse surface"
   />
+  <SemanticSwatch
+    name="inverseSecondary"
+    description="Secondary color on inverse surface (light mode = dark palette value)"
+  />
+  <SemanticSwatch
+    name="inverseTertiary"
+    description="Tertiary color on inverse surface (light mode = dark palette value)"
+  />
 </div>
 
 ### Utility Colors
@@ -235,7 +243,7 @@ const buttonStyle = css({
   bg: 'primary',
   color: 'onPrimary',
   _hover: {
-    bg: 'primaryContainer'
+    bg: 'primary.container'
   }
 });
 

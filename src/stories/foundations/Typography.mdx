@@ -13,32 +13,35 @@ The system uses three font families, each serving a specific purpose:
 
 <div style={{ marginBottom: '32px', padding: '24px', backgroundColor: '#f5f5f5', borderRadius: '8px' }}>
   <div style={{ marginBottom: '16px' }}>
-    <div style={{ fontWeight: '600', marginBottom: '8px' }}>Display</div>
+    <div style={{ fontWeight: '600', marginBottom: '8px' }}>Display — Fraunces</div>
     <div style={{ fontFamily: '"Fraunces", Georgia, serif', fontSize: '24px', marginBottom: '4px' }}>
-      "Fraunces", Georgia, serif
+      The quick brown fox jumps over the lazy dog
     </div>
     <div style={{ fontSize: '12px', color: '#666' }}>
-      Used for display and headline styles. Provides an elegant, editorial feel.
+      Used for display and headline styles. Provides an elegant, editorial feel.<br />
+      Available weights: Thin (100), Light (300), Regular (400), Medium (500), SemiBold (600), Bold (700)
     </div>
   </div>
 
   <div style={{ marginBottom: '16px' }}>
-    <div style={{ fontWeight: '600', marginBottom: '8px' }}>Body</div>
+    <div style={{ fontWeight: '600', marginBottom: '8px' }}>Body — Poppins</div>
     <div style={{ fontFamily: '"Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', fontSize: '16px', marginBottom: '4px' }}>
-      "Poppins", -apple-system, BlinkMacSystemFont, sans-serif
+      The quick brown fox jumps over the lazy dog
     </div>
     <div style={{ fontSize: '12px', color: '#666' }}>
-      Used for body text, titles, and labels. Optimized for legibility at all sizes.
+      Used for body text, titles, and labels. Optimized for legibility at all sizes.<br />
+      Available weights: Thin (100), Light (300), Regular (400), Medium (500), SemiBold (600), Bold (700)
     </div>
   </div>
 
   <div>
-    <div style={{ fontWeight: '600', marginBottom: '8px' }}>Monospace</div>
+    <div style={{ fontWeight: '600', marginBottom: '8px' }}>Monospace — JetBrains Mono</div>
     <div style={{ fontFamily: '"JetBrains Mono", "Fira Code", Consolas, monospace', fontSize: '14px', marginBottom: '4px' }}>
-      JetBrains Mono, Fira Code, Consolas, monospace
+      The quick brown fox jumps over the lazy dog
     </div>
     <div style={{ fontSize: '12px', color: '#666' }}>
-      Used for code snippets and technical content. Supports ligatures.
+      Used for code snippets and technical content. Supports ligatures.<br />
+      Available weights: Regular (400), Bold (700)
     </div>
   </div>
 </div>
@@ -47,11 +50,11 @@ The system uses three font families, each serving a specific purpose:
 
 ## Type Scale
 
-Material Design 3's type scale consists of 13 styles across 5 categories: Display, Headline, Title, Body, and Label.
+Material Design 3's type scale consists of 15 styles across 5 categories: Display, Headline, Title, Body, and Label.
 
 ### Display Styles
 
-Display styles are the largest text on screen, reserved for short, important text or numerals.
+Display styles are the largest text on screen, reserved for short, important text or numerals. Uses **Fraunces** (display font family). Default weight: **regular (400)**.
 
 <TypeSpecimen
   styleName="displayLarge"
@@ -88,7 +91,7 @@ Display styles are the largest text on screen, reserved for short, important tex
 
 ### Headline Styles
 
-Headlines are for high-emphasis text on smaller screens. They're best-suited for short, high-emphasis text.
+Headlines are for high-emphasis text on smaller screens. Uses **Fraunces** (display font family). Default weight: **regular (400)**.
 
 <TypeSpecimen
   styleName="headlineLarge"
@@ -125,7 +128,7 @@ Headlines are for high-emphasis text on smaller screens. They're best-suited for
 
 ### Title Styles
 
-Titles are for medium-emphasis text that remains relatively short. Use titles for grouping related content or to emphasize important sections.
+Titles are for medium-emphasis text that remains relatively short. Uses **Poppins** (body font family). Default weight: **medium (500)**.
 
 <TypeSpecimen
   styleName="titleLarge"
@@ -162,10 +165,9 @@ Titles are for medium-emphasis text that remains relatively short. Use titles fo
 
 ### Body Styles
 
-Body styles are used for longer passages of text in your app.
+Body styles are used for longer passages of text in your app. Uses **Poppins** (body font family). Default weight: **regular (400)**.
 
-> **Note:** `bodyLarge` is a custom override from the M3 default (16px → 18px).
-> This provides better readability for primary content at Discourser's reading densities.
+> **Note:** `bodyLarge` is a custom DDS override from the M3 default. Size bumped from 16px/24px → **18px/28px** for better readability at Discourser's content densities.
 
 <TypeSpecimen
   styleName="bodyLarge"
@@ -202,7 +204,7 @@ Body styles are used for longer passages of text in your app.
 
 ### Label Styles
 
-Label styles are for text in components like buttons, tabs, and labels. They're utilitarian and medium-emphasis.
+Label styles are for text in components like buttons, tabs, and labels. Uses **Poppins** (body font family). Default weight: **medium (500)**.
 
 <TypeSpecimen
   styleName="labelLarge"
@@ -239,15 +241,108 @@ Label styles are for text in components like buttons, tabs, and labels. They're 
 
 ---
 
+## Available Weights Per Style
+
+Each text style has a defined set of valid weights sourced from `material3.language.ts`. Applying a weight outside this set produces inconsistent results — don't assume all weights are available for all styles.
+
+The **default weight** is what `textStyle` renders without a `fontWeight` override.
+
+### Display & Headline (Fraunces)
+
+| Style | Default | light (300) | regular (400) | medium (500) | semiBold (600) | bold (700) |
+|---|---|---|---|---|---|---|
+| `displayLarge` | regular | — | ✅ | — | ✅ | — |
+| `displayMedium` | regular | — | ✅ | — | ✅ | — |
+| `displaySmall` | regular | — | ✅ | — | ✅ | — |
+| `headlineLarge` | regular | ✅ | ✅ | — | ✅ | — |
+| `headlineMedium` | regular | ✅ | ✅ | — | ✅ | — |
+| `headlineSmall` | regular | ✅ | ✅ | — | ✅ | — |
+
+> Display styles intentionally omit `bold` — Fraunces at display sizes is expressive enough at semiBold.
+
+### Title (Poppins)
+
+| Style | Default | light (300) | regular (400) | medium (500) | semiBold (600) | bold (700) |
+|---|---|---|---|---|---|---|
+| `titleLarge` | medium | — | ✅ | ✅ | ✅ | ✅ |
+| `titleMedium` | medium | — | ✅ | ✅ | ✅ | ✅ |
+| `titleSmall` | medium | — | ✅ | ✅ | ✅ | ✅ |
+
+> Titles have the widest weight range — they're the most flexible styles for expressing hierarchy within UI components.
+
+### Body (Poppins)
+
+| Style | Default | light (300) | regular (400) | medium (500) | semiBold (600) | bold (700) |
+|---|---|---|---|---|---|---|
+| `bodyLarge` | regular | ✅ | ✅ | ✅ | ✅ | — |
+| `bodyMedium` | regular | ✅ | ✅ | ✅ | ✅ | — |
+| `bodySmall` | regular | ✅ | ✅ | ✅ | ✅ | — |
+
+> Body styles cap at semiBold. Bold body text at paragraph sizes degrades readability.
+
+### Label (Poppins)
+
+| Style | Default | light (300) | regular (400) | medium (500) | semiBold (600) | bold (700) |
+|---|---|---|---|---|---|---|
+| `labelLarge` | medium | ✅ | — | ✅ | ✅ | ✅ |
+| `labelMedium` | medium | ✅ | — | ✅ | ✅ | ✅ |
+| `labelSmall` | medium | ✅ | — | ✅ | ✅ | ✅ |
+
+> Labels skip `regular` — at small sizes, 400 weight is visually indistinct from medium and can appear too thin in UI contexts.
+
+---
+
+## Applying Weight Overrides in Code
+
+Use the `fontWeight` Panda CSS prop to override the default weight. Always stay within the valid weights for that style (see tables above).
+
+```tsx
+import { css } from 'styled-system/css';
+
+// Use the default weight (no override needed)
+<Text textStyle="bodyLarge">Normal body text</Text>
+
+// Override to semiBold (valid for bodyLarge)
+<Text textStyle="bodyLarge" fontWeight="semibold">Emphasized body</Text>
+
+// Headline with light weight (valid for headlineLarge)
+<Text textStyle="headlineLarge" fontWeight="light">Delicate headline</Text>
+
+// Title with bold weight (valid for titleLarge)
+<Text textStyle="titleLarge" fontWeight="bold">Strong title</Text>
+
+// In css() calls
+const emphasisStyle = css({
+  textStyle: 'bodyMedium',
+  fontWeight: 'medium',  // valid: bumps from default 400 → 500
+});
+```
+
+**Panda CSS fontWeight token names:**
+
+| Weight value | Panda CSS token |
+|---|---|
+| 300 | `light` |
+| 400 | `normal` |
+| 500 | `medium` |
+| 600 | `semibold` |
+| 700 | `bold` |
+
+> Note: Panda uses `semibold` (lowercase, no space) while the language file uses `semiBold` (camelCase). Always use Panda's token name in component code.
+
+---
+
 ## Usage Guidelines
 
 ### Choosing the Right Style
 
-**Display**: Hero text, marketing headlines, featured numbers
-**Headline**: Page titles, section headers, card titles
-**Title**: List item titles, dialog titles, form section headers
-**Body**: Paragraphs, descriptions, long-form content
-**Label**: Buttons, tabs, chips, form labels, captions
+| Category | Use for |
+|---|---|
+| **Display** | Hero text, marketing headlines, featured numerals |
+| **Headline** | Page titles, section headers, card titles |
+| **Title** | List item titles, dialog titles, form section headers |
+| **Body** | Paragraphs, descriptions, long-form content |
+| **Label** | Buttons, tabs, chips, form labels, captions |
 
 ### Responsive Typography
 
@@ -259,8 +354,8 @@ Consider using different type styles at different breakpoints:
 
 ### Accessibility
 
-- Maintain minimum 16px font size for body text
-- Ensure sufficient line height (1.5 for body text)
+- Maintain minimum 16px font size for body text (bodyLarge at 18px, bodyMedium at 14px for secondary content)
+- Ensure sufficient line height (bodyLarge: 28px gives 1.56 ratio — above the 1.5 WCAG recommendation)
 - Use proper heading hierarchy (h1 → h2 → h3)
 - Test with browser zoom up to 200%
 
@@ -276,6 +371,11 @@ const headingStyle = css({
 
 const bodyStyle = css({
   textStyle: 'bodyMedium',
-  color: 'onSurfaceVariant'
+  color: 'onSurface.variant'
+});
+
+const buttonLabelStyle = css({
+  textStyle: 'labelLarge',
+  color: 'onPrimary'
 });
 ```

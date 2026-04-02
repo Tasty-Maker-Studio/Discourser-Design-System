@@ -65,6 +65,7 @@ export {
   RightArrowIcon,
   type RightArrowIconProps,
 } from './Icons/RightArrowIcon';
+export { LeftArrowIcon, type LeftArrowIconProps } from './Icons/LeftArrowIcon';
 export { ChevronUpIcon, type ChevronUpIconProps } from './Icons/ChevronUpIcon';
 export {
   DiscourserLogo,
