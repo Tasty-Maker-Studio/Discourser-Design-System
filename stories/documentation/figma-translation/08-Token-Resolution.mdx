@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks';
 
-<Meta title="Documentation/Figma Translation/08-Token Resolution" />
+<Meta title="Documentation/Figma Translation/07-Token Resolution" />
 
 # Token Resolution Reference
 
@@ -249,8 +249,68 @@ instead of the M3 **0–100 scale**. The approximate conversion:
 
 ---
 
+## Radii Reference
+
+DDS uses **Park UI semantic radii** (`l1`, `l2`, `l3`, `full`) as the canonical tokens for all component recipes.
+
+> The M3 base names (`extraSmall`, `small`, `medium`, `large`, `extraLarge`) come from the Figma
+> `Spacing & Shape` variable collection and exist in `styled-system/tokens`, but are **not used in
+> component recipes**. When you encounter these names in a Figma audit, map them to the DDS
+> canonical token on the right.
+
+| Figma token | Value | M3 base name (pipeline only) | DDS recipe token |
+|---|---|---|---|
+| `radii/none` | `0px` | `none` | `rounded="none"` |
+| `radii/extraSmall` | `4px` | `extraSmall` | `rounded="l1"` (2px — closest) |
+| `radii/small` | `8px` | `small` | `rounded="l3"` (8px) or `rounded="l2"` (6px) |
+| `radii/medium` | `12px` | `medium` | `rounded="l3"` (8px — closest) |
+| `radii/large` | `16px` | `large` | `rounded="l3"` (8px — closest) |
+| `radii/extraLarge` | `28px` | `extraLarge` | No direct match — use `rounded="full"` for pills |
+| `radii/full` | `9999px` | `full` | `rounded="full"` |
+
+**Canonical usage summary:**
+- `rounded="l1"` (2px) — checkboxes, breadcrumbs, subtle rounding
+- `rounded="l2"` (6px) — buttons, inputs, badges, tooltips, textarea, tabs
+- `rounded="l3"` (8px) — cards, dialogs, popovers, toasts, nav menus
+- `rounded="full"` (9999px) — pills, avatars, switches, spinners, toggle tracks
+
+---
+
+## Elevation (Shadow) Reference
+
+DDS shadows use a **two-layer system**.
+
+**Layer 1 — Base tokens** (`level0`–`level5`): M3 elevation values registered via `transform.ts`.
+Do **not** use these directly in component code.
+
+**Layer 2 — Semantic tokens** (`xs`, `sm`, `md`, `lg`, `xl`, `2xl`): Defined in `src/preset/shadows.ts`.
+These are the tokens to use in component recipes and custom styling.
+
+| M3 Level | Semantic token | Shadow value | Use case |
+|---|---|---|---|
+| `level0` | `shadow="none"` | `none` | Flat surfaces, inline content |
+| `level1` | `shadow="xs"` | `0px 1px 2px rgba(0,0,0,0.3), 0px 1px 3px 1px rgba(0,0,0,0.15)` | Cards at rest, contained buttons |
+| `level2` | `shadow="sm"` | `0px 1px 2px rgba(0,0,0,0.3), 0px 2px 6px 2px rgba(0,0,0,0.15)` | Cards on hover, raised buttons |
+| `level3` | `shadow="md"` | `0px 4px 8px 3px rgba(0,0,0,0.15), 0px 1px 3px rgba(0,0,0,0.3)` | **Dialogs, dropdowns, popovers** |
+| `level4` | `shadow="lg"` | `0px 6px 10px 4px rgba(0,0,0,0.15), 0px 2px 3px rgba(0,0,0,0.3)` | Navigation drawers, modal sheets |
+| `level5` | `shadow="xl"` | `0px 8px 12px 6px rgba(0,0,0,0.15), 0px 4px 4px rgba(0,0,0,0.3)` | FABs, tooltips, snackbars |
+
+```tsx
+// ✅ Correct: semantic shadow token
+<Box shadow="md">Dialog content</Box>
+
+// ❌ Wrong: base token directly (don't use level0–level5 in component code)
+<Box shadow="level3">Dialog content</Box>
+
+// ❌ Wrong: raw CSS string
+<Box boxShadow="0px 4px 8px 3px rgba(0,0,0,0.15)...">...</Box>
+```
+
+---
+
 ## Cross-References
 
 - [01-Colors](/docs/documentation-figma-translation-01-colors--docs) — Tailwind/Shadcn → DDS color mapping
+- [04-Shadows-Radii](/docs/documentation-figma-translation-04-shadows-radii--docs) — Shadow and corner radius usage patterns
 - [Guidelines: Colors](/docs/documentation-guidelines-99-colors--docs) — Full M3 color role documentation
 - [Guidelines: Elevation](/docs/documentation-guidelines-99-elevation--docs) — Surface container elevation system

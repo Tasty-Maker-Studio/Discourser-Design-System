@@ -8,6 +8,7 @@
  */
 
 import { material3Language } from '../src/languages/material3.language';
+import type { WeightVariant } from '../src/contracts/design-language.contract';
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
@@ -204,40 +205,202 @@ function buildEffectStyles(): { elevation: Record<string, ElevationEntry> } {
 }
 
 // ---------------------------------------------------------------------------
-// Builder 5: Text styles — typography
+// Helper: font style label → numeric font weight
+// ---------------------------------------------------------------------------
+
+const fontStyleToWeight: Record<string, number> = {
+  Thin: 100,
+  Light: 300,
+  Regular: 400,
+  Medium: 500,
+  SemiBold: 600,
+  Bold: 700,
+};
+
+// Convert a Figma group path (e.g. "Display/Large") to a camelCase step key
+// (e.g. "displayLarge") — the inverse of stepKeyToFigmaGroup.
+function figmaGroupToStepKey(group: string): string {
+  const parts = group.split('/');
+  return (
+    parts[0].toLowerCase() +
+    parts
+      .slice(1)
+      .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
+      .join('')
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Builder 5: Text styles — typography (one entry per weight variant = 56 total)
 // ---------------------------------------------------------------------------
 
 type TextStyleEntry = {
+  name: string;
+  description: string;
   fontFamily: string;
+  fontStyle: string;
   fontSize: number;
-  fontWeight: number;
-  lineHeight: number;
+  lineHeightPx: number;
   letterSpacing: number;
-  figmaTextStyle: string;
+  fontVariationSettings?: string;
 };
 
-function buildTextStyles(): Record<string, TextStyleEntry> {
-  const result: Record<string, TextStyleEntry> = {};
+// Convert camelCase scale key to slash-separated Figma group path.
+// e.g. "displayLarge" → "Display/Large", "headlineMedium" → "Headline/Medium"
+function stepKeyToFigmaGroup(key: string): string {
+  return key
+    .replace(/([A-Z])/g, '/$1')
+    .replace(/^(.)/, (c) => c.toUpperCase())
+    .split('/')
+    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+    .join('/');
+}
+
+// Capitalize first letter of a WeightName for the style label.
+// e.g. "semiBold" → "SemiBold", "regular" → "Regular"
+function weightLabel(name: string): string {
+  return name.charAt(0).toUpperCase() + name.slice(1);
+}
+
+function buildTextStyles(): TextStyleEntry[] {
+  const result: TextStyleEntry[] = [];
   const lang = material3Language;
 
   for (const [key, step] of Object.entries(lang.typography.scale)) {
     const fontKey = step.geometry.fontFamily as 'display' | 'body' | 'mono';
     const fontConfig = lang.typography.fonts[fontKey];
-    const fontFamily = fontConfig.figmaName;
-    const defaultVariant = step.weights[step.defaultWeight];
-    const fontWeight = Number(defaultVariant?.fontWeight ?? '400');
+    const group = stepKeyToFigmaGroup(key);
 
-    result[key] = {
-      fontFamily,
-      fontSize: px(step.geometry.fontSize),
-      fontWeight,
-      lineHeight: px(step.geometry.lineHeight),
-      letterSpacing: px(step.geometry.letterSpacing),
-      figmaTextStyle: key,
-    };
+    for (const [weightName, variantRaw] of Object.entries(step.weights)) {
+      const variant = variantRaw as WeightVariant | undefined;
+      if (!variant) continue;
+      const fontStyle =
+        fontConfig.weightMap[
+          variant.fontWeight as keyof typeof fontConfig.weightMap
+        ] ?? variant.fontWeight;
+
+      const entry: TextStyleEntry = {
+        name: `${group}/${weightLabel(weightName)}`,
+        description: `dds:typography.scale.${key}.weights.${weightName}`,
+        fontFamily: fontConfig.figmaName,
+        fontStyle,
+        fontSize: px(step.geometry.fontSize),
+        lineHeightPx: px(step.geometry.lineHeight),
+        letterSpacing: px(step.geometry.letterSpacing),
+      };
+
+      if (step.geometry.fontVariationSettings) {
+        entry.fontVariationSettings = step.geometry.fontVariationSettings;
+      }
+
+      result.push(entry);
+    }
   }
 
   return result;
+}
+
+// ---------------------------------------------------------------------------
+// Builder 6: Token name mapping — docs/token-name-mapping.json
+// ---------------------------------------------------------------------------
+
+type TextStyleMappingEntry = {
+  figmaTextStyle: string;
+  figmaDescription: string;
+  ddsTokenPath: string;
+  pandaTextStyle: string;
+  fontFamily: string;
+  fontStyle: string;
+  fontWeight: number;
+  fontSize: number;
+  lineHeightPx: number;
+  letterSpacing: number;
+  isDefaultWeight: boolean;
+  exampleUsage: string;
+};
+
+function buildTokenNameMapping(textStyles: TextStyleEntry[]): void {
+  const mappingPath = path.join(
+    __dirname,
+    '..',
+    'docs',
+    'token-name-mapping.json',
+  );
+  const existing = JSON.parse(fs.readFileSync(mappingPath, 'utf-8'));
+  const scale = material3Language.typography.scale as unknown as Record<
+    string,
+    { defaultWeight?: string }
+  >;
+
+  const textStyleEntries: TextStyleMappingEntry[] = textStyles.map((entry) => {
+    // entry.name = "Display/Large/SemiBold"
+    // entry.description = "dds:typography.scale.displayLarge.weights.semiBold"
+    const nameParts = entry.name.split('/');
+    const group = nameParts.slice(0, -1).join('/'); // "Display/Large"
+    const stepKey = figmaGroupToStepKey(group); // "displayLarge"
+    const ddsTokenPath = entry.description.replace('dds:', '');
+    const weightName = ddsTokenPath.split('.').pop() ?? '';
+    const isDefaultWeight = scale[stepKey]?.defaultWeight === weightName;
+
+    return {
+      figmaTextStyle: entry.name,
+      figmaDescription: entry.description,
+      ddsTokenPath,
+      pandaTextStyle: stepKey,
+      fontFamily: entry.fontFamily,
+      fontStyle: entry.fontStyle,
+      fontWeight: fontStyleToWeight[entry.fontStyle] ?? 400,
+      fontSize: entry.fontSize,
+      lineHeightPx: entry.lineHeightPx,
+      letterSpacing: entry.letterSpacing,
+      isDefaultWeight,
+      exampleUsage: `textStyle: '${stepKey}'`,
+    };
+  });
+
+  const updated = {
+    ...existing,
+    version: packageJson.version ?? '0.0.0',
+    generatedAt: new Date().toISOString(),
+    shadowSemanticAliases: buildShadowSemanticAliases(),
+    textStyles: textStyleEntries,
+  };
+
+  writeJson(mappingPath, updated);
+}
+
+// ---------------------------------------------------------------------------
+// Builder 7: Shadow semantic aliases — docs/token-name-mapping.json
+// ---------------------------------------------------------------------------
+
+const shadowAliasDescriptions: Record<string, string> = {
+  xs: 'Cards at rest — level1',
+  sm: 'Cards on hover, panels — level2',
+  md: 'Dialogs, dropdowns, popovers — level3',
+  lg: 'Navigation drawers, modal sheets — level4',
+  xl: 'FABs, tooltips, snackbars — level5',
+  '2xl': 'Large overlays — level5',
+  inset: 'Inset shadow for recessed elements (inputs, wells)',
+};
+
+const shadowAliasResolvesTo: Record<string, string> = {
+  xs: 'level1',
+  sm: 'level2',
+  md: 'level3',
+  lg: 'level4',
+  xl: 'level5',
+  '2xl': 'level5',
+  inset: 'custom inset using neutral.a4/a6',
+};
+
+function buildShadowSemanticAliases() {
+  return Object.keys(shadowAliasResolvesTo).map((token) => ({
+    pandaToken: token,
+    cssProperty: `--shadows-${token}`,
+    resolvesTo: shadowAliasResolvesTo[token],
+    description: shadowAliasDescriptions[token] ?? token,
+    exampleUsage: `shadow: '${token}'`,
+  }));
 }
 
 // ---------------------------------------------------------------------------
@@ -256,7 +419,7 @@ function writeJson(filePath: string, data: unknown): void {
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 }
 
-const distDir = path.join(__dirname, '..', 'dist');
+const exportDir = path.join(__dirname, '..', 'tokens', 'export-to-figma');
 
 // --- figma-variables.json ---
 const primitives = buildPrimitives();
@@ -273,31 +436,32 @@ const figmaVariables = {
   'Spacing & Shape': spacingAndShape,
 };
 
-const figmaVariablesPath = path.join(distDir, 'figma-variables.json');
+const figmaVariablesPath = path.join(exportDir, 'figma-variables.json');
 writeJson(figmaVariablesPath, figmaVariables);
 
 // --- figma-effect-styles.json ---
 const effectStyles = buildEffectStyles();
-const effectStylesPath = path.join(distDir, 'figma-effect-styles.json');
+const effectStylesPath = path.join(exportDir, 'figma-effect-styles.json');
 writeJson(effectStylesPath, effectStyles);
 
 // --- figma-text-styles.json ---
 const textStyles = buildTextStyles();
-const textStylesPath = path.join(distDir, 'figma-text-styles.json');
+const textStylesPath = path.join(exportDir, 'figma-text-styles.json');
 writeJson(textStylesPath, textStyles);
 
-// --- tokens/tokens.json (copy of figma-variables.json) ---
-const tokensPath = path.join(__dirname, '..', 'tokens', 'tokens.json');
-writeJson(tokensPath, figmaVariables);
+// --- docs/token-name-mapping.json ---
+buildTokenNameMapping(textStyles);
 
 // --- Summary ---
 console.log(
-  `✅ dist/figma-variables.json — ${Object.keys(primitives).length} Primitives, ${Object.keys(semantic).length} Semantic, ${Object.keys(spacingAndShape).length} Spacing & Shape tokens`,
+  `✅ tokens/export-to-figma/figma-variables.json — ${Object.keys(primitives).length} Primitives, ${Object.keys(semantic).length} Semantic, ${Object.keys(spacingAndShape).length} Spacing & Shape tokens`,
 );
 console.log(
-  `✅ dist/figma-effect-styles.json — ${Object.keys(effectStyles.elevation).length} elevation levels`,
+  `✅ tokens/export-to-figma/figma-effect-styles.json — ${Object.keys(effectStyles.elevation).length} elevation levels`,
 );
 console.log(
-  `✅ dist/figma-text-styles.json — ${Object.keys(textStyles).length} text styles`,
+  `✅ tokens/export-to-figma/figma-text-styles.json — ${textStyles.length} text styles`,
 );
-console.log(`✅ tokens/tokens.json updated`);
+console.log(
+  `✅ docs/token-name-mapping.json updated — ${textStyles.length} text style entries`,
+);

@@ -6,6 +6,10 @@ import type { DesignLanguageContract } from '../contracts/design-language.contra
  * Source color: #63A002 (TastyMakers green)
  * Generated via Material Theme Builder plugin 2024-12-24
  */
+// ⚠️  After changing this file, run `pnpm figma:export` to:
+//     1. Regenerate tokens/export-to-figma/ files for Figma import
+//     2. Regenerate docs/token-name-mapping.json for AI agent resolution
+//     3. Update docs/token-name-mapping.md manually to match
 export const material3Language: DesignLanguageContract = {
   name: 'material3',
   version: '1.0.0',

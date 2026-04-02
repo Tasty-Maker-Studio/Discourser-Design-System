@@ -208,7 +208,7 @@ async function promptForFiles(): Promise<FigmaExportConfig> {
   return {
     primitivesPath: expandPath(answers.primitivesPath),
     semanticPath: expandPath(answers.semanticPath),
-    outputDir: path.join(__dirname, '..', 'tokens'),
+    outputDir: path.join(__dirname, '..', 'tokens', 'imported-from-figma'),
   };
 }
 
@@ -241,7 +241,7 @@ async function createBackup(outputDir: string): Promise<string> {
     'primitives-generated.json',
     'semantic-light-generated.json',
     'semantic-dark-generated.json',
-    'tokens.json',
+    'figma-variables.json',
   ];
 
   let backedUpCount = 0;
@@ -404,7 +404,7 @@ async function generateCombinedTokens(outputDir: string): Promise<void> {
     );
   }
 
-  const combinedPath = path.join(outputDir, 'tokens.json');
+  const combinedPath = path.join(outputDir, 'figma-variables.json');
   fs.writeFileSync(combinedPath, JSON.stringify(combined, null, 2), 'utf-8');
 }
 
@@ -418,18 +418,18 @@ function showSummary(summary: Summary): void {
   console.log(`   • Total:            ${summary.totalCount} tokens\n`);
 
   console.log('📂 Files updated:');
-  console.log('   ✓ tokens/primitives-generated.json');
-  console.log('   ✓ tokens/semantic-light-generated.json');
-  console.log('   ✓ tokens/semantic-dark-generated.json');
-  console.log('   ✓ tokens/tokens.json\n');
+  console.log('   ✓ tokens/imported-from-figma/primitives-generated.json');
+  console.log('   ✓ tokens/imported-from-figma/semantic-light-generated.json');
+  console.log('   ✓ tokens/imported-from-figma/semantic-dark-generated.json');
+  console.log('   ✓ tokens/imported-from-figma/figma-variables.json\n');
 
   console.log(
-    `💾 Backup saved: tokens/${path.basename(summary.backupPath)}/\n`,
+    `💾 Backup saved: tokens/imported-from-figma/${path.basename(summary.backupPath)}/\n`,
   );
 
   console.log('Next steps:');
-  console.log('   1. Review changes: git diff tokens/');
-  console.log('   2. Test build: npm run build:panda');
+  console.log('   1. Review changes: git diff tokens/imported-from-figma/');
+  console.log('   2. Test build: pnpm build:panda');
   console.log('   3. Commit changes: git add tokens/ && git commit\n');
 }
 
