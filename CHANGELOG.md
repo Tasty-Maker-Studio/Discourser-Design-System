@@ -1,5 +1,15 @@
 # @discourser/design-system
 
+## 0.26.0
+
+### Minor Changes
+
+- [#185](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/185) [`fe43442`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/fe434422ceedf7f9347a45c5fe451978b4d56ab0) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - udpating tokens to incude typepography weights, and better overal clarity
+
+### Patch Changes
+
+- [#185](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/pull/185) [`b621577`](https://github.com/Tasty-Maker-Studio/Discourser-Design-System/commit/b6215773a8dc57a2efc0e82d4ab99ab16092e9ae) Thanks [@willTastyMakers](https://github.com/willTastyMakers)! - Add LeftArrowIcon component and update RightArrowIcon with new matching thin-line arrow design (viewBox 0 0 21 17). Both icons exported from package and added to Storybook icon gallery.
+
 ## 0.25.3
 
 ### Patch Changes
