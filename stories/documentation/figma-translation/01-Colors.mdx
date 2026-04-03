@@ -6,37 +6,52 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 This page translates color tokens from Figma, Tailwind CSS, and Shadcn/UI to Discourser Design System equivalents.
 
+## Token Vocabulary: Two Valid Systems
+
+Discourser exposes **two sets** of semantic color tokens. Both are real and valid — pick one system and stay consistent within a component.
+
+| System | Source | Example |
+|---|---|---|
+| **M3 Semantic** | Material Design 3 color roles | `bg="surface.container"`, `color="onSurface"` |
+| **Park UI Aliases** | Park UI compatibility layer | `bg="canvas"`, `color="fg.default"` |
+
+The `globalCss` in `panda.config.ts` uses Park UI aliases (`bg: 'canvas'`, `color: 'fg.default'`) for the page root. Components and layout code should use **M3 Semantic tokens**.
+
+---
+
 ## Background Colors
 
-| Source (Figma/Tailwind/Shadcn) | Discourser | Notes |
-|---|---|---|
-| `bg-background`, `bg-white` | `bg="canvas"` | Page-level background, resolves to gray.1 |
-| `bg-card`, `bg-popover` | `bg="surface.container"` or use component | Surface containers — use M3 surface container, or let component handle it (Card.Root sets its own bg) |
-| `bg-muted` | `bg="surface.container.low"` | Subtle background areas — M3 surface container low |
-| `bg-primary` | `colorPalette="primary"` (on components) or `bg="primary.9"` (raw) | Primary action surfaces — prefer colorPalette on components |
-| `bg-secondary` | `colorPalette="secondary"` or `bg="secondary.9"` | Secondary surfaces |
-| `bg-destructive` | `colorPalette="error"` or `bg="error.9"` | Error/destructive surfaces |
-| `bg-accent` | `bg="primary.a3"` or `bg="secondary.a3"` | Accent/highlight backgrounds (use alpha variants for subtle tints) |
+| Source (Figma/Tailwind/Shadcn) | M3 Semantic | Park UI Alias | Notes |
+|---|---|---|---|
+| `bg-background`, `bg-white` | `bg="background"` | `bg="canvas"` | Page-level background |
+| `bg-card`, `bg-popover` | `bg="surface.container"` | — | Default card/dialog background |
+| `bg-muted` | `bg="surface.container.low"` | — | Subtle background areas |
+| `bg-primary` | `colorPalette="primary"` (on components) or `bg="primary"` (raw) | — | Primary action surfaces — prefer colorPalette on components |
+| `bg-secondary` | `colorPalette="secondary"` or `bg="secondary"` | — | Secondary surfaces |
+| `bg-destructive` | `colorPalette="error"` or `bg="error"` | — | Error/destructive surfaces |
+| `bg-accent` | `bg="primary.container"` or `bg="secondary.container"` | — | Accent/tinted container backgrounds |
 
 ## Text Colors
 
-| Source (Figma/Tailwind/Shadcn) | Discourser | Notes |
-|---|---|---|
-| `text-foreground` | `color="fg.default"` | Primary text, resolves to gray.12 |
-| `text-muted-foreground` | `color="fg.muted"` | Secondary text, resolves to gray.11 |
-| `text-subtle` | `color="fg.subtle"` | Tertiary/disabled text, resolves to gray.10 |
-| `text-primary` | `color="primary.11"` | Branded text |
-| `text-destructive` | `color="error.11"` | Error text |
-| `text-primary-foreground` | `color="onM3Primary"` | Text on primary backgrounds — use M3 onPrimary token |
-| `text-secondary-foreground` | `color="onM3Secondary"` | Text on secondary backgrounds — use M3 onSecondary token |
+| Source (Figma/Tailwind/Shadcn) | M3 Semantic | Park UI Alias | Notes |
+|---|---|---|---|
+| `text-foreground` | `color="onSurface"` | `color="fg.default"` | Primary text |
+| `text-muted-foreground` | `color="onSurface.variant"` | `color="fg.muted"` | Secondary text |
+| `text-subtle` | `color="onSurface.variant"` | `color="fg.subtle"` | Tertiary/disabled text |
+| `text-primary` | `color="primary"` | — | Branded/tinted text (use sparingly) |
+| `text-destructive` | `color="error"` | — | Error text |
+| `text-primary-foreground` | `color="onPrimary"` | — | Text on primary backgrounds |
+| `text-secondary-foreground` | `color="onSecondary"` | — | Text on secondary backgrounds |
 
 ## Border Colors
 
-| Source (Figma/Tailwind/Shadcn) | Discourser | Notes |
-|---|---|---|
-| `border`, `border-input` | `borderColor="border"` | Default border, resolves to gray.6 |
-| `border-primary` | `borderColor="primary.7"` | Primary-colored borders |
-| `border-muted` | `borderColor="gray.4"` | Subtle borders (lighter than default) |
+| Source (Figma/Tailwind/Shadcn) | M3 Semantic | Park UI Alias | Notes |
+|---|---|---|---|
+| `border`, `border-input` | `borderColor="outline.variant"` | `borderColor="border"` | Default border |
+| `border-primary` | `borderColor="primary"` | — | Primary-colored borders |
+| `border-strong` | `borderColor="outline"` | — | Strong borders, focus rings |
+
+---
 
 ## M3 Surface System
 
@@ -45,8 +60,8 @@ When Figma uses Material Design 3 vocabulary directly:
 | Source (M3) | Discourser | Notes |
 |---|---|---|
 | `surface` | `bg="surface"` | M3 base surface |
-| `surface-dim` | `bg="surface.dim"` | M3 dimmed surface (lower than base) |
-| `surface-bright` | `bg="surface.bright"` | M3 bright surface (higher than base) |
+| `surface-dim` | `bg="surface.dim"` | Dimmed surface (= `surface.container.low`) |
+| `surface-bright` | `bg="surface.bright"` | Bright surface (= `surface.container.high`) |
 | `surface-container` | `bg="surface.container"` | M3 default container (Level 1 elevation) |
 | `surface-container-low` | `bg="surface.container.low"` | M3 low container (subtle elevation) |
 | `surface-container-lowest` | `bg="surface.container.lowest"` | M3 lowest container (minimal elevation) |
@@ -54,38 +69,55 @@ When Figma uses Material Design 3 vocabulary directly:
 | `surface-container-highest` | `bg="surface.container.highest"` | M3 highest container (Level 4 elevation) |
 | `on-surface` | `color="onSurface"` | Text on M3 surfaces |
 | `on-surface-variant` | `color="onSurface.variant"` | Secondary text on M3 surfaces |
-| `outline` | `borderColor="outline"` | M3 outline |
+| `outline` | `borderColor="outline"` | M3 strong outline |
 | `outline-variant` | `borderColor="outline.variant"` | M3 subtle outline |
 
-## M3 Primary/Secondary/Tertiary Tokens
+---
 
-When using explicit M3 color roles:
+## M3 Primary / Secondary / Tertiary / Error Tokens
 
 | Source (M3) | Discourser | Notes |
 |---|---|---|
-| `primary` | `bg="m3Primary"` | M3 primary color (explicit) |
-| `primary-container` | `bg="m3Primary.container"` | M3 primary container |
-| `on-primary` | `color="onM3Primary"` | Text on M3 primary |
-| `on-primary-container` | `color="onM3Primary.container"` | Text on M3 primary container |
-| `secondary` | `bg="m3Secondary"` | M3 secondary color (explicit) |
-| `secondary-container` | `bg="m3Secondary.container"` | M3 secondary container |
-| `on-secondary` | `color="onM3Secondary"` | Text on M3 secondary |
-| `on-secondary-container` | `color="onM3Secondary.container"` | Text on M3 secondary container |
-| `tertiary` | `bg="m3Tertiary"` | M3 tertiary color (explicit) |
-| `tertiary-container` | `bg="m3Tertiary.container"` | M3 tertiary container |
-| `on-tertiary` | `color="onM3Tertiary"` | Text on M3 tertiary |
-| `on-tertiary-container` | `color="onM3Tertiary.container"` | Text on M3 tertiary container |
+| `primary` | `bg="primary"` | M3 primary color |
+| `primary-container` | `bg="primary.container"` | M3 primary container |
+| `on-primary` | `color="onPrimary"` | Text on primary |
+| `on-primary-container` | `color="onPrimary.container"` | Text on primary container |
+| `secondary` | `bg="secondary"` | M3 secondary color |
+| `secondary-container` | `bg="secondary.container"` | M3 secondary container |
+| `on-secondary` | `color="onSecondary"` | Text on secondary |
+| `on-secondary-container` | `color="onSecondary.container"` | Text on secondary container |
+| `tertiary` | `bg="tertiary"` | M3 tertiary color |
+| `tertiary-container` | `bg="tertiary.container"` | M3 tertiary container |
+| `on-tertiary` | `color="onTertiary"` | Text on tertiary |
+| `on-tertiary-container` | `color="onTertiary.container"` | Text on tertiary container |
+| `error` | `bg="error"` | M3 error color |
+| `error-container` | `bg="error.container"` | M3 error container |
+| `on-error` | `color="onError"` | Text on error |
+| `on-error-container` | `color="onError.container"` | Text on error container |
 
-**Note:** M3 tokens are prefixed (`m3Primary`, `m3Secondary`, `m3Tertiary`) to avoid conflicts with Radix color bridge tokens. For component usage, prefer `colorPalette="primary"` over explicit M3 tokens.
+---
+
+## Inverse & Utility Tokens
+
+| Source (M3) | Discourser | Notes |
+|---|---|---|
+| `inverse-surface` | `bg="inverseSurface"` | Tooltip / snackbar background |
+| `inverse-on-surface` | `color="inverseOnSurface"` | Text on inverse surface |
+| `inverse-primary` | `color="inversePrimary"` | Primary accent on dark bg |
+| `scrim` | `bg="scrim"` | Dialog overlay / backdrop |
+| `surface-variant` | `bg="surfaceVariant"` | Chip / input background |
+| `on-surface-variant` | `color="onSurface.variant"` | Secondary text on chip bg |
+
+---
 
 ## Color Palette System
 
 Discourser uses the **colorPalette prop pattern** for theming components.
 
-### Rule: Components First, Then Radix Scale
+### Rule: Components First, Then Direct Tokens
 
 - **If a component supports `colorPalette` prop** → ALWAYS use `colorPalette`
-- **For custom styling outside components** → Use Radix scale directly (`primary.9`, `error.11`, etc.)
+- **For custom styling outside components** → Use semantic tokens directly (`primary`, `error`, etc.)
 
 ### Available Palettes
 
@@ -93,11 +125,12 @@ Discourser uses the **colorPalette prop pattern** for theming components.
 - `secondary` — Brand secondary color
 - `tertiary` — Brand tertiary color
 - `error` — Error/destructive actions
-- `neutral` or `gray` — Neutral grayscale
+- `neutral` / `gray` — Neutral grayscale
+- `red` — Red (for explicit red needs, distinct from `error`)
 
 ### Radix Color Scale Explained
 
-Discourser uses the **Radix Colors scale** (1-12) for all color palettes:
+Discourser uses the **Radix Colors scale** (1-12) for all color palettes, bridged to M3 semantic names:
 
 | Scale | Usage | Example |
 |---|---|---|
@@ -114,24 +147,26 @@ Discourser uses the **Radix Colors scale** (1-12) for all color palettes:
 | `11` | Text colors | Low-contrast text |
 | `12` | High-contrast text | Black/white text |
 
-**Alpha variants** (`a1`-`a12`) have transparency, useful for overlays and subtle tints.
+**Alpha variants** (`a1`–`a12`) have transparency, useful for overlays and subtle tints.
 
-### When to Use colorPalette vs Direct Scale
+### When to Use colorPalette vs Direct Token
 
 ```tsx
 // ✅ CORRECT: Component with colorPalette
 <Button colorPalette="primary">Submit</Button>
-// Generated: bg=primary.9, color=onM3Primary, hover:bg=primary.10
+// Generated: bg=primary, color=onPrimary, hover states auto-handled
 
 // ✅ CORRECT: Custom Box needing primary accent background
-<Box bg="primary.3" borderColor="primary.7">
-  <Text color="primary.11">Custom styled box</Text>
+<Box bg="primary.container" borderColor="primary">
+  <Text color="onPrimary.container">Custom styled box</Text>
 </Box>
 
 // ❌ WRONG: Manual coloring when component supports colorPalette
-<Button bg="primary.9" color="white">Submit</Button>
+<Button bg="primary" color="onPrimary">Submit</Button>
 // Loses automatic hover states, contrast, and theme consistency
 ```
+
+---
 
 ## Common Mistakes
 
@@ -148,7 +183,7 @@ Discourser uses the **Radix Colors scale** (1-12) for all color palettes:
 
 ```tsx
 // ✅ CORRECT: Semantic token
-<Box bg="primary.9" color="onM3Primary">
+<Box bg="primary" color="onPrimary">
   Brand section
 </Box>
 ```
@@ -168,7 +203,7 @@ Discourser uses the **Radix Colors scale** (1-12) for all color palettes:
 
 ```tsx
 // ✅ CORRECT: Panda CSS props
-<Box bg="primary.9" color="white">
+<Box bg="primary" color="onPrimary">
   Content
 </Box>
 ```
@@ -179,7 +214,7 @@ Discourser uses the **Radix Colors scale** (1-12) for all color palettes:
 
 ```tsx
 // ❌ WRONG: Manual background/color when component supports colorPalette
-<Button bg="primary.9" color="onM3Primary" _hover={{ bg: "primary.10" }}>
+<Button bg="primary" color="onPrimary" _hover={{ bg: "primary.10" }}>
   Submit
 </Button>
 ```
@@ -195,7 +230,7 @@ Discourser uses the **Radix Colors scale** (1-12) for all color palettes:
 
 ---
 
-### ❌ Using Raw Radix Scale for Text
+### ❌ Using Raw Radix Scale for Body Text
 
 ```tsx
 // ❌ WRONG: Direct Radix scale for body text
@@ -204,38 +239,36 @@ Discourser uses the **Radix Colors scale** (1-12) for all color palettes:
 </Text>
 ```
 
-**Why wrong:** Not semantic — if you change gray palette, all text colors need updating.
+**Why wrong:** Not semantic — use `fg.default` (Park UI alias) or `onSurface` (M3 semantic) for theme-aware text.
 
 ```tsx
-// ✅ CORRECT: Semantic token
+// ✅ CORRECT: Semantic alias
 <Text color="fg.default">
+  Body text content
+</Text>
+
+// ✅ ALSO CORRECT: M3 semantic
+<Text color="onSurface">
   Body text content
 </Text>
 ```
 
 ---
 
-### ❌ Mixing bg-* with M3 Explicit Tokens
+### ❌ Using Old `m3Primary` / `m3Secondary` Prefix
 
 ```tsx
-// ❌ WRONG: Mixing Shadcn vocabulary with M3 explicit tokens
-<Box bg="m3Primary">
-  <Text style={{ color: 'var(--text-primary-foreground)' }}>Mixed vocabulary</Text>
-</Box>
+// ❌ WRONG: Old prefixed token names
+<Box bg="m3Primary" color="onM3Primary">...</Box>
+<Box bg="m3Secondary" color="onM3Secondary">...</Box>
 ```
 
-**Why wrong:** Inconsistent — pick one translation path and stick to it.
+**Why wrong:** The `m3` prefix was removed. Tokens are now clean: `primary`, `onPrimary`, `secondary`, `onSecondary`.
 
 ```tsx
-// ✅ CORRECT: Consistent Discourser vocabulary
-<Box bg="primary.9">
-  <Text color="onM3Primary">Consistent</Text>
-</Box>
-
-// ✅ ALSO CORRECT: M3 explicit vocabulary
-<Box bg="m3Primary">
-  <Text color="onM3Primary">M3 consistent</Text>
-</Box>
+// ✅ CORRECT: Clean token names
+<Box bg="primary" color="onPrimary">...</Box>
+<Box bg="secondary" color="onSecondary">...</Box>
 ```
 
 ---
@@ -245,6 +278,7 @@ Discourser uses the **Radix Colors scale** (1-12) for all color palettes:
 For comprehensive color system details:
 - [Guidelines: Colors](/docs/documentation-guidelines-99-colors--docs) — Full M3 color role documentation
 - [Guidelines: Elevation](/docs/documentation-guidelines-99-elevation--docs) — Surface container elevation system
+- [07 — Token Resolution](/docs/documentation-figma-translation-07-token-resolution--docs) — Full Figma variable → Panda CSS hex values
 
 For component-specific colorPalette usage:
-- Coming soon: Component Translation pages (05-07)
+- [05 — Components](/docs/documentation-figma-translation-05-components--docs) — Component Translation pages

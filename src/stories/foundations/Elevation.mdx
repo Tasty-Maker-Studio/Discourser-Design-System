@@ -27,12 +27,18 @@ The middle layer maps design intent to base tokens:
 Components use semantic tokens for flexibility:
 ```tsx
 // ✅ Use semantic tokens in components
-boxShadow: 'sm'
-boxShadow: 'md'
+boxShadow: 'xs'   // level1 — subtle cards
+boxShadow: 'sm'   // level2 — default cards
+boxShadow: 'md'   // level3 — dialogs, dropdowns
+boxShadow: 'lg'   // level4 — drawers, sheets
+boxShadow: 'xl'   // level5 — FABs, tooltips
 
-// ❌ Don't use base tokens directly
+// ❌ Don't use base tokens directly — these are internal only
+boxShadow: 'level1'
 boxShadow: 'level2'
 ```
+
+**Shadow semantic token map:** `xs`=level1, `sm`=level2, `md`=level3, `lg`=level4, `xl`=level5.
 
 This architecture allows the design language to be swapped by changing which base tokens the semantic layer references, without touching component code.
 
@@ -44,14 +50,14 @@ This architecture allows the design language to be swapped by changing which bas
 
 ## Elevation Reference
 
-| Level | Shadow Value | Use Case |
-|-------|--------------|----------|
-| **level0** | none | Flat elements, no elevation needed |
-| **level1** | `0px 1px 2px rgba(0,0,0,0.3), 0px 1px 3px 1px rgba(0,0,0,0.15)` | Cards at rest, contained buttons |
-| **level2** | `0px 1px 2px rgba(0,0,0,0.3), 0px 2px 6px 2px rgba(0,0,0,0.15)` | Cards on hover, raised buttons |
-| **level3** | `0px 4px 8px 3px rgba(0,0,0,0.15), 0px 1px 3px rgba(0,0,0,0.3)` | Dialogs, dropdowns, popovers |
-| **level4** | `0px 6px 10px 4px rgba(0,0,0,0.15), 0px 2px 3px rgba(0,0,0,0.3)` | Navigation drawer, modal sheets |
-| **level5** | `0px 8px 12px 6px rgba(0,0,0,0.15), 0px 4px 4px rgba(0,0,0,0.3)` | Floating action buttons, tooltips |
+| M3 Level | Semantic Token | Shadow Value | Use Case |
+|----------|---------------|--------------|----------|
+| **level0** | (no shadow) | none | Flat elements, no elevation needed |
+| **level1** | **`xs`** | `0px 1px 2px rgba(0,0,0,0.3), 0px 1px 3px 1px rgba(0,0,0,0.15)` | Cards at rest, contained buttons |
+| **level2** | **`sm`** | `0px 1px 2px rgba(0,0,0,0.3), 0px 2px 6px 2px rgba(0,0,0,0.15)` | Cards on hover, raised buttons |
+| **level3** | **`md`** | `0px 4px 8px 3px rgba(0,0,0,0.15), 0px 1px 3px rgba(0,0,0,0.3)` | Dialogs, dropdowns, popovers |
+| **level4** | **`lg`** | `0px 6px 10px 4px rgba(0,0,0,0.15), 0px 2px 3px rgba(0,0,0,0.3)` | Navigation drawer, modal sheets |
+| **level5** | **`xl`** | `0px 8px 12px 6px rgba(0,0,0,0.15), 0px 4px 4px rgba(0,0,0,0.3)` | Floating action buttons, tooltips |
 
 ---
 
@@ -212,8 +218,8 @@ Elevation works differently in dark themes:
 import { css } from 'styled-system/css';
 
 const cardStyle = css({
-  boxShadow: 'xs',
-  borderRadius: 'medium',
+  boxShadow: 'sm',   // level2 — default card elevation
+  borderRadius: 'l3',
   padding: 'lg'
 });
 ```
@@ -246,9 +252,9 @@ const modalStyle = css({
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  boxShadow: 'md',
-  borderRadius: 'large',
-  backgroundColor: 'surface',
+  boxShadow: 'md',   // level3 — dialog elevation
+  borderRadius: 'l3',
+  backgroundColor: 'surface.container.high',
   padding: 'xl'
 });
 ```

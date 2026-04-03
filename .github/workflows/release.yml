@@ -84,9 +84,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Create a new branch for version changes
+          # Create (or force-reset) branch from current dev so it always has the latest ci.yml
           BRANCH="changeset-release/dev"
-          git checkout -b $BRANCH 2>/dev/null || git checkout $BRANCH
+          git checkout -B $BRANCH
 
           # Run changeset version to update package.json and CHANGELOG
           pnpm exec changeset version

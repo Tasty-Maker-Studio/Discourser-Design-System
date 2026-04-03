@@ -114,6 +114,19 @@ function buildKnownTokenList(): Set<string> {
   ];
   surfaceTokens.forEach((token) => tokens.add(token));
 
+  // Add M3 role container tokens (nested dot-notation)
+  const containerTokens = [
+    'primary.container',
+    'onPrimary.container',
+    'secondary.container',
+    'onSecondary.container',
+    'tertiary.container',
+    'onTertiary.container',
+    'error.container',
+    'onError.container',
+  ];
+  containerTokens.forEach((token) => tokens.add(token));
+
   // Add common semantic tokens
   const commonTokens = [
     'canvas',

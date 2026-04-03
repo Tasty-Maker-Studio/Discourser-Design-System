@@ -1,10 +1,10 @@
 # Token Name Mapping
 
-> Generated from `dist/figma-variables.json`, `dist/figma-effect-styles.json`,
-> `dist/figma-text-styles.json`, `src/preset/semantic-tokens.ts`, and
-> `src/preset/colors/create-palette-bridge.ts`.
+> Generated from `tokens/export-to-figma/figma-variables.json`, `tokens/export-to-figma/figma-effect-styles.json`,
+> `tokens/export-to-figma/figma-text-styles.json`, `src/preset/semantic-tokens.ts`,
+> `src/preset/colors/create-palette-bridge.ts`, and `src/languages/material3.language.ts`.
 >
-> Version: 0.22.0 (matches `$metadata.version` in `figma-variables.json`)
+> Version: 0.25.3
 
 ---
 
@@ -195,7 +195,7 @@ Defined in `src/preset/index.ts:144–147` as semantic tokens:
 
 ## Section 4: Shadows (Effect Styles)
 
-6 base elevation tokens from `dist/figma-effect-styles.json`, plus semantic
+6 base elevation tokens from `tokens/export-to-figma/figma-effect-styles.json`, plus semantic
 aliases defined in `src/preset/shadows.ts`.
 
 ### Base Elevation Tokens
@@ -225,27 +225,115 @@ aliases defined in `src/preset/shadows.ts`.
 
 ## Section 5: Typography (Text Styles)
 
-15 entries from `dist/figma-text-styles.json`. The Figma text style name is
-identical to the Panda `textStyle` name — no transformation needed.
+51 entries from `tokens/export-to-figma/figma-text-styles.json`. The system
+uses slash-hierarchy naming (`Category/Size/Weight`) with all weight variants
+per scale step — upgraded from 15 flat styles (one per scale step, default
+weight only) to 51 styles covering all variants.
 
-| Figma Text Style | Panda `textStyle` Name | Font Family | Font Size | Font Weight | Line Height | Example Usage                 |
-| ---------------- | ---------------------- | ----------- | --------- | ----------- | ----------- | ----------------------------- |
-| `displayLarge`   | `displayLarge`         | Fraunces    | 57px      | 400         | 64px        | `textStyle: 'displayLarge'`   |
-| `displayMedium`  | `displayMedium`        | Fraunces    | 45px      | 400         | 52px        | `textStyle: 'displayMedium'`  |
-| `displaySmall`   | `displaySmall`         | Fraunces    | 36px      | 400         | 44px        | `textStyle: 'displaySmall'`   |
-| `headlineLarge`  | `headlineLarge`        | Fraunces    | 32px      | 400         | 40px        | `textStyle: 'headlineLarge'`  |
-| `headlineMedium` | `headlineMedium`       | Fraunces    | 28px      | 400         | 36px        | `textStyle: 'headlineMedium'` |
-| `headlineSmall`  | `headlineSmall`        | Fraunces    | 24px      | 400         | 32px        | `textStyle: 'headlineSmall'`  |
-| `titleLarge`     | `titleLarge`           | Poppins     | 22px      | 500         | 28px        | `textStyle: 'titleLarge'`     |
-| `titleMedium`    | `titleMedium`          | Poppins     | 16px      | 500         | 24px        | `textStyle: 'titleMedium'`    |
-| `titleSmall`     | `titleSmall`           | Poppins     | 14px      | 500         | 20px        | `textStyle: 'titleSmall'`     |
-| `bodyLarge`      | `bodyLarge`            | Poppins     | 16px      | 400         | 24px        | `textStyle: 'bodyLarge'`      |
-| `bodyMedium`     | `bodyMedium`           | Poppins     | 14px      | 400         | 20px        | `textStyle: 'bodyMedium'`     |
-| `bodySmall`      | `bodySmall`            | Poppins     | 12px      | 400         | 16px        | `textStyle: 'bodySmall'`      |
-| `labelLarge`     | `labelLarge`           | Poppins     | 14px      | 500         | 20px        | `textStyle: 'labelLarge'`     |
-| `labelMedium`    | `labelMedium`          | Poppins     | 12px      | 500         | 16px        | `textStyle: 'labelMedium'`    |
-| `labelSmall`     | `labelSmall`           | Poppins     | 11px      | 500         | 16px        | `textStyle: 'labelSmall'`     |
+**Description field convention:** Each Figma text style carries a description
+field in the format `dds:typography.scale.{scaleName}.weights.{weightName}`.
+This is the semantic bridge the Figma MCP reads to resolve back to the DDS token.
 
-> No mismatches in this section — Figma text style names map 1:1 to Panda
-> `textStyle` names. Display and headline styles use **Fraunces** (serif);
-> all other styles use **Poppins** (sans-serif).
+> **pandaTextStyle uses the scale step name, not the weight variant.** Panda
+> `textStyle` tokens are geometry-only (size, line height, letter spacing, font
+> family). Font weight is applied separately via the `fontWeight` utility.
+> For example: `textStyle: 'headlineSmall'` sets geometry; add
+> `fontWeight: 600` (or `'semiBold'`) separately for the SemiBold variant.
+
+### Display (Fraunces)
+
+| Figma Text Style | Font | Weight | Size | Line Height | Letter Spacing | DDS Token Path | Panda textStyle | Default? |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `Display/Large/Regular` | Fraunces | Regular (400) | 57px | 64px | -0.25 | `typography.scale.displayLarge.weights.regular` | `displayLarge` | ✓ |
+| `Display/Large/SemiBold` | Fraunces | SemiBold (600) | 57px | 64px | -0.25 | `typography.scale.displayLarge.weights.semiBold` | `displayLarge` | |
+| `Display/Medium/Regular` | Fraunces | Regular (400) | 45px | 52px | 0 | `typography.scale.displayMedium.weights.regular` | `displayMedium` | ✓ |
+| `Display/Medium/SemiBold` | Fraunces | SemiBold (600) | 45px | 52px | 0 | `typography.scale.displayMedium.weights.semiBold` | `displayMedium` | |
+| `Display/Small/Regular` | Fraunces | Regular (400) | 36px | 44px | 0 | `typography.scale.displaySmall.weights.regular` | `displaySmall` | ✓ |
+| `Display/Small/SemiBold` | Fraunces | SemiBold (600) | 36px | 44px | 0 | `typography.scale.displaySmall.weights.semiBold` | `displaySmall` | |
+
+### Headline (Fraunces)
+
+| Figma Text Style | Font | Weight | Size | Line Height | Letter Spacing | DDS Token Path | Panda textStyle | Default? |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `Headline/Large/Light` | Fraunces | Light (300) | 32px | 40px | 0 | `typography.scale.headlineLarge.weights.light` | `headlineLarge` | |
+| `Headline/Large/Regular` | Fraunces | Regular (400) | 32px | 40px | 0 | `typography.scale.headlineLarge.weights.regular` | `headlineLarge` | ✓ |
+| `Headline/Large/SemiBold` | Fraunces | SemiBold (600) | 32px | 40px | 0 | `typography.scale.headlineLarge.weights.semiBold` | `headlineLarge` | |
+| `Headline/Medium/Light` | Fraunces | Light (300) | 28px | 36px | 0 | `typography.scale.headlineMedium.weights.light` | `headlineMedium` | |
+| `Headline/Medium/Regular` | Fraunces | Regular (400) | 28px | 36px | 0 | `typography.scale.headlineMedium.weights.regular` | `headlineMedium` | ✓ |
+| `Headline/Medium/SemiBold` | Fraunces | SemiBold (600) | 28px | 36px | 0 | `typography.scale.headlineMedium.weights.semiBold` | `headlineMedium` | |
+| `Headline/Small/Light` | Fraunces | Light (300) | 24px | 32px | 0 | `typography.scale.headlineSmall.weights.light` | `headlineSmall` | |
+| `Headline/Small/Regular` | Fraunces | Regular (400) | 24px | 32px | 0 | `typography.scale.headlineSmall.weights.regular` | `headlineSmall` | ✓ |
+| `Headline/Small/SemiBold` | Fraunces | SemiBold (600) | 24px | 32px | 0 | `typography.scale.headlineSmall.weights.semiBold` | `headlineSmall` | |
+
+### Title (Poppins)
+
+| Figma Text Style | Font | Weight | Size | Line Height | Letter Spacing | DDS Token Path | Panda textStyle | Default? |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `Title/Large/Regular` | Poppins | Regular (400) | 22px | 28px | 0 | `typography.scale.titleLarge.weights.regular` | `titleLarge` | |
+| `Title/Large/Medium` | Poppins | Medium (500) | 22px | 28px | 0 | `typography.scale.titleLarge.weights.medium` | `titleLarge` | ✓ |
+| `Title/Large/SemiBold` | Poppins | SemiBold (600) | 22px | 28px | 0 | `typography.scale.titleLarge.weights.semiBold` | `titleLarge` | |
+| `Title/Large/Bold` | Poppins | Bold (700) | 22px | 28px | 0 | `typography.scale.titleLarge.weights.bold` | `titleLarge` | |
+| `Title/Medium/Regular` | Poppins | Regular (400) | 16px | 24px | 0.15 | `typography.scale.titleMedium.weights.regular` | `titleMedium` | |
+| `Title/Medium/Medium` | Poppins | Medium (500) | 16px | 24px | 0.15 | `typography.scale.titleMedium.weights.medium` | `titleMedium` | ✓ |
+| `Title/Medium/SemiBold` | Poppins | SemiBold (600) | 16px | 24px | 0.15 | `typography.scale.titleMedium.weights.semiBold` | `titleMedium` | |
+| `Title/Medium/Bold` | Poppins | Bold (700) | 16px | 24px | 0.15 | `typography.scale.titleMedium.weights.bold` | `titleMedium` | |
+| `Title/Small/Regular` | Poppins | Regular (400) | 14px | 20px | 0.1 | `typography.scale.titleSmall.weights.regular` | `titleSmall` | |
+| `Title/Small/Medium` | Poppins | Medium (500) | 14px | 20px | 0.1 | `typography.scale.titleSmall.weights.medium` | `titleSmall` | ✓ |
+| `Title/Small/SemiBold` | Poppins | SemiBold (600) | 14px | 20px | 0.1 | `typography.scale.titleSmall.weights.semiBold` | `titleSmall` | |
+| `Title/Small/Bold` | Poppins | Bold (700) | 14px | 20px | 0.1 | `typography.scale.titleSmall.weights.bold` | `titleSmall` | |
+
+### Body (Poppins)
+
+| Figma Text Style | Font | Weight | Size | Line Height | Letter Spacing | DDS Token Path | Panda textStyle | Default? |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `Body/Large/Light` | Poppins | Light (300) | 18px | 28px | 0.5 | `typography.scale.bodyLarge.weights.light` | `bodyLarge` | |
+| `Body/Large/Regular` | Poppins | Regular (400) | 18px | 28px | 0.5 | `typography.scale.bodyLarge.weights.regular` | `bodyLarge` | ✓ |
+| `Body/Large/Medium` | Poppins | Medium (500) | 18px | 28px | 0.5 | `typography.scale.bodyLarge.weights.medium` | `bodyLarge` | |
+| `Body/Large/SemiBold` | Poppins | SemiBold (600) | 18px | 28px | 0.5 | `typography.scale.bodyLarge.weights.semiBold` | `bodyLarge` | |
+| `Body/Medium/Light` | Poppins | Light (300) | 14px | 20px | 0.25 | `typography.scale.bodyMedium.weights.light` | `bodyMedium` | |
+| `Body/Medium/Regular` | Poppins | Regular (400) | 14px | 20px | 0.25 | `typography.scale.bodyMedium.weights.regular` | `bodyMedium` | ✓ |
+| `Body/Medium/Medium` | Poppins | Medium (500) | 14px | 20px | 0.25 | `typography.scale.bodyMedium.weights.medium` | `bodyMedium` | |
+| `Body/Medium/SemiBold` | Poppins | SemiBold (600) | 14px | 20px | 0.25 | `typography.scale.bodyMedium.weights.semiBold` | `bodyMedium` | |
+| `Body/Small/Light` | Poppins | Light (300) | 12px | 16px | 0.4 | `typography.scale.bodySmall.weights.light` | `bodySmall` | |
+| `Body/Small/Regular` | Poppins | Regular (400) | 12px | 16px | 0.4 | `typography.scale.bodySmall.weights.regular` | `bodySmall` | ✓ |
+| `Body/Small/Medium` | Poppins | Medium (500) | 12px | 16px | 0.4 | `typography.scale.bodySmall.weights.medium` | `bodySmall` | |
+| `Body/Small/SemiBold` | Poppins | SemiBold (600) | 12px | 16px | 0.4 | `typography.scale.bodySmall.weights.semiBold` | `bodySmall` | |
+
+### Label (Poppins)
+
+| Figma Text Style | Font | Weight | Size | Line Height | Letter Spacing | DDS Token Path | Panda textStyle | Default? |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `Label/Large/Light` | Poppins | Light (300) | 14px | 20px | 0.1 | `typography.scale.labelLarge.weights.light` | `labelLarge` | |
+| `Label/Large/Medium` | Poppins | Medium (500) | 14px | 20px | 0.1 | `typography.scale.labelLarge.weights.medium` | `labelLarge` | ✓ |
+| `Label/Large/SemiBold` | Poppins | SemiBold (600) | 14px | 20px | 0.1 | `typography.scale.labelLarge.weights.semiBold` | `labelLarge` | |
+| `Label/Large/Bold` | Poppins | Bold (700) | 14px | 20px | 0.1 | `typography.scale.labelLarge.weights.bold` | `labelLarge` | |
+| `Label/Medium/Light` | Poppins | Light (300) | 12px | 16px | 0.5 | `typography.scale.labelMedium.weights.light` | `labelMedium` | |
+| `Label/Medium/Medium` | Poppins | Medium (500) | 12px | 16px | 0.5 | `typography.scale.labelMedium.weights.medium` | `labelMedium` | ✓ |
+| `Label/Medium/SemiBold` | Poppins | SemiBold (600) | 12px | 16px | 0.5 | `typography.scale.labelMedium.weights.semiBold` | `labelMedium` | |
+| `Label/Medium/Bold` | Poppins | Bold (700) | 12px | 16px | 0.5 | `typography.scale.labelMedium.weights.bold` | `labelMedium` | |
+| `Label/Small/Light` | Poppins | Light (300) | 11px | 16px | 0.5 | `typography.scale.labelSmall.weights.light` | `labelSmall` | |
+| `Label/Small/Medium` | Poppins | Medium (500) | 11px | 16px | 0.5 | `typography.scale.labelSmall.weights.medium` | `labelSmall` | ✓ |
+| `Label/Small/SemiBold` | Poppins | SemiBold (600) | 11px | 16px | 0.5 | `typography.scale.labelSmall.weights.semiBold` | `labelSmall` | |
+| `Label/Small/Bold` | Poppins | Bold (700) | 11px | 16px | 0.5 | `typography.scale.labelSmall.weights.bold` | `labelSmall` | |
+
+---
+
+## Section 6: Figma MCP Resolution — What the AI Sees
+
+When the Figma Desktop MCP reads a node via `get_design_context`, it returns
+structured data. This table shows what each token type looks like in MCP
+output and how it resolves to a DDS token.
+
+| Token Type | What MCP Returns | How to Resolve to DDS Token |
+| --- | --- | --- |
+| Color fill | `boundVariables.fills[].id` → variable name e.g. `"Semantic/primary"` | Look up `figmaPath` in `token-name-mapping.json` `semantic` array → `pandaToken` |
+| Spacing/padding | `boundVariables.paddingLeft.id` → variable name e.g. `"Spacing & Shape/spacing/md"` | Look up `figmaPath` in `spacingAndShape` array → `pandaToken` + `pandaCategory` |
+| Border radius | `boundVariables.cornerRadius.id` → variable name e.g. `"Spacing & Shape/radii/medium"` | Look up `figmaPath` in `spacingAndShape` array |
+| Shadow/elevation | `effects[].styleId` → effect style name e.g. `"elevation/level2"` | Look up `figmaEffectStyle` in `effectStyles` array → `pandaToken` |
+| Text style | `style.textStyleId` → text style name e.g. `"Headline/Small/SemiBold"` | Look up `figmaTextStyle` in `textStyles` array → `ddsTokenPath` and `pandaTextStyle` |
+| Text style description | `style.description` = `"dds:typography.scale.headlineSmall.weights.semiBold"` | Parse after `"dds:"` → direct DDS token path |
+
+> **The text style description field is the most direct resolution path for
+> typography** — no lookup table needed. The MCP returns it as part of the
+> style metadata and it maps directly to the `DesignLanguageContract` token
+> path (strip the `dds:` prefix to get `typography.scale.{step}.weights.{weight}`).
