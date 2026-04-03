@@ -179,9 +179,16 @@ if (importMatch) {
   }
 }
 
+// Components whose catalog import name differs from their barrel export name.
+// Key = name as it appears in index.ts parsing; Value = name in catalog story.
+const CATALOG_ALIASES: Record<string, string> = {
+  Toast: 'Toaster', // Toast.tsx exports Toaster; catalog imports as Toaster
+};
+
 const missingFromCatalog: string[] = [];
 for (const component of exportedComponents) {
-  if (!catalogImports.has(component)) {
+  const catalogName = CATALOG_ALIASES[component] ?? component;
+  if (!catalogImports.has(catalogName)) {
     missingFromCatalog.push(component);
   }
 }

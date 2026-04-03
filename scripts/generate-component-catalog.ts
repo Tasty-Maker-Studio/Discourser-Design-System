@@ -147,6 +147,11 @@ function generateCatalog(): void {
   lines.push('---');
   lines.push('');
 
+  // Components whose catalog import name differs from their barrel export name.
+  const CATALOG_ALIASES: Record<string, string> = {
+    Toast: 'Toaster', // Toast.tsx exports Toaster; catalog imports as Toaster
+  };
+
   // ── Component sections ────────────────────────────────────────────────────
   const stubWarnings: string[] = [];
 
@@ -159,7 +164,9 @@ function generateCatalog(): void {
     );
     lines.push('');
 
-    if (!catalogImports.has(name)) {
+    const catalogName = CATALOG_ALIASES[name] ?? name;
+
+    if (!catalogImports.has(catalogName)) {
       lines.push(
         '> ⚠️ No catalog entry found in ComponentCatalog.stories.tsx — add an example to keep this catalog accurate.',
       );

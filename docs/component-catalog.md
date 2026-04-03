@@ -20,7 +20,10 @@ Run `pnpm catalog:generate` to regenerate after changes.
 **Type:** Compound
 **Import:** `import { AbsoluteCenter } from '@discourser/design-system'`
 
-> ⚠️ No catalog entry found in ComponentCatalog.stories.tsx — add an example to keep this catalog accurate.
+**Usage:**
+```tsx
+<AbsoluteCenterNS.AbsoluteCenter>
+```
 
 ---
 
@@ -149,7 +152,10 @@ Run `pnpm catalog:generate` to regenerate after changes.
 **Type:** Simple
 **Import:** `import { Divider } from '@discourser/design-system'`
 
-> ⚠️ No catalog entry found in ComponentCatalog.stories.tsx — add an example to keep this catalog accurate.
+**Usage:**
+```tsx
+<Divider />
+```
 
 ---
 
@@ -170,7 +176,10 @@ Run `pnpm catalog:generate` to regenerate after changes.
 **Type:** Compound
 **Import:** `import { Group } from '@discourser/design-system'`
 
-> ⚠️ No catalog entry found in ComponentCatalog.stories.tsx — add an example to keep this catalog accurate.
+**Usage:**
+```tsx
+<GroupNS.Group>
+```
 
 ---
 
@@ -191,7 +200,10 @@ Run `pnpm catalog:generate` to regenerate after changes.
 **Type:** Compound
 **Import:** `import { Icon } from '@discourser/design-system'`
 
-> ⚠️ No catalog entry found in ComponentCatalog.stories.tsx — add an example to keep this catalog accurate.
+**Usage:**
+```tsx
+<IconButton variant={v} colorPalette="primary" aria-label={v}>
+```
 
 ---
 
@@ -332,7 +344,7 @@ Run `pnpm catalog:generate` to regenerate after changes.
 **Type:** Simple
 **Import:** `import { SettingsPopover } from '@discourser/design-system'`
 
-> ⚠️ No catalog entry found in ComponentCatalog.stories.tsx — add an example to keep this catalog accurate.
+**Usage:** *(see ComponentCatalog.stories.tsx)*
 
 ---
 
@@ -389,7 +401,10 @@ Run `pnpm catalog:generate` to regenerate after changes.
 **Type:** Simple
 **Import:** `import { StudioControls } from '@discourser/design-system'`
 
-> ⚠️ No catalog entry found in ComponentCatalog.stories.tsx — add an example to keep this catalog accurate.
+**Usage:**
+```tsx
+<StudioControls scenarioName="UX Interview Practice" scenarioFocus="Technical Communication" scenarioLevel="beginner" />
+```
 
 ---
 
@@ -434,7 +449,10 @@ Run `pnpm catalog:generate` to regenerate after changes.
 **Type:** Simple
 **Import:** `import { Toast } from '@discourser/design-system'`
 
-> ⚠️ No catalog entry found in ComponentCatalog.stories.tsx — add an example to keep this catalog accurate.
+**Usage:**
+```tsx
+<Toaster />
+```
 
 ---
 
