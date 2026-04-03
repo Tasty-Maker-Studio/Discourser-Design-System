@@ -109,7 +109,7 @@ if (missing.length === 0 && extra.length === 0) {
     `${GREEN}✓ All exported components have matching package.json export entries.${RESET}`,
   );
   console.log('');
-  process.exit(0);
+  // Phase 2 runs next — do not exit here
 }
 
 if (missing.length > 0) {
@@ -147,7 +147,88 @@ if (extra.length > 0) {
   console.warn('');
 }
 
-// Fail the build only when components are missing from exports
-if (missing.length > 0) {
+// Fail the build only when components are missing from exports (Phase 1)
+const phase1Failed = missing.length > 0;
+
+// ── Phase 2: Validate ComponentCatalog.stories.tsx coverage ──────────────────
+//
+// Warning-only (non-fatal) while the catalog is being built out. Tighten to
+// process.exit(1) once all exported components have catalog story entries.
+
+console.log('');
+console.log(
+  '📖 Validating ComponentCatalog.stories.tsx coverage against src/components/index.ts...',
+);
+console.log('');
+
+const storyPath = path.join(root, 'stories/ComponentCatalog.stories.tsx');
+const storySource = fs.readFileSync(storyPath, 'utf8');
+
+// Parse the import { ... } from '../src' block
+const importBlockRe = /import\s+\{([^}]+)\}\s+from\s+['"]\.\.\/src['"]/s;
+const importMatch = storySource.match(importBlockRe);
+
+const catalogImports = new Set<string>();
+if (importMatch) {
+  for (const token of importMatch[1].split(',')) {
+    const trimmed = token.trim();
+    if (!trimmed || trimmed.startsWith('type ')) continue;
+    // Handle "CloseButton as CloseButtonNS" → extract "CloseButton"
+    const baseName = trimmed.split(/\s+as\s+/)[0].trim();
+    if (baseName) catalogImports.add(baseName);
+  }
+}
+
+const missingFromCatalog: string[] = [];
+for (const component of exportedComponents) {
+  if (!catalogImports.has(component)) {
+    missingFromCatalog.push(component);
+  }
+}
+
+const extraInCatalog: string[] = [];
+for (const name of catalogImports) {
+  // Only check PascalCase names (component names, not lowercase utilities like `toaster`)
+  if (!/^[A-Z]/.test(name)) continue;
+  const found = [...exportedComponents].some(
+    (c) => c.toLowerCase() === name.toLowerCase(),
+  );
+  if (!found) extraInCatalog.push(name);
+}
+
+if (missingFromCatalog.length === 0) {
+  console.log(
+    `${GREEN}✓ All exported components are present in ComponentCatalog.stories.tsx.${RESET}`,
+  );
+  console.log('');
+} else {
+  // Warning-only — see comment above. Change to console.error + phase2Failed=true to harden.
+  console.warn(
+    `${YELLOW}⚠  Components exported from index.ts but not yet in ComponentCatalog.stories.tsx:${RESET}`,
+  );
+  for (const name of missingFromCatalog.sort()) {
+    console.warn(`  ${YELLOW}• ${name}${RESET}`);
+  }
+  console.warn('');
+  console.warn(
+    `${YELLOW}  Add these to stories/ComponentCatalog.stories.tsx to complete the catalog.${RESET}`,
+  );
+  console.warn('');
+}
+
+if (extraInCatalog.length > 0) {
+  console.warn(
+    `${YELLOW}⚠  ComponentCatalog.stories.tsx imports components not found in index.ts (may be intentional):${RESET}`,
+  );
+  for (const name of extraInCatalog.sort()) {
+    console.warn(`  ${YELLOW}• ${name}${RESET}`);
+  }
+  console.warn('');
+}
+
+// ── Final exit ────────────────────────────────────────────────────────────────
+if (phase1Failed) {
   process.exit(1);
 }
+
+process.exit(0);
