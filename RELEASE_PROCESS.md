@@ -1,18 +1,51 @@
 # Release Process Documentation
 
 ## Overview
+
 This project uses an automated release workflow with **Changesets** for versioning and **npm Trusted Publishing (OIDC)** for publishing packages. **No NPM tokens are required.**
 
 ## How It Works
 
+### The release process is now manual-bump, auto-publish:
+
+1. **On your feature branch**, run changeset version to bump the version:
+
+   ```bash
+   pnpm exec changeset version
+   ```
+
+   This bumps `package.json`, updates `CHANGELOG.md`, and deletes changeset files.
+
+2. **Commit the version bump** on your feature branch:
+
+   ```bash
+   git add .
+   git commit -m "chore: version packages"
+   ```
+
+3. **Merge to dev, then to main** via normal PR flow.
+
+4. **GitHub Actions detects the version difference** between `package.json`
+   and the published npm version, and automatically publishes.
+
+### Why this approach?
+
+The previous approach detected changeset files in the workflow. This broke
+consistently because changesets were deleted by `pnpm exec changeset version`
+before the workflow ran. The new approach uses a single reliable signal:
+version mismatch between local and npm.
+
 ### 1. Making Changes
+
 When working on components and stories, you should:
+
 - Create feature branches
 - Make your changes to components in `src/`
 - Add/update Storybook stories
 - Add a changeset if your changes should trigger a release
 
 ### 2. Adding a Changeset
+
 When you want your changes to be included in the next release:
 
 ```bash
@@ -20,30 +53,26 @@ pnpm changeset
 ```
 
 This will prompt you to:
+
 - Select the type of change (major, minor, patch)
 - Write a description of the change
 
 This creates a `.md` file in `.changeset/` directory.
 
-### 3. Automated Release Workflow
+Then run the version bump locally before merging:
 
-When changes are merged to `main`:
-
-1. **GitHub Actions checks for changesets**
-   - If changesets exist, it runs `pnpm exec changeset version`
-   - This updates `package.json` version and `CHANGELOG.md`
-   - Creates a PR with the version changes to `changeset-release/main` branch
-
-2. **When version PR is merged to main**
-   - Builds the package
-   - Publishes to npm using OIDC (no token needed!)
-   - Creates a git tag (e.g., `v0.2.1`)
+```bash
+pnpm exec changeset version
+git add .
+git commit -m "chore: version packages"
+```
 
 ## Critical Files - DO NOT MODIFY
 
 The following files control the release process and should **NEVER** be modified when working on components:
 
 ### Protected Files
+
 - `.github/workflows/release.yml` - GitHub Actions workflow
 - `package.json` - Package configuration (version is auto-managed)
 - `.changeset/config.json` - Changeset configuration
@@ -61,6 +90,7 @@ The following files control the release process and should **NEVER** be modified
 ## Pre-commit Checks
 
 Every commit triggers:
+
 1. **Critical file check** - Warns if modifying protected files
 2. **ESLint** - Auto-fixes linting issues in `.ts` and `.tsx` files
 3. **Prettier** - Auto-formats code
@@ -71,6 +101,7 @@ Every commit triggers:
 This workflow previously used `changesets/action@v1` but it caused persistent PATH resolution issues after `node_modules` was removed from git tracking (commit 9035f305).
 
 **Current approach:**
+
 - Run `pnpm exec changeset version` directly via bash
 - Avoids PATH resolution issues
 - Simpler and more reliable
@@ -98,6 +129,7 @@ This workflow previously used `changesets/action@v1` but it caused persistent PA
 ### Bypassing Pre-commit Hooks
 
 In rare cases where you need to bypass hooks (NOT recommended):
+
 ```bash
 git commit --no-verify -m "your message"
 ```
@@ -115,12 +147,14 @@ git commit --no-verify -m "your message"
 ## When Working on Components
 
 You should **ONLY** be modifying:
+
 - `src/` - Component source code
 - `*.stories.tsx` - Storybook stories
 - `scripts/` - Utility scripts (for tokens, etc.)
 - Documentation files (README.md, component docs)
 
 You should **NEVER** need to touch:
+
 - `.github/workflows/` - CI/CD workflows
 - Core build configuration files
 - Package management files
@@ -130,6 +164,7 @@ You should **NEVER** need to touch:
 ## Development Workflow
 
 1. Create a feature branch
+
    ```bash
    git checkout -b feature/my-component
    ```
@@ -140,6 +175,7 @@ You should **NEVER** need to touch:
    - Update documentation as needed
 
 3. Add a changeset (if needed)
+
    ```bash
    pnpm changeset
    ```
@@ -150,6 +186,7 @@ You should **NEVER** need to touch:
    - Respond to critical file warnings (if any)
 
 5. Push and create PR
+
    ```bash
    git push -u origin feature/my-component
    ```
@@ -160,5 +197,5 @@ You should **NEVER** need to touch:
 
 ---
 
-Last updated: 2025-01-07
-After 3 hours of debugging, please don't modify the workflow files unnecessarily! 😅
+Last updated: 2026-04-03
+Simplified to manual-bump + auto-publish. No more changeset file detection in CI.

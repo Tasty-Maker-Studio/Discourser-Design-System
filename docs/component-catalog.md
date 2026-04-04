@@ -2,8 +2,8 @@
 
 > **Status:** Generated — auto-produced by `scripts/generate-component-catalog.ts`
 > **Source:** `stories/ComponentCatalog.stories.tsx` + `src/components/index.ts`
-> **Design System Version:** 0.26.0
-> **Generated:** 2026-04-03
+> **Design System Version:** 0.27.0
+> **Generated:** 2026-04-04
 > **Do not hand-edit** — this file is overwritten on every build
 
 ---
