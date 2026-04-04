@@ -46,6 +46,12 @@ import {
   RightArrowIcon,
   ChevronUpIcon,
   type NavSection,
+  Divider,
+  SettingsPopover,
+  StudioControls,
+  AbsoluteCenter as AbsoluteCenterNS,
+  Group as GroupNS,
+  Icon as IconNS,
 } from '../src';
 import { HStack, VStack, Box, Grid } from '../styled-system/jsx';
 import { css } from '../styled-system/css';
@@ -1619,13 +1625,34 @@ export const FullCatalog: StoryObj = {
         <VStack alignItems="start" gap="3" w="full">
           <SubLabel>ScenarioCard — Individual Cards</SubLabel>
           <HStack gap="6" flexWrap="wrap" alignItems="start">
-            {([
-              { difficulty: 'beginner' as const, title: 'UX Research Interview', duration: '10-15 min', isActive: true, position: 1 },
-              { difficulty: 'intermediate' as const, title: 'Business Analysis ROI', duration: '15-25 min', isActive: false, position: 2 },
-              { difficulty: 'advanced' as const, title: 'Product Redesign Challenge', duration: '25-35 min', isActive: false, position: 3 },
-            ]).map(({ difficulty, title, duration, isActive, position }) => (
+            {[
+              {
+                difficulty: 'beginner' as const,
+                title: 'UX Research Interview',
+                duration: '10-15 min',
+                isActive: true,
+                position: 1,
+              },
+              {
+                difficulty: 'intermediate' as const,
+                title: 'Business Analysis ROI',
+                duration: '15-25 min',
+                isActive: false,
+                position: 2,
+              },
+              {
+                difficulty: 'advanced' as const,
+                title: 'Product Redesign Challenge',
+                duration: '25-35 min',
+                isActive: false,
+                position: 3,
+              },
+            ].map(({ difficulty, title, duration, isActive, position }) => (
               <VStack key={difficulty} alignItems="start" gap="1">
-                <MonoLabel>{difficulty}{isActive ? ' (active)' : ''}</MonoLabel>
+                <MonoLabel>
+                  {difficulty}
+                  {isActive ? ' (active)' : ''}
+                </MonoLabel>
                 <Box w="240px">
                   <ScenarioCard
                     scenario={{
@@ -1643,6 +1670,135 @@ export const FullCatalog: StoryObj = {
               </VStack>
             ))}
           </HStack>
+        </VStack>
+      </VStack>
+
+      {/* ── 11. Utility & Layout ─────────────────────────────────────────── */}
+      <VStack alignItems="start" gap="8" w="full">
+        <SectionTitle
+          title="Utility & Layout"
+          description="AbsoluteCenter, Divider, Group, Icon — structural helpers. SettingsPopover, StudioControls, Toast — app-level components."
+        />
+
+        {/* AbsoluteCenter */}
+        <VStack alignItems="start" gap="3" w="full">
+          <SubLabel>AbsoluteCenter</SubLabel>
+          <Box
+            position="relative"
+            w="48"
+            h="32"
+            borderWidth="1px"
+            borderColor="border"
+            borderRadius="l2"
+          >
+            <AbsoluteCenterNS.AbsoluteCenter>
+              Centered content
+            </AbsoluteCenterNS.AbsoluteCenter>
+          </Box>
+        </VStack>
+
+        {/* Divider */}
+        <VStack alignItems="start" gap="3" w="full">
+          <SubLabel>Divider</SubLabel>
+          <VStack gap="4" w="96" alignItems="start">
+            <VStack alignItems="start" gap="1" w="full">
+              <MonoLabel>horizontal (default)</MonoLabel>
+              <Divider />
+            </VStack>
+            <VStack alignItems="start" gap="1" w="full">
+              <MonoLabel>with label</MonoLabel>
+              <Divider label="OR" />
+            </VStack>
+            <VStack alignItems="start" gap="1">
+              <MonoLabel>vertical</MonoLabel>
+              <Box display="flex" h="10" gap="4" alignItems="center">
+                <span className={css({ fontSize: 'sm' })}>Left</span>
+                <Divider orientation="vertical" />
+                <span className={css({ fontSize: 'sm' })}>Right</span>
+              </Box>
+            </VStack>
+          </VStack>
+        </VStack>
+
+        {/* Group */}
+        <VStack alignItems="start" gap="3" w="full">
+          <SubLabel>Group</SubLabel>
+          <GroupNS.Group>
+            <Button variant="outline" colorPalette="primary">
+              First
+            </Button>
+            <Button variant="outline" colorPalette="primary">
+              Second
+            </Button>
+            <Button variant="outline" colorPalette="primary">
+              Third
+            </Button>
+          </GroupNS.Group>
+        </VStack>
+
+        {/* Icon */}
+        <VStack alignItems="start" gap="3" w="full">
+          <SubLabel>Icon — SVG wrapper (sizes)</SubLabel>
+          <HStack gap="6" alignItems="center">
+            {(['4', '6', '8', '10', '12'] as const).map((size) => (
+              <VStack key={size} gap="1" alignItems="center">
+                <IconNS.Icon w={size} h={size} color="primary.9">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                  </svg>
+                </IconNS.Icon>
+                <MonoLabel>{size}</MonoLabel>
+              </VStack>
+            ))}
+          </HStack>
+        </VStack>
+
+        {/* SettingsPopover */}
+        <VStack alignItems="start" gap="3" w="full">
+          <SubLabel>SettingsPopover</SubLabel>
+          <Box w="280px" bg="surface.dim" borderRadius="l3" overflow="hidden">
+            <SettingsPopover
+              userName="Will Streeter"
+              userTier="Free Trial"
+              userEmail="will@discourser.ai"
+              actions={[
+                {
+                  key: 'logout',
+                  label: 'Logout',
+                  onClick: () => {},
+                },
+              ]}
+            />
+          </Box>
+        </VStack>
+
+        {/* StudioControls */}
+        <VStack alignItems="start" gap="3" w="full">
+          <SubLabel>StudioControls — beginner (all sections expanded)</SubLabel>
+          <Box w="350px" bg="surface.container.highest" minH="600px">
+            <StudioControls
+              scenarioName="UX Interview Practice"
+              scenarioFocus="Technical Communication"
+              scenarioLevel="beginner"
+            />
+          </Box>
+        </VStack>
+
+        {/* Toast / Toaster */}
+        <VStack alignItems="start" gap="3" w="full">
+          <SubLabel>Toast / Toaster</SubLabel>
+          <p
+            className={css({ fontSize: 'sm', color: 'fg.muted', maxW: '2xl' })}
+          >
+            Exported as <code>Toaster</code> (component) and{' '}
+            <code>toaster</code> (imperative API) from the barrel key{' '}
+            <code>Toast</code>. Interactive toast triggers are shown in the
+            Feedback section above.
+          </p>
         </VStack>
       </VStack>
 
