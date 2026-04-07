@@ -282,7 +282,8 @@ export function StudioControls({
                       }}
                     />
                     <RadioGroup.ItemText
-                      css={{ fontSize: 'md', fontWeight: 'medium' }}
+                      css={{ textStyle: 'bodyMedium' }}
+                      style={{ fontWeight: 'var(--font-weights-normal)' }}
                     >
                       {option.label}
                     </RadioGroup.ItemText>

@@ -1,5 +1,12 @@
 # @discourser/design-system
 
+## 0.28.1
+
+### Patch Changes
+
+- Fix SettingsPopover shadow — replace invalid boxShadow: 'level2' token with correct alias 'md'
+- 9c027ec: fix: prelaunch feedback — Breadcrumb text style/weight corrections, StudioControls triggerCss prop, Figma Code Connect updates
+
 ## 0.28.0
 
 ### Minor Changes
