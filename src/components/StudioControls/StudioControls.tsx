@@ -47,6 +47,11 @@ const ALL_SECTION_IDS = [
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
+const DEFAULT_TRIGGER_CSS = {
+  fontSize: 'sm',
+  fontWeight: 'semibold',
+} as const;
+
 export function StudioControls({
   scenarioName,
   scenarioFocus,
@@ -56,12 +61,14 @@ export function StudioControls({
   defaultRecordingMode = 'no-recording',
   defaultShowTimer = true,
   defaultHideInterviewers = false,
+  triggerCss,
   onAudioLevelChange,
   onMicLevelChange,
   onRecordingModeChange,
   onTimerChange,
   onInterviewersChange,
 }: StudioControlsProps) {
+  const resolvedTriggerCss = { ...DEFAULT_TRIGGER_CSS, ...triggerCss };
   const styles = studioControls();
 
   const [audioLevel, setAudioLevel] = useState(defaultAudioLevel);
@@ -78,8 +85,7 @@ export function StudioControls({
           <Accordion.ItemTrigger
             className={styles.sectionTrigger}
             css={{
-              fontSize: 'lg',
-              fontWeight: 'medium',
+              ...resolvedTriggerCss,
               borderRadius: '0',
               py: '4',
               bg: 'neutral.1',
@@ -132,8 +138,7 @@ export function StudioControls({
           <Accordion.ItemTrigger
             className={styles.sectionTrigger}
             css={{
-              fontSize: 'lg',
-              fontWeight: 'medium',
+              ...resolvedTriggerCss,
               borderRadius: '0',
               py: '4',
               bg: 'neutral.1',
@@ -183,8 +188,7 @@ export function StudioControls({
           <Accordion.ItemTrigger
             className={styles.sectionTrigger}
             css={{
-              fontSize: 'lg',
-              fontWeight: 'medium',
+              ...resolvedTriggerCss,
               borderRadius: '0',
               py: '4',
               bg: 'neutral.1',
@@ -234,8 +238,7 @@ export function StudioControls({
           <Accordion.ItemTrigger
             className={styles.sectionTrigger}
             css={{
-              fontSize: 'lg',
-              fontWeight: 'medium',
+              ...resolvedTriggerCss,
               borderRadius: '0',
               py: '4',
               bg: 'neutral.1',
@@ -296,8 +299,7 @@ export function StudioControls({
           <Accordion.ItemTrigger
             className={styles.sectionTrigger}
             css={{
-              fontSize: 'lg',
-              fontWeight: 'medium',
+              ...resolvedTriggerCss,
               borderRadius: '0',
               py: '4',
               bg: 'neutral.1',
@@ -338,8 +340,7 @@ export function StudioControls({
           <Accordion.ItemTrigger
             className={styles.sectionTrigger}
             css={{
-              fontSize: 'lg',
-              fontWeight: 'medium',
+              ...resolvedTriggerCss,
               borderRadius: '0',
               py: '4',
               bg: 'neutral.1',
