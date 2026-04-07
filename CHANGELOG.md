@@ -1,5 +1,11 @@
 # @discourser/design-system
 
+## 0.28.0
+
+### Minor Changes
+
+- Ship panda.buildinfo.json in dist/ so consumer apps can use the Panda CSS build info approach for complete slot recipe CSS generation. Fixes systemic issue where all slot recipe classNameMaps were empty in consumer apps.
+
 ## 0.27.0
 
 ### Minor Changes

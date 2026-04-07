@@ -105,16 +105,14 @@ export const studioControls = defineSlotRecipe({
       gap: '1',
     },
     scenarioName: {
-      fontSize: 'lg',
+      textStyle: 'bodyMedium',
       fontWeight: 'semibold',
       color: 'onSurface',
-      lineHeight: '1.2',
     },
     scenarioFocus: {
-      fontSize: 'sm',
+      textStyle: 'bodyMedium',
       fontWeight: 'medium',
       color: 'onSurface',
-      lineHeight: '1.4',
     },
     // Stone-bg inner card — Figma: #F5F1EB ≈ surface.container
     settingsCard: {
@@ -127,7 +125,7 @@ export const studioControls = defineSlotRecipe({
       py: '2.5',
     },
     settingsCardHeading: {
-      fontSize: 'md',
+      textStyle: 'bodyMedium',
       fontWeight: 'medium',
       color: 'onSurface',
     },
@@ -143,7 +141,7 @@ export const studioControls = defineSlotRecipe({
       width: 'full',
     },
     settingsRowLabel: {
-      fontSize: 'sm',
+      textStyle: 'bodyMedium',
       fontWeight: 'medium',
       color: 'onSurface',
       flex: 1,
@@ -198,8 +196,8 @@ export const studioControls = defineSlotRecipe({
       width: 'full',
     },
     sliderLabelText: {
-      fontSize: 'md',
-      fontWeight: 'semibold',
+      textStyle: 'bodyMedium',
+      fontWeight: 'medium',
       color: 'onSurface',
     },
     levelBadge: {
@@ -242,10 +240,9 @@ export const studioControls = defineSlotRecipe({
       width: 'full',
     },
     toggleDescription: {
-      fontSize: 'sm',
-      fontWeight: 'normal',
+      textStyle: 'bodyMedium',
+      fontWeight: 'medium',
       color: 'onSurface',
-      lineHeight: '1.4',
       flex: 1,
     },
   },

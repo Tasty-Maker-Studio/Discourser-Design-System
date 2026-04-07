@@ -83,8 +83,8 @@ export const breadcrumb = defineSlotRecipe({
         },
         link: {
           color: 'fg.subtle',
+          textStyle: 'bodyMedium',
           fontWeight: 'medium',
-          fontSize: 'lg',
           _hover: { color: 'fg.default' },
           _currentPage: { color: 'fg.default', fontWeight: 'semibold' },
         },

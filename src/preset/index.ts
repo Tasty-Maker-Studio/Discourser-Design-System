@@ -52,6 +52,7 @@ import { contentCard } from './recipes/content-card';
 import { scenarioCard } from './recipes/scenario-card';
 import { scenarioQueue } from './recipes/scenario-queue';
 import { scenarioSettings } from './recipes/scenario-settings';
+import { studioControls } from './recipes/studio-controls';
 
 // Park UI theme extensions
 import { layerStyles } from './layer-styles';
@@ -195,6 +196,7 @@ export const discourserPandaPreset = definePreset({
         scenarioCard,
         scenarioQueue,
         scenarioSettings,
+        studioControls,
       },
     },
   },

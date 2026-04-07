@@ -122,8 +122,8 @@ export const ParentItem = ({
 }) => {
   const styles = css({
     color: 'fg.subtle',
-    textStyle: 'sm',
-    fontWeight: 'normal',
+    textStyle: 'bodyMedium',
+    fontWeight: 'light',
     textDecoration: 'none',
     _hover: href
       ? { color: 'fg.default', textDecoration: 'underline' }
@@ -145,7 +145,8 @@ export const ParentSeparator = () => (
     aria-hidden="true"
     className={css({
       color: 'fg.subtle',
-      textStyle: 'sm',
+      textStyle: 'bodyMedium',
+      fontWeight: 'light',
       mx: '0.5',
     })}
   >
