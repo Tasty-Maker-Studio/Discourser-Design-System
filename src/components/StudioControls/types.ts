@@ -1,6 +1,10 @@
+import type { SystemStyleObject } from 'styled-system/types';
+
 export type RecordingMode = 'no-recording' | 'audio-only' | 'video-audio';
 
 export interface StudioControlsProps {
+  /** Override CSS for every accordion trigger label — customize font, size, weight from the consuming app */
+  triggerCss?: SystemStyleObject;
   scenarioName: string;
   scenarioFocus: string;
   scenarioLevel: 'beginner' | 'intermediate' | 'advanced';
