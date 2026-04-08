@@ -35,8 +35,6 @@ export function SettingsPopover({
             borderTopStyle: 'solid',
             borderTopColor: 'neutral.3',
             borderRadius: '0',
-            boxShadow:
-              '0px -1px 2px rgba(0, 0, 0, 0.3), 0px -2px 6px 2px rgba(0, 0, 0, 0.15)',
             cursor: 'pointer',
             transition: 'background 0.2s',
             _hover: {
@@ -87,7 +85,7 @@ export function SettingsPopover({
             p: '0',
             w: '275px',
             borderRadius: 'l3',
-            boxShadow: 'level2',
+            boxShadow: 'md',
             overflow: 'hidden',
           })}
         >

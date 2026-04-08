@@ -59,8 +59,19 @@ run_step "Type checking" "pnpm typecheck" || true
 # Step 4: Linting
 run_step "Linting" "pnpm lint" || true
 
-# Step 5: Tests
-run_step "Running tests" "pnpm test run" || true
+# Step 5: Tests — hard abort on failure; no point continuing after broken tests
+echo -e "${BLUE}▶ Running tests...${NC}"
+if ! pnpm vitest --run; then
+  echo ""
+  echo -e "${RED}╔══════════════════════════════════════════════════════╗${NC}"
+  echo -e "${RED}║        TESTS FAILED — PUSH BLOCKED                   ║${NC}"
+  echo -e "${RED}║   Fix the failing tests above, then re-push.         ║${NC}"
+  echo -e "${RED}╚══════════════════════════════════════════════════════╝${NC}"
+  echo ""
+  exit 1
+fi
+echo -e "${GREEN}✓ Tests passed${NC}"
+echo ""
 
 # NOTE: Build is intentionally NOT run here.
 # Full build (pnpm build) runs in GitHub Actions CI on every PR.
@@ -74,7 +85,10 @@ if [ $FAILED -eq 0 ]; then
   echo -e "${GREEN}✓ Safe to push${NC}"
   exit 0
 else
-  echo -e "${RED}✗ Some verification checks failed${NC}"
-  echo -e "${RED}✗ Please fix errors before pushing${NC}"
+  echo ""
+  echo -e "${RED}╔══════════════════════════════════════════════════════╗${NC}"
+  echo -e "${RED}║   PUSH BLOCKED — fix the errors above before pushing ║${NC}"
+  echo -e "${RED}╚══════════════════════════════════════════════════════╝${NC}"
+  echo ""
   exit 1
 fi
